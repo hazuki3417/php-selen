@@ -15,7 +15,7 @@ package-dumpautoload:COMMAND +=dumpautoload
 package-dumpautoload: composer;
 
 runner:
-	docker run -it --rm -v ${PWD}:/var/www/html -w /var/www/html php:${IMAGE_TAG} ${COMMAND}
+	docker run -t --rm -v ${PWD}:/var/www/html -w /var/www/html php:${IMAGE_TAG} ${COMMAND}
 
 generate-api-coverage: IMAGE_TAG +=7.2-alpine
 generate-api-coverage: COMMAND +=phpdbg -qrr vendor/bin/phpunit -c phpunit.coverage.xml
