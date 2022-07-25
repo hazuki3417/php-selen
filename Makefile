@@ -8,7 +8,7 @@ all:
 composer:
 	docker-compose run --rm composer ${COMMAND}
 
-package-install:COMMAND +=install –prefer-dist --no-suggest
+package-install:COMMAND +=install --no-suggest
 package-install: composer;
 
 package-dumpautoload:COMMAND +=dumpautoload
