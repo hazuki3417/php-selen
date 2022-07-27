@@ -18,7 +18,7 @@ abstract class AbstractMemo implements MemoInterface
     /**
      * @var mixed 保持する値を格納する変数
      */
-    protected mixed $object = null;
+    protected $object;
 
     /**
      * 保持する値を渡します
