@@ -22,8 +22,9 @@ class MaxLength extends AbstractMemo
      *
      * @return bool 条件に一致している場合はtrueを、それ以外の場合はfalseを返します
      */
-    protected function condition($object): bool{
-        if($this->object === null){
+    protected function condition($object): bool
+    {
+        if ($this->object === null) {
             $this->object = $object;
             return true;
         }
@@ -40,7 +41,8 @@ class MaxLength extends AbstractMemo
      *
      * @return string データ型の名称を返します
      */
-    protected function typeName(): string {
-        return "string";
+    protected function typeName(): string
+    {
+        return 'string';
     }
 }
