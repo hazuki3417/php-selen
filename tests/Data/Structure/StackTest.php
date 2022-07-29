@@ -7,21 +7,22 @@ declare(strict_types=1);
  * @copyright 2021 hazuki3417 all rights reserved.
  */
 
-namespace Selen\DataStructure\Test;
+namespace Selen\Data\Structure\Test;
 
 use PHPUnit\Framework\TestCase;
-use Selen\DataStructure\Stack;
+use Selen\Data\Structure\Stack;
 
 /**
- * @coversDefaultClass \Selen\DataStructure\Stack
+ * @coversDefaultClass \Selen\Data\Structure\Stack
  *
- * @group Selen/DataStructure
- * @group Selen/DataStructure/Stack
+ * @group Selen/Data
+ * @group Selen/Data/Structure
+ * @group Selen/Data/Structure/Stack
  *
- * @see \Selen\DataStructure\Stack
+ * @see \Selen\Data\Structure\Stack
  *
  * [command]
- * php ./vendor/bin/phpunit --group=Selen/DataStructure/Stack
+ * php ./vendor/bin/phpunit --group=Selen/Data/Structure/Stack
  *
  * @internal
  */

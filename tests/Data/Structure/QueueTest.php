@@ -7,21 +7,22 @@ declare(strict_types=1);
  * @copyright 2021 hazuki3417 all rights reserved.
  */
 
-namespace Selen\DataStructure\Test;
+namespace Selen\Data\Structure\Test;
 
 use PHPUnit\Framework\TestCase;
-use Selen\DataStructure\Queue;
+use Selen\Data\Structure\Queue;
 
 /**
- * @coversDefaultClass \Selen\DataStructure\Queue
+ * @coversDefaultClass \Selen\Data\Structure\Queue
  *
- * @group Selen/DataStructure
- * @group Selen/DataStructure/Queue
+ * @group Selen/Data
+ * @group Selen/Data/Structure
+ * @group Selen/Data/Structure/Queue
  *
- * @see \Selen\DataStructure\Queue
+ * @see \Selen\Data\Structure\Queue
  *
  * [command]
- * php ./vendor/bin/phpunit --group=Selen/DataStructure/Queue
+ * php ./vendor/bin/phpunit --group=Selen/Data/Structure/Queue
  *
  * @internal
  */

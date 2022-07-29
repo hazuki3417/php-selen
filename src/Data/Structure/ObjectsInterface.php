@@ -6,7 +6,7 @@
  * @copyright 2021 hazuki3417 all rights reserved.
  */
 
-namespace Selen\DataStructure;
+namespace Selen\Data\Structure;
 
 interface ObjectsInterface
 {

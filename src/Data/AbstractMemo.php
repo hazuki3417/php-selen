@@ -8,7 +8,7 @@
 
 namespace Selen\Data;
 
-use Selen\DataStructure\Types;
+use Selen\Data\Structure\Types;
 
 /**
  * 値を保持するクラス

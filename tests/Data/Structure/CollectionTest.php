@@ -7,21 +7,22 @@ declare(strict_types=1);
  * @copyright 2021 hazuki3417 all rights reserved.
  */
 
-namespace Selen\DataStructure\Test;
+namespace Selen\Data\Structure\Test;
 
 use PHPUnit\Framework\TestCase;
-use Selen\DataStructure\Collection;
+use Selen\Data\Structure\Collection;
 
 /**
- * @coversDefaultClass \Selen\DataStructure\Collection
+ * @coversDefaultClass \Selen\Data\Structure\Collection
  *
- * @group Selen/DataStructure
- * @group Selen/DataStructure/Collection
+ * @group Selen/Data
+ * @group Selen/Data/Structure
+ * @group Selen/Data/Structure/Collection
  *
- * @see \Selen\DataStructure\Collection
+ * @see \Selen\Data\Structure\Collection
  *
  * [command]
- * php ./vendor/bin/phpunit --group=Selen/DataStructure/Collection
+ * php ./vendor/bin/phpunit --group=Selen/Data/Structure/Collection
  *
  * @internal
  */

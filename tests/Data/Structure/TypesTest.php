@@ -7,21 +7,22 @@ declare(strict_types=1);
  * @copyright 2021 hazuki3417 all rights reserved.
  */
 
-namespace Selen\DataStructure\Test;
+namespace Selen\Data\Structure\Test;
 
 use PHPUnit\Framework\TestCase;
-use Selen\DataStructure\Types;
+use Selen\Data\Structure\Types;
 
 /**
- * @coversDefaultClass \Selen\DataStructure\Types
+ * @coversDefaultClass \Selen\Data\Structure\Types
  *
- * @group Selen/DataStructure
- * @group Selen/DataStructure/Types
+ * @group Selen/Data
+ * @group Selen/Data/Structure
+ * @group Selen/Data/Structure/Types
  *
- * @see \Selen\DataStructure\Types
+ * @see \Selen\Data\Structure\Types
  *
  * [command]
- * php ./vendor/bin/phpunit --group=Selen/DataStructure/Types
+ * php ./vendor/bin/phpunit --group=Selen/Data/Structure/Types
  *
  * @internal
  */

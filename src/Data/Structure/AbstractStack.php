@@ -6,9 +6,9 @@
  * @copyright 2021 hazuki3417 all rights reserved.
  */
 
-namespace Selen\DataStructure;
+namespace Selen\Data\Structure;
 
-abstract class AbstractQueue extends AbstractObjects implements QueueInterface
+abstract class AbstractStack extends AbstractObjects implements StackInterface
 {
     private $workValue;
 
@@ -28,15 +28,15 @@ abstract class AbstractQueue extends AbstractObjects implements QueueInterface
 
     public function next(): void
     {
-        ++$this->workKey;
-        $this->workValue = array_shift($this->objects);
+        --$this->workKey;
+        $this->workValue = array_pop($this->objects);
     }
 
     public function rewind(): void
     {
-        reset($this->objects);
+        end($this->objects);
         $this->workKey = key($this->objects);
-        $this->workValue = array_shift($this->objects);
+        $this->workValue = array_pop($this->objects);
     }
 
     public function valid(): bool
