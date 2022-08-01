@@ -234,4 +234,46 @@ class CaseTest extends TestCase
     {
         $this->assertEquals($expected, CaseName::camel($input));
     }
+
+    public function dataProviderUpper()
+    {
+        return [
+            'pattern001' => ['expected' => '',     'input' => ''],
+            'pattern002' => ['expected' => 'CASE', 'input' => 'Case'],
+            'pattern003' => ['expected' => 'CASE', 'input' => 'case'],
+        ];
+    }
+
+    /**
+     * @dataProvider dataProviderUpper
+     * @group Selen/Str/Case::Upper
+     *
+     * @param mixed $expected
+     * @param mixed $input
+     */
+    public function testUpper($expected, $input)
+    {
+        $this->assertEquals($expected, CaseName::upper($input));
+    }
+
+    public function dataProviderLower()
+    {
+        return [
+            'pattern001' => ['expected' => '',     'input' => ''],
+            'pattern002' => ['expected' => 'case', 'input' => 'CASE'],
+            'pattern003' => ['expected' => 'case', 'input' => 'Case'],
+        ];
+    }
+
+    /**
+     * @dataProvider dataProviderLower
+     * @group Selen/Str/Case::Lower
+     *
+     * @param mixed $expected
+     * @param mixed $input
+     */
+    public function testLower($expected, $input)
+    {
+        $this->assertEquals($expected, CaseName::lower($input));
+    }
 }
