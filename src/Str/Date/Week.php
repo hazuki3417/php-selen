@@ -6,7 +6,7 @@
  * @copyright 2021 hazuki3417 all rights reserved.
  */
 
-namespace Selen\Str;
+namespace Selen\Str\Date;
 
 /**
  * 日本語・英語の曜日を相互変換するクラス.
