@@ -246,7 +246,7 @@ class CaseTest extends TestCase
 
     /**
      * @dataProvider dataProviderUpper
-     * @group Selen/Str/Case::Upper
+     * @group Selen/Str/Case::upper
      *
      * @param mixed $expected
      * @param mixed $input
@@ -267,7 +267,7 @@ class CaseTest extends TestCase
 
     /**
      * @dataProvider dataProviderLower
-     * @group Selen/Str/Case::Lower
+     * @group Selen/Str/Case::lower
      *
      * @param mixed $expected
      * @param mixed $input
