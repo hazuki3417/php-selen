@@ -54,6 +54,6 @@ class TypesTest extends TestCase
     {
         $this->expectException(\InvalidArgumentException::class);
 
-        Types::validate("inputValue", "string", "string");
+        Types::validate('inputValue', 'string', 'string');
     }
 }

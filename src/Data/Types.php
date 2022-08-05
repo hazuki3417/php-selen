@@ -13,11 +13,13 @@ class Types
     public static function validate($data, string ...$typeNames): bool
     {
         $isDuplicateTypeName = count(\array_unique($typeNames)) < count($typeNames);
-        if($isDuplicateTypeName){
+
+        if ($isDuplicateTypeName) {
             throw new \InvalidArgumentException('Duplicate type specification.');
         }
 
         $results = [];
+
         foreach ($typeNames as $typeName) {
             $results[] = Type::validate($data, $typeName);
         }
