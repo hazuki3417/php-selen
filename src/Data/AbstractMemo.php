@@ -8,8 +8,6 @@
 
 namespace Selen\Data;
 
-use Selen\Data\Type;
-
 /**
  * 値を保持するクラス
  */
