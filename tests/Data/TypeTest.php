@@ -10,23 +10,22 @@ declare(strict_types=1);
 namespace Selen\Data\Structure\Test;
 
 use PHPUnit\Framework\TestCase;
-use Selen\Data\Structure\Types;
+use Selen\Data\Type;
 
 /**
- * @coversDefaultClass \Selen\Data\Structure\Types
+ * @coversDefaultClass \Selen\Data\Type
  *
  * @group Selen/Data
- * @group Selen/Data/Structure
- * @group Selen/Data/Structure/Types
+ * @group Selen/Data/Type
  *
- * @see \Selen\Data\Structure\Types
+ * @see \Selen\Data\Type
  *
  * [command]
- * php ./vendor/bin/phpunit --group=Selen/Data/Structure/Types
+ * php ./vendor/bin/phpunit --group=Selen/Data/Type
  *
  * @internal
  */
-class TypesTest extends TestCase
+class TypeTest extends TestCase
 {
     public function dataProviderValidate()
     {
@@ -163,7 +162,7 @@ class TypesTest extends TestCase
     {
         $this->assertEquals(
             $expected,
-            Types::validate($input['typeName'], $input['data'])
+            Type::validate($input['typeName'], $input['data'])
         );
     }
 }

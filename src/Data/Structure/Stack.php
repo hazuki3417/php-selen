@@ -8,6 +8,8 @@
 
 namespace Selen\Data\Structure;
 
+use Selen\Data\Type;
+
 final class Stack extends AbstractStack
 {
     private $typeName;
@@ -19,7 +21,7 @@ final class Stack extends AbstractStack
 
     public function push($object)
     {
-        $isExpectedType = Types::validate($this->typeName, $object);
+        $isExpectedType = Type::validate($this->typeName, $object);
 
         if (!$isExpectedType) {
             throw new \InvalidArgumentException('Invalid argument type.');

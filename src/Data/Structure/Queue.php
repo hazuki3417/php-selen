@@ -8,6 +8,8 @@
 
 namespace Selen\Data\Structure;
 
+use Selen\Data\Type;
+
 final class Queue extends AbstractQueue
 {
     private $typeName;
@@ -19,7 +21,7 @@ final class Queue extends AbstractQueue
 
     public function enqueue($object)
     {
-        $isExpectedType = Types::validate($this->typeName, $object);
+        $isExpectedType = Type::validate($this->typeName, $object);
 
         if (!$isExpectedType) {
             throw new \InvalidArgumentException('Invalid argument type.');

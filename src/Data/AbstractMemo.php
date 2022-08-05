@@ -8,7 +8,7 @@
 
 namespace Selen\Data;
 
-use Selen\Data\Structure\Types;
+use Selen\Data\Type;
 
 /**
  * 値を保持するクラス
@@ -31,7 +31,7 @@ abstract class AbstractMemo implements MemoInterface
      */
     public function set($object): bool
     {
-        $isExpectedType = Types::validate($this->typeName(), $object);
+        $isExpectedType = Type::validate($this->typeName(), $object);
 
         if (!$isExpectedType) {
             throw new \InvalidArgumentException('Invalid argument type.');

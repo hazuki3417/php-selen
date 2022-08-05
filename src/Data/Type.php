@@ -6,9 +6,9 @@
  * @copyright 2021 hazuki3417 all rights reserved.
  */
 
-namespace Selen\Data\Structure;
+namespace Selen\Data;
 
-class Types
+class Type
 {
     public const NAME_ARRAY = 'array';
     public const NAME_BOOL = 'bool';

@@ -8,6 +8,8 @@
 
 namespace Selen\Data\Structure;
 
+use Selen\Data\Type;
+
 final class Collection extends AbstractCollection
 {
     private $typeName;
@@ -19,7 +21,7 @@ final class Collection extends AbstractCollection
 
     public function add($object)
     {
-        $isExpectedType = Types::validate($this->typeName, $object);
+        $isExpectedType = Type::validate($this->typeName, $object);
 
         if (!$isExpectedType) {
             throw new \InvalidArgumentException('Invalid argument type.');
@@ -31,7 +33,7 @@ final class Collection extends AbstractCollection
 
     public function remove($object)
     {
-        $isExpectedType = Types::validate($this->typeName, $object);
+        $isExpectedType = Type::validate($this->typeName, $object);
 
         if (!$isExpectedType) {
             throw new \InvalidArgumentException('Invalid argument type.');
