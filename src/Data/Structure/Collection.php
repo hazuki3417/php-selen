@@ -21,7 +21,7 @@ final class Collection extends AbstractCollection
 
     public function add($object)
     {
-        $isExpectedType = Type::validate($this->typeName, $object);
+        $isExpectedType = Type::validate($object, $this->typeName);
 
         if (!$isExpectedType) {
             throw new \InvalidArgumentException('Invalid argument type.');
@@ -33,7 +33,7 @@ final class Collection extends AbstractCollection
 
     public function remove($object)
     {
-        $isExpectedType = Type::validate($this->typeName, $object);
+        $isExpectedType = Type::validate($object, $this->typeName);
 
         if (!$isExpectedType) {
             throw new \InvalidArgumentException('Invalid argument type.');

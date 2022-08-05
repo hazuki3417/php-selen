@@ -23,7 +23,7 @@ class Type
     public const NAME_SCALAR = 'scalar';
     public const NAME_STRING = 'string';
 
-    public static function validate(string $typeName, $data): bool
+    public static function validate($data, string $typeName): bool
     {
         $status = false;
 

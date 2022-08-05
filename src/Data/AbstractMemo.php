@@ -31,7 +31,7 @@ abstract class AbstractMemo implements MemoInterface
      */
     public function set($object): bool
     {
-        $isExpectedType = Type::validate($this->typeName(), $object);
+        $isExpectedType = Type::validate($object, $this->typeName());
 
         if (!$isExpectedType) {
             throw new \InvalidArgumentException('Invalid argument type.');

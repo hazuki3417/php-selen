@@ -21,7 +21,7 @@ final class Stack extends AbstractStack
 
     public function push($object)
     {
-        $isExpectedType = Type::validate($this->typeName, $object);
+        $isExpectedType = Type::validate($object, $this->typeName);
 
         if (!$isExpectedType) {
             throw new \InvalidArgumentException('Invalid argument type.');

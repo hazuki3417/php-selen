@@ -162,7 +162,7 @@ class TypeTest extends TestCase
     {
         $this->assertEquals(
             $expected,
-            Type::validate($input['typeName'], $input['data'])
+            Type::validate($input['data'], $input['typeName'])
         );
     }
 }
