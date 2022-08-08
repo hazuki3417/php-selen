@@ -31,7 +31,6 @@ class BoolUtilTest extends TestCase
         return [
             'pattern001' => ['expected' => 'true',  'input' => true],
             'pattern002' => ['expected' => 'false', 'input' => false],
-
         ];
     }
 
@@ -58,7 +57,6 @@ class BoolUtilTest extends TestCase
             'pattern007' => ['expected' => false,   'input' => [true, true, false]],
             'pattern008' => ['expected' => true,    'input' => [true, false, false]],
             'pattern009' => ['expected' => false,   'input' => [false, false, false]],
-
         ];
     }
 
@@ -85,7 +83,6 @@ class BoolUtilTest extends TestCase
             'pattern007' => ['expected' => true,    'input' => [true, true, false]],
             'pattern008' => ['expected' => false,   'input' => [true, false, false]],
             'pattern009' => ['expected' => false,   'input' => [false, false, false]],
-
         ];
     }
 
@@ -112,7 +109,6 @@ class BoolUtilTest extends TestCase
             'pattern007' => ['expected' => true,    'input' => [true, true, false]],
             'pattern008' => ['expected' => true,    'input' => [true, false, false]],
             'pattern009' => ['expected' => false,   'input' => [false, false, false]],
-
         ];
     }
 
@@ -139,7 +135,6 @@ class BoolUtilTest extends TestCase
             'pattern007' => ['expected' => true,    'input' => [true, true, false]],
             'pattern008' => ['expected' => true,    'input' => [true, false, false]],
             'pattern009' => ['expected' => true,    'input' => [false, false, false]],
-
         ];
     }
 
@@ -166,7 +161,6 @@ class BoolUtilTest extends TestCase
             'pattern007' => ['expected' => false,   'input' => [true, true, false]],
             'pattern008' => ['expected' => false,   'input' => [true, false, false]],
             'pattern009' => ['expected' => false,   'input' => [false, false, false]],
-
         ];
     }
 
@@ -193,7 +187,6 @@ class BoolUtilTest extends TestCase
             'pattern007' => ['expected' => false,   'input' => [true, true, false]],
             'pattern008' => ['expected' => false,   'input' => [true, false, false]],
             'pattern009' => ['expected' => true,    'input' => [false, false, false]],
-
         ];
     }
 
@@ -207,8 +200,4 @@ class BoolUtilTest extends TestCase
     {
         $this->assertEquals($expected, BoolUtil::allFalse(...$input));
     }
-
-
-
-
 }
