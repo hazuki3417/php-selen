@@ -2,12 +2,19 @@
 
 declare(strict_types=1);
 
+// $header = <<<'EOF'
+// @license MIT
+// @author hazuki3417<hazuki3417@gmail.com>
+// @copyright 2021 hazuki3417 all rights reserved.
+// EOF;
+
 $finder = PhpCsFixer\Finder::create()->exclude('vendor')->in(__DIR__);
 
 $config = new PhpCsFixer\Config();
 
 return $config
     ->setRules([
+        // 'header_comment' => ['header' => $header],
         '@PSR12' => true,
         '@PhpCsFixer' => true,
         'align_multiline_comment' => true,
@@ -43,7 +50,7 @@ return $config
         'include' => true,
         'linebreak_after_opening_tag' => false,
         'list_syntax' => [
-            'syntax' => 'short'
+            'syntax' => 'short',
         ],
         'lowercase_cast' => true,
         'magic_constant_casing' => true,
