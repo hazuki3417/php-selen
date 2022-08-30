@@ -76,7 +76,7 @@ class CaseTest extends TestCase
      */
     public function testKebab($expected, $input)
     {
-        $this->assertEquals($expected, CaseName::kebab($input));
+        $this->assertSame($expected, CaseName::kebab($input));
     }
 
     public function dataProviderSnake()
@@ -128,7 +128,7 @@ class CaseTest extends TestCase
      */
     public function testSnake($expected, $input)
     {
-        $this->assertEquals($expected, CaseName::snake($input));
+        $this->assertSame($expected, CaseName::snake($input));
     }
 
     public function dataProviderPascal()
@@ -180,7 +180,7 @@ class CaseTest extends TestCase
      */
     public function testPascal($expected, $input)
     {
-        $this->assertEquals($expected, CaseName::pascal($input));
+        $this->assertSame($expected, CaseName::pascal($input));
     }
 
     public function dataProviderCamel()
@@ -232,7 +232,7 @@ class CaseTest extends TestCase
      */
     public function testCamel($expected, $input)
     {
-        $this->assertEquals($expected, CaseName::camel($input));
+        $this->assertSame($expected, CaseName::camel($input));
     }
 
     public function dataProviderUpper()
@@ -253,7 +253,7 @@ class CaseTest extends TestCase
      */
     public function testUpper($expected, $input)
     {
-        $this->assertEquals($expected, CaseName::upper($input));
+        $this->assertSame($expected, CaseName::upper($input));
     }
 
     public function dataProviderLower()
@@ -274,6 +274,6 @@ class CaseTest extends TestCase
      */
     public function testLower($expected, $input)
     {
-        $this->assertEquals($expected, CaseName::lower($input));
+        $this->assertSame($expected, CaseName::lower($input));
     }
 }

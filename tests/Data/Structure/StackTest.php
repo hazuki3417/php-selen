@@ -68,7 +68,7 @@ class StackTest extends TestCase
     {
         $instance = new Stack(\DateTime::class);
 
-        $this->assertEquals(null, $instance->pop());
+        $this->assertSame(null, $instance->pop());
 
         $addData1 = new \DateTime();
         $addData2 = new \DateTime('-7 days');
@@ -76,9 +76,9 @@ class StackTest extends TestCase
         $instance->push($addData1);
         $instance->push($addData2);
 
-        $this->assertEquals($addData2, $instance->pop());
-        $this->assertEquals($addData1, $instance->pop());
-        $this->assertEquals(null, $instance->pop());
+        $this->assertSame($addData2, $instance->pop());
+        $this->assertSame($addData1, $instance->pop());
+        $this->assertSame(null, $instance->pop());
     }
 
     public function testIsEmpty()
@@ -131,23 +131,23 @@ class StackTest extends TestCase
     {
         $instance = new Stack('string');
 
-        $this->assertEquals(0, $instance->size());
+        $this->assertSame(0, $instance->size());
 
         $instance->push('add data1');
 
-        $this->assertEquals(1, $instance->size());
+        $this->assertSame(1, $instance->size());
 
         $instance->push('add data2');
 
-        $this->assertEquals(2, $instance->size());
+        $this->assertSame(2, $instance->size());
 
         $instance->pop();
 
-        $this->assertEquals(1, $instance->size());
+        $this->assertSame(1, $instance->size());
 
         $instance->pop();
 
-        $this->assertEquals(0, $instance->size());
+        $this->assertSame(0, $instance->size());
     }
 
     public function testClear()
@@ -185,7 +185,7 @@ class StackTest extends TestCase
         }
 
         foreach ($stack as $key => $stackData) {
-            $this->assertEquals($objects[$key], $stackData);
+            $this->assertSame($objects[$key], $stackData);
         }
 
         $this->assertTrue($stack->isEmpty());

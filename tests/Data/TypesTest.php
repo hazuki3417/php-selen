@@ -44,7 +44,7 @@ class TypesTest extends TestCase
      */
     public function testValidate($expected, $input)
     {
-        $this->assertEquals(
+        $this->assertSame(
             $expected,
             Types::validate($input['data'], $input['typeName1'], $input['typeName2'])
         );

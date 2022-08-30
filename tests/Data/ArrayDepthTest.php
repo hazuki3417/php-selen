@@ -36,27 +36,27 @@ class ArrayDepthTest extends TestCase
     {
         $instance = new ArrayDepth();
 
-        $this->assertEquals(0, $instance->current());
+        $this->assertSame(0, $instance->current());
 
-        $this->assertEquals(false, $instance->up());
-        $this->assertEquals(0, $instance->current());
+        $this->assertSame(false, $instance->up());
+        $this->assertSame(0, $instance->current());
 
-        $this->assertEquals(true, $instance->down());
-        $this->assertEquals(1, $instance->current());
+        $this->assertSame(true, $instance->down());
+        $this->assertSame(1, $instance->current());
 
-        $this->assertEquals(true, $instance->up());
-        $this->assertEquals(0, $instance->current());
+        $this->assertSame(true, $instance->up());
+        $this->assertSame(0, $instance->current());
 
-        $this->assertEquals(true, $instance->down());
-        $this->assertEquals(1, $instance->current());
+        $this->assertSame(true, $instance->down());
+        $this->assertSame(1, $instance->current());
 
-        $this->assertEquals(true, $instance->down());
-        $this->assertEquals(2, $instance->current());
+        $this->assertSame(true, $instance->down());
+        $this->assertSame(2, $instance->current());
 
-        $this->assertEquals(true, $instance->down());
-        $this->assertEquals(3, $instance->current());
+        $this->assertSame(true, $instance->down());
+        $this->assertSame(3, $instance->current());
 
-        $this->assertEquals(true, $instance->up());
-        $this->assertEquals(2, $instance->current());
+        $this->assertSame(true, $instance->up());
+        $this->assertSame(2, $instance->current());
     }
 }

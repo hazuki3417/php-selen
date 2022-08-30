@@ -83,7 +83,7 @@ class HalfTest extends TestCase
      */
     public function testExist($expected, $input)
     {
-        $this->assertEquals($expected, (Half::set($input))->exist());
+        $this->assertSame($expected, (Half::set($input))->exist());
     }
 
     public function dataProviderNotExist()
@@ -136,7 +136,7 @@ class HalfTest extends TestCase
      */
     public function testNotExist($expected, $input)
     {
-        $this->assertEquals($expected, (Half::set($input))->notExist());
+        $this->assertSame($expected, (Half::set($input))->notExist());
     }
 
     public function dataProviderOnly()
@@ -189,7 +189,7 @@ class HalfTest extends TestCase
      */
     public function testOnly($expected, $input)
     {
-        $this->assertEquals($expected, (Half::set($input))->only());
+        $this->assertSame($expected, (Half::set($input))->only());
     }
 
     public function dataProviderNotOnly()
@@ -242,6 +242,6 @@ class HalfTest extends TestCase
      */
     public function testNotOnly($expected, $input)
     {
-        $this->assertEquals($expected, (Half::set($input))->notOnly());
+        $this->assertSame($expected, (Half::set($input))->notOnly());
     }
 }

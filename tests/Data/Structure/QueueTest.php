@@ -68,7 +68,7 @@ class QueueTest extends TestCase
     {
         $instance = new Queue(\DateTime::class);
 
-        $this->assertEquals(null, $instance->dequeue());
+        $this->assertSame(null, $instance->dequeue());
 
         $addData1 = new \DateTime();
         $addData2 = new \DateTime('-7 days');
@@ -76,9 +76,9 @@ class QueueTest extends TestCase
         $instance->enqueue($addData1);
         $instance->enqueue($addData2);
 
-        $this->assertEquals($addData1, $instance->dequeue());
-        $this->assertEquals($addData2, $instance->dequeue());
-        $this->assertEquals(null, $instance->dequeue());
+        $this->assertSame($addData1, $instance->dequeue());
+        $this->assertSame($addData2, $instance->dequeue());
+        $this->assertSame(null, $instance->dequeue());
     }
 
     public function testIsEmpty()
@@ -131,23 +131,23 @@ class QueueTest extends TestCase
     {
         $instance = new Queue('string');
 
-        $this->assertEquals(0, $instance->size());
+        $this->assertSame(0, $instance->size());
 
         $instance->enqueue('add data1');
 
-        $this->assertEquals(1, $instance->size());
+        $this->assertSame(1, $instance->size());
 
         $instance->enqueue('add data2');
 
-        $this->assertEquals(2, $instance->size());
+        $this->assertSame(2, $instance->size());
 
         $instance->dequeue();
 
-        $this->assertEquals(1, $instance->size());
+        $this->assertSame(1, $instance->size());
 
         $instance->dequeue();
 
-        $this->assertEquals(0, $instance->size());
+        $this->assertSame(0, $instance->size());
     }
 
     public function testClear()
@@ -185,7 +185,7 @@ class QueueTest extends TestCase
         }
 
         foreach ($queue as $key => $queueData) {
-            $this->assertEquals($objects[$key], $queueData);
+            $this->assertSame($objects[$key], $queueData);
         }
 
         $this->assertTrue($queue->isEmpty());

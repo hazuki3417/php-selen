@@ -50,7 +50,7 @@ class WeekTest extends TestCase
      */
     public function testCheckWeekId($expected, $input)
     {
-        $this->assertEquals($expected, Week::checkWeekId($input));
+        $this->assertSame($expected, Week::checkWeekId($input));
     }
 
     public function dataProviderEnWeekStrToWeekId()
@@ -82,7 +82,7 @@ class WeekTest extends TestCase
      */
     public function testEnWeekStrToWeekId($expected, $input)
     {
-        $this->assertEquals($expected, Week::enWeekStrToWeekId($input));
+        $this->assertSame($expected, Week::enWeekStrToWeekId($input));
     }
 
     public function dataProviderJpWeekStrToWeekId()
@@ -114,7 +114,7 @@ class WeekTest extends TestCase
      */
     public function testJpWeekStrToWeekId($expected, $input)
     {
-        $this->assertEquals($expected, Week::jpWeekStrToWeekId($input));
+        $this->assertSame($expected, Week::jpWeekStrToWeekId($input));
     }
 
     public function dataProviderToJp()
@@ -174,7 +174,7 @@ class WeekTest extends TestCase
      */
     public function testToJp($expected, $input)
     {
-        $this->assertEquals(
+        $this->assertSame(
             $expected,
             Week::toJp($input['week'], $input['format'])
         );
@@ -273,7 +273,7 @@ class WeekTest extends TestCase
      */
     public function testToEn($expected, $input)
     {
-        $this->assertEquals(
+        $this->assertSame(
             $expected,
             Week::toEn($input['week'], $input['format'])
         );

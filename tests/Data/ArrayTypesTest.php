@@ -44,7 +44,7 @@ class ArrayTypesTest extends TestCase
      */
     public function testValidate($expected, $input)
     {
-        $this->assertEquals(
+        $this->assertSame(
             $expected,
             ArrayTypes::validate($input['data'], $input['typeName1'], $input['typeName2'])
         );

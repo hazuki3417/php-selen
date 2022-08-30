@@ -149,7 +149,7 @@ class Radix2Test extends TestCase
      */
     public function testHira($expected, $input)
     {
-        $this->assertEquals($expected, Jp::isHira($input));
+        $this->assertSame($expected, Jp::isHira($input));
     }
 
     public function dataProviderKana()
@@ -277,6 +277,6 @@ class Radix2Test extends TestCase
      */
     public function testKana($expected, $input)
     {
-        $this->assertEquals($expected, Jp::isKana($input));
+        $this->assertSame($expected, Jp::isKana($input));
     }
 }

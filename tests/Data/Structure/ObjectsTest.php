@@ -65,15 +65,15 @@ class ObjectsTest extends TestCase
     {
         $instance = new Objects([]);
 
-        $this->assertEquals(0, $instance->size());
+        $this->assertSame(0, $instance->size());
 
         $instance = new Objects([1]);
 
-        $this->assertEquals(1, $instance->size());
+        $this->assertSame(1, $instance->size());
 
         $instance = new Objects([1, 2]);
 
-        $this->assertEquals(2, $instance->size());
+        $this->assertSame(2, $instance->size());
     }
 
     public function testClear()

@@ -77,7 +77,7 @@ class SpaceTest extends TestCase
      */
     public function testExist($expected, $input)
     {
-        $this->assertEquals($expected, (Space::set($input))->exist());
+        $this->assertSame($expected, (Space::set($input))->exist());
     }
 
     public function dataProviderNotExist()
@@ -125,7 +125,7 @@ class SpaceTest extends TestCase
      */
     public function testNotExist($expected, $input)
     {
-        $this->assertEquals($expected, (Space::set($input))->notExist());
+        $this->assertSame($expected, (Space::set($input))->notExist());
     }
 
     public function dataProviderOnly()
@@ -173,7 +173,7 @@ class SpaceTest extends TestCase
      */
     public function testOnly($expected, $input)
     {
-        $this->assertEquals($expected, (Space::set($input))->only());
+        $this->assertSame($expected, (Space::set($input))->only());
     }
 
     public function dataProviderNotOnly()
@@ -221,6 +221,6 @@ class SpaceTest extends TestCase
      */
     public function testNotOnly($expected, $input)
     {
-        $this->assertEquals($expected, (Space::set($input))->notOnly());
+        $this->assertSame($expected, (Space::set($input))->notOnly());
     }
 }

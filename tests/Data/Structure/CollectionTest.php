@@ -42,13 +42,13 @@ class CollectionTest extends TestCase
         $addData1 = new \DateTime();
         $addData2 = new \DateTime('-7 days');
 
-        $this->assertEquals(0, $instance->size());
+        $this->assertSame(0, $instance->size());
 
         $instance->add($addData1);
-        $this->assertEquals(1, $instance->size());
+        $this->assertSame(1, $instance->size());
 
         $instance->add($addData2);
-        $this->assertEquals(2, $instance->size());
+        $this->assertSame(2, $instance->size());
     }
 
     public function testAddException()
@@ -72,19 +72,19 @@ class CollectionTest extends TestCase
         $removeData1 = new \DateTime();
         $removeData2 = new \DateTime('-7 days');
 
-        $this->assertEquals(0, $instance->size());
+        $this->assertSame(0, $instance->size());
 
         $this->assertTrue($instance->add($removeData1));
-        $this->assertEquals(1, $instance->size());
+        $this->assertSame(1, $instance->size());
 
         $this->assertTrue($instance->add($removeData2));
-        $this->assertEquals(2, $instance->size());
+        $this->assertSame(2, $instance->size());
 
         $this->assertTrue($instance->remove($removeData1));
-        $this->assertEquals(1, $instance->size());
+        $this->assertSame(1, $instance->size());
 
         $this->assertTrue($instance->remove($removeData2));
-        $this->assertEquals(0, $instance->size());
+        $this->assertSame(0, $instance->size());
     }
 
     public function testRemoveException()
@@ -160,23 +160,23 @@ class CollectionTest extends TestCase
         $targetData1 = new \DateTime();
         $targetData2 = new \DateTime('-7 days');
 
-        $this->assertEquals(0, $instance->size());
+        $this->assertSame(0, $instance->size());
 
         $instance->add($targetData1);
 
-        $this->assertEquals(1, $instance->size());
+        $this->assertSame(1, $instance->size());
 
         $instance->add($targetData2);
 
-        $this->assertEquals(2, $instance->size());
+        $this->assertSame(2, $instance->size());
 
         $instance->remove($targetData1);
 
-        $this->assertEquals(1, $instance->size());
+        $this->assertSame(1, $instance->size());
 
         $instance->remove($targetData2);
 
-        $this->assertEquals(0, $instance->size());
+        $this->assertSame(0, $instance->size());
     }
 
     public function testClear()

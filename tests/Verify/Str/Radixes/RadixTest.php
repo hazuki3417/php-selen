@@ -53,7 +53,7 @@ class RadixTest extends TestCase
      */
     public function testVerify($expected, $input)
     {
-        $this->assertEquals($expected, Radix::verify($input['num'], $input['base']));
+        $this->assertSame($expected, Radix::verify($input['num'], $input['base']));
     }
 
     public function testVerifyException1()

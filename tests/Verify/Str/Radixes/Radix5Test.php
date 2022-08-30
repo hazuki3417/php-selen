@@ -129,6 +129,6 @@ class Radix5Test extends TestCase
      */
     public function testVerify($expected, $input)
     {
-        $this->assertEquals($expected, Radix5::verify($input));
+        $this->assertSame($expected, Radix5::verify($input));
     }
 }

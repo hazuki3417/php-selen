@@ -40,9 +40,9 @@ class MinLengthTest extends TestCase
     {
         $instance = new MinLength();
 
-        $this->assertEquals(true, $instance->set('12345'));
-        $this->assertEquals(true, $instance->set(''));
-        $this->assertEquals(false, $instance->set('1234'));
+        $this->assertSame(true, $instance->set('12345'));
+        $this->assertSame(true, $instance->set(''));
+        $this->assertSame(false, $instance->set('1234'));
     }
 
     public function testSetException()
@@ -59,26 +59,26 @@ class MinLengthTest extends TestCase
     {
         $instance = new MinLength();
 
-        $this->assertEquals(null, $instance->get());
+        $this->assertSame(null, $instance->get());
 
         // 値が保持されるかテスト（初回）
-        $this->assertEquals(true, $instance->set('12345'));
-        $this->assertEquals('12345', $instance->get());
+        $this->assertSame(true, $instance->set('12345'));
+        $this->assertSame('12345', $instance->get());
 
         // 値が保持されるかテスト（境界値テスト）
-        $this->assertEquals(true, $instance->set('1234'));
-        $this->assertEquals('1234', $instance->get());
+        $this->assertSame(true, $instance->set('1234'));
+        $this->assertSame('1234', $instance->get());
 
         // 値が保持されないかテスト（境界値テスト）
-        $this->assertEquals(false, $instance->set('12345'));
-        $this->assertEquals('1234', $instance->get());
+        $this->assertSame(false, $instance->set('12345'));
+        $this->assertSame('1234', $instance->get());
 
         // 値が保持されるかテスト（短い文字）
-        $this->assertEquals(true, $instance->set('123'));
-        $this->assertEquals('123', $instance->get());
+        $this->assertSame(true, $instance->set('123'));
+        $this->assertSame('123', $instance->get());
 
         // 値が上書きされないかテスト（同じ文字列長で異なる文字列）
-        $this->assertEquals(false, $instance->set('abc'));
-        $this->assertEquals('123', $instance->get());
+        $this->assertSame(false, $instance->set('abc'));
+        $this->assertSame('123', $instance->get());
     }
 }

@@ -38,9 +38,9 @@ class AbstractMemoTest extends TestCase
     {
         $instance = new TestMemo();
 
-        $this->assertEquals(true, $instance->set(''));
-        $this->assertEquals(true, $instance->set('12345'));
-        $this->assertEquals(false, $instance->set('1234'));
+        $this->assertSame(true, $instance->set(''));
+        $this->assertSame(true, $instance->set('12345'));
+        $this->assertSame(false, $instance->set('1234'));
     }
 
     public function testSetException()
@@ -57,23 +57,23 @@ class AbstractMemoTest extends TestCase
     {
         $instance = new TestMemo();
 
-        $this->assertEquals(null, $instance->get());
+        $this->assertSame(null, $instance->get());
 
         // 値が保持されるかテスト（初回）
-        $this->assertEquals(true, $instance->set('12345'));
-        $this->assertEquals('12345', $instance->get());
+        $this->assertSame(true, $instance->set('12345'));
+        $this->assertSame('12345', $instance->get());
 
         // 値が保持されないかテスト（境界値テスト）
-        $this->assertEquals(false, $instance->set('1234'));
-        $this->assertEquals('12345', $instance->get());
+        $this->assertSame(false, $instance->set('1234'));
+        $this->assertSame('12345', $instance->get());
 
         // 値が保持されるかテスト（境界値テスト）
-        $this->assertEquals(false, $instance->set('12345'));
-        $this->assertEquals('12345', $instance->get());
+        $this->assertSame(false, $instance->set('12345'));
+        $this->assertSame('12345', $instance->get());
 
         // 値が保持されるかテスト（長い文字列）
-        $this->assertEquals(true, $instance->set('12345678'));
-        $this->assertEquals('12345678', $instance->get());
+        $this->assertSame(true, $instance->set('12345678'));
+        $this->assertSame('12345678', $instance->get());
     }
 }
 

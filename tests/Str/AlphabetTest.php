@@ -84,7 +84,7 @@ class AlphabetTest extends TestCase
      */
     public function testGetLowerCase26Ary($expected, $input)
     {
-        $this->assertEquals($expected, Alphabet::getLowerCase26Ary($input));
+        $this->assertSame($expected, Alphabet::getLowerCase26Ary($input));
     }
 
     /**
@@ -164,7 +164,7 @@ class AlphabetTest extends TestCase
      */
     public function testGetUpperCase26Ary($expected, $input)
     {
-        $this->assertEquals($expected, Alphabet::getUpperCase26Ary($input));
+        $this->assertSame($expected, Alphabet::getUpperCase26Ary($input));
     }
 
     /**

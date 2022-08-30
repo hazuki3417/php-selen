@@ -160,7 +160,7 @@ class TypeTest extends TestCase
      */
     public function testValidate($expected, $input)
     {
-        $this->assertEquals(
+        $this->assertSame(
             $expected,
             Type::validate($input['data'], $input['typeName'])
         );

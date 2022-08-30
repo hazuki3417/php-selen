@@ -72,7 +72,7 @@ class LengthTest extends TestCase
      */
     public function testCount($expected, $testVal)
     {
-        $this->assertEquals($expected, (Length::set($testVal))->count());
+        $this->assertSame($expected, (Length::set($testVal))->count());
     }
 
     public function dataProviderGt()
@@ -125,7 +125,7 @@ class LengthTest extends TestCase
      */
     public function testGt($expected, $testVal)
     {
-        $this->assertEquals($expected, (Length::set($testVal['set']))->gt($testVal['gt']));
+        $this->assertSame($expected, (Length::set($testVal['set']))->gt($testVal['gt']));
     }
 
     public function testGtException()
@@ -185,7 +185,7 @@ class LengthTest extends TestCase
      */
     public function testGe($expected, $testVal)
     {
-        $this->assertEquals($expected, (Length::set($testVal['set']))->ge($testVal['ge']));
+        $this->assertSame($expected, (Length::set($testVal['set']))->ge($testVal['ge']));
     }
 
     public function testGeException()
@@ -245,7 +245,7 @@ class LengthTest extends TestCase
      */
     public function testLe($expected, $testVal)
     {
-        $this->assertEquals($expected, (Length::set($testVal['set']))->le($testVal['le']));
+        $this->assertSame($expected, (Length::set($testVal['set']))->le($testVal['le']));
     }
 
     public function testLeException()
@@ -305,7 +305,7 @@ class LengthTest extends TestCase
      */
     public function testLt($expected, $testVal)
     {
-        $this->assertEquals($expected, (Length::set($testVal['set']))->lt($testVal['lt']));
+        $this->assertSame($expected, (Length::set($testVal['set']))->lt($testVal['lt']));
     }
 
     public function testLtException()
@@ -365,7 +365,7 @@ class LengthTest extends TestCase
      */
     public function testEqual($expected, $testVal)
     {
-        $this->assertEquals($expected, (Length::set($testVal['set']))->equal($testVal['equal']));
+        $this->assertSame($expected, (Length::set($testVal['set']))->equal($testVal['equal']));
     }
 
     public function testEqualException1()
@@ -451,7 +451,7 @@ class LengthTest extends TestCase
      */
     public function testIn($expected, $testVal)
     {
-        $this->assertEquals(
+        $this->assertSame(
             $expected,
             (Length::set($testVal['set']))->in($testVal['min'], $testVal['max'])
         );
@@ -554,7 +554,7 @@ class LengthTest extends TestCase
      */
     public function testOut($expected, $testVal)
     {
-        $this->assertEquals(
+        $this->assertSame(
             $expected,
             (Length::set($testVal['set']))->out($testVal['min'], $testVal['max'])
         );
