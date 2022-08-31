@@ -9,3 +9,4 @@
 
  - [API Reference](https://php-selen.s3.ap-northeast-1.amazonaws.com/phpdoc/index.html)
  - [API Coverage](https://php-selen.s3.ap-northeast-1.amazonaws.com/coverage/index.html)
+ - [Packagist](https://packagist.org/packages/hazuki3417/php-selen)
