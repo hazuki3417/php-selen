@@ -32,6 +32,12 @@ class ExchangerTest extends TestCase
 {
     public function dataProviderExecute()
     {
+        $stub1 = function($value){
+            return 'replace string 1';
+        };
+        $stub2 = $this->createStub(ValueExchangeInterface::class);
+        $stub2->method('execute')->willReturn('replace string 2');
+
         return [
             // key指定なし
             'pattern001' => [
@@ -136,11 +142,11 @@ class ExchangerTest extends TestCase
                     ],
                     'define' => new ArrayDefine(
                         Define::key('parentKeyName1')->arrayDefine(
-                            Define::key('childKeyName1-2')->exchange(MockCallableValueExchange::replaceString1())
+                            Define::key('childKeyName1-2')->exchange($stub1)
                         ),
                         Define::key('parentKeyName2')->arrayDefine(
                             Define::key('childKeyName2-2')->arrayDefine(
-                                Define::key(1)->exchange(new MockValueExchange())
+                                Define::key(1)->exchange($stub2)
                             )
                         )
                     ),
@@ -165,20 +171,5 @@ class ExchangerTest extends TestCase
         $this->assertEquals(
             $expected,
             Exchanger::execute($value, $define));
-    }
-}
-
-class MockCallableValueExchange{
-    public static function replaceString1(){
-        return function($value){
-            return 'replace string 1';
-        };
-    }
-}
-
-class MockValueExchange implements ValueExchangeInterface{
-    public function execute($value)
-    {
-        return 'replace string 2';
     }
 }

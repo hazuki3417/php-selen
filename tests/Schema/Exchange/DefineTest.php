@@ -11,6 +11,7 @@ namespace Selen\Schema\Exchange\Define\Test;
 
 use PHPUnit\Framework\TestCase;
 use Selen\Schema\Exchange\Define;
+use Selen\Schema\Exchange\ValueExchangeInterface;
 
 /**
  * @coversDefaultClass \Selen\Schema\Exchange\Define
@@ -74,6 +75,54 @@ class DefineTest extends TestCase
 
         $this->expectException(\RuntimeException::class);
         $key->exchange();
+    }
+
+    public function testExchange3()
+    {
+        $key = Define::noKey();
+        $this->assertInstanceOf(Define::class, $key->exchange(
+            function(){},
+            function(){}
+        ));
+    }
+
+    public function testExchangeException3()
+    {
+        // NOTE: 配列形式の定義と変換の定義は同時に呼び出すことはできない
+        $key = Define::noKey()->arrayDefine();
+
+        $this->expectException(\RuntimeException::class);
+        $key->exchange(
+            function(){},
+            true
+        );
+    }
+
+    public function testExchange4()
+    {
+        $stub1 = $this->createStub(ValueExchangeInterface::class);
+        $stub2 = $this->createStub(ValueExchangeInterface::class);
+        $stub1->method('execute')->willReturn('replace string 2');
+        $stub2->method('execute')->willReturn('replace string 3');
+
+        $key = Define::noKey();
+        $this->assertInstanceOf(Define::class, $key->exchange(
+            $stub1,
+            $stub2
+        ));
+    }
+
+    public function testExchangeException4()
+    {
+        $stub1 = $this->createStub(ValueExchangeInterface::class);
+        $stub1->method('execute')->willReturn('replace string 2');
+
+        $key = Define::noKey();
+        $this->expectException(\InvalidArgumentException::class);
+        $key->exchange(
+            $stub1,
+            true
+        );
     }
 
     public function testArrayDefine1()
