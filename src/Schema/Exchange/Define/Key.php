@@ -12,38 +12,46 @@ use Selen\Data\Types;
 
 class Key
 {
-    /** @var bool keyの追加処理フラグ*/
+    /** @var bool keyの追加処理フラグ */
     private $haveCalledAdd = false;
 
-    /** @var bool keyの削除処理フラグ*/
+    /** @var bool keyの削除処理フラグ */
     private $haveCalledRemove = false;
 
-    /** @var bool keyのリネーム処理フラグ*/
+    /** @var bool keyのリネーム処理フラグ */
     private $haveCalledRename = false;
 
-    /** @var string|int|null key名*/
+    /** @var string|int|null key名 */
     private $name;
 
     /**
      * Keyインスタンスを生成します
      *
      * @param string|int|null $name key名を指定します。index arrayの場合はnullを渡します。
+     *
+     * @throws \InvalidArgumentException 引数の型が不正なときに発生します
      */
     public function __construct($name)
     {
-        if (!Types::validate($name, ...['string', 'integer', 'null'])) {
-            throw new \InvalidArgumentException('型が不正');
+        $allowType = ['string', 'integer', 'null'];
+
+        if (!Types::validate($name, ...$allowType)) {
+            $format = 'Invalid $name type. expected type %s.';
+            $mes = \sprintf($format, \implode(', ', $allowType));
+            throw new \InvalidArgumentException($mes);
         }
         $this->name = $name;
     }
 
     /**
      * keyの追加処理を有効にします
+     *
+     * @throws \LogicException メソッドの呼び出し順が不正なときに発生します
      */
     public function add()
     {
         if ($this->callConflict()) {
-            $mes = 'Invalid method call. cannot call remove or rename method after add';
+            $mes = 'Invalid method call. cannot call remove or rename method after add.';
             throw new \LogicException($mes);
         }
 
@@ -53,11 +61,13 @@ class Key
 
     /**
      * keyの削除処理を有効にします
+     *
+     * @throws \LogicException メソッドの呼び出し順が不正なときに発生します
      */
     public function remove()
     {
         if ($this->callConflict()) {
-            $mes = 'Invalid method call. cannot call add or rename method after remove';
+            $mes = 'Invalid method call. cannot call add or rename method after remove.';
             throw new \LogicException($mes);
         }
 
@@ -67,11 +77,13 @@ class Key
 
     /**
      * keyのリネーム処理を有効にします
+     *
+     * @throws \LogicException メソッドの呼び出し順が不正なときに発生します
      */
     public function rename()
     {
         if ($this->callConflict()) {
-            $mes = 'Invalid method call. cannot call add or remove method after rename';
+            $mes = 'Invalid method call. cannot call add or remove method after rename.';
             throw new \LogicException($mes);
         }
 
