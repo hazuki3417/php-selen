@@ -26,6 +26,9 @@ class Key
     /** @var string|int|null key名 */
     private $name;
 
+    /** @var string[] */
+    private $nameAllowType = ['string', 'integer', 'null'];
+
     /**
      * Keyインスタンスを生成します
      *
@@ -37,11 +40,9 @@ class Key
      */
     public function __construct($name)
     {
-        $allowType = ['string', 'integer', 'null'];
-
-        if (!Types::validate($name, ...$allowType)) {
+        if (!$this->verifyNameType($name)) {
             $format = 'Invalid $name type. expected type %s.';
-            $mes = \sprintf($format, \implode(', ', $allowType));
+            $mes = \sprintf($format, \implode(', ', $this->nameAllowType));
             throw new InvalidArgumentException($mes);
         }
         $this->name = $name;
@@ -136,9 +137,38 @@ class Key
      *
      * @return string|int|null key名を返します
      */
-    public function name()
+    public function getName()
     {
         return $this->name;
+    }
+
+    /**
+     * key名を設定します
+     *
+     * @param string|int|null $value
+     *
+     * @return bool 成功した場合はtrueを、それ以外の場合はfalseを返します
+     */
+    public function setName($value)
+    {
+        $result = $this->verifyNameType($value);
+
+        if ($result) {
+            $this->name = $value;
+        }
+        return $result;
+    }
+
+    /**
+     * key名の型を検証します
+     *
+     * @param string|int|null $value
+     *
+     * @return bool 合格した場合はtrueを、それ以外の場合はfalseを返します
+     */
+    private function verifyNameType($value)
+    {
+        return Types::validate($value, ...$this->nameAllowType);
     }
 
     /**

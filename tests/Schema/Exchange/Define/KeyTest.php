@@ -43,7 +43,7 @@ class KeyTest extends TestCase
         new Key(false);
     }
 
-    public function dataProviderName()
+    public function dataProviderGetName()
     {
         return [
             'pattern001' => ['expected' => 'keyName',  'input' => 'keyName'],
@@ -54,14 +54,37 @@ class KeyTest extends TestCase
     }
 
     /**
-     * @dataProvider dataProviderName
+     * @dataProvider dataProviderGetName
      *
      * @param mixed $expected
      * @param mixed $input
      */
-    public function testName($expected, $input)
+    public function testGetName($expected, $input)
     {
-        $this->assertSame($expected, (new Key($input))->name());
+        $this->assertSame($expected, (new Key($input))->getName());
+    }
+
+    public function dataProviderSetName()
+    {
+        return [
+            'pattern001' => ['expected' => true,  'input' => 'keyName'],
+            'pattern002' => ['expected' => true,  'input' => '0'],
+            'pattern003' => ['expected' => true,  'input' => 0],
+            'pattern004' => ['expected' => true,  'input' => null],
+            'pattern005' => ['expected' => false, 'input' => []],
+        ];
+    }
+
+    /**
+     * @dataProvider dataProviderSetName
+     *
+     * @param mixed $expected
+     * @param mixed $input
+     */
+    public function testSetName($expected, $input)
+    {
+        $key = new Key(null);
+        $this->assertSame($expected, $key->setName($input));
     }
 
     public function testAdd()
