@@ -63,4 +63,79 @@ class KeyTest extends TestCase
     {
         $this->assertSame($expected, (new Key($input))->name());
     }
+
+    public function testAdd()
+    {
+        $this->assertInstanceOf(Key::class, (new Key('keyName'))->add());
+    }
+
+    public function testAddException1()
+    {
+        $this->expectException(\LogicException::class);
+        (new Key('keyName'))->add()->remove();
+    }
+
+    public function testAddException2()
+    {
+        $this->expectException(\LogicException::class);
+        (new Key('keyName'))->add()->rename();
+    }
+
+    public function testRemove()
+    {
+        $this->assertInstanceOf(Key::class, (new Key('keyName'))->remove());
+    }
+
+    public function testRemoveException1()
+    {
+        $this->expectException(\LogicException::class);
+        (new Key('keyName'))->remove()->add();
+    }
+
+    public function testRemoveException2()
+    {
+        $this->expectException(\LogicException::class);
+        (new Key('keyName'))->remove()->rename();
+    }
+
+    public function testRename()
+    {
+        $this->assertInstanceOf(Key::class, (new Key('keyName'))->rename());
+    }
+
+    public function testRenameException1()
+    {
+        $this->expectException(\LogicException::class);
+        (new Key('keyName'))->rename()->add();
+    }
+
+    public function testRenameException2()
+    {
+        $this->expectException(\LogicException::class);
+        (new Key('keyName'))->rename()->remove();
+    }
+
+    public function testIsAddKey()
+    {
+        $key = new Key('keyName');
+        $this->assertFalse($key->isAddKey());
+        $key->add();
+        $this->assertTrue($key->isAddKey());
+    }
+
+    public function testIsRemoveKey()
+    {
+        $key = new Key('keyName');
+        $this->assertFalse($key->isRemoveKey());
+        $key->remove();
+        $this->assertTrue($key->isRemoveKey());
+    }
+
+    public function testIsRenameKey()
+    {
+        $key = new Key('keyName');
+        $this->assertFalse($key->isRenameKey());
+        $key->rename();
+        $this->assertTrue($key->isRenameKey());
+    }
 }
