@@ -27,6 +27,7 @@ class Define
     /** @var bool */
     private $haveCalledArrayDefine = false;
 
+
     private function __construct(Key $key)
     {
         $this->key = $key;
@@ -42,7 +43,6 @@ class Define
 
     /**
      * @param string|int $name
-     * @param bool $require
      *
      * @return \Selen\Schema\Exchange\Define
      */
