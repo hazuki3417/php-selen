@@ -61,7 +61,7 @@ class Define
      */
     public function exchange(...$executes)
     {
-        if ($this->typeDefineConflict()) {
+        if ($this->defineConflict()) {
             throw new \RuntimeException('定義の仕方が不正です');
         }
 
@@ -89,7 +89,7 @@ class Define
      */
     public function arrayDefine(Define ...$define)
     {
-        if ($this->typeDefineConflict()) {
+        if ($this->defineConflict()) {
             throw new \RuntimeException('定義の仕方が不正です');
         }
 
@@ -136,7 +136,7 @@ class Define
      *
      * @return bool 競合する場合はtrueを、それ以外の場合はfalseを返します
      */
-    private function typeDefineConflict()
+    private function defineConflict()
     {
         return $this->haveCalledExchange || $this->haveCalledArrayDefine;
     }
