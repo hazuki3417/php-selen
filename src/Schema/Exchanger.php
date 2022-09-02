@@ -9,11 +9,9 @@
 namespace Selen\Schema;
 
 use Selen\Schema\Exchange\ArrayDefine;
+use Selen\Schema\Exchange\KeyExchangeInterface;
 use Selen\Schema\Exchange\ValueExchangeInterface;
 
-/**
- * TODO: key名の変換・追加・削除wを行う機能を追加
- */
 class Exchanger
 {
     /**
@@ -33,40 +31,89 @@ class Exchanger
         foreach ($defines as $define) {
             if ($define->nestedTypeDefineExists()) {
                 // ネストされた定義なら再帰処理を行う
-                $input[$define->key->name()] = self::execute(
-                    $input[$define->key->name()],
+                $input[$define->key->getName()] = self::execute(
+                    $input[$define->key->getName()],
                     $define->arrayDefine
                 );
                 continue;
             }
 
-            // ネストされていない定義なら変換処理を行う
+            // ネストされていない定義なら変換処理へ進む
 
-            if ($define->isAssocArrayDefine()) {
-                // key定義ありのときの処理
-                foreach ($define->executes as $execute) {
-                    $input[$define->key->name()] =
-                        self::exchange($execute, $input[$define->key->name()]);
+            if ($define->isKeyExchange()) {
+                // keyの変換処理
+                if ($define->key->isRemoveKey()) {
+                    unset($input[$define->key->getName()]);
+                    // NOTE: keyを消した場合は値の変換は必要ないので抜ける
+                    continue;
                 }
-                continue;
+
+                if ($define->key->isAddKey()) {
+                    $addKeyDefaultValue = null;
+                    $input[$define->key->getName()] = $addKeyDefaultValue;
+                }
+
+                if ($define->key->isRenameKey()) {
+                    $beforeName = $define->key->getName();
+                    $afterName = self::keyExchange(
+                        $define->keyExchangeExecute,
+                        $beforeName
+                    );
+                    $tmpValue = $input[$beforeName];
+                    unset($input[$beforeName]);
+                    $input[$afterName] = $tmpValue;
+                    $define->key->setName($afterName);
+                }
             }
 
-            if ($define->isIndexArrayDefine()) {
-                // key定義なしのときの処理
-                foreach ($define->executes as $execute) {
-                    $input = self::exchange($execute, $input);
+            if ($define->isValueExchange()) {
+                // valueの変換処理
+                if ($define->isAssocArrayDefine()) {
+                    // key定義ありのときの処理
+                    foreach ($define->executes as $execute) {
+                        $input[$define->key->getName()] =
+                            self::exchange($execute, $input[$define->key->getName()]);
+                    }
+                    continue;
                 }
-                continue;
+
+                if ($define->isIndexArrayDefine()) {
+                    // key定義なしのときの処理
+                    foreach ($define->executes as $execute) {
+                        $input = self::exchange($execute, $input);
+                    }
+                    continue;
+                }
             }
         }
         return $input;
     }
 
     /**
+     * keyの変換処理を行います
+     *
+     * @param \Selen\Schema\Exchange\KeyExchangeInterface|callable|null $execute
+     * @param string $key
+     *
+     * @return string
+     */
+    private static function keyExchange($execute, $key)
+    {
+        if ($execute instanceof KeyExchangeInterface) {
+            return $execute->execute($key);
+        }
+
+        if (\is_callable($execute)) {
+            return $execute($key);
+        }
+
+        return $key;
+    }
+
+    /**
      * 値の変換処理を行います
      *
      * @param \Selen\Schema\Exchange\ValueExchangeInterface|callable $execute
-     * @param mixed $execute
      * @param mixed $value
      *
      * @return mixed

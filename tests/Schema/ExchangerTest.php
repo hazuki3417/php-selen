@@ -12,6 +12,7 @@ namespace Selen\Schema\Exchanger\Define\Test;
 use PHPUnit\Framework\TestCase;
 use Selen\Schema\Exchange\ArrayDefine;
 use Selen\Schema\Exchange\Define;
+use Selen\Schema\Exchange\KeyExchangeInterface;
 use Selen\Schema\Exchange\ValueExchangeInterface;
 use Selen\Schema\Exchanger;
 
@@ -33,11 +34,17 @@ class ExchangerTest extends TestCase
 {
     public function dataProviderExecute()
     {
-        $stub1 = function ($value) {
+        $valueExchangeStub1 = function ($value) {
             return 'replace string 1';
         };
-        $stub2 = $this->createStub(ValueExchangeInterface::class);
-        $stub2->method('execute')->willReturn('replace string 2');
+        $valueExchangeStub2 = $this->createStub(ValueExchangeInterface::class);
+        $valueExchangeStub2->method('execute')->willReturn('replace string 2');
+
+        $keyExchangeStub1 = function ($value) {
+            return 'renameKey1';
+        };
+        $keyExchangeStub2 = $this->createStub(KeyExchangeInterface::class);
+        $keyExchangeStub2->method('execute')->willReturn('renameChildKey1-1');
 
         return [
             // key指定なし
@@ -142,12 +149,121 @@ class ExchangerTest extends TestCase
                     ],
                     'define' => new ArrayDefine(
                         Define::key('parentKeyName1')->arrayDefine(
-                            Define::key('childKeyName1-2')->exchange($stub1)
+                            Define::key('childKeyName1-2')->exchange($valueExchangeStub1)
                         ),
                         Define::key('parentKeyName2')->arrayDefine(
                             Define::key('childKeyName2-2')->arrayDefine(
-                                Define::key(1)->exchange($stub2)
+                                Define::key(1)->exchange($valueExchangeStub2)
                             )
+                        )
+                    ),
+                ],
+            ],
+            // keyの追加
+            'pattern005' => [
+                'expected' => [
+                    'keyName1' => 'value1',
+                    'parentKeyName1' => [
+                        'childKeyName1-2' => 'childKeyValue1-2',
+                        'childKeyName1-1' => null,
+                    ],
+                    'keyName2' => null,
+                ],
+                'input' => [
+                    'value' => [
+                        'keyName1' => 'value1',
+                        'parentKeyName1' => [
+                            'childKeyName1-2' => 'childKeyValue1-2',
+                        ],
+                    ],
+                    'define' => new ArrayDefine(
+                        Define::key('keyName2', Define::KEY_ACTION_ADD),
+                        Define::key('parentKeyName1')->arrayDefine(
+                            Define::key('childKeyName1-1', Define::KEY_ACTION_ADD)
+                        )
+                    ),
+                ],
+            ],
+            // keyの削除
+            'pattern006' => [
+                'expected' => [
+                    'keyName1' => 'value1',
+                    'parentKeyName1' => [
+                        'childKeyName1-2' => 'childKeyValue1-2',
+                    ],
+                ],
+                'input' => [
+                    'value' => [
+                        'keyName1' => 'value1',
+                        'keyName2' => 'value2',
+                        'parentKeyName1' => [
+                            'childKeyName1-1' => 'childKeyValue1-1',
+                            'childKeyName1-2' => 'childKeyValue1-2',
+                        ],
+                    ],
+                    'define' => new ArrayDefine(
+                        Define::key('keyName2', Define::KEY_ACTION_REMOVE),
+                        Define::key('parentKeyName1')->arrayDefine(
+                            Define::key('childKeyName1-1', Define::KEY_ACTION_REMOVE)
+                        )
+                    ),
+                ],
+            ],
+            // keyのリネーム
+            'pattern007' => [
+                'expected' => [
+                    // keyの順番は保証しない・サポートもしない
+                    'parentKeyName1' => [
+                        'renameChildKey1-1' => 'childKeyValue1-1',
+                    ],
+                    'renameKey1' => 'value1',
+                ],
+                'input' => [
+                    'value' => [
+                        'keyName1' => 'value1',
+                        'parentKeyName1' => [
+                            'childKeyName1-1' => 'childKeyValue1-1',
+                        ],
+                    ],
+                    'define' => new ArrayDefine(
+                        Define::key('keyName1', Define::KEY_ACTION_RENAME, function ($keyName) {
+                            return 'renameKey1';
+                        }),
+                        Define::key('parentKeyName1')->arrayDefine(
+                            Define::key('childKeyName1-1', Define::KEY_ACTION_RENAME, function ($keyName) {
+                                return 'renameChildKey1-1';
+                            })
+                        )
+                    ),
+                ],
+            ],
+            // keyのリネーム + 変換処理
+            'pattern008' => [
+                'expected' => [
+                    'keyName2' => 'value2',
+                    'parentKeyName1' => [
+                        'childKeyName1-2' => 'childKeyValue1-2',
+                        'renameChildKey1-1' => 'replaceValue1-1',
+                    ],
+                    'renameKey1' => 'replaceValue1',
+                ],
+                'input' => [
+                    'value' => [
+                        'keyName1' => 'value1',
+                        'keyName2' => 'value2',
+                        'parentKeyName1' => [
+                            'childKeyName1-1' => 'childKeyValue1-1',
+                            'childKeyName1-2' => 'childKeyValue1-2',
+                        ],
+                    ],
+                    'define' => new ArrayDefine(
+                        Define::key('keyName1', Define::KEY_ACTION_RENAME, $keyExchangeStub1)->exchange(function ($value) {
+                            return 'replaceValue1';
+                        }),
+                        Define::key('parentKeyName1')->arrayDefine(
+                            Define::key('childKeyName1-1', Define::KEY_ACTION_RENAME, $keyExchangeStub2)->exchange(function ($value) {
+                                return 'replaceValue1-1';
+                            })
                         )
                     ),
                 ],
@@ -168,7 +284,7 @@ class ExchangerTest extends TestCase
         /** @var \Selen\Schema\Exchange\ArrayDefine $define */
         $define = $input['define'];
 
-        $this->assertEquals(
+        $this->assertSame(
             $expected,
             Exchanger::execute($value, $define)
         );

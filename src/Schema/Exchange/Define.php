@@ -12,8 +12,16 @@ use Selen\Schema\Exchange\Define\Key;
 
 class Define
 {
+    public const KEY_ACTION_NONE = 'none';
+    public const KEY_ACTION_ADD = 'add';
+    public const KEY_ACTION_REMOVE = 'remove';
+    public const KEY_ACTION_RENAME = 'rename';
+
     /** @var \Selen\Schema\Exchange\Define\Key */
     public $key;
+
+    /** @var \Selen\Schema\Exchange\KeyExchangeInterface|callable|null */
+    public $keyExchangeExecute;
 
     /** @var \Selen\Schema\Exchange\ValueExchangeInterface[]|callable[] */
     public $executes;
@@ -27,7 +35,6 @@ class Define
     /** @var bool */
     private $haveCalledArrayDefine = false;
 
-
     private function __construct(Key $key)
     {
         $this->key = $key;
@@ -38,20 +45,55 @@ class Define
      */
     public static function noKey()
     {
+        // TODO: noKeyが指定されたときのkeyActionの処理を実装する
         return new self(new Key(null));
     }
 
     /**
      * @param string|int $name
+     * @param \Selen\Schema\Exchange\KeyExchangeInterface|callable|null $execute
      *
      * @return \Selen\Schema\Exchange\Define
      */
-    public static function key($name)
+    public static function key($name, string $action = self::KEY_ACTION_NONE, $execute = null)
     {
         if ($name === null) {
-            throw new \InvalidArgumentException('型が不正');
+            throw new \InvalidArgumentException('$nameの型が不正');
         }
-        return new self(new Key($name));
+
+        if (!self::isAllowKeyAction($action)) {
+            throw new \InvalidArgumentException('$actionの値が不正');
+        }
+
+        $isExecuteNull = \is_null($execute);
+        $isExecuteCallable = \is_callable($execute);
+        $isExecuteInterface = $execute instanceof KeyExchangeInterface;
+        $isAllowExecute =
+            $isExecuteNull || $isExecuteCallable || $isExecuteInterface;
+
+        if (!$isAllowExecute) {
+            throw new \InvalidArgumentException('$executeの型が不正');
+        }
+
+        $key = new Key($name);
+
+        switch (true) {
+            case $action === self::KEY_ACTION_ADD:
+                $key = $key->add();
+                break;
+            case $action === self::KEY_ACTION_REMOVE:
+                $key = $key->remove();
+                break;
+            case $action === self::KEY_ACTION_RENAME:
+                $key = $key->rename();
+                break;
+            default:
+                break;
+        }
+        $self = new self($key);
+        $self->keyExchangeExecute = $execute;
+
+        return $self;
     }
 
     /**
@@ -83,7 +125,7 @@ class Define
     }
 
     /**
-     * @param Define ...$define
+     * @param \Selen\Schema\Exchange\Define ...$define
      *
      * @return \Selen\Schema\Exchange\Define
      */
@@ -108,7 +150,7 @@ class Define
      */
     public function isIndexArrayDefine(): bool
     {
-        return $this->key->name() === null;
+        return $this->key->getName() === null;
     }
 
     /**
@@ -118,7 +160,41 @@ class Define
      */
     public function isAssocArrayDefine(): bool
     {
-        return $this->key->name() !== null;
+        return $this->key->getName() !== null;
+    }
+
+    /**
+     * 変換処理を実行するか判定します。
+     *
+     * @return bool 変換する場合はtrueを、粗冷媒の場合はfalseを返します
+     */
+    public function isExchange(): bool
+    {
+        return $this->isKeyExchange() || $this->isValueExchange();
+    }
+
+    /**
+     * keyの変換処理を実行するか判定します。
+     *
+     * @return bool 変換する場合はtrueを、粗冷媒の場合はfalseを返します
+     */
+    public function isKeyExchange(): bool
+    {
+        return
+            $this->key->isAddKey()
+            || $this->key->isRemoveKey()
+            || $this->key->isRenameKey();
+    }
+
+    /**
+     * valueの変換処理を実行するか判定します。
+     *
+     * @return bool 変換する場合はtrueを、粗冷媒の場合はfalseを返します
+     */
+    public function isValueExchange(): bool
+    {
+        // NOTE: defineConflictでチェックしているので、片方のみの判定でも良い
+        return $this->executes !== null && $this->arrayDefine === null;
     }
 
     /**
@@ -128,7 +204,20 @@ class Define
      */
     public function nestedTypeDefineExists(): bool
     {
+        // NOTE: defineConflictでチェックしているので、片方のみの判定でも良い
         return $this->executes === null && $this->arrayDefine !== null;
+    }
+
+    private static function isAllowKeyAction(string $name)
+    {
+        $actions = [
+            self::KEY_ACTION_NONE,
+            self::KEY_ACTION_ADD,
+            self::KEY_ACTION_REMOVE,
+            self::KEY_ACTION_RENAME,
+        ];
+
+        return \in_array($name, $actions, true);
     }
 
     /**
