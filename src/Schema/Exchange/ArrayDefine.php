@@ -8,15 +8,21 @@
 
 namespace Selen\Schema\Exchange;
 
+use LogicException;
+
 class ArrayDefine
 {
-    /** @var \Selen\Schema\Exchange\Define[] */
+    /** @var \Selen\Schema\Exchange\Define[] key定義 */
     public $defines;
 
     /**
-     * ArrayDefineインスタンスを作成します
+     * ArrayDefineインスタンスを生成します
      *
      * @param Define ...$defines 定義を渡します
+     *
+     * @return \Selen\Schema\Exchange\ArrayDefine
+     *
+     * @throws \LogicException Defineクラスの定義が不正なときに発生します
      */
     public function __construct(Define ...$defines)
     {
@@ -28,8 +34,12 @@ class ArrayDefine
             $isIndexDefineDuplicate =
                 $indexArrayDefineExists && $define->isIndexArrayDefine();
 
+            $errMes = 'Illegal combination of Define classes.';
+
             if ($isIndexDefineDuplicate) {
-                throw new \RuntimeException('keyなしの配列定義が複数存在しています');
+                $reasonMes = 'Multiple definitions without key cannot be specified.';
+                $mes = \sprintf('%s %s', $errMes, $reasonMes);
+                throw new LogicException($mes);
             }
 
             if ($define->isIndexArrayDefine()) {
@@ -44,7 +54,9 @@ class ArrayDefine
                 $indexArrayDefineExists && $assocArrayDefineExists;
 
             if ($isDefineConflict) {
-                throw new \RuntimeException('keyあり・なしの配列定義が混在しています');
+                $reasonMes = 'Definitions with and without key are mixed.';
+                $mes = \sprintf('%s %s', $errMes, $reasonMes);
+                throw new LogicException($mes);
             }
         }
 

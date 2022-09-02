@@ -50,7 +50,7 @@ class ArrayDefineTest extends TestCase
     public function testConstructException1()
     {
         // keyなしの定義が複数存在するケース（想定していない定義）
-        $this->expectException(\RuntimeException::class);
+        $this->expectException(\LogicException::class);
         new ArrayDefine(
             Define::noKey(),
             Define::noKey()
@@ -60,7 +60,7 @@ class ArrayDefineTest extends TestCase
     public function testConstructException2()
     {
         // keyあり・なしの定義が混在するケース（想定していない定義）
-        $this->expectException(\RuntimeException::class);
+        $this->expectException(\LogicException::class);
         new ArrayDefine(
             Define::key('keyName'),
             Define::noKey()
