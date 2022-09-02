@@ -10,10 +10,11 @@ declare(strict_types=1);
 namespace Selen\Schema\Exchanger\Define\Test;
 
 use PHPUnit\Framework\TestCase;
-use Selen\Schema\Exchanger;
-use Selen\Schema\Exchange\Define;
 use Selen\Schema\Exchange\ArrayDefine;
+use Selen\Schema\Exchange\Define;
 use Selen\Schema\Exchange\ValueExchangeInterface;
+use Selen\Schema\Exchanger;
+
 /**
  * @coversDefaultClass \Selen\Schema\Exchanger
  *
@@ -32,7 +33,7 @@ class ExchangerTest extends TestCase
 {
     public function dataProviderExecute()
     {
-        $stub1 = function($value){
+        $stub1 = function ($value) {
             return 'replace string 1';
         };
         $stub2 = $this->createStub(ValueExchangeInterface::class);
@@ -52,15 +53,14 @@ class ExchangerTest extends TestCase
                     ],
                     'define' => new ArrayDefine(
                         // keyを指定しない場合、callableの引数には配列がそのまま渡されます
-                        Define::noKey()->exchange(function($values){
-                            foreach($values as $key => $value){
+                        Define::noKey()->exchange(function ($values) {
+                            foreach ($values as $key => $value) {
                                 $values[$key] = $value .= ' + add string';
-
                             }
                             return $values;
                         })
                     ),
-                ]
+                ],
             ],
             // key指定あり（input配列のkey名指定なし）
             'pattern002' => [
@@ -77,14 +77,14 @@ class ExchangerTest extends TestCase
                         // keyを指定した場合、callableの引数にはkey名に対応する値が渡されます
                         // key名にindexを指定した場合は配列が持っているindexを参照します
                         // int型の0とstring型の'0'は同じindexとして扱います（php配列の仕様）
-                        Define::key(0)->exchange(function($value){
+                        Define::key(0)->exchange(function ($value) {
                             return $value .= ' + add string 0';
                         }),
-                        Define::key('1')->exchange(function($value){
+                        Define::key('1')->exchange(function ($value) {
                             return $value .= ' + add string 1';
                         })
                     ),
-                ]
+                ],
             ],
             // key指定あり（input配列のkey名指定あり）
             'pattern003' => [
@@ -98,14 +98,14 @@ class ExchangerTest extends TestCase
                         'keyName' => 'value2',
                     ],
                     'define' => new ArrayDefine(
-                        Define::key(3)->exchange(function($value){
+                        Define::key(3)->exchange(function ($value) {
                             return $value .= ' + add string index key = 3';
                         }),
-                        Define::key('keyName')->exchange(function($value){
+                        Define::key('keyName')->exchange(function ($value) {
                             return $value .= ' + add string index key = keyName';
                         })
                     ),
-                ]
+                ],
             ],
             // 多次元配列の変換
             'pattern004' => [
@@ -150,7 +150,7 @@ class ExchangerTest extends TestCase
                             )
                         )
                     ),
-                ]
+                ],
             ],
         ];
     }
@@ -170,6 +170,7 @@ class ExchangerTest extends TestCase
 
         $this->assertEquals(
             $expected,
-            Exchanger::execute($value, $define));
+            Exchanger::execute($value, $define)
+        );
     }
 }

@@ -81,8 +81,8 @@ class DefineTest extends TestCase
     {
         $key = Define::noKey();
         $this->assertInstanceOf(Define::class, $key->exchange(
-            function(){},
-            function(){}
+            function () {},
+            function () {}
         ));
     }
 
@@ -93,7 +93,7 @@ class DefineTest extends TestCase
 
         $this->expectException(\RuntimeException::class);
         $key->exchange(
-            function(){},
+            function () {},
             true
         );
     }
