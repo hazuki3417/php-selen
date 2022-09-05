@@ -19,11 +19,39 @@ class Exchanger
      *
      * @param array $input 変換する配列を渡します
      * @param ArrayDefine $arrayDefine 変換の定義を渡します
+     * @param mixed|null $keyExchangesExecute
+     * @param mixed|null $valueExchangesExecute
      *
      * @return array 変換した配列を返します
      */
-    public static function execute(array $input, ArrayDefine $arrayDefine)
-    {
+    public static function execute(
+        array $input,
+        ArrayDefine $arrayDefine,
+        $keyExchangesExecute = null,
+        $valueExchangesExecute = null
+    ) {
+        $isKeyExchangeNull = \is_null($keyExchangesExecute);
+        $isKeyExchangeCallable = \is_callable($keyExchangesExecute);
+        $isKeyExchangeInterface = $keyExchangesExecute instanceof KeyExchangeInterface;
+        $isKeyExchangeAllowExecute =
+            $isKeyExchangeNull || $isKeyExchangeCallable || $isKeyExchangeInterface;
+
+        if (!$isKeyExchangeAllowExecute) {
+            throw new \InvalidArgumentException('$keyExchangesExecuteの型が不正');
+        }
+
+        $isValueExchangeNull = \is_null($valueExchangesExecute);
+        $isValueExchangeCallable = \is_callable($valueExchangesExecute);
+        $isValueExchangeInterface = $valueExchangesExecute instanceof KeyExchangeInterface;
+        $isValueExchangeAllowExecute =
+            $isValueExchangeNull || $isValueExchangeCallable || $isValueExchangeInterface;
+
+        if (!$isValueExchangeAllowExecute) {
+            throw new \InvalidArgumentException('$valueExchangesExecuteの型が不正');
+        }
+
+        // TODO: $arrayDefineをnullで受け付けるように修正
+
         $defines = $arrayDefine->defines;
 
         // 定義側のループ処理
@@ -33,7 +61,9 @@ class Exchanger
                 // ネストされた定義なら再帰処理を行う
                 $input[$define->key->getName()] = self::execute(
                     $input[$define->key->getName()],
-                    $define->arrayDefine
+                    $define->arrayDefine,
+                    $keyExchangesExecute,
+                    $valueExchangesExecute
                 );
                 continue;
             }
@@ -86,6 +116,49 @@ class Exchanger
                 }
             }
         }
+
+        $isKeyExchange = $keyExchangesExecute !== null;
+        $isValueExchange = $valueExchangesExecute !== null;
+        $isExchange = $keyExchangesExecute || $valueExchangesExecute;
+
+        if (!$isExchange) {
+            // 全体の変換処理が定義されていないなら入力値をそのまま返す
+            return $input;
+        }
+
+        // 全体の変換処理が定義されているなら入力側のループ処理を行う
+        foreach ($input as $key => $value) {
+            if ($isKeyExchange) {
+                $beforeName = $key;
+                $afterName = self::keyExchange(
+                    $keyExchangesExecute,
+                    $beforeName
+                );
+                $tmpValue = $input[$beforeName];
+                unset($input[$beforeName]);
+                $input[$afterName] = $tmpValue;
+                $key = $afterName;
+            }
+
+            if ($isValueExchange) {
+                $input[$key] = self::valueExchange(
+                    $valueExchangesExecute,
+                    $input[$key]
+                );
+            }
+
+            if (\is_array($value)) {
+                // 値が配列なら再帰処理を行う
+                $input[$key] = self::execute(
+                    $input[$key],
+                    $arrayDefine,
+                    $keyExchangesExecute,
+                    $valueExchangesExecute
+                );
+                continue;
+            }
+        }
+
         return $input;
     }
 
@@ -113,7 +186,7 @@ class Exchanger
     /**
      * 値の変換処理を行います
      *
-     * @param \Selen\Schema\Exchange\ValueExchangeInterface|callable $execute
+     * @param \Selen\Schema\Exchange\ValueExchangeInterface|callable|null $execute
      * @param mixed $value
      *
      * @return mixed
@@ -124,6 +197,10 @@ class Exchanger
             return $execute->execute($value);
         }
 
-        return $execute($value);
+        if (\is_callable($execute)) {
+            return $execute($value);
+        }
+
+        return $value;
     }
 }

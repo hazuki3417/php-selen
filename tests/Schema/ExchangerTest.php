@@ -15,6 +15,7 @@ use Selen\Schema\Exchange\Define;
 use Selen\Schema\Exchange\KeyExchangeInterface;
 use Selen\Schema\Exchange\ValueExchangeInterface;
 use Selen\Schema\Exchanger;
+use Selen\Str\CaseName;
 
 /**
  * @coversDefaultClass \Selen\Schema\Exchanger
@@ -67,6 +68,8 @@ class ExchangerTest extends TestCase
                             return $values;
                         })
                     ),
+                    'keyExchangeExecute' => null,
+                    'valueExchangeExecute' => null,
                 ],
             ],
             // key指定あり（input配列のkey名指定なし）
@@ -91,6 +94,8 @@ class ExchangerTest extends TestCase
                             return $value .= ' + add string 1';
                         })
                     ),
+                    'keyExchangeExecute' => null,
+                    'valueExchangeExecute' => null,
                 ],
             ],
             // key指定あり（input配列のkey名指定あり）
@@ -112,6 +117,8 @@ class ExchangerTest extends TestCase
                             return $value .= ' + add string index key = keyName';
                         })
                     ),
+                    'keyExchangeExecute' => null,
+                    'valueExchangeExecute' => null,
                 ],
             ],
             // 多次元配列の変換
@@ -157,6 +164,8 @@ class ExchangerTest extends TestCase
                             )
                         )
                     ),
+                    'keyExchangeExecute' => null,
+                    'valueExchangeExecute' => null,
                 ],
             ],
             // keyの追加
@@ -182,6 +191,8 @@ class ExchangerTest extends TestCase
                             Define::key('childKeyName1-1', Define::KEY_ACTION_ADD)
                         )
                     ),
+                    'keyExchangeExecute' => null,
+                    'valueExchangeExecute' => null,
                 ],
             ],
             // keyの削除
@@ -207,6 +218,8 @@ class ExchangerTest extends TestCase
                             Define::key('childKeyName1-1', Define::KEY_ACTION_REMOVE)
                         )
                     ),
+                    'keyExchangeExecute' => null,
+                    'valueExchangeExecute' => null,
                 ],
             ],
             // keyのリネーム
@@ -235,6 +248,8 @@ class ExchangerTest extends TestCase
                             })
                         )
                     ),
+                    'keyExchangeExecute' => null,
+                    'valueExchangeExecute' => null,
                 ],
             ],
             // keyのリネーム + 変換処理
@@ -266,6 +281,63 @@ class ExchangerTest extends TestCase
                             })
                         )
                     ),
+                    'keyExchangeExecute' => null,
+                    'valueExchangeExecute' => null,
+                ],
+            ],
+            // すべてのkeyのリネーム
+            'pattern009' => [
+                'expected' => [
+                    'key_name1' => 'value1',
+                    'key_name2' => 'value2',
+                    'parent_key_name1' => [
+                        'child_key_name1_1' => 'childKeyValue1-1',
+                        'child_key_name1_2' => 'childKeyValue1-2',
+                    ],
+                ],
+                'input' => [
+                    'value' => [
+                        'keyName1' => 'value1',
+                        'keyName2' => 'value2',
+                        'parentKeyName1' => [
+                            'childKeyName1-1' => 'childKeyValue1-1',
+                            'childKeyName1-2' => 'childKeyValue1-2',
+                        ],
+                    ],
+                    'define' => new ArrayDefine(),
+                    'keyExchangeExecute' => function ($key) {
+                        return CaseName::snake($key);
+                    },
+                    'valueExchangeExecute' => null,
+                ],
+            ],
+            // すべての値の置換
+            'pattern010' => [
+                'expected' => [
+                    'keyName1' => 'value1',
+                    'keyName2' => 'value2',
+                    'parentKeyName1' => [
+                        'childKeyName1-1' => 'child_key_value1_1',
+                        'childKeyName1-2' => 'child_key_value1_2',
+                    ],
+                ],
+                'input' => [
+                    'value' => [
+                        'keyName1' => 'value1',
+                        'keyName2' => 'value2',
+                        'parentKeyName1' => [
+                            'childKeyName1-1' => 'childKeyValue1-1',
+                            'childKeyName1-2' => 'childKeyValue1-2',
+                        ],
+                    ],
+                    'define' => new ArrayDefine(),
+                    'keyExchangeExecute' => null,
+                    'valueExchangeExecute' => function ($value) {
+                        if (\is_string($value)) {
+                            return CaseName::snake($value);
+                        }
+                        return $value;
+                    },
                 ],
             ],
         ];
@@ -283,10 +355,17 @@ class ExchangerTest extends TestCase
         $value = $input['value'];
         /** @var \Selen\Schema\Exchange\ArrayDefine $define */
         $define = $input['define'];
+        $keyExchangeExecute = $input['keyExchangeExecute'];
+        $valueExchangeExecute = $input['valueExchangeExecute'];
 
         $this->assertSame(
             $expected,
-            Exchanger::execute($value, $define)
+            Exchanger::execute(
+                $value,
+                $define,
+                $keyExchangeExecute,
+                $valueExchangeExecute
+            )
         );
     }
 }
