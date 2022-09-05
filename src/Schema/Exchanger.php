@@ -118,86 +118,97 @@ class Exchanger
      */
     public function execute(array $input)
     {
-        return $this->routine($input, $this->arrayDefine);
+        $input = $this->defineRoutine($input, $this->arrayDefine);
+        $input = $this->inputRoutine($input);
+
+        return $input;
     }
 
     /**
-     * 定義した配列形式に変換します
+     * 定義した配列形式に変換します（個別設定）
      *
      * @param array $input 変換する配列を渡します
      * @param ArrayDefine $arrayDefine 変換の定義を渡します
      *
      * @return array 変換した配列を返します
      */
-    private function routine(
+    private function defineRoutine(
         array $input,
         ?ArrayDefine $arrayDefine
     ) {
-        /*
-         * TODO: コードが長いのでリファクタリングが必要。下記の粒度で分割
-         *       - 定義側のループ内処理（defineRoutine）
-         *       - input側のループ内処理（inputRoutine）
-         */
+        if ($arrayDefine === null) {
+            // 変換の定義がないときの処理
+            return $input;
+        }
 
-        if ($arrayDefine !== null) {
-            $defines = $arrayDefine->defines;
+        // 変換の定義があるときの処理
 
-            // 定義側のループ処理
-            /** @var \Selen\Schema\Exchange\Define $define */
-            foreach ($defines as $define) {
-                if ($define->nestedTypeDefineExists()) {
-                    // ネストされた定義なら再帰処理を行う
-                    $input[$define->key->getName()] = $this->routine(
-                        $input[$define->key->getName()],
-                        $define->arrayDefine
-                    );
+        /** @var \Selen\Schema\Exchange\Define $define */
+        foreach ($arrayDefine->defines as $define) {
+            if ($define->nestedTypeDefineExists()) {
+                // ネストされた定義なら再帰処理を行う
+                $input[$define->key->getName()] = $this->defineRoutine(
+                    $input[$define->key->getName()],
+                    $define->arrayDefine
+                );
+                continue;
+            }
+
+            // ネストされていない定義なら変換処理へ進む
+            if ($define->isKeyExchange()) {
+                // keyの変換処理
+                if ($define->key->isRemoveKey()) {
+                    unset($input[$define->key->getName()]);
+                    // NOTE: keyを消した場合は値の変換は必要ないので抜ける
                     continue;
                 }
 
-                // ネストされていない定義なら変換処理へ進む
-                if ($define->isKeyExchange()) {
-                    // keyの変換処理
-                    if ($define->key->isRemoveKey()) {
-                        unset($input[$define->key->getName()]);
-                        // NOTE: keyを消した場合は値の変換は必要ないので抜ける
-                        continue;
-                    }
-
-                    if ($define->key->isAddKey()) {
-                        $addKeyDefaultValue = null;
-                        $input[$define->key->getName()] = $addKeyDefaultValue;
-                    }
-
-                    if ($define->key->isRenameKey()) {
-                        $beforeName = $define->key->getName();
-                        $afterName = $this->keyExchange(
-                            $define->keyExchangeExecute,
-                            $beforeName
-                        );
-                        $tmpValue = $input[$beforeName];
-                        unset($input[$beforeName]);
-                        $input[$afterName] = $tmpValue;
-                        $define->key->setName($afterName);
-                    }
+                if ($define->key->isAddKey()) {
+                    $addKeyDefaultValue = null;
+                    $input[$define->key->getName()] = $addKeyDefaultValue;
                 }
 
-                if ($define->isValueExchange()) {
-                    // valueの変換処理
-                    if ($define->isAssocArrayDefine()) {
-                        // key定義ありのときの処理
-                        $input[$define->key->getName()] =
-                            $this->valueExchange($define->valueExchangeExecute, $input[$define->key->getName()]);
-                        continue;
-                    }
+                if ($define->key->isRenameKey()) {
+                    $beforeName = $define->key->getName();
+                    $afterName = $this->keyExchange(
+                        $define->keyExchangeExecute,
+                        $beforeName
+                    );
+                    $tmpValue = $input[$beforeName];
+                    unset($input[$beforeName]);
+                    $input[$afterName] = $tmpValue;
+                    $define->key->setName($afterName);
+                }
+            }
 
-                    if ($define->isIndexArrayDefine()) {
-                        // key定義なしのときの処理
-                        $input = $this->valueExchange($define->valueExchangeExecute, $input);
-                        continue;
-                    }
+            if ($define->isValueExchange()) {
+                // valueの変換処理
+                if ($define->isAssocArrayDefine()) {
+                    // key定義ありのときの処理
+                    $input[$define->key->getName()] =
+                        $this->valueExchange($define->valueExchangeExecute, $input[$define->key->getName()]);
+                    continue;
+                }
+
+                if ($define->isIndexArrayDefine()) {
+                    // key定義なしのときの処理
+                    $input = $this->valueExchange($define->valueExchangeExecute, $input);
+                    continue;
                 }
             }
         }
+        return $input;
+    }
+
+
+    /**
+     * 定義した配列形式に変換します（全体設定）
+     *
+     * @param array $input 変換する配列を渡します
+     *
+     * @return array 変換した配列を返します
+     */
+    private function inputRoutine(array $input){
 
         if (!$this->isExchanges()) {
             // 全体の変換処理が定義されていないなら入力値をそのまま返す
@@ -227,16 +238,17 @@ class Exchanger
 
             if (\is_array($value)) {
                 // 値が配列なら再帰処理を行う
-                $input[$key] = $this->routine(
-                    $input[$key],
-                    $arrayDefine
+                // \var_dump($key);
+                // \var_dump($input[$key]);
+                $input[$key] = $this->inputRoutine(
+                    $input[$key]
                 );
                 continue;
             }
         }
-
         return $input;
     }
+
 
     /**
      * 変換処理を実行するかどうか判定します。

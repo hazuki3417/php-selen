@@ -9,6 +9,7 @@ declare(strict_types=1);
 
 namespace Selen\Schema\Exchanger\Define\Test;
 
+use DateTime;
 use PHPUnit\Framework\TestCase;
 use Selen\Schema\Exchange\ArrayDefine;
 use Selen\Schema\Exchange\Define;
@@ -335,6 +336,73 @@ class ExchangerTest extends TestCase
                     'valueExchangeExecute' => function ($value) {
                         if (\is_string($value)) {
                             return CaseName::snake($value);
+                        }
+                        return $value;
+                    },
+                ],
+            ],
+            /**
+             * 各種変換処理をすべて組み合わせたパターン
+             * - キー名を変換（すべて）
+             * - 値を変換（すべて）
+             * - キー名を削除（個別）
+             * - キー名を追加（個別）
+             * - キー名を別の名前に変換（個別）
+             * - 値変換（個別）
+             */
+            'pattern010' => [
+                'expected' => [
+                    'dummy_key1' => 'dummyValue1 add string',
+                    'dummy_key2' => 'dummyValue2 add string',
+                    'dummy_key3' => 0,
+                    'dummy_key4' => true,
+                    'dummy_key5' => [],
+                    'dummy_key6' => 0.1,
+                    'created_at' => '2022-09-05 add string',
+                    'updated_at' => 1662940800,
+                    'queue_status' => 'success add string',
+                    'use_state' => false,
+                ],
+                'input' => [
+                    'value' => [
+                        'id' => '630f1d9dc7636af90c0d73f6',
+                        'dummyKey1' => 'dummyValue1',
+                        'dummyKey2' => 'dummyValue2',
+                        'dummyKey3' => 0,
+                        'dummyKey4' => true,
+                        'dummyKey5' => [],
+                        'dummyKey6' => 0.1,
+                        'queueState' => 'success',
+                        'createdAt' => new DateTime("2022-09-05"),
+                        'updatedAt' => new DateTime("2022-09-12"),
+                    ],
+                    'define' => new ArrayDefine(
+                        // key削除
+                        Define::key('id', Define::KEY_ACTION_REMOVE),
+                        // keyリネーム
+                        Define::key('queueState', Define::KEY_ACTION_RENAME, function($key){
+                            return 'queueStatus';
+                        }),
+                        // key追加しつつ初期値を設定
+                        Define::key('useState', Define::KEY_ACTION_ADD)->value(function($value){
+                            return false;
+                        }),
+                        Define::key('createdAt')->value(function($value){
+                            /** @var \DateTime $value  */
+                            return $value->format('Y-m-d');
+                        }),
+                        Define::key('updatedAt')->value(function($value){
+                            /** @var \DateTime $value  */
+                            return $value->getTimestamp();
+                        })
+                    ),
+                    'keyExchangeExecute' => function($key){
+                        return CaseName::snake($key);
+                    },
+                    'valueExchangeExecute' => function ($value) {
+                        if (\is_string($value)) {
+                            // string型の値を持つものにはすべて接尾辞を追加
+                            return $value . ' add string';
                         }
                         return $value;
                     },
