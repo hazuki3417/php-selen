@@ -72,7 +72,7 @@ class Exchanger
                     // key定義ありのときの処理
                     foreach ($define->executes as $execute) {
                         $input[$define->key->getName()] =
-                            self::exchange($execute, $input[$define->key->getName()]);
+                            self::valueExchange($execute, $input[$define->key->getName()]);
                     }
                     continue;
                 }
@@ -80,7 +80,7 @@ class Exchanger
                 if ($define->isIndexArrayDefine()) {
                     // key定義なしのときの処理
                     foreach ($define->executes as $execute) {
-                        $input = self::exchange($execute, $input);
+                        $input = self::valueExchange($execute, $input);
                     }
                     continue;
                 }
@@ -118,7 +118,7 @@ class Exchanger
      *
      * @return mixed
      */
-    private static function exchange($execute, $value)
+    private static function valueExchange($execute, $value)
     {
         if ($execute instanceof ValueExchangeInterface) {
             return $execute->execute($value);
