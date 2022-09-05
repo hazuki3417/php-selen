@@ -16,6 +16,12 @@ class Define
     public const KEY_ACTION_ADD = 'add';
     public const KEY_ACTION_REMOVE = 'remove';
     public const KEY_ACTION_RENAME = 'rename';
+    public const KEY_ACTIONS = [
+        self::KEY_ACTION_NONE,
+        self::KEY_ACTION_ADD,
+        self::KEY_ACTION_REMOVE,
+        self::KEY_ACTION_RENAME,
+    ];
 
     /** @var \Selen\Schema\Exchange\Define\Key */
     public $key;
@@ -23,18 +29,23 @@ class Define
     /** @var \Selen\Schema\Exchange\KeyExchangeInterface|callable|null */
     public $keyExchangeExecute;
 
-    /** @var \Selen\Schema\Exchange\ValueExchangeInterface[]|callable[] */
-    public $executes;
+    /** @var \Selen\Schema\Exchange\ValueExchangeInterface|callable|null */
+    public $valueExchangeExecute;
 
     /** @var \Selen\Schema\Exchange\ArrayDefine|null */
     public $arrayDefine;
 
     /** @var bool */
-    private $haveCalledExchange = false;
+    private $haveCalledValue = false;
 
     /** @var bool */
     private $haveCalledArrayDefine = false;
 
+    /**
+     * インスタンスを生成します
+     *
+     * @return \Selen\Schema\Exchange\Define
+     */
     private function __construct(Key $key)
     {
         $this->key = $key;
@@ -53,26 +64,37 @@ class Define
      * @param string|int $name
      * @param \Selen\Schema\Exchange\KeyExchangeInterface|callable|null $execute
      *
+     * @throws \InvalidArgumentException 引数の型が不正なときに発生します
+     * @throws \ValueError 引数の値が不正なときに発生します
+     *
      * @return \Selen\Schema\Exchange\Define
      */
     public static function key($name, string $action = self::KEY_ACTION_NONE, $execute = null)
     {
+        $format = 'Invalid %s %s. expected %s %s.';
+
         if ($name === null) {
-            throw new \InvalidArgumentException('$nameの型が不正');
+            $allowType = ['integer', 'string'];
+            $mes = \sprintf($format, '$name', 'type', 'type', \implode(', ', $allowType));
+            throw new \InvalidArgumentException($mes);
         }
 
         if (!self::isAllowKeyAction($action)) {
-            throw new \InvalidArgumentException('$actionの値が不正');
+            $mes = \sprintf($format, '$action', 'value', 'value', \implode(', ', self::KEY_ACTIONS));
+            throw new \ValueError($mes);
         }
 
-        $isExecuteNull = \is_null($execute);
-        $isExecuteCallable = \is_callable($execute);
-        $isExecuteInterface = $execute instanceof KeyExchangeInterface;
-        $isAllowExecute =
-            $isExecuteNull || $isExecuteCallable || $isExecuteInterface;
+        /** @var bool[] */
+        $allowTypeList = [
+            \is_null($execute),
+            \is_callable($execute),
+            ($execute instanceof KeyExchangeInterface),
+        ];
 
-        if (!$isAllowExecute) {
-            throw new \InvalidArgumentException('$executeの型が不正');
+        if (!\in_array(true, $allowTypeList, true)) {
+            $allowType = [null, 'callable', KeyExchangeInterface::class];
+            $mes = \sprintf($format, '$execute', 'type', 'type', \implode(', ', $allowType));
+            throw new \InvalidArgumentException($mes);
         }
 
         $key = new Key($name);
@@ -97,42 +119,48 @@ class Define
     }
 
     /**
-     * @param \Selen\Schema\Exchange\ValueExchangeInterface|callable ...$executes
+     * @param \Selen\Schema\Exchange\ValueExchangeInterface|callable|null $execute
+     *
+     * @throws \LogicException メソッドの呼び出し順が不正なときに発生します
+     * @throws \InvalidArgumentException 引数の型が不正なときに発生します
      *
      * @return \Selen\Schema\Exchange\Define
      */
-    public function exchange(...$executes)
+    public function value($execute = null)
     {
         if ($this->defineConflict()) {
-            throw new \RuntimeException('定義の仕方が不正です');
+            throw new \LogicException('Invalid method call. cannot call value method after arrayDefine.');
         }
 
-        // NOTE: 引数の指定がない場合はそのまま通す（エラーにしない）
+        $allowTypeList = [
+            \is_null($execute),
+            \is_callable($execute),
+            ($execute instanceof ValueExchangeInterface),
+        ];
 
-        foreach ($executes as $execute) {
-            $isCallable = \is_callable($execute);
-            $isInterface = $execute instanceof ValueExchangeInterface;
-
-            if ($isCallable || $isInterface) {
-                continue;
-            }
-            throw new \InvalidArgumentException('引数の型が不正です');
+        if (!\in_array(true, $allowTypeList, true)) {
+            $format = 'Invalid %s %s. expected %s %s.';
+            $allowType = [null, 'callable', ValueExchangeInterface::class];
+            $mes = \sprintf($format, '$execute', 'type', 'type', \implode(', ', $allowType));
+            throw new \InvalidArgumentException($mes);
         }
 
-        $this->haveCalledExchange = true;
-        $this->executes = $executes;
+        $this->haveCalledValue = true;
+        $this->valueExchangeExecute = $execute;
         return $this;
     }
 
     /**
      * @param \Selen\Schema\Exchange\Define ...$define
      *
+     * @throws \LogicException メソッドの呼び出し順が不正なときに発生します
+     *
      * @return \Selen\Schema\Exchange\Define
      */
     public function arrayDefine(Define ...$define)
     {
         if ($this->defineConflict()) {
-            throw new \RuntimeException('定義の仕方が不正です');
+            throw new \LogicException('Invalid method call. cannot call arrayDefine method after value.');
         }
 
         // NOTE: 引数の指定がない場合はそのまま通す（エラーにしない）
@@ -194,7 +222,7 @@ class Define
     public function isValueExchange(): bool
     {
         // NOTE: defineConflictでチェックしているので、片方のみの判定でも良い
-        return $this->executes !== null && $this->arrayDefine === null;
+        return $this->valueExchangeExecute !== null && $this->arrayDefine === null;
     }
 
     /**
@@ -205,19 +233,12 @@ class Define
     public function nestedTypeDefineExists(): bool
     {
         // NOTE: defineConflictでチェックしているので、片方のみの判定でも良い
-        return $this->executes === null && $this->arrayDefine !== null;
+        return $this->valueExchangeExecute === null && $this->arrayDefine !== null;
     }
 
     private static function isAllowKeyAction(string $name)
     {
-        $actions = [
-            self::KEY_ACTION_NONE,
-            self::KEY_ACTION_ADD,
-            self::KEY_ACTION_REMOVE,
-            self::KEY_ACTION_RENAME,
-        ];
-
-        return \in_array($name, $actions, true);
+        return \in_array($name, self::KEY_ACTIONS, true);
     }
 
     /**
@@ -227,6 +248,6 @@ class Define
      */
     private function defineConflict()
     {
-        return $this->haveCalledExchange || $this->haveCalledArrayDefine;
+        return $this->haveCalledValue || $this->haveCalledArrayDefine;
     }
 }

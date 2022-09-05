@@ -61,7 +61,7 @@ class ExchangerTest extends TestCase
                     ],
                     'define' => new ArrayDefine(
                         // keyを指定しない場合、callableの引数には配列がそのまま渡されます
-                        Define::noKey()->exchange(function ($values) {
+                        Define::noKey()->value(function ($values) {
                             foreach ($values as $key => $value) {
                                 $values[$key] = $value .= ' + add string';
                             }
@@ -87,10 +87,10 @@ class ExchangerTest extends TestCase
                         // keyを指定した場合、callableの引数にはkey名に対応する値が渡されます
                         // key名にindexを指定した場合は配列が持っているindexを参照します
                         // int型の0とstring型の'0'は同じindexとして扱います（php配列の仕様）
-                        Define::key(0)->exchange(function ($value) {
+                        Define::key(0)->value(function ($value) {
                             return $value .= ' + add string 0';
                         }),
-                        Define::key('1')->exchange(function ($value) {
+                        Define::key('1')->value(function ($value) {
                             return $value .= ' + add string 1';
                         })
                     ),
@@ -110,10 +110,10 @@ class ExchangerTest extends TestCase
                         'keyName' => 'value2',
                     ],
                     'define' => new ArrayDefine(
-                        Define::key(3)->exchange(function ($value) {
+                        Define::key(3)->value(function ($value) {
                             return $value .= ' + add string index key = 3';
                         }),
-                        Define::key('keyName')->exchange(function ($value) {
+                        Define::key('keyName')->value(function ($value) {
                             return $value .= ' + add string index key = keyName';
                         })
                     ),
@@ -156,11 +156,11 @@ class ExchangerTest extends TestCase
                     ],
                     'define' => new ArrayDefine(
                         Define::key('parentKeyName1')->arrayDefine(
-                            Define::key('childKeyName1-2')->exchange($valueExchangeStub1)
+                            Define::key('childKeyName1-2')->value($valueExchangeStub1)
                         ),
                         Define::key('parentKeyName2')->arrayDefine(
                             Define::key('childKeyName2-2')->arrayDefine(
-                                Define::key(1)->exchange($valueExchangeStub2)
+                                Define::key(1)->value($valueExchangeStub2)
                             )
                         )
                     ),
@@ -272,11 +272,11 @@ class ExchangerTest extends TestCase
                         ],
                     ],
                     'define' => new ArrayDefine(
-                        Define::key('keyName1', Define::KEY_ACTION_RENAME, $keyExchangeStub1)->exchange(function ($value) {
+                        Define::key('keyName1', Define::KEY_ACTION_RENAME, $keyExchangeStub1)->value(function ($value) {
                             return 'replaceValue1';
                         }),
                         Define::key('parentKeyName1')->arrayDefine(
-                            Define::key('childKeyName1-1', Define::KEY_ACTION_RENAME, $keyExchangeStub2)->exchange(function ($value) {
+                            Define::key('childKeyName1-1', Define::KEY_ACTION_RENAME, $keyExchangeStub2)->value(function ($value) {
                                 return 'replaceValue1-1';
                             })
                         )

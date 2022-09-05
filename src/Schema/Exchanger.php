@@ -185,18 +185,14 @@ class Exchanger
                     // valueの変換処理
                     if ($define->isAssocArrayDefine()) {
                         // key定義ありのときの処理
-                        foreach ($define->executes as $execute) {
-                            $input[$define->key->getName()] =
-                                $this->valueExchange($execute, $input[$define->key->getName()]);
-                        }
+                        $input[$define->key->getName()] =
+                            $this->valueExchange($define->valueExchangeExecute, $input[$define->key->getName()]);
                         continue;
                     }
 
                     if ($define->isIndexArrayDefine()) {
                         // key定義なしのときの処理
-                        foreach ($define->executes as $execute) {
-                            $input = $this->valueExchange($execute, $input);
-                        }
+                        $input = $this->valueExchange($define->valueExchangeExecute, $input);
                         continue;
                     }
                 }

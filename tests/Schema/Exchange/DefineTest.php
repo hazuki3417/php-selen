@@ -47,82 +47,64 @@ class DefineTest extends TestCase
         $this->assertInstanceOf(Define::class, Define::noKey());
     }
 
-    public function testExchange1()
+    public function testValue1()
     {
         $key = Define::key('keyName');
-        $this->assertInstanceOf(Define::class, $key->exchange());
+        $this->assertInstanceOf(Define::class, $key->value());
     }
 
-    public function testExchangeException1()
+    public function testValueException1()
     {
         // NOTE: 配列形式の定義と変換の定義は同時に呼び出すことはできない
         $key = Define::key('keyName')->arrayDefine();
 
-        $this->expectException(\RuntimeException::class);
-        $key->exchange();
+        $this->expectException(\LogicException::class);
+        $key->value();
     }
 
-    public function testExchange2()
+    public function testValue2()
     {
         $key = Define::noKey();
-        $this->assertInstanceOf(Define::class, $key->exchange());
+        $this->assertInstanceOf(Define::class, $key->value());
     }
 
-    public function testExchangeException2()
+    public function testValueException2()
     {
         // NOTE: 配列形式の定義と変換の定義は同時に呼び出すことはできない
         $key = Define::noKey()->arrayDefine();
 
-        $this->expectException(\RuntimeException::class);
-        $key->exchange();
+        $this->expectException(\LogicException::class);
+        $key->value();
     }
 
-    public function testExchange3()
+    public function testValue3()
     {
         $key = Define::noKey();
-        $this->assertInstanceOf(Define::class, $key->exchange(
-            function () {},
+        $this->assertInstanceOf(Define::class, $key->value(
             function () {}
         ));
     }
 
-    public function testExchangeException3()
+    public function testValueException3()
     {
         // NOTE: 配列形式の定義と変換の定義は同時に呼び出すことはできない
         $key = Define::noKey()->arrayDefine();
 
-        $this->expectException(\RuntimeException::class);
-        $key->exchange(
-            function () {},
+        $this->expectException(\LogicException::class);
+        $key->value(
             true
         );
     }
 
-    public function testExchange4()
+    public function testValue4()
     {
         $stub1 = $this->createStub(ValueExchangeInterface::class);
-        $stub2 = $this->createStub(ValueExchangeInterface::class);
         $stub1->method('execute')->willReturn('replace string 2');
-        $stub2->method('execute')->willReturn('replace string 3');
 
         $key = Define::noKey();
-        $this->assertInstanceOf(Define::class, $key->exchange(
-            $stub1,
-            $stub2
+        $this->assertInstanceOf(Define::class, $key->value(
+            $stub1
         ));
-    }
-
-    public function testExchangeException4()
-    {
-        $stub1 = $this->createStub(ValueExchangeInterface::class);
-        $stub1->method('execute')->willReturn('replace string 2');
-
-        $key = Define::noKey();
-        $this->expectException(\InvalidArgumentException::class);
-        $key->exchange(
-            $stub1,
-            true
-        );
     }
 
     public function testArrayDefine1()
@@ -134,9 +116,9 @@ class DefineTest extends TestCase
     public function testArrayDefineException1()
     {
         // NOTE: 配列形式の定義と変換の定義は同時に呼び出すことはできない
-        $key = Define::key('keyName')->exchange();
+        $key = Define::key('keyName')->value();
 
-        $this->expectException(\RuntimeException::class);
+        $this->expectException(\LogicException::class);
         $key->arrayDefine();
     }
 
@@ -149,9 +131,9 @@ class DefineTest extends TestCase
     public function testArrayDefineException2()
     {
         // NOTE: 配列形式の定義と変換の定義は同時に呼び出すことはできない
-        $key = Define::noKey()->exchange();
+        $key = Define::noKey()->value();
 
-        $this->expectException(\RuntimeException::class);
+        $this->expectException(\LogicException::class);
         $key->arrayDefine();
     }
 
@@ -165,7 +147,7 @@ class DefineTest extends TestCase
     {
         // NOTE: 変換処理の引数のcallableまたはValueExchangeInterface以外のものを指定
         $this->expectException(\InvalidArgumentException::class);
-        $key = Define::noKey()->exchange('string');
+        $key = Define::noKey()->value('string');
     }
 
     public function dataProviderIsIndexArrayDefine()
@@ -219,10 +201,10 @@ class DefineTest extends TestCase
             'pattern003' => ['expected' => false, 'input' => Define::key(0)],
             'pattern004' => ['expected' => false, 'input' => Define::noKey()],
 
-            'pattern005' => ['expected' => false, 'input' => (Define::key('str'))->exchange()],
-            'pattern006' => ['expected' => false, 'input' => (Define::key('0'))->exchange()],
-            'pattern007' => ['expected' => false, 'input' => (Define::key(0))->exchange()],
-            'pattern008' => ['expected' => false, 'input' => (Define::noKey())->exchange()],
+            'pattern005' => ['expected' => false, 'input' => (Define::key('str'))->value()],
+            'pattern006' => ['expected' => false, 'input' => (Define::key('0'))->value()],
+            'pattern007' => ['expected' => false, 'input' => (Define::key(0))->value()],
+            'pattern008' => ['expected' => false, 'input' => (Define::noKey())->value()],
 
             'pattern009' => ['expected' => true, 'input' => (Define::key('str'))->arrayDefine()],
             'pattern010' => ['expected' => true, 'input' => (Define::key('0'))->arrayDefine()],
