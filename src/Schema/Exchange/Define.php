@@ -166,7 +166,7 @@ class Define
     /**
      * 変換処理を実行するか判定します。
      *
-     * @return bool 変換する場合はtrueを、粗冷媒の場合はfalseを返します
+     * @return bool 変換する場合はtrueを、それ以外の場合はfalseを返します
      */
     public function isExchange(): bool
     {
@@ -176,7 +176,7 @@ class Define
     /**
      * keyの変換処理を実行するか判定します。
      *
-     * @return bool 変換する場合はtrueを、粗冷媒の場合はfalseを返します
+     * @return bool 変換する場合はtrueを、それ以外の場合はfalseを返します
      */
     public function isKeyExchange(): bool
     {
@@ -189,7 +189,7 @@ class Define
     /**
      * valueの変換処理を実行するか判定します。
      *
-     * @return bool 変換する場合はtrueを、粗冷媒の場合はfalseを返します
+     * @return bool 変換する場合はtrueを、それ以外の場合はfalseを返します
      */
     public function isValueExchange(): bool
     {
