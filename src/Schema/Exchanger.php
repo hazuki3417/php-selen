@@ -133,7 +133,7 @@ class Exchanger
         array $input,
         ?ArrayDefine $arrayDefine
     ) {
-        /**
+        /*
          * TODO: コードが長いのでリファクタリングが必要。下記の粒度で分割
          *       - 定義側のループ内処理（defineRoutine）
          *       - input側のループ内処理（inputRoutine）
