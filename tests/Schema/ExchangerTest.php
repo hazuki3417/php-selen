@@ -304,7 +304,7 @@ class ExchangerTest extends TestCase
                             'childKeyName1-2' => 'childKeyValue1-2',
                         ],
                     ],
-                    'define' => new ArrayDefine(),
+                    'define' => null,
                     'keyExchangeExecute' => function ($key) {
                         return CaseName::snake($key);
                     },
@@ -330,7 +330,7 @@ class ExchangerTest extends TestCase
                             'childKeyName1-2' => 'childKeyValue1-2',
                         ],
                     ],
-                    'define' => new ArrayDefine(),
+                    'define' => null,
                     'keyExchangeExecute' => null,
                     'valueExchangeExecute' => function ($value) {
                         if (\is_string($value)) {
@@ -358,14 +358,15 @@ class ExchangerTest extends TestCase
         $keyExchangeExecute = $input['keyExchangeExecute'];
         $valueExchangeExecute = $input['valueExchangeExecute'];
 
+        $exchanger = Exchanger::new();
+
         $this->assertSame(
             $expected,
-            Exchanger::execute(
-                $value,
-                $define,
-                $keyExchangeExecute,
-                $valueExchangeExecute
-            )
+            $exchanger
+                ->key($keyExchangeExecute)
+                ->value($valueExchangeExecute)
+                ->arrayDefine($define)
+                ->execute($value)
         );
     }
 }
