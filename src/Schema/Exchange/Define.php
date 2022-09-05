@@ -79,13 +79,13 @@ class Define
 
         switch (true) {
             case $action === self::KEY_ACTION_ADD:
-                $key = $key->add();
+                $key = $key->enableAdd();
                 break;
             case $action === self::KEY_ACTION_REMOVE:
-                $key = $key->remove();
+                $key = $key->enableRemove();
                 break;
             case $action === self::KEY_ACTION_RENAME:
-                $key = $key->rename();
+                $key = $key->enableRename();
                 break;
             default:
                 break;

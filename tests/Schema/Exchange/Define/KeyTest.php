@@ -87,62 +87,62 @@ class KeyTest extends TestCase
         $this->assertSame($expected, $key->setName($input));
     }
 
-    public function testAdd()
+    public function testEnableAdd()
     {
-        $this->assertInstanceOf(Key::class, (new Key('keyName'))->add());
+        $this->assertInstanceOf(Key::class, (new Key('keyName'))->enableAdd());
     }
 
-    public function testAddException1()
+    public function testEnableAddException1()
     {
         $this->expectException(\LogicException::class);
-        (new Key('keyName'))->add()->remove();
+        (new Key('keyName'))->enableAdd()->enableRemove();
     }
 
-    public function testAddException2()
+    public function testEnableAddException2()
     {
         $this->expectException(\LogicException::class);
-        (new Key('keyName'))->add()->rename();
+        (new Key('keyName'))->enableAdd()->enableRename();
     }
 
-    public function testRemove()
+    public function testEnableRemove()
     {
-        $this->assertInstanceOf(Key::class, (new Key('keyName'))->remove());
+        $this->assertInstanceOf(Key::class, (new Key('keyName'))->enableRemove());
     }
 
-    public function testRemoveException1()
-    {
-        $this->expectException(\LogicException::class);
-        (new Key('keyName'))->remove()->add();
-    }
-
-    public function testRemoveException2()
+    public function testEnableRemoveException1()
     {
         $this->expectException(\LogicException::class);
-        (new Key('keyName'))->remove()->rename();
+        (new Key('keyName'))->enableRemove()->enableAdd();
     }
 
-    public function testRename()
-    {
-        $this->assertInstanceOf(Key::class, (new Key('keyName'))->rename());
-    }
-
-    public function testRenameException1()
+    public function testEnableRemoveException2()
     {
         $this->expectException(\LogicException::class);
-        (new Key('keyName'))->rename()->add();
+        (new Key('keyName'))->enableRemove()->enableRename();
     }
 
-    public function testRenameException2()
+    public function testEnableRename()
+    {
+        $this->assertInstanceOf(Key::class, (new Key('keyName'))->enableRename());
+    }
+
+    public function testEnableRenameException1()
     {
         $this->expectException(\LogicException::class);
-        (new Key('keyName'))->rename()->remove();
+        (new Key('keyName'))->enableRename()->enableAdd();
+    }
+
+    public function testEnableRenameException2()
+    {
+        $this->expectException(\LogicException::class);
+        (new Key('keyName'))->enableRename()->enableRemove();
     }
 
     public function testIsAddKey()
     {
         $key = new Key('keyName');
         $this->assertFalse($key->isAddKey());
-        $key->add();
+        $key->enableAdd();
         $this->assertTrue($key->isAddKey());
     }
 
@@ -150,7 +150,7 @@ class KeyTest extends TestCase
     {
         $key = new Key('keyName');
         $this->assertFalse($key->isRemoveKey());
-        $key->remove();
+        $key->enableRemove();
         $this->assertTrue($key->isRemoveKey());
     }
 
@@ -158,7 +158,7 @@ class KeyTest extends TestCase
     {
         $key = new Key('keyName');
         $this->assertFalse($key->isRenameKey());
-        $key->rename();
+        $key->enableRename();
         $this->assertTrue($key->isRenameKey());
     }
 }

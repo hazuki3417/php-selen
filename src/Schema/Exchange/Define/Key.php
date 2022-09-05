@@ -30,7 +30,7 @@ class Key
     private $nameAllowType = ['string', 'integer', 'null'];
 
     /**
-     * Keyインスタンスを生成します
+     * インスタンスを生成します
      *
      * @param string|int|null $name key名を指定します。index arrayの場合はnullを渡します。
      *
@@ -55,10 +55,10 @@ class Key
      *
      * @throws \LogicException メソッドの呼び出し順が不正なときに発生します
      */
-    public function add()
+    public function enableAdd()
     {
         if ($this->callConflict()) {
-            $mes = 'Invalid method call. cannot call remove or rename method after add.';
+            $mes = 'Invalid method call. cannot call enableRemove or enableRename method after enableAdd.';
             throw new LogicException($mes);
         }
 
@@ -73,10 +73,10 @@ class Key
      *
      * @throws \LogicException メソッドの呼び出し順が不正なときに発生します
      */
-    public function remove()
+    public function enableRemove()
     {
         if ($this->callConflict()) {
-            $mes = 'Invalid method call. cannot call add or rename method after remove.';
+            $mes = 'Invalid method call. cannot call enableAdd or enableRename method after enableRemove.';
             throw new LogicException($mes);
         }
 
@@ -91,10 +91,10 @@ class Key
      *
      * @throws \LogicException メソッドの呼び出し順が不正なときに発生します
      */
-    public function rename()
+    public function enableRename()
     {
         if ($this->callConflict()) {
-            $mes = 'Invalid method call. cannot call add or remove method after rename.';
+            $mes = 'Invalid method call. cannot call enableAdd or enableRemove method after enableRename.';
             throw new LogicException($mes);
         }
 
@@ -172,7 +172,7 @@ class Key
     }
 
     /**
-     * key追加・削除・リネームの呼び出しが競合しているか確認します
+     * keyの追加・削除・リネームの呼び出しが競合しているか確認します
      *
      * @return bool 競合する場合はtrueを、それ以外の場合はfalseを返します
      */
