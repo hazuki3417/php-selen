@@ -341,7 +341,7 @@ class ExchangerTest extends TestCase
                     },
                 ],
             ],
-            /**
+            /*
              * 各種変換処理をすべて組み合わせたパターン
              * - キー名を変換（すべて）
              * - 値を変換（すべて）
@@ -373,30 +373,30 @@ class ExchangerTest extends TestCase
                         'dummyKey5' => [],
                         'dummyKey6' => 0.1,
                         'queueState' => 'success',
-                        'createdAt' => new DateTime("2022-09-05"),
-                        'updatedAt' => new DateTime("2022-09-12"),
+                        'createdAt' => new DateTime('2022-09-05'),
+                        'updatedAt' => new DateTime('2022-09-12'),
                     ],
                     'define' => new ArrayDefine(
                         // key削除
                         Define::key('id', Define::KEY_ACTION_REMOVE),
                         // keyリネーム
-                        Define::key('queueState', Define::KEY_ACTION_RENAME, function($key){
+                        Define::key('queueState', Define::KEY_ACTION_RENAME, function ($key) {
                             return 'queueStatus';
                         }),
                         // key追加しつつ初期値を設定
-                        Define::key('useState', Define::KEY_ACTION_ADD)->value(function($value){
+                        Define::key('useState', Define::KEY_ACTION_ADD)->value(function ($value) {
                             return false;
                         }),
-                        Define::key('createdAt')->value(function($value){
-                            /** @var \DateTime $value  */
+                        Define::key('createdAt')->value(function ($value) {
+                            // @var \DateTime $value
                             return $value->format('Y-m-d');
                         }),
-                        Define::key('updatedAt')->value(function($value){
-                            /** @var \DateTime $value  */
+                        Define::key('updatedAt')->value(function ($value) {
+                            // @var \DateTime $value
                             return $value->getTimestamp();
                         })
                     ),
-                    'keyExchangeExecute' => function($key){
+                    'keyExchangeExecute' => function ($key) {
                         return CaseName::snake($key);
                     },
                     'valueExchangeExecute' => function ($value) {

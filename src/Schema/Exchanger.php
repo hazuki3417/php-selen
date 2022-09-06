@@ -101,7 +101,7 @@ class Exchanger
      *
      * @return \Selen\Schema\Exchanger
      *
-     * @param ?ArrayDefine $arrayDefine
+     * @param ?\Selen\Schema\Exchange\ArrayDefine $arrayDefine
      */
     public function arrayDefine(?ArrayDefine $arrayDefine)
     {
@@ -119,16 +119,14 @@ class Exchanger
     public function execute(array $input)
     {
         $input = $this->defineRoutine($input, $this->arrayDefine);
-        $input = $this->inputRoutine($input);
-
-        return $input;
+        return $this->inputRoutine($input);
     }
 
     /**
      * 定義した配列形式に変換します（個別設定）
      *
      * @param array $input 変換する配列を渡します
-     * @param ArrayDefine $arrayDefine 変換の定義を渡します
+     * @param \Selen\Schema\Exchange\ArrayDefine $arrayDefine 変換の定義を渡します
      *
      * @return array 変換した配列を返します
      */
@@ -200,7 +198,6 @@ class Exchanger
         return $input;
     }
 
-
     /**
      * 定義した配列形式に変換します（全体設定）
      *
@@ -208,8 +205,8 @@ class Exchanger
      *
      * @return array 変換した配列を返します
      */
-    private function inputRoutine(array $input){
-
+    private function inputRoutine(array $input)
+    {
         if (!$this->isExchanges()) {
             // 全体の変換処理が定義されていないなら入力値をそのまま返す
             return $input;
@@ -248,7 +245,6 @@ class Exchanger
         }
         return $input;
     }
-
 
     /**
      * 変換処理を実行するかどうか判定します。
