@@ -90,4 +90,10 @@ class ObjectsTest extends TestCase
         $this->assertNull($instance->clear());
         $this->assertTrue($instance->isEmpty());
     }
+
+    public function testToArray()
+    {
+        $instance = new Objects([]);
+        $this->assertIsArray($instance->toArray());
+    }
 }

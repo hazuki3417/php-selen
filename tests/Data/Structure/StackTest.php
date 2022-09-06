@@ -174,6 +174,12 @@ class StackTest extends TestCase
         $this->assertTrue($instance->isEmpty());
     }
 
+    public function testToArray()
+    {
+        $instance = new Stack('string');
+        $this->assertIsArray($instance->toArray());
+    }
+
     public function testForeach()
     {
         $stack = new Stack('string');

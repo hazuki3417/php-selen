@@ -174,6 +174,12 @@ class QueueTest extends TestCase
         $this->assertTrue($instance->isEmpty());
     }
 
+    public function testToArray()
+    {
+        $instance = new Queue('string');
+        $this->assertIsArray($instance->toArray());
+    }
+
     public function testForeach()
     {
         $queue = new Queue('string');

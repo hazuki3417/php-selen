@@ -205,4 +205,10 @@ class CollectionTest extends TestCase
 
         $this->assertTrue($instance->isEmpty());
     }
+
+    public function testToArray()
+    {
+        $instance = new Collection(\DateTime::class);
+        $this->assertIsArray($instance->toArray());
+    }
 }

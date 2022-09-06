@@ -36,4 +36,9 @@ abstract class AbstractObjects implements ObjectsInterface
     {
         $this->objects = [];
     }
+
+    public function toArray(): array
+    {
+        return $this->objects;
+    }
 }

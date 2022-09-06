@@ -17,4 +17,6 @@ interface ObjectsInterface
     public function size(): int;
 
     public function clear();
+
+    public function toArray(): array;
 }
