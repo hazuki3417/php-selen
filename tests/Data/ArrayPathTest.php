@@ -9,13 +9,13 @@ declare(strict_types=1);
 
 namespace Selen\Data\Test;
 
-use phpDocumentor\Reflection\Types\Array_;
 use PHPUnit\Framework\TestCase;
 use Selen\Data\ArrayPath;
 
 /**
  * @coversDefaultClass \Selen\Data\ArrayPath
  *
+ * @group Selen
  * @group Selen/Data
  * @group Selen/Data/ArrayPath
  *
@@ -33,7 +33,7 @@ class ArrayPathTest extends TestCase
         $this->assertInstanceOf(ArrayPath::class, new ArrayPath());
     }
 
-    public function testClassLogic()
+    public function testUpDownCurrent()
     {
         $instance = new ArrayPath();
 
@@ -61,13 +61,16 @@ class ArrayPathTest extends TestCase
         $this->assertSame(2, $instance->current());
     }
 
-    public function testSet(){
+    public function testSet()
+    {
         $instance = new ArrayPath();
 
-        $this->assertNull($instance->set("path1"));
+        $this->assertNull($instance->set('path1'));
     }
 
-    public function testFetch(){
+
+    public function testFetch()
+    {
         $instance = new ArrayPath();
         $instance->set('path0');
 
@@ -98,21 +101,24 @@ class ArrayPathTest extends TestCase
         $this->assertSame(['path0'], $instance->fetch(0, $instance->current()));
     }
 
-    public function testFetchException1(){
+    public function testFetchException1()
+    {
         $instance = new ArrayPath();
 
         $this->expectException(\ValueError::class);
         $instance->fetch(-1, 0);
     }
 
-    public function testFetchException2(){
+    public function testFetchException2()
+    {
         $instance = new ArrayPath();
 
         $this->expectException(\ValueError::class);
         $instance->fetch(0, 3);
     }
 
-    public function testFetchException3(){
+    public function testFetchException3()
+    {
         $instance = new ArrayPath();
         $instance->set('path0');
 
@@ -126,23 +132,46 @@ class ArrayPathTest extends TestCase
     }
 
 
-    public function testToString(){
-        $instance = new ArrayPath();
-        $instance->set('path0');
+    public function dataProviderToString()
+    {
+        return [
+            'pattern001' => ['expected' => '',                         'input' => []],
+            'pattern002' => ['expected' => '',                         'input' => ['']],
+            'pattern003' => ['expected' => 'depth1',                   'input' => ['depth1']],
+            'pattern004' => ['expected' => 'depth1.depth2',            'input' => ['depth1', 'depth2']],
+            'pattern005' => ['expected' => 'depth1.depth2.[0].depth3', 'input' => ['depth1', 'depth2', '[0]', 'depth3']],
+        ];
+    }
 
-        $instance->down();
-        $instance->set('path1');
+    /**
+     * @dataProvider dataProviderToString
+     *
+     * @param mixed $expected
+     * @param mixed $input
+     */
+    public function testToString($expected, $input)
+    {
+        $this->assertSame($expected, ArrayPath::toString($input));
+    }
 
-        $instance->down();
-        $instance->set('path2');
+    public function dataProviderToArray()
+    {
+        return [
+            'pattern001' => ['expected' => [],                                    'input' => ''],
+            'pattern002' => ['expected' => ['depth1'],                            'input' => 'depth1'],
+            'pattern003' => ['expected' => ['depth1', 'depth2'],                  'input' => 'depth1.depth2'],
+            'pattern004' => ['expected' => ['depth1', 'depth2', '[0]', 'depth3'], 'input' => 'depth1.depth2.[0].depth3'],
+        ];
+    }
 
-        $instance->down();
-        $instance->set('path3');
-
-        $expected = 'path0.path1.path2.path3';
-        $this->assertSame(
-            $expected,
-            ArrayPath::toString($instance->fetch(0, $instance->current()))
-        );
+    /**
+     * @dataProvider dataProviderToArray
+     *
+     * @param mixed $expected
+     * @param mixed $input
+     */
+    public function testToArray($expected, $input)
+    {
+        $this->assertSame($expected, ArrayPath::toArray($input));
     }
 }
