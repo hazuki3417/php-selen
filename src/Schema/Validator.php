@@ -118,24 +118,20 @@ class Validator
                     continue;
                 }
 
-                // NOTE: 値の検証が必要でkeyが存在するときは処理を継続する。
-                if ($define->isAssocArrayDefine()) {
-                    // key定義ありのときの処理
-                    foreach ($define->valueValidateExecutes as $execute) {
-                        $validateResult = $this->valueValidate($execute, $input[$define->key->getName()]);
-                        $this->validateResults[] = $validateResult;
-                    }
-                    continue;
-                }
+                foreach ($define->valueValidateExecutes as $execute) {
+                    $validateResult = $define->isAssocArrayDefine() ?
+                        $this->valueValidate($execute, $input[$define->key->getName()]) :
+                        $this->valueValidate($execute, $input);
+                    $this->validateResults[] = $validateResult;
 
-                if ($define->isIndexArrayDefine()) {
-                    // key定義なしのときの処理
-                    foreach ($define->valueValidateExecutes as $execute) {
-                        $validateResult = $this->valueValidate($execute, $input);
-                        $this->validateResults[] = $validateResult;
+                    if ($validateResult->getResult()) {
+                        // 検証結果が合格の場合は控えている検証処理を実行する
+                        continue;
                     }
-                    continue;
+                    // 検証結果が不合格の場合は控えている検証処理は実行しない
+                    break;
                 }
+                continue;
             }
 
             if ($define->nestedTypeDefineExists()) {
