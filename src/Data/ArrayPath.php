@@ -117,7 +117,7 @@ class ArrayPath
      */
     public static function toArray(string $path): array
     {
-        if($path === ''){
+        if ($path === '') {
             return [];
         }
         return \explode(self::$separator, $path);

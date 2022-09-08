@@ -68,7 +68,6 @@ class ArrayPathTest extends TestCase
         $this->assertNull($instance->set('path1'));
     }
 
-
     public function testFetch()
     {
         $instance = new ArrayPath();
@@ -130,7 +129,6 @@ class ArrayPathTest extends TestCase
         $this->expectException(\ValueError::class);
         $instance->fetch(1, 0);
     }
-
 
     public function dataProviderToString()
     {
