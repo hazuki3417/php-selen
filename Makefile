@@ -17,6 +17,10 @@ package-dumpautoload: composer;
 runner:
 	docker run -t --rm -v ${PWD}:/var/www/html -w /var/www/html php:${IMAGE_TAG} ${COMMAND}
 
+php-cs-fixer: IMAGE_TAG +=8.0-alpine
+php-cs-fixer: COMMAND +=php vendor/bin/php-cs-fixer fix
+php-cs-fixer: runner;
+
 generate-api-coverage: IMAGE_TAG +=7.2-alpine
 generate-api-coverage: COMMAND +=phpdbg -qrr vendor/bin/phpunit -c phpunit.coverage.xml
 generate-api-coverage: runner;
