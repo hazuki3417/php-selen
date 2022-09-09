@@ -10,8 +10,10 @@ namespace Selen\Schema;
 
 use Selen\Data\ArrayPath;
 use Selen\Schema\Validate\ArrayDefine;
+use Selen\Schema\Validate\Define;
 use Selen\Schema\Validate\Model\ValidateResult;
 use Selen\Schema\Validate\Model\ValidatorResult;
+use Selen\Schema\Validate\ValueValidateInterface;
 
 class Validator
 {
@@ -89,21 +91,15 @@ class Validator
                 $this->arrayPath->setCurrentPath('[]');
             }
 
-            /** @var bool $isSkipValueValidate 値の検証をスキップするかどうかを保持する変数 */
-            $isSkipValueValidate = false;
-
             if ($define->isKeyValidate()) {
                 // keyの検証処理
                 $validateResult = $this->keyValidate($define, $input);
                 $this->validateResults[] = $validateResult;
-                // NOTE: keyが存在しない場合は値の検証をスキップする
-                $isSkipValueValidate = !$validateResult->getResult();
             }
 
             if ($define->isValueValidate()) {
                 // valueの検証処理
-                if ($isSkipValueValidate) {
-                    // NOTE: 値の検証は必要だが、keyが存在しないため検証できない。その場合はスキップする。
+                if ($this->isSkipValueValidate($define, $input)) {
                     continue;
                 }
 
@@ -163,6 +159,27 @@ class Validator
         $this->arrayPath->up();
     }
 
+    /**
+     * 値のバリデーション処理をスキップするかどうか確認します
+     *
+     * @param \Selen\Schema\Validator\Define $define
+     *
+     * @return bool スキップする場合はtrueを、それ以外の場合はfalseを返します
+     */
+    private function isSkipValueValidate(Define $define, array $input): bool
+    {
+        // NOTE: 定義側のkey名はnullを許容していない。nullのときはindex array定義なので検証は必要
+        if ($define->key->getName() === null) {
+            return false;
+        }
+        return !array_key_exists($define->key->getName(), $input);
+    }
+
+    /**
+     * 配列の階層パス文字列を取得します
+     *
+     * @return string 配列の階層パス文字列を返します
+     */
     private function getArrayPathStr(): string
     {
         return ArrayPath::toString($this->arrayPath->getPaths());
@@ -177,18 +194,11 @@ class Validator
     private function keyValidate($define, $value): ValidateResult
     {
         $validateResult = new ValidateResult(true, $this->getArrayPathStr());
-
-        if ($define->isAssocArrayDefine()) {
-            return \array_key_exists($define->key->getName(), $value) ?
-                $validateResult :
-                $validateResult
-                    ->setResult(false)
-                    ->setMessage('key is required');
-        }
-
-        if ($define->isIndexArrayDefine()) {
-            return $validateResult;
-        }
+        return \array_key_exists($define->key->getName(), $value) ?
+            $validateResult :
+            $validateResult
+                ->setResult(false)
+                ->setMessage('key is required');
     }
 
     /**

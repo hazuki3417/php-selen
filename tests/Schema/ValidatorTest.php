@@ -13,6 +13,7 @@ use PHPUnit\Framework\TestCase;
 use Selen\Schema\Validate\ArrayDefine;
 use Selen\Schema\Validate\Define;
 use Selen\Schema\Validate\Model\ValidateResult;
+use Selen\Schema\Validate\ValueValidateInterface;
 use Selen\Schema\Validator;
 
 /**
@@ -355,6 +356,108 @@ class ValidatorTest extends TestCase
             'string3',
             true,
             'string5',
+        ];
+
+        $validator = Validator::new();
+        $result = $validator->arrayDefine($define)->execute($input);
+        $this->assertValidatorClass($expectedSuccess, $expectedValidateResults, $result);
+    }
+
+    /**
+     * 値のバリデーションテスト（1次元配列）定義は存在するが、定義に対応するinput値が存在しないケース
+     */
+    public function testPattern102()
+    {
+        $expectedSuccess = false;
+        $expectedValidateResults = [
+            new ValidateResult(false, 'key1', 'key is required'),
+            // new ValidateResult(false, 'key2', 'Invalid value type. Expected string type.'),
+        ];
+
+        $callableIsString = function ($value, $result) {
+            // @var Selen\Schema\Validate\Model\ValidateResult $result
+            return \is_string($value) ?
+                    $result->setResult(true) :
+                    $result->setResult(false)->setMessage('Invalid value type. Expected string type.');
+        };
+
+        $define = new ArrayDefine(
+            Define::key('key1', true)->value($callableIsString),
+            Define::key('key2', false)->value($callableIsString)
+        );
+
+        $input = [
+            // 'key2' => 0
+        ];
+
+        $validator = Validator::new();
+        $result = $validator->arrayDefine($define)->execute($input);
+        $this->assertValidatorClass($expectedSuccess, $expectedValidateResults, $result);
+    }
+
+    /**
+     * 値のバリデーションテスト（1次元配列）定義は存在し、定義に対応するinput値が存在するケース
+     */
+    public function testPattern103()
+    {
+        $expectedSuccess = false;
+        $expectedValidateResults = [
+            new ValidateResult(true, 'key1'),
+            new ValidateResult(true, 'key1'),
+            new ValidateResult(false, 'key2', 'Invalid value type. Expected string type.'),
+        ];
+
+        $callableIsString = function ($value, $result) {
+            // @var Selen\Schema\Validate\Model\ValidateResult $result
+            return \is_string($value) ?
+                    $result->setResult(true) :
+                    $result->setResult(false)->setMessage('Invalid value type. Expected string type.');
+        };
+
+        $define = new ArrayDefine(
+            Define::key('key1', true)->value($callableIsString),
+            Define::key('key2', false)->value($callableIsString)
+        );
+
+        $input = [
+            'key1' => 'string',
+            'key2' => 0,
+        ];
+
+        $validator = Validator::new();
+        $result = $validator->arrayDefine($define)->execute($input);
+        $this->assertValidatorClass($expectedSuccess, $expectedValidateResults, $result);
+    }
+
+    /**
+     * 値のバリデーションテスト（1次元配列）interfaceを使用した値バリデーション実装
+     */
+    public function testPattern104()
+    {
+        $expectedSuccess = false;
+        $expectedValidateResults = [
+            new ValidateResult(true, 'key1'),
+            new ValidateResult(true, 'key1'),
+            new ValidateResult(false, 'key2', 'Invalid value type. Expected string type.'),
+        ];
+
+        $validateResultStub1 = new ValidateResult(true, 'key1');
+        $validateResultStub2 = new ValidateResult(false, 'key2', 'Invalid value type. Expected string type.');
+
+        $valueValidateStub1 = $this->createStub(ValueValidateInterface::class);
+        $valueValidateStub1->method('execute')->willReturn($validateResultStub1);
+
+        $valueValidateStub2 = $this->createStub(ValueValidateInterface::class);
+        $valueValidateStub2->method('execute')->willReturn($validateResultStub2);
+
+        $define = new ArrayDefine(
+            Define::key('key1', true)->value($valueValidateStub1),
+            Define::key('key2', false)->value($valueValidateStub2)
+        );
+
+        $input = [
+            'key1' => 'string',
+            'key2' => 0,
         ];
 
         $validator = Validator::new();
