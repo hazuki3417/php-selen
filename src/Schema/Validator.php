@@ -17,6 +17,9 @@ use Selen\Schema\Validate\ValueValidateInterface;
 
 class Validator
 {
+    /** @var bool */
+    private $additionalKey = false;
+
     /** @var \Selen\Schema\Validate\ArrayDefine */
     private $arrayDefine;
 
@@ -44,6 +47,21 @@ class Validator
     public static function new(): Validator
     {
         return new self();
+    }
+
+    /**
+     * 追加キーの検証を行うかどうか指定します
+     *
+     * TODO: 本体処理は未実装。
+     *
+     * @param bool $verify 追加キーの検証を行う場合はtrueを、行わない場合はfalseを渡します
+     *
+     * @return \Selen\Schema\Validator
+     */
+    public function additionalKey(bool $verify = false): Validator
+    {
+        $this->additionalKey = $verify;
+        return $this;
     }
 
     /**
