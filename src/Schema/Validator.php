@@ -15,7 +15,7 @@ use Selen\Schema\Validate\Model\ValidatorResult;
 
 class Validator
 {
-    /** @var \Selen\Schema\Validate\ArrayDefine||null */
+    /** @var \Selen\Schema\Validate\ArrayDefine */
     private $arrayDefine;
 
     /** @var \Selen\Schema\Validate\Model\ValidateResult[] */
@@ -48,10 +48,8 @@ class Validator
      * key・valueの検証処理を設定します（個別設定）
      *
      * @return \Selen\Schema\Validator
-     *
-     * @param ?\Selen\Schema\Validate\ArrayDefine $arrayDefine
      */
-    public function arrayDefine(?ArrayDefine $arrayDefine): Validator
+    public function arrayDefine(ArrayDefine $arrayDefine): Validator
     {
         $this->arrayDefine = $arrayDefine;
         return $this;
@@ -83,15 +81,8 @@ class Validator
      */
     private function defineRoutine(
         array $input,
-        ?ArrayDefine $arrayDefine
+        ArrayDefine $arrayDefine
     ) {
-        if ($arrayDefine === null) {
-            // 定義がないときの処理
-            return;
-        }
-
-        // 定義があるときの処理
-
         $this->arrayPath->down();
         /** @var \Selen\Schema\Validate\Define $define */
         foreach ($arrayDefine->defines as $define) {

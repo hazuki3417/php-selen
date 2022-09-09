@@ -43,7 +43,7 @@ class ValidatorTest extends TestCase
     {
         $expectedSuccess = false;
         $expectedValidateResults = [
-            new ValidateResult(true, 'key1'),
+            new ValidateResult(false, 'key1', 'key is required'),
             new ValidateResult(false, 'key2', 'key is required'),
             // new ValidateResult(true, 'key3'), key3はoptionalなのでkeyの検証は実施されないため、結果も存在しない
             // new ValidateResult(true, 'key4'), key4はoptionalなのでkeyの検証は実施されないため、結果も存在しない
@@ -56,17 +56,11 @@ class ValidatorTest extends TestCase
             Define::key('key4', false)
         );
 
-        $input = [
-            'key1' => '0',
-            // 'key2' => '0',
-            'key3' => '0',
-            // 'key4' => '0',
-        ];
+        $input = [];
 
         $validator = Validator::new();
 
         $result = $validator->arrayDefine($define)->execute($input);
-        $validator->debug();
 
         $this->assertValidatorClass($expectedSuccess, $expectedValidateResults, $result);
     }
@@ -101,7 +95,6 @@ class ValidatorTest extends TestCase
         $validator = Validator::new();
 
         $result = $validator->arrayDefine($define)->execute($input);
-        $validator->debug();
 
         $this->assertValidatorClass($expectedSuccess, $expectedValidateResults, $result);
     }
