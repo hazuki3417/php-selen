@@ -19,6 +19,9 @@ class ArrayPath
     /** @var int */
     private $currentIndex = 0;
 
+    /** @var int */
+    private $minCurrentIndex = 0;
+
     /**
      * 現在位置から1つ上の階層に移動します
      *
@@ -26,9 +29,10 @@ class ArrayPath
      */
     public function up(): bool
     {
-        if ($this->currentIndex <= 0) {
+        if ($this->currentIndex <= $this->minCurrentIndex) {
             return false;
         }
+        unset($this->paths[$this->currentIndex]);
         --$this->currentIndex;
         return true;
     }
@@ -50,40 +54,28 @@ class ArrayPath
     }
 
     /**
-     * key名を設定します。key名はcurrent()が返す階層に設定されます
+     * key名を設定します
      *
-     * @param string $pathName key名を渡します
+     * @param string $name key名を渡します
+     * @return bool 成功した場合はtrueを、それ以外の場合はfalseを返します
      */
-    public function set(string $pathName)
+    public function setCurrentPath(string $name)
     {
-        $this->paths[$this->current()] = $pathName;
+        if ($this->currentIndex <= $this->minCurrentIndex) {
+            return false;
+        }
+        $this->paths[$this->currentIndex] = $name;
+        return true;
     }
 
     /**
-     * 指定した範囲のkey名を取得します
+     * 配列の階層情報を取得します。
      *
-     * @param int $start 取得する階層の開始位置を渡します
-     * @param int $end 取得する階層の終了位置を渡します
-     *
-     * @return array 指定した範囲のkey名を返します
+     * @return array 配列の階層情報を返します
      */
-    public function fetch(int $start, int $end): array
+    public function getPaths(): array
     {
-        if ($start < 0) {
-            throw new \ValueError('Invalid value range for $start.');
-        }
-
-        if (count($this->paths) < $end) {
-            throw new \ValueError('Invalid value range for $end.');
-        }
-
-        if ($end < $start) {
-            throw new \ValueError('Invalid value range. Please specify a value smaller than $end for $start.');
-        }
-
-        $length = ($end - $start) + 1;
-
-        return \array_slice($this->paths, $start, $length);
+        return $this->paths;
     }
 
     /**
@@ -91,13 +83,13 @@ class ArrayPath
      *
      * @return int 現在位置の階層を返します
      */
-    public function current(): int
+    public function getCurrentIndex(): int
     {
         return $this->currentIndex;
     }
 
     /**
-     *配列形式の階層表現を文字列形式に変換します
+     * 配列形式の階層表現を文字列形式に変換します
      *
      * @param array $paths 配列形式の階層表現配列を渡します
      *

@@ -33,101 +33,96 @@ class ArrayPathTest extends TestCase
         $this->assertInstanceOf(ArrayPath::class, new ArrayPath());
     }
 
-    public function testUpDownCurrent()
+    public function testDown()
     {
         $instance = new ArrayPath();
 
-        $this->assertSame(0, $instance->current());
+        // verify default state
+        $this->assertSame(0, $instance->getCurrentIndex());
+        $this->assertSame([], $instance->getPaths());
 
+        // verify action
+        $this->assertSame(true, $instance->down());
+        // verify state
+        $this->assertSame(1, $instance->getCurrentIndex());
+        $this->assertSame([1 => ''], $instance->getPaths());
+
+        // verify action
+        $this->assertSame(true, $instance->down());
+        // verify state
+        $this->assertSame(2, $instance->getCurrentIndex());
+        $this->assertSame([1 => '', 2 => ''], $instance->getPaths());
+
+        // verify action
+        $this->assertSame(true, $instance->down());
+        // verify state
+        $this->assertSame(3, $instance->getCurrentIndex());
+        $this->assertSame([1 => '', 2 => '', 3 => ''], $instance->getPaths());
+    }
+
+    public function testUp()
+    {
+        $instance = new ArrayPath();
+
+        // verify default state
+        $this->assertSame(0, $instance->getCurrentIndex());
+        $this->assertSame([], $instance->getPaths());
+
+        // verify action
         $this->assertSame(false, $instance->up());
-        $this->assertSame(0, $instance->current());
+        // verify state
+        $this->assertSame(0, $instance->getCurrentIndex());
+        $this->assertSame([], $instance->getPaths());
 
-        $this->assertSame(true, $instance->down());
-        $this->assertSame(1, $instance->current());
+        $instance->down();
+        $instance->down();
+        $instance->down();
+        // verify state
+        $this->assertSame(3, $instance->getCurrentIndex());
+        $this->assertSame([1 => '', 2 => '', 3 => ''], $instance->getPaths());
 
+        // verify action
         $this->assertSame(true, $instance->up());
-        $this->assertSame(0, $instance->current());
+        // verify state
+        $this->assertSame(2, $instance->getCurrentIndex());
+        $this->assertSame([1 => '', 2 => ''], $instance->getPaths());
 
-        $this->assertSame(true, $instance->down());
-        $this->assertSame(1, $instance->current());
-
-        $this->assertSame(true, $instance->down());
-        $this->assertSame(2, $instance->current());
-
-        $this->assertSame(true, $instance->down());
-        $this->assertSame(3, $instance->current());
-
+        // verify action
         $this->assertSame(true, $instance->up());
-        $this->assertSame(2, $instance->current());
+        // verify state
+        $this->assertSame(1, $instance->getCurrentIndex());
+        $this->assertSame([1 => ''], $instance->getPaths());
     }
 
-    public function testSet()
+    public function testSetCurrentPath()
     {
         $instance = new ArrayPath();
 
-        $this->assertNull($instance->set('path1'));
-    }
+        // action
+        $this->assertFalse($instance->setCurrentPath('key1'));
+        // verify default state
+        $this->assertSame(0, $instance->getCurrentIndex());
+        $this->assertSame([], $instance->getPaths());
 
-    public function testFetch()
-    {
-        $instance = new ArrayPath();
-        $instance->set('path0');
-
+        // verify action
         $instance->down();
-        $instance->set('path1');
+        $this->assertTrue($instance->setCurrentPath('key1'));
+        // verify state
+        $this->assertSame(1, $instance->getCurrentIndex());
+        $this->assertSame([1 => 'key1'], $instance->getPaths());
 
+        // verify action
         $instance->down();
-        $instance->set('path2');
+        $this->assertTrue($instance->setCurrentPath('key2'));
+        // verify state
+        $this->assertSame(2, $instance->getCurrentIndex());
+        $this->assertSame([1 => 'key1', 2 => 'key2'], $instance->getPaths());
 
-        $instance->down();
-
-        $this->assertSame(['path0'], $instance->fetch(0, 0));
-        $this->assertSame(['path0', 'path1'], $instance->fetch(0, 1));
-        $this->assertSame(['path0', 'path1', 'path2'], $instance->fetch(0, 2));
-        $this->assertSame(['path1'], $instance->fetch(1, 1));
-        $this->assertSame(['path1', 'path2'], $instance->fetch(1, 2));
-        $this->assertSame(['path0', 'path1', 'path2', ''], $instance->fetch(0, $instance->current()));
-
-        $instance->up();
-        $instance->up();
-        $instance->up();
-
-        $this->assertSame(['path0'], $instance->fetch(0, 0));
-        $this->assertSame(['path0', 'path1'], $instance->fetch(0, 1));
-        $this->assertSame(['path0', 'path1', 'path2'], $instance->fetch(0, 2));
-        $this->assertSame(['path1'], $instance->fetch(1, 1));
-        $this->assertSame(['path1', 'path2'], $instance->fetch(1, 2));
-        $this->assertSame(['path0'], $instance->fetch(0, $instance->current()));
-    }
-
-    public function testFetchException1()
-    {
-        $instance = new ArrayPath();
-
-        $this->expectException(\ValueError::class);
-        $instance->fetch(-1, 0);
-    }
-
-    public function testFetchException2()
-    {
-        $instance = new ArrayPath();
-
-        $this->expectException(\ValueError::class);
-        $instance->fetch(0, 3);
-    }
-
-    public function testFetchException3()
-    {
-        $instance = new ArrayPath();
-        $instance->set('path0');
-
-        $instance->down();
-        $instance->set('path1');
-
-        $instance->down();
-
-        $this->expectException(\ValueError::class);
-        $instance->fetch(1, 0);
+        // verify action
+        $this->assertTrue($instance->setCurrentPath('renameKey2'));
+        // verify state
+        $this->assertSame(2, $instance->getCurrentIndex());
+        $this->assertSame([1 => 'key1', 2 => 'renameKey2'], $instance->getPaths());
     }
 
     public function dataProviderToString()
