@@ -246,20 +246,20 @@ class ValidatorTest extends TestCase
                     'key1-1-1' => 0,
                     'key1-1-2' => 0,
                     'key1-1-3' => 0,
-                ]
+                ],
             ],
             'key2' => [
                 'key2-1' => [
                     'key2-1-1' => 0,
                     'key2-1-3' => 0,
-                ]
+                ],
             ],
             'key3' => [
                 'key3-1' => [
                     'key3-1-1' => 0,
                     'key3-1-2' => 0,
                     'key3-1-3' => 0,
-                ]
+                ],
             ],
             'key4' => [
                 [
@@ -276,8 +276,85 @@ class ValidatorTest extends TestCase
                     'key5-1-1' => 0,
                     'key5-1-2' => 0,
                     'key5-1-3' => 0,
-                ]
+                ],
             ],
+        ];
+
+        $validator = Validator::new();
+        $result = $validator->arrayDefine($define)->execute($input);
+        $this->assertValidatorClass($expectedSuccess, $expectedValidateResults, $result);
+    }
+
+    /**
+     * 値のバリデーションテスト（1次元配列）
+     */
+    public function testPattern100()
+    {
+        $expectedSuccess = false;
+        $expectedValidateResults = [
+            new ValidateResult(true, 'key1'),
+            new ValidateResult(true, 'key1'),
+            new ValidateResult(true, 'key2'),
+            new ValidateResult(false, 'key2', 'Invalid value type. Expected string type.'),
+            new ValidateResult(true, 'key3'),
+            new ValidateResult(false, 'key4', 'Invalid value type. Expected string type.'),
+        ];
+
+        $callableIsString = function ($value, $result) {
+            // @var Selen\Schema\Validate\Model\ValidateResult $result
+            return \is_string($value) ?
+                    $result->setResult(true) :
+                    $result->setResult(false)->setMessage('Invalid value type. Expected string type.');
+        };
+
+        $define = new ArrayDefine(
+            Define::key('key1', true)->value($callableIsString),
+            Define::key('key2', true)->value($callableIsString),
+            Define::key('key3', false)->value($callableIsString),
+            Define::key('key4', false)->value($callableIsString)
+        );
+
+        $input = [
+            'key1' => 'string',
+            'key2' => 0,
+            'key3' => 'string',
+            'key4' => 0,
+        ];
+
+        $validator = Validator::new();
+        $result = $validator->arrayDefine($define)->execute($input);
+        $this->assertValidatorClass($expectedSuccess, $expectedValidateResults, $result);
+    }
+
+    /**
+     * 値のバリデーションテスト（1次元配列）
+     */
+    public function testPattern101()
+    {
+        $expectedSuccess = false;
+        $expectedValidateResults = [
+            new ValidateResult(false, '[]', 'Invalid value type. Values in array expected string type.'),
+        ];
+
+        $callableIsString = function ($value, $result) {
+            // @var array $value
+            // @var Selen\Schema\Validate\Model\ValidateResult $result
+            return \is_string($value) ?
+                    $result->setResult(true) :
+                    $result->setResult(false)->setMessage('Invalid value type. Values in array expected string type.');
+        };
+
+        $define = new ArrayDefine(
+            Define::noKey()->value($callableIsString)
+        );
+
+        $input = [
+            'string0',
+            0,
+            'string2',
+            'string3',
+            true,
+            'string5',
         ];
 
         $validator = Validator::new();

@@ -84,6 +84,11 @@ class Validator
             if ($define->isAssocArrayDefine()) {
                 $this->arrayPath->setCurrentPath($define->key->getName());
             }
+
+            if ($define->isIndexArrayDefine()) {
+                $this->arrayPath->setCurrentPath('[]');
+            }
+
             // NOTE: keyなしの場合は再帰処理の前段で配列パスの設定を行う
 
             /** @var bool $isSkipValueValidate 値の検証をスキップするかどうかを保持する変数 */
