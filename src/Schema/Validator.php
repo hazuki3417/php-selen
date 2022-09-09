@@ -66,11 +66,6 @@ class Validator
         return new ValidatorResult(...$this->validateResults);
     }
 
-    public function debug()
-    {
-        \var_dump('log', $this->validateResults);
-    }
-
     /**
      * 定義した配列形式に変換します（個別設定）
      *
@@ -87,7 +82,7 @@ class Validator
         /** @var \Selen\Schema\Validate\Define $define */
         foreach ($arrayDefine->defines as $define) {
             if ($define->isAssocArrayDefine()) {
-                $this->arrayPath->set($define->key->getName());
+                $this->arrayPath->setCurrentPath($define->key->getName());
             }
             // NOTE: keyなしの場合は再帰処理の前段で配列パスの設定を行う
 
@@ -153,7 +148,7 @@ class Validator
 
                     foreach ($passRecursionInput as $index => $item) {
                         $path = \sprintf('[%s]', $index);
-                        $this->arrayPath->set($path);
+                        $this->arrayPath->setCurrentPath($path);
                         $this->defineRoutine(
                             $item,
                             $define->arrayDefine
@@ -167,8 +162,7 @@ class Validator
 
     private function getArrayPathStr(): string
     {
-        $arrayPaths = $this->arrayPath->fetch(0, $this->arrayPath->current());
-        return ArrayPath::toString($arrayPaths);
+        return ArrayPath::toString($this->arrayPath->getPaths());
     }
 
     /**
