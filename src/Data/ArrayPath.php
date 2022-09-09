@@ -57,6 +57,7 @@ class ArrayPath
      * key名を設定します
      *
      * @param string $name key名を渡します
+     *
      * @return bool 成功した場合はtrueを、それ以外の場合はfalseを返します
      */
     public function setCurrentPath(string $name)
