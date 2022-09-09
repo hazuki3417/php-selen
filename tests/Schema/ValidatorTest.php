@@ -45,8 +45,6 @@ class ValidatorTest extends TestCase
         $expectedValidateResults = [
             new ValidateResult(false, 'key1', 'key is required'),
             new ValidateResult(false, 'key2', 'key is required'),
-            // new ValidateResult(true, 'key3'), key3はoptionalなのでkeyの検証は実施されないため、結果も存在しない
-            // new ValidateResult(true, 'key4'), key4はoptionalなのでkeyの検証は実施されないため、結果も存在しない
         ];
 
         $define = new ArrayDefine(
@@ -72,8 +70,6 @@ class ValidatorTest extends TestCase
         $expectedValidateResults = [
             new ValidateResult(true, 'key1'),
             new ValidateResult(true, 'key2'),
-            // new ValidateResult(true, 'key3'), key3はoptionalなのでkeyの検証は実施されないため、結果も存在しない
-            // new ValidateResult(true, 'key4'), key4はoptionalなのでkeyの検証は実施されないため、結果も存在しない
         ];
 
         $define = new ArrayDefine(
@@ -110,31 +106,20 @@ class ValidatorTest extends TestCase
             new ValidateResult(false, 'key1', 'key is required'),
             new ValidateResult(false, 'key1.key1-1', 'key is required'),
             new ValidateResult(false, 'key1.key1-1.key1-1-1', 'key is required'),
-            // new ValidateResult(false, 'key1.key1-1.key1-1-2'),
             new ValidateResult(false, 'key1.key1-1.key1-1-3', 'key is required'),
 
-            // new ValidateResult(false, 'key2'),
             new ValidateResult(false, 'key2.key2-1', 'key is required'),
             new ValidateResult(false, 'key2.key2-1.key2-1-1', 'key is required'),
-            // new ValidateResult(false, 'key2.key2-1.key2-1-2'),
             new ValidateResult(false, 'key2.key2-1.key2-1-3', 'key is required'),
 
-            // new ValidateResult(false, 'key3'),
-            // new ValidateResult(false, 'key3.key3-1'),
             new ValidateResult(false, 'key3.key3-1.key3-1-1', 'key is required'),
-            // new ValidateResult(false, 'key3.key3-1.key3-1-2'),
             new ValidateResult(false, 'key3.key3-1.key3-1-3', 'key is required'),
 
             new ValidateResult(false, 'key4', 'key is required'),
-            // new ValidateResult(false, 'key4.[0]'),
             new ValidateResult(false, 'key4.[0].key4-1-1', 'key is required'),
-            // new ValidateResult(false, 'key4.[0].key4-1-2'),
             new ValidateResult(false, 'key4.[0].key4-1-3', 'key is required'),
 
-            // new ValidateResult(false, 'key5'),
-            // new ValidateResult(false, 'key5.[0]'),
             new ValidateResult(false, 'key5.[0].key5-1-1', 'key is required'),
-            // new ValidateResult(false, 'key5.[0].key5-1-2'),
             new ValidateResult(false, 'key5.[0].key5-1-3', 'key is required'),
         ];
 
@@ -144,21 +129,21 @@ class ValidatorTest extends TestCase
                     Define::key('key1-1-1', true),
                     Define::key('key1-1-2', false),
                     Define::key('key1-1-3', true)
-                ),
+                )
             ),
             Define::key('key2', false)->arrayDefine(
                 Define::key('key2-1', true)->arrayDefine(
                     Define::key('key2-1-1', true),
                     Define::key('key2-1-2', false),
                     Define::key('key2-1-3', true)
-                ),
+                )
             ),
             Define::key('key3', false)->arrayDefine(
                 Define::key('key3-1', false)->arrayDefine(
                     Define::key('key3-1-1', true),
                     Define::key('key3-1-2', false),
                     Define::key('key3-1-3', true)
-                ),
+                )
             ),
             Define::key('key4', true)->arrayDefine(
                 Define::noKey()->arrayDefine(
@@ -173,10 +158,127 @@ class ValidatorTest extends TestCase
                     Define::key('key5-1-2', false),
                     Define::key('key5-1-3', true)
                 )
-            ),
+            )
         );
 
         $input = [];
+
+        $validator = Validator::new();
+        $result = $validator->arrayDefine($define)->execute($input);
+        $this->assertValidatorClass($expectedSuccess, $expectedValidateResults, $result);
+    }
+
+    /**
+     * keyのバリデーションテスト（多次元配列）
+     *
+     * @param mixed $expectedSuccess
+     * @param mixed $expectedValidateResults
+     * @param mixed $result
+     */
+    public function testPattern011()
+    {
+        $expectedSuccess = true;
+        $expectedValidateResults = [
+            // NOTE: コメントアウトされた行は記録されない想定の検証結果
+            new ValidateResult(true, 'key1'),
+            new ValidateResult(true, 'key1.key1-1'),
+            new ValidateResult(true, 'key1.key1-1.key1-1-1'),
+            new ValidateResult(true, 'key1.key1-1.key1-1-3'),
+
+            new ValidateResult(true, 'key2.key2-1'),
+            new ValidateResult(true, 'key2.key2-1.key2-1-1'),
+            new ValidateResult(true, 'key2.key2-1.key2-1-3'),
+
+            new ValidateResult(true, 'key3.key3-1.key3-1-1'),
+            new ValidateResult(true, 'key3.key3-1.key3-1-3'),
+
+            new ValidateResult(true, 'key4'),
+            new ValidateResult(true, 'key4.[0].key4-1-1'),
+            new ValidateResult(true, 'key4.[0].key4-1-3'),
+            new ValidateResult(true, 'key4.[1].key4-1-1'),
+            new ValidateResult(true, 'key4.[1].key4-1-3'),
+
+            new ValidateResult(true, 'key5.[0].key5-1-1'),
+            new ValidateResult(true, 'key5.[0].key5-1-3'),
+        ];
+
+        $define = new ArrayDefine(
+            Define::key('key1', true)->arrayDefine(
+                Define::key('key1-1', true)->arrayDefine(
+                    Define::key('key1-1-1', true),
+                    Define::key('key1-1-2', false),
+                    Define::key('key1-1-3', true)
+                )
+            ),
+            Define::key('key2', false)->arrayDefine(
+                Define::key('key2-1', true)->arrayDefine(
+                    Define::key('key2-1-1', true),
+                    Define::key('key2-1-2', false),
+                    Define::key('key2-1-3', true)
+                )
+            ),
+            Define::key('key3', false)->arrayDefine(
+                Define::key('key3-1', false)->arrayDefine(
+                    Define::key('key3-1-1', true),
+                    Define::key('key3-1-2', false),
+                    Define::key('key3-1-3', true)
+                )
+            ),
+            Define::key('key4', true)->arrayDefine(
+                Define::noKey()->arrayDefine(
+                    Define::key('key4-1-1', true),
+                    Define::key('key4-1-2', false),
+                    Define::key('key4-1-3', true)
+                )
+            ),
+            Define::key('key5', false)->arrayDefine(
+                Define::noKey()->arrayDefine(
+                    Define::key('key5-1-1', true),
+                    Define::key('key5-1-2', false),
+                    Define::key('key5-1-3', true)
+                )
+            )
+        );
+
+        $input = [
+            'key1' => [
+                'key1-1' => [
+                    'key1-1-1' => 0,
+                    'key1-1-2' => 0,
+                    'key1-1-3' => 0,
+                ]
+            ],
+            'key2' => [
+                'key2-1' => [
+                    'key2-1-1' => 0,
+                    'key2-1-3' => 0,
+                ]
+            ],
+            'key3' => [
+                'key3-1' => [
+                    'key3-1-1' => 0,
+                    'key3-1-2' => 0,
+                    'key3-1-3' => 0,
+                ]
+            ],
+            'key4' => [
+                [
+                    'key4-1-1' => 0,
+                    'key4-1-3' => 0,
+                ],
+                [
+                    'key4-1-1' => 0,
+                    'key4-1-3' => 0,
+                ],
+            ],
+            'key5' => [
+                [
+                    'key5-1-1' => 0,
+                    'key5-1-2' => 0,
+                    'key5-1-3' => 0,
+                ]
+            ],
+        ];
 
         $validator = Validator::new();
         $result = $validator->arrayDefine($define)->execute($input);
@@ -196,15 +298,16 @@ class ValidatorTest extends TestCase
 
         $verifyValidateResults = $result->getValidateResults();
 
+        $this->assertSame(
+            count($expectedValidateResults),
+            count($verifyValidateResults),
+            '検証値のValidateResultsと期待値のValidateResultsの件数が一致しません'
+        );
+
         foreach ($expectedValidateResults as $index => $expectedValidateResult) {
-            $this->assertArrayHasKey(
-                $index,
-                $verifyValidateResults,
-                '検証値のValidateResultsと期待値のValidateResultsの件数が一致しません'
-            );
             // keyが存在したら中身の検証を行う
             $verifyValidateResult = $verifyValidateResults[$index];
-            $mes = \sprintf('index number: %s', $index);
+            $mes = \sprintf('Failure index number: %s', $index);
             $this->assertSame(
                 $expectedValidateResult->getResult(),
                 $verifyValidateResult->getResult(),
