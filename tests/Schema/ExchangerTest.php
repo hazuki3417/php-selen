@@ -350,7 +350,7 @@ class ExchangerTest extends TestCase
              * - キー名を別の名前に変換（個別）
              * - 値変換（個別）
              */
-            'pattern010' => [
+            'pattern011' => [
                 'expected' => [
                     'dummy_key1'   => 'dummyValue1 add string',
                     'dummy_key2'   => 'dummyValue2 add string',
