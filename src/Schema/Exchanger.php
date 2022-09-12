@@ -238,8 +238,6 @@ class Exchanger
 
             if (\is_array($value)) {
                 // 値が配列なら再帰処理を行う
-                // \var_dump($key);
-                // \var_dump($input[$key]);
                 $input[$key] = $this->inputRoutine(
                     $input[$key]
                 );
