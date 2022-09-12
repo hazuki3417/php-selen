@@ -19,7 +19,7 @@ class Jp
      */
     public static function isKana(string $str)
     {
-        $range = 'ァ-ヺ';
+        $range   = 'ァ-ヺ';
         $pattern = \sprintf('/[%s]/u', $range);
 
         return 0 < preg_match($pattern, $str);
@@ -34,7 +34,7 @@ class Jp
      */
     public static function isHira(string $str)
     {
-        $range = 'ぁ-ゖ';
+        $range   = 'ぁ-ゖ';
         $pattern = \sprintf('/[%s]/u', $range);
 
         return 0 < preg_match($pattern, $str);

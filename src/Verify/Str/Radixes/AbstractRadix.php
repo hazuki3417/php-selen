@@ -10,8 +10,8 @@ namespace Selen\Verify\Str\Radixes;
 
 abstract class AbstractRadix implements RadixInterface
 {
-    public const CARDINALITY = 0;
-    public const NUMBER_RANGE = '';
+    public const CARDINALITY    = 0;
+    public const NUMBER_RANGE   = '';
     public const ALPHABET_RANGE = '';
 
     /**

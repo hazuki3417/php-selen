@@ -35,7 +35,7 @@ abstract class AbstractQueue extends AbstractObjects implements QueueInterface
     public function rewind(): void
     {
         reset($this->objects);
-        $this->workKey = key($this->objects);
+        $this->workKey   = key($this->objects);
         $this->workValue = array_shift($this->objects);
     }
 

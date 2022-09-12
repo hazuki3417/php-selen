@@ -12,11 +12,11 @@ use Selen\Schema\Exchange\Define\Key;
 
 class Define
 {
-    public const KEY_ACTION_NONE = 'none';
-    public const KEY_ACTION_ADD = 'add';
+    public const KEY_ACTION_NONE   = 'none';
+    public const KEY_ACTION_ADD    = 'add';
     public const KEY_ACTION_REMOVE = 'remove';
     public const KEY_ACTION_RENAME = 'rename';
-    public const KEY_ACTIONS = [
+    public const KEY_ACTIONS       = [
         self::KEY_ACTION_NONE,
         self::KEY_ACTION_ADD,
         self::KEY_ACTION_REMOVE,
@@ -75,7 +75,7 @@ class Define
 
         if ($name === null) {
             $allowType = ['integer', 'string'];
-            $mes = \sprintf($format, '$name', 'type', 'type', \implode(', ', $allowType));
+            $mes       = \sprintf($format, '$name', 'type', 'type', \implode(', ', $allowType));
             throw new \InvalidArgumentException($mes);
         }
 
@@ -93,7 +93,7 @@ class Define
 
         if (!\in_array(true, $allowTypeList, true)) {
             $allowType = [null, 'callable', KeyExchangeInterface::class];
-            $mes = \sprintf($format, '$execute', 'type', 'type', \implode(', ', $allowType));
+            $mes       = \sprintf($format, '$execute', 'type', 'type', \implode(', ', $allowType));
             throw new \InvalidArgumentException($mes);
         }
 
@@ -112,7 +112,7 @@ class Define
             default:
                 break;
         }
-        $self = new self($key);
+        $self                     = new self($key);
         $self->keyExchangeExecute = $execute;
 
         return $self;
@@ -139,13 +139,13 @@ class Define
         ];
 
         if (!\in_array(true, $allowTypeList, true)) {
-            $format = 'Invalid %s %s. expected %s %s.';
+            $format    = 'Invalid %s %s. expected %s %s.';
             $allowType = [null, 'callable', ValueExchangeInterface::class];
-            $mes = \sprintf($format, '$execute', 'type', 'type', \implode(', ', $allowType));
+            $mes       = \sprintf($format, '$execute', 'type', 'type', \implode(', ', $allowType));
             throw new \InvalidArgumentException($mes);
         }
 
-        $this->haveCalledValue = true;
+        $this->haveCalledValue      = true;
         $this->valueExchangeExecute = $execute;
         return $this;
     }
@@ -166,7 +166,7 @@ class Define
         // NOTE: 引数の指定がない場合はそのまま通す（エラーにしない）
 
         $this->haveCalledArrayDefine = true;
-        $this->arrayDefine = new ArrayDefine(...$define);
+        $this->arrayDefine           = new ArrayDefine(...$define);
 
         return $this;
     }

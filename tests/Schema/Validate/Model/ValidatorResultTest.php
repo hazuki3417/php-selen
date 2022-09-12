@@ -34,7 +34,7 @@ class ValidatorResultTest extends TestCase
     public function testConstruct1()
     {
         $validateResultStub = $this->createStub(ValidateResult::class);
-        $instance = new ValidatorResult($validateResultStub);
+        $instance           = new ValidatorResult($validateResultStub);
         $this->assertInstanceOf(ValidatorResult::class, $instance);
     }
 
@@ -42,7 +42,7 @@ class ValidatorResultTest extends TestCase
     {
         $validateResultStub1 = $this->createStub(ValidateResult::class);
         $validateResultStub2 = $this->createStub(ValidateResult::class);
-        $instance = new ValidatorResult($validateResultStub1, $validateResultStub2);
+        $instance            = new ValidatorResult($validateResultStub1, $validateResultStub2);
         $this->assertInstanceOf(ValidatorResult::class, $instance);
     }
 
@@ -67,21 +67,21 @@ class ValidatorResultTest extends TestCase
             // バリデーション結果：合格1件、違反0件
             'pattern001' => [
                 'expected' => true,
-                'input' => [
+                'input'    => [
                     $successValidateResultStub,
                 ],
             ],
             // バリデーション結果：合格0件、違反1件
             'pattern002' => [
                 'expected' => false,
-                'input' => [
+                'input'    => [
                     $failureValidateResultStub,
                 ],
             ],
             // バリデーション結果：合格2件、違反0件
             'pattern003' => [
                 'expected' => true,
-                'input' => [
+                'input'    => [
                     $successValidateResultStub,
                     $successValidateResultStub,
                 ],
@@ -89,7 +89,7 @@ class ValidatorResultTest extends TestCase
             // バリデーション結果：合格0件、違反2件
             'pattern004' => [
                 'expected' => false,
-                'input' => [
+                'input'    => [
                     $failureValidateResultStub,
                     $failureValidateResultStub,
                 ],
@@ -97,7 +97,7 @@ class ValidatorResultTest extends TestCase
             // バリデーション結果：合格1件、違反1件
             'pattern005' => [
                 'expected' => false,
-                'input' => [
+                'input'    => [
                     $successValidateResultStub,
                     $failureValidateResultStub,
                 ],
@@ -126,21 +126,21 @@ class ValidatorResultTest extends TestCase
             // バリデーション結果：合格1件、違反0件
             'pattern001' => [
                 'expected' => false,
-                'input' => [
+                'input'    => [
                     $successValidateResultStub,
                 ],
             ],
             // バリデーション結果：合格0件、違反1件
             'pattern002' => [
                 'expected' => true,
-                'input' => [
+                'input'    => [
                     $failureValidateResultStub,
                 ],
             ],
             // バリデーション結果：合格2件、違反0件
             'pattern003' => [
                 'expected' => false,
-                'input' => [
+                'input'    => [
                     $successValidateResultStub,
                     $successValidateResultStub,
                 ],
@@ -148,7 +148,7 @@ class ValidatorResultTest extends TestCase
             // バリデーション結果：合格0件、違反2件
             'pattern004' => [
                 'expected' => true,
-                'input' => [
+                'input'    => [
                     $failureValidateResultStub,
                     $failureValidateResultStub,
                 ],
@@ -156,7 +156,7 @@ class ValidatorResultTest extends TestCase
             // バリデーション結果：合格1件、違反1件
             'pattern005' => [
                 'expected' => true,
-                'input' => [
+                'input'    => [
                     $successValidateResultStub,
                     $failureValidateResultStub,
                 ],
@@ -180,7 +180,7 @@ class ValidatorResultTest extends TestCase
     {
         $validateResultStub1 = $this->createStub(ValidateResult::class);
         $validateResultStub2 = $this->createStub(ValidateResult::class);
-        $instance = new ValidatorResult($validateResultStub1, $validateResultStub2);
+        $instance            = new ValidatorResult($validateResultStub1, $validateResultStub2);
 
         $validateResults = $instance->getValidateResults();
         $this->assertIsArray($validateResults);

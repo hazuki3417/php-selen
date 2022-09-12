@@ -31,14 +31,13 @@ class ArrayDefine
 
         foreach ($defines as $define) {
             /** @var bool $isIndexDefineDuplicate index配列の定義が複数存在するか */
-            $isIndexDefineDuplicate =
-                $indexArrayDefineExists && $define->isIndexArrayDefine();
+            $isIndexDefineDuplicate = $indexArrayDefineExists && $define->isIndexArrayDefine();
 
             $errMes = 'Illegal combination of Define classes.';
 
             if ($isIndexDefineDuplicate) {
                 $reasonMes = 'Multiple definitions without key cannot be specified.';
-                $mes = \sprintf('%s %s', $errMes, $reasonMes);
+                $mes       = \sprintf('%s %s', $errMes, $reasonMes);
                 throw new LogicException($mes);
             }
 
@@ -50,12 +49,11 @@ class ArrayDefine
                 $assocArrayDefineExists = true;
             }
 
-            $isDefineConflict =
-                $indexArrayDefineExists && $assocArrayDefineExists;
+            $isDefineConflict = $indexArrayDefineExists && $assocArrayDefineExists;
 
             if ($isDefineConflict) {
                 $reasonMes = 'Definitions with and without key are mixed.';
-                $mes = \sprintf('%s %s', $errMes, $reasonMes);
+                $mes       = \sprintf('%s %s', $errMes, $reasonMes);
                 throw new LogicException($mes);
             }
         }

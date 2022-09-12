@@ -59,9 +59,9 @@ class Exchanger
         ];
 
         if (!\in_array(true, $allowTypeList, true)) {
-            $format = 'Invalid $execute type. expected type %s.';
+            $format    = 'Invalid $execute type. expected type %s.';
             $allowType = [null, 'callable', KeyExchangeInterface::class];
-            $mes = \sprintf($format, \implode(', ', $allowType));
+            $mes       = \sprintf($format, \implode(', ', $allowType));
             throw new \InvalidArgumentException($mes);
         }
 
@@ -86,9 +86,9 @@ class Exchanger
         ];
 
         if (!\in_array(true, $allowTypeList, true)) {
-            $format = 'Invalid $execute type. expected type %s.';
+            $format    = 'Invalid $execute type. expected type %s.';
             $allowType = [null, 'callable', KeyExchangeInterface::class];
-            $mes = \sprintf($format, \implode(', ', $allowType));
+            $mes       = \sprintf($format, \implode(', ', $allowType));
             throw new \InvalidArgumentException($mes);
         }
 
@@ -162,13 +162,13 @@ class Exchanger
                 }
 
                 if ($define->key->isAddKey()) {
-                    $addKeyDefaultValue = null;
+                    $addKeyDefaultValue             = null;
                     $input[$define->key->getName()] = $addKeyDefaultValue;
                 }
 
                 if ($define->key->isRenameKey()) {
                     $beforeName = $define->key->getName();
-                    $afterName = $this->keyExchange(
+                    $afterName  = $this->keyExchange(
                         $define->keyExchangeExecute,
                         $beforeName
                     );
@@ -183,8 +183,7 @@ class Exchanger
                 // valueの変換処理
                 if ($define->isAssocArrayDefine()) {
                     // key定義ありのときの処理
-                    $input[$define->key->getName()] =
-                        $this->valueExchange($define->valueExchangeExecute, $input[$define->key->getName()]);
+                    $input[$define->key->getName()] = $this->valueExchange($define->valueExchangeExecute, $input[$define->key->getName()]);
                     continue;
                 }
 
@@ -216,14 +215,14 @@ class Exchanger
         foreach ($input as $key => $value) {
             if ($this->isKeyExchanges()) {
                 $beforeName = $key;
-                $afterName = $this->keyExchange(
+                $afterName  = $this->keyExchange(
                     $this->keyExchangesExecute,
                     $beforeName
                 );
                 $tmpValue = $input[$beforeName];
                 unset($input[$beforeName]);
                 $input[$afterName] = $tmpValue;
-                $key = $afterName;
+                $key               = $afterName;
             }
 
             if ($this->isValueExchanges()) {

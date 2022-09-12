@@ -35,10 +35,10 @@ class Key
     {
         if (!$this->verifyNameType($name)) {
             $format = 'Invalid $name type. expected type %s.';
-            $mes = \sprintf($format, \implode(', ', $this->nameAllowType));
+            $mes    = \sprintf($format, \implode(', ', $this->nameAllowType));
             throw new InvalidArgumentException($mes);
         }
-        $this->name = $name;
+        $this->name    = $name;
         $this->require = $require;
     }
 

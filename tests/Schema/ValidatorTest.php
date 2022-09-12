@@ -42,7 +42,7 @@ class ValidatorTest extends TestCase
      */
     public function testPattern000()
     {
-        $expectedSuccess = false;
+        $expectedSuccess         = false;
         $expectedValidateResults = [
             new ValidateResult(false, 'key1', 'key is required'),
             new ValidateResult(false, 'key2', 'key is required'),
@@ -58,7 +58,7 @@ class ValidatorTest extends TestCase
         $input = [];
 
         $validator = Validator::new();
-        $result = $validator->arrayDefine($define)->execute($input);
+        $result    = $validator->arrayDefine($define)->execute($input);
         $this->assertValidatorClass($expectedSuccess, $expectedValidateResults, $result);
     }
 
@@ -67,7 +67,7 @@ class ValidatorTest extends TestCase
      */
     public function testPattern001()
     {
-        $expectedSuccess = true;
+        $expectedSuccess         = true;
         $expectedValidateResults = [
             new ValidateResult(true, 'key1'),
             new ValidateResult(true, 'key2'),
@@ -88,7 +88,7 @@ class ValidatorTest extends TestCase
         ];
 
         $validator = Validator::new();
-        $result = $validator->arrayDefine($define)->execute($input);
+        $result    = $validator->arrayDefine($define)->execute($input);
         $this->assertValidatorClass($expectedSuccess, $expectedValidateResults, $result);
     }
 
@@ -101,7 +101,7 @@ class ValidatorTest extends TestCase
      */
     public function testPattern010()
     {
-        $expectedSuccess = false;
+        $expectedSuccess         = false;
         $expectedValidateResults = [
             // NOTE: コメントアウトされた行は記録されない想定の検証結果
             new ValidateResult(false, 'key1', 'key is required'),
@@ -165,7 +165,7 @@ class ValidatorTest extends TestCase
         $input = [];
 
         $validator = Validator::new();
-        $result = $validator->arrayDefine($define)->execute($input);
+        $result    = $validator->arrayDefine($define)->execute($input);
         $this->assertValidatorClass($expectedSuccess, $expectedValidateResults, $result);
     }
 
@@ -178,7 +178,7 @@ class ValidatorTest extends TestCase
      */
     public function testPattern011()
     {
-        $expectedSuccess = true;
+        $expectedSuccess         = true;
         $expectedValidateResults = [
             // NOTE: コメントアウトされた行は記録されない想定の検証結果
             new ValidateResult(true, 'key1'),
@@ -282,7 +282,7 @@ class ValidatorTest extends TestCase
         ];
 
         $validator = Validator::new();
-        $result = $validator->arrayDefine($define)->execute($input);
+        $result    = $validator->arrayDefine($define)->execute($input);
         $this->assertValidatorClass($expectedSuccess, $expectedValidateResults, $result);
     }
 
@@ -291,7 +291,7 @@ class ValidatorTest extends TestCase
      */
     public function testPattern100()
     {
-        $expectedSuccess = false;
+        $expectedSuccess         = false;
         $expectedValidateResults = [
             new ValidateResult(true, 'key1'),
             new ValidateResult(true, 'key1'),
@@ -323,7 +323,7 @@ class ValidatorTest extends TestCase
         ];
 
         $validator = Validator::new();
-        $result = $validator->arrayDefine($define)->execute($input);
+        $result    = $validator->arrayDefine($define)->execute($input);
         $this->assertValidatorClass($expectedSuccess, $expectedValidateResults, $result);
     }
 
@@ -332,7 +332,7 @@ class ValidatorTest extends TestCase
      */
     public function testPattern101()
     {
-        $expectedSuccess = false;
+        $expectedSuccess         = false;
         $expectedValidateResults = [
             new ValidateResult(false, '[]', 'Invalid value type. Values in array expected string type.'),
         ];
@@ -359,7 +359,7 @@ class ValidatorTest extends TestCase
         ];
 
         $validator = Validator::new();
-        $result = $validator->arrayDefine($define)->execute($input);
+        $result    = $validator->arrayDefine($define)->execute($input);
         $this->assertValidatorClass($expectedSuccess, $expectedValidateResults, $result);
     }
 
@@ -368,7 +368,7 @@ class ValidatorTest extends TestCase
      */
     public function testPattern102()
     {
-        $expectedSuccess = false;
+        $expectedSuccess         = false;
         $expectedValidateResults = [
             new ValidateResult(false, 'key1', 'key is required'),
             // new ValidateResult(false, 'key2', 'Invalid value type. Expected string type.'),
@@ -391,7 +391,7 @@ class ValidatorTest extends TestCase
         ];
 
         $validator = Validator::new();
-        $result = $validator->arrayDefine($define)->execute($input);
+        $result    = $validator->arrayDefine($define)->execute($input);
         $this->assertValidatorClass($expectedSuccess, $expectedValidateResults, $result);
     }
 
@@ -400,7 +400,7 @@ class ValidatorTest extends TestCase
      */
     public function testPattern103()
     {
-        $expectedSuccess = false;
+        $expectedSuccess         = false;
         $expectedValidateResults = [
             new ValidateResult(true, 'key1'),
             new ValidateResult(true, 'key1'),
@@ -425,7 +425,7 @@ class ValidatorTest extends TestCase
         ];
 
         $validator = Validator::new();
-        $result = $validator->arrayDefine($define)->execute($input);
+        $result    = $validator->arrayDefine($define)->execute($input);
         $this->assertValidatorClass($expectedSuccess, $expectedValidateResults, $result);
     }
 
@@ -434,7 +434,7 @@ class ValidatorTest extends TestCase
      */
     public function testPattern104()
     {
-        $expectedSuccess = false;
+        $expectedSuccess         = false;
         $expectedValidateResults = [
             new ValidateResult(true, 'key1'),
             new ValidateResult(true, 'key1'),
@@ -461,7 +461,7 @@ class ValidatorTest extends TestCase
         ];
 
         $validator = Validator::new();
-        $result = $validator->arrayDefine($define)->execute($input);
+        $result    = $validator->arrayDefine($define)->execute($input);
         $this->assertValidatorClass($expectedSuccess, $expectedValidateResults, $result);
     }
 
@@ -487,7 +487,7 @@ class ValidatorTest extends TestCase
         foreach ($expectedValidateResults as $index => $expectedValidateResult) {
             // keyが存在したら中身の検証を行う
             $verifyValidateResult = $verifyValidateResults[$index];
-            $mes = \sprintf('Failure index number: %s', $index);
+            $mes                  = \sprintf('Failure index number: %s', $index);
             $this->assertSame(
                 $expectedValidateResult->getResult(),
                 $verifyValidateResult->getResult(),

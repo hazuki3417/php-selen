@@ -111,7 +111,7 @@ class Validator
 
             if ($define->isKeyValidate()) {
                 // keyの検証処理
-                $validateResult = $this->keyValidate($define, $input);
+                $validateResult          = $this->keyValidate($define, $input);
                 $this->validateResults[] = $validateResult;
             }
 

@@ -37,10 +37,10 @@ class Str
 
     private function __construct(string $val)
     {
-        $this->str = $val;
+        $this->str    = $val;
         $this->length = Length::set($this->str);
-        $this->space = Space::set($this->str);
-        $this->width = Width::set($this->str);
+        $this->space  = Space::set($this->str);
+        $this->width  = Width::set($this->str);
     }
 
     public static function set(string $val): Str

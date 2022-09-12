@@ -10,7 +10,7 @@ namespace Selen\Verify\Str\Radixes;
 
 class Radix26 extends AbstractRadix
 {
-    public const CARDINALITY = 26;
-    public const NUMBER_RANGE = '0-9';
+    public const CARDINALITY    = 26;
+    public const NUMBER_RANGE   = '0-9';
     public const ALPHABET_RANGE = 'a-p';
 }

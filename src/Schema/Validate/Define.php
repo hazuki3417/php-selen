@@ -58,7 +58,7 @@ class Define
 
         if ($name === null) {
             $allowType = ['integer', 'string'];
-            $mes = \sprintf($format, '$name', 'type', 'type', \implode(', ', $allowType));
+            $mes       = \sprintf($format, '$name', 'type', 'type', \implode(', ', $allowType));
             throw new \InvalidArgumentException($mes);
         }
 
@@ -86,14 +86,14 @@ class Define
             ];
 
             if (!\in_array(true, $allowTypeList, true)) {
-                $format = 'Invalid %s %s. expected %s %s.';
+                $format    = 'Invalid %s %s. expected %s %s.';
                 $allowType = [null, 'callable', ValueValidateInterface::class];
-                $mes = \sprintf($format, '$executes', 'type', 'type', \implode(', ', $allowType));
+                $mes       = \sprintf($format, '$executes', 'type', 'type', \implode(', ', $allowType));
                 throw new \InvalidArgumentException($mes);
             }
         }
 
-        $this->haveCalledValue = true;
+        $this->haveCalledValue       = true;
         $this->valueValidateExecutes = $executes;
         return $this;
     }
@@ -114,7 +114,7 @@ class Define
         // NOTE: 引数の指定がない場合はそのまま通す（エラーにしない）
 
         $this->haveCalledArrayDefine = true;
-        $this->arrayDefine = new ArrayDefine(...$define);
+        $this->arrayDefine           = new ArrayDefine(...$define);
         return $this;
     }
 

@@ -81,38 +81,38 @@ class LengthTest extends TestCase
             // 空白文字のときのテスト
             'pattern001' => [
                 'expected' => false,
-                'testVal' => ['set' => '', 'gt' => 0],
+                'testVal'  => ['set' => '', 'gt' => 0],
             ],
             // 1文字のときのテスト
             'pattern002' => [
                 'expected' => true,
-                'testVal' => ['set' => 'a', 'gt' => 0],
+                'testVal'  => ['set' => 'a', 'gt' => 0],
             ],
             // 境界値テスト（半角文字）
             'pattern003' => [
                 'expected' => true,
-                'testVal' => ['set' => 'abcde', 'gt' => 4],
+                'testVal'  => ['set' => 'abcde', 'gt' => 4],
             ],
             'pattern004' => [
                 'expected' => false,
-                'testVal' => ['set' => 'abcde', 'gt' => 5],
+                'testVal'  => ['set' => 'abcde', 'gt' => 5],
             ],
             'pattern005' => [
                 'expected' => false,
-                'testVal' => ['set' => 'abcde', 'gt' => 6],
+                'testVal'  => ['set' => 'abcde', 'gt' => 6],
             ],
             // 境界値テスト（全角文字）
             'pattern006' => [
                 'expected' => true,
-                'testVal' => ['set' => 'あいうえお', 'gt' => 4],
+                'testVal'  => ['set' => 'あいうえお', 'gt' => 4],
             ],
             'pattern007' => [
                 'expected' => false,
-                'testVal' => ['set' => 'あいうえお', 'gt' => 5],
+                'testVal'  => ['set' => 'あいうえお', 'gt' => 5],
             ],
             'pattern008' => [
                 'expected' => false,
-                'testVal' => ['set' => 'あいうえお', 'gt' => 6],
+                'testVal'  => ['set' => 'あいうえお', 'gt' => 6],
             ],
         ];
     }
@@ -141,38 +141,38 @@ class LengthTest extends TestCase
             // 空白文字のときのテスト
             'pattern001' => [
                 'expected' => true,
-                'testVal' => ['set' => '', 'ge' => 0],
+                'testVal'  => ['set' => '', 'ge' => 0],
             ],
             // 1文字のときのテスト
             'pattern002' => [
                 'expected' => true,
-                'testVal' => ['set' => 'a', 'ge' => 0],
+                'testVal'  => ['set' => 'a', 'ge' => 0],
             ],
             // 境界値テスト（半角文字）
             'pattern003' => [
                 'expected' => true,
-                'testVal' => ['set' => 'abcde', 'ge' => 4],
+                'testVal'  => ['set' => 'abcde', 'ge' => 4],
             ],
             'pattern004' => [
                 'expected' => true,
-                'testVal' => ['set' => 'abcde', 'ge' => 5],
+                'testVal'  => ['set' => 'abcde', 'ge' => 5],
             ],
             'pattern005' => [
                 'expected' => false,
-                'testVal' => ['set' => 'abcde', 'ge' => 6],
+                'testVal'  => ['set' => 'abcde', 'ge' => 6],
             ],
             // 境界値テスト（全角文字）
             'pattern006' => [
                 'expected' => true,
-                'testVal' => ['set' => 'あいうえお', 'ge' => 4],
+                'testVal'  => ['set' => 'あいうえお', 'ge' => 4],
             ],
             'pattern007' => [
                 'expected' => true,
-                'testVal' => ['set' => 'あいうえお', 'ge' => 5],
+                'testVal'  => ['set' => 'あいうえお', 'ge' => 5],
             ],
             'pattern008' => [
                 'expected' => false,
-                'testVal' => ['set' => 'あいうえお', 'ge' => 6],
+                'testVal'  => ['set' => 'あいうえお', 'ge' => 6],
             ],
         ];
     }
@@ -201,38 +201,38 @@ class LengthTest extends TestCase
             // 空白文字のときのテスト
             'pattern001' => [
                 'expected' => true,
-                'testVal' => ['set' => '', 'le' => 0],
+                'testVal'  => ['set' => '', 'le' => 0],
             ],
             // 1文字のときのテスト
             'pattern002' => [
                 'expected' => false,
-                'testVal' => ['set' => 'a', 'le' => 0],
+                'testVal'  => ['set' => 'a', 'le' => 0],
             ],
             // 境界値テスト（半角文字）
             'pattern003' => [
                 'expected' => false,
-                'testVal' => ['set' => 'abcde', 'le' => 4],
+                'testVal'  => ['set' => 'abcde', 'le' => 4],
             ],
             'pattern004' => [
                 'expected' => true,
-                'testVal' => ['set' => 'abcde', 'le' => 5],
+                'testVal'  => ['set' => 'abcde', 'le' => 5],
             ],
             'pattern005' => [
                 'expected' => true,
-                'testVal' => ['set' => 'abcde', 'le' => 6],
+                'testVal'  => ['set' => 'abcde', 'le' => 6],
             ],
             // 境界値テスト（全角文字）
             'pattern006' => [
                 'expected' => false,
-                'testVal' => ['set' => 'あいうえお', 'le' => 4],
+                'testVal'  => ['set' => 'あいうえお', 'le' => 4],
             ],
             'pattern007' => [
                 'expected' => true,
-                'testVal' => ['set' => 'あいうえお', 'le' => 5],
+                'testVal'  => ['set' => 'あいうえお', 'le' => 5],
             ],
             'pattern008' => [
                 'expected' => true,
-                'testVal' => ['set' => 'あいうえお', 'le' => 6],
+                'testVal'  => ['set' => 'あいうえお', 'le' => 6],
             ],
         ];
     }
@@ -261,38 +261,38 @@ class LengthTest extends TestCase
             // 空白文字のときのテスト
             'pattern001' => [
                 'expected' => false,
-                'testVal' => ['set' => '', 'lt' => 0],
+                'testVal'  => ['set' => '', 'lt' => 0],
             ],
             // 1文字のときのテスト
             'pattern002' => [
                 'expected' => false,
-                'testVal' => ['set' => 'a', 'lt' => 0],
+                'testVal'  => ['set' => 'a', 'lt' => 0],
             ],
             // 境界値テスト（半角文字）
             'pattern003' => [
                 'expected' => false,
-                'testVal' => ['set' => 'abcde', 'lt' => 4],
+                'testVal'  => ['set' => 'abcde', 'lt' => 4],
             ],
             'pattern004' => [
                 'expected' => false,
-                'testVal' => ['set' => 'abcde', 'lt' => 5],
+                'testVal'  => ['set' => 'abcde', 'lt' => 5],
             ],
             'pattern005' => [
                 'expected' => true,
-                'testVal' => ['set' => 'abcde', 'lt' => 6],
+                'testVal'  => ['set' => 'abcde', 'lt' => 6],
             ],
             // 境界値テスト（全角文字）
             'pattern006' => [
                 'expected' => false,
-                'testVal' => ['set' => 'あいうえお', 'lt' => 4],
+                'testVal'  => ['set' => 'あいうえお', 'lt' => 4],
             ],
             'pattern007' => [
                 'expected' => false,
-                'testVal' => ['set' => 'あいうえお', 'lt' => 5],
+                'testVal'  => ['set' => 'あいうえお', 'lt' => 5],
             ],
             'pattern008' => [
                 'expected' => true,
-                'testVal' => ['set' => 'あいうえお', 'lt' => 6],
+                'testVal'  => ['set' => 'あいうえお', 'lt' => 6],
             ],
         ];
     }
@@ -321,38 +321,38 @@ class LengthTest extends TestCase
             // 空白文字のときのテスト
             'pattern001' => [
                 'expected' => true,
-                'testVal' => ['set' => '', 'equal' => 0],
+                'testVal'  => ['set' => '', 'equal' => 0],
             ],
             // 1文字のときのテスト
             'pattern002' => [
                 'expected' => false,
-                'testVal' => ['set' => '', 'equal' => 1],
+                'testVal'  => ['set' => '', 'equal' => 1],
             ],
             // 境界値テスト（半角文字）
             'pattern003' => [
                 'expected' => false,
-                'testVal' => ['set' => 'abcde', 'equal' => 4],
+                'testVal'  => ['set' => 'abcde', 'equal' => 4],
             ],
             'pattern004' => [
                 'expected' => true,
-                'testVal' => ['set' => 'abcde', 'equal' => 5],
+                'testVal'  => ['set' => 'abcde', 'equal' => 5],
             ],
             'pattern005' => [
                 'expected' => false,
-                'testVal' => ['set' => 'abcde', 'equal' => 6],
+                'testVal'  => ['set' => 'abcde', 'equal' => 6],
             ],
             // 境界値テスト（全角文字）
             'pattern006' => [
                 'expected' => false,
-                'testVal' => ['set' => 'あいうえお', 'equal' => 4],
+                'testVal'  => ['set' => 'あいうえお', 'equal' => 4],
             ],
             'pattern007' => [
                 'expected' => true,
-                'testVal' => ['set' => 'あいうえお', 'equal' => 5],
+                'testVal'  => ['set' => 'あいうえお', 'equal' => 5],
             ],
             'pattern008' => [
                 'expected' => false,
-                'testVal' => ['set' => 'あいうえお', 'equal' => 6],
+                'testVal'  => ['set' => 'あいうえお', 'equal' => 6],
             ],
         ];
     }
@@ -381,64 +381,64 @@ class LengthTest extends TestCase
             // 空白文字のときのテスト
             'pattern001' => [
                 'expected' => true,
-                'testVal' => ['set' => '', 'min' => 0, 'max' => 1],
+                'testVal'  => ['set' => '', 'min' => 0, 'max' => 1],
             ],
             // 1文字のときのテスト
             'pattern002' => [
                 'expected' => true,
-                'testVal' => ['set' => 'a', 'min' => 0, 'max' => 1],
+                'testVal'  => ['set' => 'a', 'min' => 0, 'max' => 1],
             ],
             // minの境界値テスト（半角文字）
             'pattern003' => [
                 'expected' => true,
-                'testVal' => ['set' => 'abcde', 'min' => 0, 'max' => 7],
+                'testVal'  => ['set' => 'abcde', 'min' => 0, 'max' => 7],
             ],
             'pattern004' => [
                 'expected' => true,
-                'testVal' => ['set' => 'abcde', 'min' => 5, 'max' => 7],
+                'testVal'  => ['set' => 'abcde', 'min' => 5, 'max' => 7],
             ],
             'pattern005' => [
                 'expected' => false,
-                'testVal' => ['set' => 'abcde', 'min' => 6, 'max' => 7],
+                'testVal'  => ['set' => 'abcde', 'min' => 6, 'max' => 7],
             ],
             // min境界値テスト（全角文字）
             'pattern006' => [
                 'expected' => true,
-                'testVal' => ['set' => 'あいうえお', 'min' => 0, 'max' => 7],
+                'testVal'  => ['set' => 'あいうえお', 'min' => 0, 'max' => 7],
             ],
             'pattern007' => [
                 'expected' => true,
-                'testVal' => ['set' => 'あいうえお', 'min' => 5, 'max' => 7],
+                'testVal'  => ['set' => 'あいうえお', 'min' => 5, 'max' => 7],
             ],
             'pattern008' => [
                 'expected' => false,
-                'testVal' => ['set' => 'あいうえお', 'min' => 6, 'max' => 7],
+                'testVal'  => ['set' => 'あいうえお', 'min' => 6, 'max' => 7],
             ],
             // maxの境界値テスト（半角文字）
             'pattern009' => [
                 'expected' => false,
-                'testVal' => ['set' => 'abcde', 'min' => 0, 'max' => 4],
+                'testVal'  => ['set' => 'abcde', 'min' => 0, 'max' => 4],
             ],
             'pattern010' => [
                 'expected' => true,
-                'testVal' => ['set' => 'abcde', 'min' => 0, 'max' => 5],
+                'testVal'  => ['set' => 'abcde', 'min' => 0, 'max' => 5],
             ],
             'pattern011' => [
                 'expected' => true,
-                'testVal' => ['set' => 'abcde', 'min' => 0, 'max' => 6],
+                'testVal'  => ['set' => 'abcde', 'min' => 0, 'max' => 6],
             ],
             // max境界値テスト（全角文字）
             'pattern012' => [
                 'expected' => false,
-                'testVal' => ['set' => 'あいうえお', 'min' => 0, 'max' => 4],
+                'testVal'  => ['set' => 'あいうえお', 'min' => 0, 'max' => 4],
             ],
             'pattern013' => [
                 'expected' => true,
-                'testVal' => ['set' => 'あいうえお', 'min' => 0, 'max' => 5],
+                'testVal'  => ['set' => 'あいうえお', 'min' => 0, 'max' => 5],
             ],
             'pattern014' => [
                 'expected' => true,
-                'testVal' => ['set' => 'あいうえお', 'min' => 0, 'max' => 6],
+                'testVal'  => ['set' => 'あいうえお', 'min' => 0, 'max' => 6],
             ],
         ];
     }
@@ -484,64 +484,64 @@ class LengthTest extends TestCase
             // 空白文字のときのテスト
             'pattern001' => [
                 'expected' => false,
-                'testVal' => ['set' => '', 'min' => 0, 'max' => 1],
+                'testVal'  => ['set' => '', 'min' => 0, 'max' => 1],
             ],
             // 1文字のときのテスト
             'pattern002' => [
                 'expected' => false,
-                'testVal' => ['set' => 'a', 'min' => 0, 'max' => 1],
+                'testVal'  => ['set' => 'a', 'min' => 0, 'max' => 1],
             ],
             // minの境界値テスト（半角文字）
             'pattern003' => [
                 'expected' => false,
-                'testVal' => ['set' => 'abcde', 'min' => 0, 'max' => 7],
+                'testVal'  => ['set' => 'abcde', 'min' => 0, 'max' => 7],
             ],
             'pattern004' => [
                 'expected' => false,
-                'testVal' => ['set' => 'abcde', 'min' => 5, 'max' => 7],
+                'testVal'  => ['set' => 'abcde', 'min' => 5, 'max' => 7],
             ],
             'pattern005' => [
                 'expected' => true,
-                'testVal' => ['set' => 'abcde', 'min' => 6, 'max' => 7],
+                'testVal'  => ['set' => 'abcde', 'min' => 6, 'max' => 7],
             ],
             // min境界値テスト（全角文字）
             'pattern006' => [
                 'expected' => false,
-                'testVal' => ['set' => 'あいうえお', 'min' => 0, 'max' => 7],
+                'testVal'  => ['set' => 'あいうえお', 'min' => 0, 'max' => 7],
             ],
             'pattern007' => [
                 'expected' => false,
-                'testVal' => ['set' => 'あいうえお', 'min' => 5, 'max' => 7],
+                'testVal'  => ['set' => 'あいうえお', 'min' => 5, 'max' => 7],
             ],
             'pattern008' => [
                 'expected' => true,
-                'testVal' => ['set' => 'あいうえお', 'min' => 6, 'max' => 7],
+                'testVal'  => ['set' => 'あいうえお', 'min' => 6, 'max' => 7],
             ],
             // maxの境界値テスト（半角文字）
             'pattern009' => [
                 'expected' => true,
-                'testVal' => ['set' => 'abcde', 'min' => 0, 'max' => 4],
+                'testVal'  => ['set' => 'abcde', 'min' => 0, 'max' => 4],
             ],
             'pattern010' => [
                 'expected' => false,
-                'testVal' => ['set' => 'abcde', 'min' => 0, 'max' => 5],
+                'testVal'  => ['set' => 'abcde', 'min' => 0, 'max' => 5],
             ],
             'pattern011' => [
                 'expected' => false,
-                'testVal' => ['set' => 'abcde', 'min' => 0, 'max' => 6],
+                'testVal'  => ['set' => 'abcde', 'min' => 0, 'max' => 6],
             ],
             // max境界値テスト（全角文字）
             'pattern012' => [
                 'expected' => true,
-                'testVal' => ['set' => 'あいうえお', 'min' => 0, 'max' => 4],
+                'testVal'  => ['set' => 'あいうえお', 'min' => 0, 'max' => 4],
             ],
             'pattern013' => [
                 'expected' => false,
-                'testVal' => ['set' => 'あいうえお', 'min' => 0, 'max' => 5],
+                'testVal'  => ['set' => 'あいうえお', 'min' => 0, 'max' => 5],
             ],
             'pattern014' => [
                 'expected' => false,
-                'testVal' => ['set' => 'あいうえお', 'min' => 0, 'max' => 6],
+                'testVal'  => ['set' => 'あいうえお', 'min' => 0, 'max' => 6],
             ],
         ];
     }

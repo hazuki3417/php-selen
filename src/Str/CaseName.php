@@ -19,7 +19,7 @@ class CaseName
     public static function kebab(string $value): string
     {
         $delimiter = '-';
-        $tmp = self::trim(self::addCamelCaseDelimiter($value));
+        $tmp       = self::trim(self::addCamelCaseDelimiter($value));
         return self::lower(self::replaceDelimiter($delimiter, $tmp));
     }
 
@@ -29,7 +29,7 @@ class CaseName
     public static function snake(string $value): string
     {
         $delimiter = '_';
-        $tmp = self::trim(self::addCamelCaseDelimiter($value));
+        $tmp       = self::trim(self::addCamelCaseDelimiter($value));
         return self::lower(self::replaceDelimiter($delimiter, $tmp));
     }
 
@@ -39,8 +39,8 @@ class CaseName
     public static function pascal(string $value): string
     {
         $delimiter = ' ';
-        $tmp = self::trim(self::addCamelCaseDelimiter($value));
-        $str = \ucwords(self::replaceDelimiter($delimiter, $tmp));
+        $tmp       = self::trim(self::addCamelCaseDelimiter($value));
+        $str       = \ucwords(self::replaceDelimiter($delimiter, $tmp));
         return \ucfirst(\preg_replace('/[ ]+/', '', $str));
     }
 
@@ -50,8 +50,8 @@ class CaseName
     public static function camel(string $value): string
     {
         $delimiter = ' ';
-        $tmp = self::trim(self::addCamelCaseDelimiter($value));
-        $str = \ucwords(self::replaceDelimiter($delimiter, $tmp));
+        $tmp       = self::trim(self::addCamelCaseDelimiter($value));
+        $str       = \ucwords(self::replaceDelimiter($delimiter, $tmp));
         return \lcfirst(\preg_replace('/[ ]+/', '', $str));
     }
 
@@ -92,7 +92,7 @@ class CaseName
      */
     private static function addCamelCaseDelimiter(string $value): string
     {
-        $delimiter = ' ';
+        $delimiter  = ' ';
         $replaceStr = \sprintf('%s${1}', $delimiter);
         return preg_replace('/([A-Z])/', $replaceStr, $value);
     }

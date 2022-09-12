@@ -10,14 +10,14 @@ namespace Selen\Data;
 
 class Type
 {
-    public const NAME_ARRAY = 'array';
-    public const NAME_BOOL = 'bool';
-    public const NAME_DOUBLE = 'double';
-    public const NAME_FLOAT = 'float';
-    public const NAME_INT = 'int';
+    public const NAME_ARRAY   = 'array';
+    public const NAME_BOOL    = 'bool';
+    public const NAME_DOUBLE  = 'double';
+    public const NAME_FLOAT   = 'float';
+    public const NAME_INT     = 'int';
     public const NAME_INTEGER = 'integer';
-    public const NAME_LONG = 'long';
-    public const NAME_NULL = 'null';
+    public const NAME_LONG    = 'long';
+    public const NAME_NULL    = 'null';
     public const NAME_NUMERIC = 'numeric';
     // const NAME_OBJECT  = 'object';
     public const NAME_SCALAR = 'scalar';

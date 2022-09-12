@@ -10,7 +10,7 @@ namespace Selen\Verify\Str\Radixes;
 
 class Radix2 extends AbstractRadix
 {
-    public const CARDINALITY = 2;
-    public const NUMBER_RANGE = '0-1';
+    public const CARDINALITY    = 2;
+    public const NUMBER_RANGE   = '0-1';
     public const ALPHABET_RANGE = '';
 }

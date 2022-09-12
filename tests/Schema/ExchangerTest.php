@@ -69,7 +69,7 @@ class ExchangerTest extends TestCase
                             return $values;
                         })
                     ),
-                    'keyExchangeExecute' => null,
+                    'keyExchangeExecute'   => null,
                     'valueExchangeExecute' => null,
                 ],
             ],
@@ -95,19 +95,19 @@ class ExchangerTest extends TestCase
                             return $value .= ' + add string 1';
                         })
                     ),
-                    'keyExchangeExecute' => null,
+                    'keyExchangeExecute'   => null,
                     'valueExchangeExecute' => null,
                 ],
             ],
             // key指定あり（input配列のkey名指定あり）
             'pattern003' => [
                 'expected' => [
-                    3 => 'value1 + add string index key = 3',
+                    3         => 'value1 + add string index key = 3',
                     'keyName' => 'value2 + add string index key = keyName',
                 ],
                 'input' => [
                     'value' => [
-                        3 => 'value1',
+                        3         => 'value1',
                         'keyName' => 'value2',
                     ],
                     'define' => new ArrayDefine(
@@ -118,14 +118,14 @@ class ExchangerTest extends TestCase
                             return $value .= ' + add string index key = keyName';
                         })
                     ),
-                    'keyExchangeExecute' => null,
+                    'keyExchangeExecute'   => null,
                     'valueExchangeExecute' => null,
                 ],
             ],
             // 多次元配列の変換
             'pattern004' => [
                 'expected' => [
-                    'keyName1' => 'value1',
+                    'keyName1'       => 'value1',
                     'parentKeyName1' => [
                         'childKeyName1-1' => 'childKeyValue1-1',
                         'childKeyName1-2' => 'replace string 1',
@@ -141,7 +141,7 @@ class ExchangerTest extends TestCase
                 ],
                 'input' => [
                     'value' => [
-                        'keyName1' => 'value1',
+                        'keyName1'       => 'value1',
                         'parentKeyName1' => [
                             'childKeyName1-1' => 'childKeyValue1-1',
                             'childKeyName1-2' => 'childKeyValue1-2',
@@ -165,14 +165,14 @@ class ExchangerTest extends TestCase
                             )
                         )
                     ),
-                    'keyExchangeExecute' => null,
+                    'keyExchangeExecute'   => null,
                     'valueExchangeExecute' => null,
                 ],
             ],
             // keyの追加
             'pattern005' => [
                 'expected' => [
-                    'keyName1' => 'value1',
+                    'keyName1'       => 'value1',
                     'parentKeyName1' => [
                         'childKeyName1-2' => 'childKeyValue1-2',
                         'childKeyName1-1' => null,
@@ -181,7 +181,7 @@ class ExchangerTest extends TestCase
                 ],
                 'input' => [
                     'value' => [
-                        'keyName1' => 'value1',
+                        'keyName1'       => 'value1',
                         'parentKeyName1' => [
                             'childKeyName1-2' => 'childKeyValue1-2',
                         ],
@@ -192,22 +192,22 @@ class ExchangerTest extends TestCase
                             Define::key('childKeyName1-1', Define::KEY_ACTION_ADD)
                         )
                     ),
-                    'keyExchangeExecute' => null,
+                    'keyExchangeExecute'   => null,
                     'valueExchangeExecute' => null,
                 ],
             ],
             // keyの削除
             'pattern006' => [
                 'expected' => [
-                    'keyName1' => 'value1',
+                    'keyName1'       => 'value1',
                     'parentKeyName1' => [
                         'childKeyName1-2' => 'childKeyValue1-2',
                     ],
                 ],
                 'input' => [
                     'value' => [
-                        'keyName1' => 'value1',
-                        'keyName2' => 'value2',
+                        'keyName1'       => 'value1',
+                        'keyName2'       => 'value2',
                         'parentKeyName1' => [
                             'childKeyName1-1' => 'childKeyValue1-1',
                             'childKeyName1-2' => 'childKeyValue1-2',
@@ -219,7 +219,7 @@ class ExchangerTest extends TestCase
                             Define::key('childKeyName1-1', Define::KEY_ACTION_REMOVE)
                         )
                     ),
-                    'keyExchangeExecute' => null,
+                    'keyExchangeExecute'   => null,
                     'valueExchangeExecute' => null,
                 ],
             ],
@@ -234,7 +234,7 @@ class ExchangerTest extends TestCase
                 ],
                 'input' => [
                     'value' => [
-                        'keyName1' => 'value1',
+                        'keyName1'       => 'value1',
                         'parentKeyName1' => [
                             'childKeyName1-1' => 'childKeyValue1-1',
                         ],
@@ -249,24 +249,24 @@ class ExchangerTest extends TestCase
                             })
                         )
                     ),
-                    'keyExchangeExecute' => null,
+                    'keyExchangeExecute'   => null,
                     'valueExchangeExecute' => null,
                 ],
             ],
             // keyのリネーム + 変換処理
             'pattern008' => [
                 'expected' => [
-                    'keyName2' => 'value2',
+                    'keyName2'       => 'value2',
                     'parentKeyName1' => [
-                        'childKeyName1-2' => 'childKeyValue1-2',
+                        'childKeyName1-2'   => 'childKeyValue1-2',
                         'renameChildKey1-1' => 'replaceValue1-1',
                     ],
                     'renameKey1' => 'replaceValue1',
                 ],
                 'input' => [
                     'value' => [
-                        'keyName1' => 'value1',
-                        'keyName2' => 'value2',
+                        'keyName1'       => 'value1',
+                        'keyName2'       => 'value2',
                         'parentKeyName1' => [
                             'childKeyName1-1' => 'childKeyValue1-1',
                             'childKeyName1-2' => 'childKeyValue1-2',
@@ -282,15 +282,15 @@ class ExchangerTest extends TestCase
                             })
                         )
                     ),
-                    'keyExchangeExecute' => null,
+                    'keyExchangeExecute'   => null,
                     'valueExchangeExecute' => null,
                 ],
             ],
             // すべてのkeyのリネーム
             'pattern009' => [
                 'expected' => [
-                    'key_name1' => 'value1',
-                    'key_name2' => 'value2',
+                    'key_name1'        => 'value1',
+                    'key_name2'        => 'value2',
                     'parent_key_name1' => [
                         'child_key_name1_1' => 'childKeyValue1-1',
                         'child_key_name1_2' => 'childKeyValue1-2',
@@ -298,14 +298,14 @@ class ExchangerTest extends TestCase
                 ],
                 'input' => [
                     'value' => [
-                        'keyName1' => 'value1',
-                        'keyName2' => 'value2',
+                        'keyName1'       => 'value1',
+                        'keyName2'       => 'value2',
                         'parentKeyName1' => [
                             'childKeyName1-1' => 'childKeyValue1-1',
                             'childKeyName1-2' => 'childKeyValue1-2',
                         ],
                     ],
-                    'define' => null,
+                    'define'             => null,
                     'keyExchangeExecute' => function ($key) {
                         return CaseName::snake($key);
                     },
@@ -315,8 +315,8 @@ class ExchangerTest extends TestCase
             // すべての値の置換
             'pattern010' => [
                 'expected' => [
-                    'keyName1' => 'value1',
-                    'keyName2' => 'value2',
+                    'keyName1'       => 'value1',
+                    'keyName2'       => 'value2',
                     'parentKeyName1' => [
                         'childKeyName1-1' => 'child_key_value1_1',
                         'childKeyName1-2' => 'child_key_value1_2',
@@ -324,15 +324,15 @@ class ExchangerTest extends TestCase
                 ],
                 'input' => [
                     'value' => [
-                        'keyName1' => 'value1',
-                        'keyName2' => 'value2',
+                        'keyName1'       => 'value1',
+                        'keyName2'       => 'value2',
                         'parentKeyName1' => [
                             'childKeyName1-1' => 'childKeyValue1-1',
                             'childKeyName1-2' => 'childKeyValue1-2',
                         ],
                     ],
-                    'define' => null,
-                    'keyExchangeExecute' => null,
+                    'define'               => null,
+                    'keyExchangeExecute'   => null,
                     'valueExchangeExecute' => function ($value) {
                         if (\is_string($value)) {
                             return CaseName::snake($value);
@@ -352,29 +352,29 @@ class ExchangerTest extends TestCase
              */
             'pattern010' => [
                 'expected' => [
-                    'dummy_key1' => 'dummyValue1 add string',
-                    'dummy_key2' => 'dummyValue2 add string',
-                    'dummy_key3' => 0,
-                    'dummy_key4' => true,
-                    'dummy_key5' => [],
-                    'dummy_key6' => 0.1,
-                    'created_at' => '2022-09-05 add string',
-                    'updated_at' => 1662940800,
+                    'dummy_key1'   => 'dummyValue1 add string',
+                    'dummy_key2'   => 'dummyValue2 add string',
+                    'dummy_key3'   => 0,
+                    'dummy_key4'   => true,
+                    'dummy_key5'   => [],
+                    'dummy_key6'   => 0.1,
+                    'created_at'   => '2022-09-05 add string',
+                    'updated_at'   => 1662940800,
                     'queue_status' => 'success add string',
-                    'use_state' => false,
+                    'use_state'    => false,
                 ],
                 'input' => [
                     'value' => [
-                        'id' => '630f1d9dc7636af90c0d73f6',
-                        'dummyKey1' => 'dummyValue1',
-                        'dummyKey2' => 'dummyValue2',
-                        'dummyKey3' => 0,
-                        'dummyKey4' => true,
-                        'dummyKey5' => [],
-                        'dummyKey6' => 0.1,
+                        'id'         => '630f1d9dc7636af90c0d73f6',
+                        'dummyKey1'  => 'dummyValue1',
+                        'dummyKey2'  => 'dummyValue2',
+                        'dummyKey3'  => 0,
+                        'dummyKey4'  => true,
+                        'dummyKey5'  => [],
+                        'dummyKey6'  => 0.1,
                         'queueState' => 'success',
-                        'createdAt' => new DateTime('2022-09-05'),
-                        'updatedAt' => new DateTime('2022-09-12'),
+                        'createdAt'  => new DateTime('2022-09-05'),
+                        'updatedAt'  => new DateTime('2022-09-12'),
                     ],
                     'define' => new ArrayDefine(
                         // key削除
@@ -422,8 +422,8 @@ class ExchangerTest extends TestCase
         /** @var array $value */
         $value = $input['value'];
         /** @var \Selen\Schema\Exchange\ArrayDefine $define */
-        $define = $input['define'];
-        $keyExchangeExecute = $input['keyExchangeExecute'];
+        $define               = $input['define'];
+        $keyExchangeExecute   = $input['keyExchangeExecute'];
         $valueExchangeExecute = $input['valueExchangeExecute'];
 
         $exchanger = Exchanger::new();

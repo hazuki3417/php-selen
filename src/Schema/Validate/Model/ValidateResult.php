@@ -28,9 +28,9 @@ class ValidateResult
      */
     public function __construct(bool $result = true, string $arrayPath = '', string $message = '')
     {
-        $this->result = $result;
+        $this->result    = $result;
         $this->arrayPath = $arrayPath;
-        $this->message = $message;
+        $this->message   = $message;
     }
 
     /**

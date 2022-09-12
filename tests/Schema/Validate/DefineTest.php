@@ -100,7 +100,7 @@ class DefineTest extends TestCase
     public function testValue4()
     {
         $validateResultStub = $this->createStub(ValidateResult::class);
-        $valueValidateStub = $this->createStub(ValueValidateInterface::class);
+        $valueValidateStub  = $this->createStub(ValueValidateInterface::class);
         $valueValidateStub->method('execute')->willReturn($validateResultStub);
 
         $key = Define::noKey();

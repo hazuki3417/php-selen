@@ -66,7 +66,7 @@ class Week
     public static function checkWeekId(int $weekId)
     {
         $startWeekId = 0;
-        $endWeekId = 6;
+        $endWeekId   = 6;
 
         return $startWeekId <= $weekId && $weekId <= $endWeekId;
     }
@@ -124,8 +124,8 @@ class Week
      */
     public static function toJp($week, string $format)
     {
-        $isInteger = is_int($week);
-        $isString = is_string($week);
+        $isInteger        = is_int($week);
+        $isString         = is_string($week);
         $allowArgWeekType = $isInteger || $isString;
 
         if (!$allowArgWeekType) {
@@ -170,8 +170,8 @@ class Week
      */
     public static function toEn($week, string $format)
     {
-        $isInteger = is_int($week);
-        $isString = is_string($week);
+        $isInteger        = is_int($week);
+        $isString         = is_string($week);
         $allowArgWeekType = $isInteger || $isString;
 
         if (!$allowArgWeekType) {
