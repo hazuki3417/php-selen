@@ -173,21 +173,24 @@ class ExchangerTest extends TestCase
             'pattern005' => [
                 'expected' => [
                     'keyName1'       => 'value1',
+                    'keyName2'       => 'value2', // すでに存在する場合は処理しない
                     'parentKeyName1' => [
                         'childKeyName1-2' => 'childKeyValue1-2',
                         'childKeyName1-1' => null,
                     ],
-                    'keyName2' => null,
+                    'keyName3' => null,
                 ],
                 'input' => [
                     'value' => [
                         'keyName1'       => 'value1',
+                        'keyName2'       => 'value2',
                         'parentKeyName1' => [
                             'childKeyName1-2' => 'childKeyValue1-2',
                         ],
                     ],
                     'define' => new ArrayDefine(
                         Define::key('keyName2', Define::KEY_ACTION_ADD),
+                        Define::key('keyName3', Define::KEY_ACTION_ADD),
                         Define::key('parentKeyName1')->arrayDefine(
                             Define::key('childKeyName1-1', Define::KEY_ACTION_ADD)
                         )

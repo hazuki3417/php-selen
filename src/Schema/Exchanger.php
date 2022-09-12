@@ -162,8 +162,12 @@ class Exchanger
                 }
 
                 if ($define->key->isAddKey()) {
-                    $addKeyDefaultValue             = null;
-                    $input[$define->key->getName()] = $addKeyDefaultValue;
+                    $addKeyDefaultValue = null;
+
+                    if (!\array_key_exists($define->key->getName(), $input)) {
+                        // NOTE: 存在しない場合はkeyを追加して値を初期化する。
+                        $input[$define->key->getName()] = $addKeyDefaultValue;
+                    }
                 }
 
                 if ($define->key->isRenameKey()) {
