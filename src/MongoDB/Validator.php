@@ -150,7 +150,7 @@ class Validator
         $fieldName      = $fieldAttribute->reflectionProperty->getName();
         return \array_key_exists($fieldName, $value) ?
             $validateResult :
-            $validateResult->setResult(false)->setMessage('field is required');
+            $validateResult->setResult(false)->setMessage('field is required.');
     }
 
     private function valueValidate(ReflectionAttribute $validateAttribute, $value): ValidateResult
