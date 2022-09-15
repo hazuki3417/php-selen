@@ -20,7 +20,7 @@ class Exchanger
     /** @var \Selen\Schema\Exchange\ValueExchangeInterface|callable|null */
     private $valueExchangesExecute;
 
-    /** @var \Selen\Schema\Exchange\ArrayDefine||null */
+    /** @var \Selen\Schema\Exchange\ArrayDefine|null */
     private $arrayDefine;
 
     /**
