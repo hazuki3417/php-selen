@@ -7,32 +7,32 @@ declare(strict_types=1);
  * @copyright 2022 hazuki3417 all rights reserved.
  */
 
-namespace Selen\MongoDB\Attributes\Validate\Type\Test;
+namespace Selen\MongoDB\Attributes\Validate\ArrayType\Test;
 
 use PHPUnit\Framework\TestCase;
-use Selen\MongoDB\Attributes\Validate\Type;
+use Selen\MongoDB\Attributes\Validate\ArrayType;
 use Selen\MongoDB\Validate\Model\ValidateResult;
 
 /**
  * @requires PHP >= 8.0
- * @coversDefaultClass \Selen\MongoDB\Attributes\Validate\Type
+ * @coversDefaultClass \Selen\MongoDB\Attributes\Validate\ArrayType
  *
- * @group Selen/MongoDB/Attributes/Validate/Type
+ * @group Selen/MongoDB/Attributes/Validate/ArrayType
  *
- * @see \Selen\MongoDB\Attributes\Validate\Type
+ * @see \Selen\MongoDB\Attributes\Validate\ArrayType
  *
  * [command]
- * php ./vendor/bin/phpunit --group=Selen/MongoDB/Attributes/Validate/Type
+ * php ./vendor/bin/phpunit --group=Selen/MongoDB/Attributes/Validate/ArrayType
  *
  * @internal
  */
-class TypeTest extends TestCase
+class ArrayTypeTest extends TestCase
 {
     public function testConstruct()
     {
-        $instance = new Type();
+        $instance = new ArrayType();
 
-        $this->assertInstanceOf(Type::class, $instance);
+        $this->assertInstanceOf(ArrayType::class, $instance);
     }
 
     public function dataProviderExecute()
@@ -42,25 +42,25 @@ class TypeTest extends TestCase
                 'expected' => new ValidateResult(true),
                 'input'    => [
                     'type'  => ['int'],
-                    'value' => 1,
+                    'value' => [1, 2, 0],
                 ], ],
             'pattern002' => [
-                'expected' => new ValidateResult(false, '', 'Invalid type. expected type int.'),
+                'expected' => new ValidateResult(false, '', 'Invalid type. expected array element type int.'),
                 'input'    => [
                     'type'  => ['int'],
-                    'value' => 1.0,
+                    'value' => [1, 2, 1.0],
                 ], ],
             'pattern003' => [
                 'expected' => new ValidateResult(true),
                 'input'    => [
                     'type'  => ['int', 'string'],
-                    'value' => 'value',
+                    'value' => ['value1', 'value2', 0],
                 ], ],
             'pattern004' => [
-                'expected' => new ValidateResult(false, '', 'Invalid type. expected type int, string.'),
+                'expected' => new ValidateResult(false, '', 'Invalid type. expected array element type int, string.'),
                 'input'    => [
                     'type'  => ['int', 'string'],
-                    'value' => true,
+                    'value' => ['value1', 'value2', 0, true],
                 ], ],
         ];
     }
@@ -75,7 +75,7 @@ class TypeTest extends TestCase
     {
         $validateResult = new ValidateResult();
 
-        $instance = new Type(...$input['type']);
+        $instance = new ArrayType(...$input['type']);
 
         $verify = $instance->execute($input['value'], $validateResult);
 

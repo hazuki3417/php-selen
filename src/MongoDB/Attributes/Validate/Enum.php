@@ -24,7 +24,37 @@ class Enum implements ValueValidateInterface
 
     public function execute($value, ValidateResult $result): ValidateResult
     {
-        return \in_array($value, $this->allowValues, true) ?
-            $result : $result->setResult(false)->setMessage('enum');
+        // TODO: enumに配列やオブジェクトは指定できないように修正する
+
+        if (\in_array($value, $this->allowValues, true)) {
+            return $result;
+        }
+
+        foreach ($this->allowValues as $index => $allowValue) {
+            $this->allowValues[$index] = $this->surround($allowValue);
+        }
+
+        $format = 'Invalid value. expected value %s.';
+        $mes    = \sprintf($format, \implode(', ', $this->allowValues));
+        return $result->setResult(false)->setMessage($mes);
+    }
+
+    public function surround($value)
+    {
+        /**
+         * NOTE: 表示用に値を整形。
+         */
+        if (\is_string($value)) {
+            return "'{$value}'";
+        }
+
+        if (\is_bool($value)) {
+            return $value ? 'true' : 'false';
+        }
+
+        if (\is_null($value)) {
+            return 'null';
+        }
+        return $value;
     }
 }

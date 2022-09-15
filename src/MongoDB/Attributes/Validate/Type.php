@@ -25,7 +25,12 @@ class Type implements ValueValidateInterface
 
     public function execute($value, ValidateResult $result): ValidateResult
     {
-        return Types::validate($value, ...$this->names) ?
-            $result : $result->setResult(false)->setMessage('type');
+        if (Types::validate($value, ...$this->names)) {
+            return $result;
+        }
+
+        $format = 'Invalid type. expected type %s.';
+        $mes    = \sprintf($format, \implode(', ', $this->names));
+        return $result->setResult(false)->setMessage($mes);
     }
 }

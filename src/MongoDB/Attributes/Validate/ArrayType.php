@@ -25,7 +25,12 @@ class ArrayType implements ValueValidateInterface
 
     public function execute($value, ValidateResult $result): ValidateResult
     {
-        return ArrayTypes::validate($value, ...$this->names) ?
-            $result : $result->setResult(false)->setMessage('array types');
+        if (ArrayTypes::validate($value, ...$this->names)) {
+            return $result;
+        }
+
+        $format = 'Invalid type. expected array element type %s.';
+        $mes    = \sprintf($format, \implode(', ', $this->names));
+        return $result->setResult(false)->setMessage($mes);
     }
 }
