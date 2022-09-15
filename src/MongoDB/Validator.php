@@ -56,7 +56,7 @@ class Validator
         $expectedAttributeCount = 1;
 
         if ($expectedAttributeCount !== count($attributes)) {
-            $format = 'Invalid attribute specification. Only one "%s" can be specified';
+            $format = 'Invalid attribute specification. Only one "%s" can be specified.';
             $mes    = \sprintf($format, Document::class);
             throw new \LogicException($mes);
         }

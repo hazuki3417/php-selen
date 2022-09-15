@@ -52,7 +52,7 @@ class Radix
         }
 
         throw new LogicException(
-            'Does not support validation of the specified radix'
+            'Does not support validation of the specified radix.'
         );
     }
 }

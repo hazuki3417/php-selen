@@ -162,7 +162,7 @@ class Length implements LengthInterface
     private function verifySignedInteger(int $val)
     {
         if ($val < 0) {
-            throw new LogicException('Signed integers cannot be specified');
+            throw new LogicException('Signed integers cannot be specified.');
         }
     }
 
@@ -177,7 +177,7 @@ class Length implements LengthInterface
     private function verifyMinAndMaxLimen(int $min, int $max)
     {
         if ($min > $max) {
-            throw new LogicException('A value greater than max cannot be specified for min');
+            throw new LogicException('A value greater than max cannot be specified for min.');
         }
     }
 }
