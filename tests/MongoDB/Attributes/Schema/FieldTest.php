@@ -7,7 +7,7 @@ declare(strict_types=1);
  * @copyright 2022 hazuki3417 all rights reserved.
  */
 
-namespace Selen\Str\Test;
+namespace Selen\MongoDB\Attributes\Schema\Field\Test;
 
 use PHPUnit\Framework\TestCase;
 use Selen\MongoDB\Attributes\Schema\Field;
