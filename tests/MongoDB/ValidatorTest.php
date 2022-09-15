@@ -48,11 +48,11 @@ class ValidatorTest extends TestCase
     {
         $expectedSuccess         = false;
         $expectedValidateResults = [
-            new ValidateResult(false, 'id', 'field is required'),
-            new ValidateResult(false, 'foreignId', 'field is required'),
-            new ValidateResult(false, 'name', 'field is required'),
-            new ValidateResult(false, 'createdAt', 'field is required'),
-            new ValidateResult(false, 'updatedAt', 'field is required'),
+            new ValidateResult(false, 'id', 'field is required.'),
+            new ValidateResult(false, 'foreignId', 'field is required.'),
+            new ValidateResult(false, 'name', 'field is required.'),
+            new ValidateResult(false, 'createdAt', 'field is required.'),
+            new ValidateResult(false, 'updatedAt', 'field is required.'),
         ];
 
         $input = [];

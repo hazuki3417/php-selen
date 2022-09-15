@@ -44,8 +44,8 @@ class ValidatorTest extends TestCase
     {
         $expectedSuccess         = false;
         $expectedValidateResults = [
-            new ValidateResult(false, 'key1', 'key is required'),
-            new ValidateResult(false, 'key2', 'key is required'),
+            new ValidateResult(false, 'key1', 'key is required.'),
+            new ValidateResult(false, 'key2', 'key is required.'),
         ];
 
         $define = new ArrayDefine(
@@ -104,24 +104,24 @@ class ValidatorTest extends TestCase
         $expectedSuccess         = false;
         $expectedValidateResults = [
             // NOTE: コメントアウトされた行は記録されない想定の検証結果
-            new ValidateResult(false, 'key1', 'key is required'),
-            new ValidateResult(false, 'key1.key1-1', 'key is required'),
-            new ValidateResult(false, 'key1.key1-1.key1-1-1', 'key is required'),
-            new ValidateResult(false, 'key1.key1-1.key1-1-3', 'key is required'),
+            new ValidateResult(false, 'key1', 'key is required.'),
+            new ValidateResult(false, 'key1.key1-1', 'key is required.'),
+            new ValidateResult(false, 'key1.key1-1.key1-1-1', 'key is required.'),
+            new ValidateResult(false, 'key1.key1-1.key1-1-3', 'key is required.'),
 
-            new ValidateResult(false, 'key2.key2-1', 'key is required'),
-            new ValidateResult(false, 'key2.key2-1.key2-1-1', 'key is required'),
-            new ValidateResult(false, 'key2.key2-1.key2-1-3', 'key is required'),
+            new ValidateResult(false, 'key2.key2-1', 'key is required.'),
+            new ValidateResult(false, 'key2.key2-1.key2-1-1', 'key is required.'),
+            new ValidateResult(false, 'key2.key2-1.key2-1-3', 'key is required.'),
 
-            new ValidateResult(false, 'key3.key3-1.key3-1-1', 'key is required'),
-            new ValidateResult(false, 'key3.key3-1.key3-1-3', 'key is required'),
+            new ValidateResult(false, 'key3.key3-1.key3-1-1', 'key is required.'),
+            new ValidateResult(false, 'key3.key3-1.key3-1-3', 'key is required.'),
 
-            new ValidateResult(false, 'key4', 'key is required'),
-            new ValidateResult(false, 'key4.[0].key4-1-1', 'key is required'),
-            new ValidateResult(false, 'key4.[0].key4-1-3', 'key is required'),
+            new ValidateResult(false, 'key4', 'key is required.'),
+            new ValidateResult(false, 'key4.[0].key4-1-1', 'key is required.'),
+            new ValidateResult(false, 'key4.[0].key4-1-3', 'key is required.'),
 
-            new ValidateResult(false, 'key5.[0].key5-1-1', 'key is required'),
-            new ValidateResult(false, 'key5.[0].key5-1-3', 'key is required'),
+            new ValidateResult(false, 'key5.[0].key5-1-1', 'key is required.'),
+            new ValidateResult(false, 'key5.[0].key5-1-3', 'key is required.'),
         ];
 
         $define = new ArrayDefine(
@@ -370,7 +370,7 @@ class ValidatorTest extends TestCase
     {
         $expectedSuccess         = false;
         $expectedValidateResults = [
-            new ValidateResult(false, 'key1', 'key is required'),
+            new ValidateResult(false, 'key1', 'key is required.'),
             // new ValidateResult(false, 'key2', 'Invalid value type. Expected string type.'),
         ];
 
