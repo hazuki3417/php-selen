@@ -22,7 +22,7 @@ Docker + xdebug + VS Code でステップ実行によるデバッグ環境を構
     "request": "launch",
     "port": 9003,
     "pathMappings": {
-        "var/www/html/": "${workspaceRoot}"
+        "/var/www/html/": "${workspaceRoot}"
     }
 }
 ```
