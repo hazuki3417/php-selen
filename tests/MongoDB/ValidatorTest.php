@@ -10,10 +10,13 @@ declare(strict_types=1);
 namespace Selen\MongoDB\Validator\Test;
 
 use PHPUnit\Framework\TestCase;
+use Selen\MongoDB\Attributes\Schema\ArrayValue;
 use Selen\MongoDB\Attributes\Schema\Field;
+use Selen\MongoDB\Attributes\Schema\InnerObject;
 use Selen\MongoDB\Attributes\Schema\RootObject;
 use Selen\MongoDB\Attributes\Schema\Value;
-use Selen\MongoDB\Attributes\Type;
+use Selen\MongoDB\Attributes\Validate\Type;
+use Selen\MongoDB\Attributes\Validate\ArrayType;
 use Selen\MongoDB\Validate\Model\ValidateResult;
 use Selen\MongoDB\Validate\Model\ValidatorResult;
 use Selen\MongoDB\Validator;
@@ -125,11 +128,11 @@ class MockRootObjectClass
     public $name = '';
 
     /** @var MockValueClass1 */
-    #[Field, Type(MockValueClass1::class)]
+    #[Field, Value(MockValueClass1::class), Type(MockValueClass1::class)]
     public $meta;
 
-    /** @var MockValueClass2 */
-    #[Field, Type(MockValueClass2::class)]
+    /** @var MockValueClass2[] */
+    #[Field, ArrayValue(MockValueClass2::class), ArrayType(MockValueClass2::class)]
     public $items;
 
     /** @var \MongoDB\BSON\UTCDateTime */
@@ -141,8 +144,8 @@ class MockRootObjectClass
     public $updatedAt;
 }
 
-#[Value]
-class MockValueClass1
+#[InnerObject]
+class MockInnerObjectClass1
 {
     /** @var string */
     #[Field, Type('string')]
@@ -157,8 +160,8 @@ class MockValueClass1
     public $tell2 = '';
 }
 
-#[Value]
-class MockValueClass2
+#[InnerObject]
+class MockInnerObjectClass2
 {
     /** @var string */
     #[Field, Type('string')]
