@@ -12,6 +12,7 @@ namespace Selen\MongoDB\Validator\Test;
 use PHPUnit\Framework\TestCase;
 use Selen\MongoDB\Attributes\Schema\Document;
 use Selen\MongoDB\Attributes\Schema\Field;
+use Selen\MongoDB\Attributes\Schema\Value;
 use Selen\MongoDB\Attributes\Type;
 use Selen\MongoDB\Validate\Model\ValidateResult;
 use Selen\MongoDB\Validate\Model\ValidatorResult;
@@ -19,6 +20,7 @@ use Selen\MongoDB\Validator;
 
 /**
  * @requires PHP >= 8.0
+ *
  * @coversDefaultClass \Selen\Validator
  *
  * @group Selen
@@ -51,6 +53,7 @@ class ValidatorTest extends TestCase
             new ValidateResult(false, 'id', 'field is required.'),
             new ValidateResult(false, 'foreignId', 'field is required.'),
             new ValidateResult(false, 'name', 'field is required.'),
+            new ValidateResult(false, 'meta', 'field is required.'),
             new ValidateResult(false, 'createdAt', 'field is required.'),
             new ValidateResult(false, 'updatedAt', 'field is required.'),
         ];
@@ -120,6 +123,10 @@ class MockDocumentClass
     #[Field, Type('string')]
     public $name = '';
 
+    /** @var MockValueClass */
+    #[Field, Type(MockValueClass::class)]
+    public $meta;
+
     /** @var \MongoDB\BSON\UTCDateTime */
     #[Field]
     public $createdAt;
@@ -132,4 +139,15 @@ class MockDocumentClass
 #[Value]
 class MockValueClass
 {
+    /** @var string */
+    #[Field, Type('string')]
+    public $mail = '';
+
+    /** @var string */
+    #[Field, Type('string')]
+    public $tell1 = '';
+
+    /** @var string */
+    #[Field, Type('string')]
+    public $tell2 = '';
 }

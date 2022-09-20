@@ -106,7 +106,7 @@ class Validator
             $this->arrayPath->setCurrentPath($fieldName);
 
             $validateResult          = $this->keyValidate($fieldAttribute, $input);
-            $this->validateResults[] = $this->keyValidate($fieldAttribute, $input);
+            $this->validateResults[] = $validateResult;
 
             if (!$validateResult->getResult()) {
                 // filedの検証結果が不合格なら値の検証は行わない
