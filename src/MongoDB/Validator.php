@@ -11,7 +11,7 @@ namespace Selen\MongoDB;
 use ReflectionAttribute;
 use ReflectionClass;
 use Selen\Data\ArrayPath;
-use Selen\MongoDB\Attributes\Schema\Document;
+use Selen\MongoDB\Attributes\Schema\RootObject;
 use Selen\MongoDB\Validate\FieldAttribute;
 use Selen\MongoDB\Validate\Model\ValidateResult;
 use Selen\MongoDB\Validate\Model\ValidatorResult;
@@ -51,13 +51,13 @@ class Validator
     {
         $reflectionClass = new ReflectionClass($name);
 
-        $attributes = $reflectionClass->getAttributes(Document::class);
+        $attributes = $reflectionClass->getAttributes(RootObject::class);
 
         $expectedAttributeCount = 1;
 
         if ($expectedAttributeCount !== count($attributes)) {
             $format = 'Invalid attribute specification. Only one "%s" can be specified.';
-            $mes    = \sprintf($format, Document::class);
+            $mes    = \sprintf($format, RootObject::class);
             throw new \LogicException($mes);
         }
 
@@ -159,7 +159,5 @@ class Validator
         /** @var \Selen\MongoDB\Attributes\Validate\ValueValidateInterface $validateInstance */
         $validateInstance = $validateAttribute->newInstance();
         return $validateInstance->execute($value, $validateResult);
-        // keyの値がobjectまたはarray objectのとき、そのobjectにMongoDBのvalueというattributeが存在したらバリデーションを行う
-        // ない場合はバリデーションを行わない（エラーにするか、実施しないかは要検討。）
     }
 }

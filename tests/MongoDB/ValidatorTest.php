@@ -10,8 +10,8 @@ declare(strict_types=1);
 namespace Selen\MongoDB\Validator\Test;
 
 use PHPUnit\Framework\TestCase;
-use Selen\MongoDB\Attributes\Schema\Document;
 use Selen\MongoDB\Attributes\Schema\Field;
+use Selen\MongoDB\Attributes\Schema\RootObject;
 use Selen\MongoDB\Attributes\Schema\Value;
 use Selen\MongoDB\Attributes\Type;
 use Selen\MongoDB\Validate\Model\ValidateResult;
@@ -54,6 +54,7 @@ class ValidatorTest extends TestCase
             new ValidateResult(false, 'foreignId', 'field is required.'),
             new ValidateResult(false, 'name', 'field is required.'),
             new ValidateResult(false, 'meta', 'field is required.'),
+            new ValidateResult(false, 'items', 'field is required.'),
             new ValidateResult(false, 'createdAt', 'field is required.'),
             new ValidateResult(false, 'updatedAt', 'field is required.'),
         ];
@@ -61,7 +62,7 @@ class ValidatorTest extends TestCase
         $input = [];
 
         $validator = Validator::new();
-        $result    = $validator->schema(MockDocumentClass::class)->execute($input);
+        $result    = $validator->schema(MockRootObjectClass::class)->execute($input);
         $this->assertInstanceOf(ValidatorResult::class, $result);
         $this->assertValidatorClass($expectedSuccess, $expectedValidateResults, $result);
     }
@@ -108,8 +109,8 @@ class ValidatorTest extends TestCase
     }
 }
 
-#[Document]
-class MockDocumentClass
+#[RootObject]
+class MockRootObjectClass
 {
     /** @var \MongoDB\BSON\ObjectId */
     #[Field]
@@ -123,9 +124,13 @@ class MockDocumentClass
     #[Field, Type('string')]
     public $name = '';
 
-    /** @var MockValueClass */
-    #[Field, Type(MockValueClass::class)]
+    /** @var MockValueClass1 */
+    #[Field, Type(MockValueClass1::class)]
     public $meta;
+
+    /** @var MockValueClass2 */
+    #[Field, Type(MockValueClass2::class)]
+    public $items;
 
     /** @var \MongoDB\BSON\UTCDateTime */
     #[Field]
@@ -137,7 +142,7 @@ class MockDocumentClass
 }
 
 #[Value]
-class MockValueClass
+class MockValueClass1
 {
     /** @var string */
     #[Field, Type('string')]
@@ -150,4 +155,16 @@ class MockValueClass
     /** @var string */
     #[Field, Type('string')]
     public $tell2 = '';
+}
+
+#[Value]
+class MockValueClass2
+{
+    /** @var string */
+    #[Field, Type('string')]
+    public $name = '';
+
+    /** @var string */
+    #[Field, Type('string')]
+    public $description = '';
 }

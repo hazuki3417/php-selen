@@ -11,6 +11,6 @@ namespace Selen\MongoDB\Attributes\Schema;
 use Attribute;
 
 #[Attribute(Attribute::TARGET_CLASS)]
-class Document implements SchemaMarkerInterface
+class InnerObject implements SchemaMarkerInterface
 {
 }
