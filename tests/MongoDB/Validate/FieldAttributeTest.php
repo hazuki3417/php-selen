@@ -51,38 +51,6 @@ class FieldAttributeTest extends TestCase
         $this->assertSame('property1', $instance->getFieldName());
     }
 
-    public function dataProviderIsSchemaAttributeExists()
-    {
-        $reflectionClass = new ReflectionClass(MockClass::class);
-        return [
-            'pattern001' => [
-                'expected' => false,
-                'input'    => $reflectionClass->getProperty('property1'),
-            ],
-            'pattern002' => [
-                'expected' => true,
-                'input'    => $reflectionClass->getProperty('property2'),
-            ],
-            'pattern003' => [
-                'expected' => false,
-                'input'    => $reflectionClass->getProperty('property3'),
-            ],
-        ];
-    }
-
-    /**
-     * @dataProvider dataProviderIsSchemaAttributeExists
-     *
-     * @param bool $expected
-     * @param \ReflectionProperty
-     * @param mixed $input
-     */
-    public function testIsSchemaAttributeExists($expected, $input)
-    {
-        $instance = new FieldAttribute($input);
-        $this->assertSame($expected, $instance->isSchemaAttributeExists());
-    }
-
     public function dataProviderIsValidateAttributeExists()
     {
         $reflectionClass = new ReflectionClass(MockClass::class);
@@ -118,9 +86,10 @@ class FieldAttributeTest extends TestCase
 
 class MockClass
 {
+    #[Field]
     public $property1;
     #[Field]
     public $property2;
-    #[Type('string')]
+    #[Field, Type('string')]
     public $property3;
 }

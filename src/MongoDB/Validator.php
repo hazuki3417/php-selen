@@ -11,10 +11,10 @@ namespace Selen\MongoDB;
 use ReflectionAttribute;
 use ReflectionClass;
 use Selen\Data\ArrayPath;
-use Selen\MongoDB\Attributes\Schema\RootObject;
 use Selen\MongoDB\Validate\FieldAttribute;
 use Selen\MongoDB\Validate\Model\ValidateResult;
 use Selen\MongoDB\Validate\Model\ValidatorResult;
+use Selen\MongoDB\Validate\ObjectAttribute;
 
 class Validator
 {
@@ -51,37 +51,16 @@ class Validator
     {
         $reflectionClass = new ReflectionClass($name);
 
-        $attributes = $reflectionClass->getAttributes(RootObject::class);
-
-        $expectedAttributeCount = 1;
-
-        if ($expectedAttributeCount !== count($attributes)) {
-            $format = 'Invalid attribute specification. Only one "%s" can be specified.';
-            $mes    = \sprintf($format, RootObject::class);
-            throw new \LogicException($mes);
-        }
+        ObjectAttribute::extractRootObjectAttribute($reflectionClass);
 
         foreach ($reflectionClass->getProperties() as $reflectionProperty) {
-            $fieldAttribute = new FieldAttribute($reflectionProperty);
-
-            if (!$fieldAttribute->isSchemaAttributeExists()) {
-                // schemaのattributeがない場合は処理対象外とする
-                continue;
+            if (FieldAttribute::isFieldAttributeExists($reflectionProperty)) {
+                // Attributes/Schema/Fieldのattributeがある場合は処理対象とする
+                $this->fieldAttributes[] = new FieldAttribute($reflectionProperty);
             }
-            // schemaのattributeがある場合は処理対象とする
-            $this->fieldAttributes[] = $fieldAttribute;
+            // Attributes/Schema/Fieldのattributeがない場合は処理対象外とする
         }
 
-        return $this;
-    }
-
-    /**
-     * Schema/Validation/ArrayDefineクラスを利用したバリデーション（予定）
-     * こっちを利用した場合は、attributeを利用したバリデーション定義は無視される想定
-     */
-    public function schemaDefine(): Validator
-    {
-        // バリデーションの定義を上書きするi/fを追加するか検討する
         return $this;
     }
 
@@ -98,12 +77,10 @@ class Validator
      */
     private function defineRoutine(array $input, array $fieldAttributes)
     {
-        // TODO: プロパティにmongodbのattributeがないときの挙動を考える
         $this->arrayPath->down();
         /** @var \Selen\MongoDB\Validate\FieldAttribute[] $fieldAttributes */
         foreach ($fieldAttributes as $fieldAttribute) {
-            $fieldName = $fieldAttribute->reflectionProperty->getName();
-            $this->arrayPath->setCurrentPath($fieldName);
+            $this->arrayPath->setCurrentPath($fieldAttribute->getFieldName());
 
             $validateResult          = $this->keyValidate($fieldAttribute, $input);
             $this->validateResults[] = $validateResult;
@@ -113,25 +90,93 @@ class Validator
                 continue;
             }
 
-            if (!$fieldAttribute->isValidateAttributeExists()) {
-                // 値を検証するattributeがない場合は値の検証を行わない
+            if ($fieldAttribute->isValidateAttributeExists()) {
+                // valueの検証処理
+                foreach ($fieldAttribute->validateAttributes as $validateAttribute) {
+                    $validateResult = $this->valueValidate(
+                        $validateAttribute,
+                        $input[$fieldAttribute->getFieldName()]
+                    );
+                    $this->validateResults[] = $validateResult;
+
+                    if (!$validateResult->getResult()) {
+                        // 検証結果が不合格の場合は控えている検証処理は実行しない
+                        break;
+                    }
+                    // 検証結果が合格の場合は控えている検証処理を実行する
+                }
                 continue;
             }
 
-            $fieldValue = $input[$fieldName];
+            if ($fieldAttribute->isInnerObjectExists()) {
+                // ネストされた定義なら再帰処理を行う
+                $passRecursionInput = [];
 
-            foreach ($fieldAttribute->validateAttributes as $validateAttribute) {
-                $validateResult          = $this->valueValidate($validateAttribute, $fieldValue);
-                $this->validateResults[] = $validateResult;
+                if ($fieldAttribute->isValueObjectDefine()) {
+                    // valueがobjectのときの処理
+                    $attributeName = \current($fieldAttribute->valueAttribute->getArguments());
 
-                if (!$validateResult->getResult()) {
-                    // 検証結果が不合格の場合は控えている検証処理は実行しない
-                    break;
+                    $reflectionClass = new ReflectionClass($attributeName);
+                    ObjectAttribute::extractInnerObjectAttribute($reflectionClass);
+                    $fieldAttributes = $this->createFieldAttributes($reflectionClass);
+
+                    /**
+                     * keyに対応する値が配列以外の場合は、値の形式が不正。
+                     * そのため空配列を渡して処理を継続させる。
+                     * ネストされた定義 = inputの値は配列形式を期待している
+                     */
+                    $passRecursionInput = $input[$fieldAttribute->getFieldName()];
+                    $passRecursionInput = \is_array($passRecursionInput)
+                        ? $passRecursionInput : [];
+                    $this->defineRoutine($passRecursionInput, $fieldAttributes);
                 }
-                // 検証結果が合格の場合は控えている検証処理を実行する
+
+                if ($fieldAttribute->isArrayObjectDefine()) {
+                    // valueがarray objectのときの処理
+                    $attributeName = \current($fieldAttribute->arrayValueAttribute->getArguments());
+
+                    $reflectionClass = new ReflectionClass($attributeName);
+                    ObjectAttribute::extractInnerObjectAttribute($reflectionClass);
+                    $fieldAttributes = $this->createFieldAttributes($reflectionClass);
+
+                    $passRecursionInput = $input[$fieldAttribute->getFieldName()];
+                    $passRecursionInput = \is_array($passRecursionInput)
+                        ? $passRecursionInput : [];
+                    $passRecursionInput = $passRecursionInput === [] ? [[]] : $passRecursionInput;
+
+                    $this->arrayPath->down();
+
+                    foreach ($passRecursionInput as $index => $item) {
+                        $path = \sprintf('[%s]', $index);
+                        $this->arrayPath->setCurrentPath($path);
+                        $this->defineRoutine(
+                            $item,
+                            $fieldAttributes
+                        );
+                    }
+                    $this->arrayPath->up();
+                }
             }
         }
         $this->arrayPath->up();
+    }
+
+    /**
+     * @return \Selen\MongoDB\Validate\FieldAttribute[]
+     */
+    private function createFieldAttributes(ReflectionClass $reflectionClass)
+    {
+        /** @var \Selen\MongoDB\Validate\FieldAttribute $fieldAttributes */
+        $fieldAttributes = [];
+
+        foreach ($reflectionClass->getProperties() as $reflectionProperty) {
+            if (FieldAttribute::isFieldAttributeExists($reflectionProperty)) {
+                // Attributes/Schema/Fieldのattributeがある場合は処理対象とする
+                $fieldAttributes[] = new FieldAttribute($reflectionProperty);
+            }
+            // Attributes/Schema/Fieldのattributeがない場合は処理対象外とする
+        }
+        return $fieldAttributes;
     }
 
     /**
@@ -147,8 +192,7 @@ class Validator
     private function keyValidate(FieldAttribute $fieldAttribute, $value): ValidateResult
     {
         $validateResult = new ValidateResult(true, $this->getArrayPathStr());
-        $fieldName      = $fieldAttribute->reflectionProperty->getName();
-        return \array_key_exists($fieldName, $value) ?
+        return \array_key_exists($fieldAttribute->getFieldName(), $value) ?
             $validateResult :
             $validateResult->setResult(false)->setMessage('field is required.');
     }

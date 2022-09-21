@@ -16,7 +16,6 @@ use Selen\MongoDB\Attributes\Schema\InnerObject;
 use Selen\MongoDB\Attributes\Schema\RootObject;
 use Selen\MongoDB\Attributes\Schema\Value;
 use Selen\MongoDB\Attributes\Validate\Type;
-use Selen\MongoDB\Attributes\Validate\ArrayType;
 use Selen\MongoDB\Validate\Model\ValidateResult;
 use Selen\MongoDB\Validate\Model\ValidatorResult;
 use Selen\MongoDB\Validator;
@@ -66,6 +65,52 @@ class ValidatorTest extends TestCase
 
         $validator = Validator::new();
         $result    = $validator->schema(MockRootObjectClass::class)->execute($input);
+        $this->assertInstanceOf(ValidatorResult::class, $result);
+        $this->assertValidatorClass($expectedSuccess, $expectedValidateResults, $result);
+    }
+
+    public function testPattern001()
+    {
+        $expectedSuccess         = false;
+        $expectedValidateResults = [
+            new ValidateResult(true, 'id'),
+            new ValidateResult(true, 'foreignId'),
+            new ValidateResult(true, 'foreignId'),
+            new ValidateResult(true, 'name'),
+            new ValidateResult(true, 'name'),
+            new ValidateResult(true, 'meta'),
+            new ValidateResult(false, 'meta.mail', 'field is required.'),
+            new ValidateResult(false, 'meta.tell1', 'field is required.'),
+            new ValidateResult(false, 'meta.tell2', 'field is required.'),
+            new ValidateResult(true, 'items'),
+            new ValidateResult(true, 'items.[0].name'),
+            new ValidateResult(true, 'items.[0].description'),
+            new ValidateResult(false, 'items.[1].name', 'field is required.'),
+            new ValidateResult(false, 'items.[1].description', 'field is required.'),
+            new ValidateResult(true, 'createdAt'),
+            new ValidateResult(true, 'updatedAt'),
+        ];
+
+        $input = [
+            'id'        => '',
+            'foreignId' => '',
+            'name'      => '',
+            'meta'      => '',
+            'items'     => [
+                [
+                    'name'        => '',
+                    'description' => '',
+                ],
+                [
+                ],
+            ],
+            'createdAt' => '',
+            'updatedAt' => '',
+        ];
+
+        $validator = Validator::new();
+        $result    = $validator->schema(MockRootObjectClass::class)->execute($input);
+
         $this->assertInstanceOf(ValidatorResult::class, $result);
         $this->assertValidatorClass($expectedSuccess, $expectedValidateResults, $result);
     }
@@ -127,12 +172,12 @@ class MockRootObjectClass
     #[Field, Type('string')]
     public $name = '';
 
-    /** @var MockValueClass1 */
-    #[Field, Value(MockValueClass1::class), Type(MockValueClass1::class)]
+    /** @var MockInnerObjectClass1 */
+    #[Field, Value(MockInnerObjectClass1::class)]
     public $meta;
 
-    /** @var MockValueClass2[] */
-    #[Field, ArrayValue(MockValueClass2::class), ArrayType(MockValueClass2::class)]
+    /** @var MockInnerObjectClass2[] */
+    #[Field, ArrayValue(MockInnerObjectClass2::class)]
     public $items;
 
     /** @var \MongoDB\BSON\UTCDateTime */
@@ -148,15 +193,15 @@ class MockRootObjectClass
 class MockInnerObjectClass1
 {
     /** @var string */
-    #[Field, Type('string')]
+    #[Field]
     public $mail = '';
 
     /** @var string */
-    #[Field, Type('string')]
+    #[Field]
     public $tell1 = '';
 
     /** @var string */
-    #[Field, Type('string')]
+    #[Field]
     public $tell2 = '';
 }
 
@@ -164,10 +209,10 @@ class MockInnerObjectClass1
 class MockInnerObjectClass2
 {
     /** @var string */
-    #[Field, Type('string')]
+    #[Field]
     public $name = '';
 
     /** @var string */
-    #[Field, Type('string')]
+    #[Field]
     public $description = '';
 }
