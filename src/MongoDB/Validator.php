@@ -51,7 +51,7 @@ class Validator
     {
         $reflectionClass = new ReflectionClass($name);
 
-        ObjectAttribute::extractRootObjectAttribute($reflectionClass);
+        ObjectAttribute::extractObjectAttribute($reflectionClass);
 
         foreach ($reflectionClass->getProperties() as $reflectionProperty) {
             if (FieldAttribute::isFieldAttributeExists($reflectionProperty)) {

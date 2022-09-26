@@ -14,6 +14,22 @@ use Selen\MongoDB\Attributes\Schema\RootObject;
 
 class ObjectAttribute
 {
+    public static function extractObjectAttribute(ReflectionClass $reflectionClass)
+    {
+        $rootAttributes         = $reflectionClass->getAttributes(RootObject::class);
+        $innerAttributes        = $reflectionClass->getAttributes(InnerObject::class);
+        $expectedAttributeCount = 1;
+        $attributeCount         = count($rootAttributes) + count($innerAttributes);
+
+        if ($expectedAttributeCount !== $attributeCount) {
+            $format = 'Invalid attribute specification. Only one "%s" can be specified.';
+            $mes    = \sprintf($format, RootObject::class . ' or ' . InnerObject::class);
+            throw new \LogicException($mes);
+        }
+
+        return $rootAttributes !== [] ? \current($rootAttributes) : \current($innerAttributes);
+    }
+
     public static function extractRootObjectAttribute(ReflectionClass $reflectionClass)
     {
         $attributes             = $reflectionClass->getAttributes(RootObject::class);

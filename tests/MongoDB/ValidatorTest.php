@@ -48,7 +48,52 @@ class ValidatorTest extends TestCase
         $this->assertInstanceOf(Validator::class, $instance);
     }
 
-    public function testPattern000()
+    public function testSchema1()
+    {
+        $instance = Validator::new();
+        $this->assertInstanceOf(
+            Validator::class,
+            $instance->schema(MockSuccessClass1::class)
+        );
+    }
+
+    public function testSchema2()
+    {
+        $instance = Validator::new();
+        $this->assertInstanceOf(
+            Validator::class,
+            $instance->schema(MockSuccessClass2::class)
+        );
+    }
+
+    public function testSchemaException1()
+    {
+        $instance = Validator::new();
+        $this->expectException(\LogicException::class);
+        $instance->schema(MockExceptionClass1::class);
+    }
+    public function testSchemaException2()
+    {
+        $instance = Validator::new();
+        $this->expectException(\LogicException::class);
+        $instance->schema(MockExceptionClass2::class);
+    }
+
+    public function testSchemaException3()
+    {
+        $instance = Validator::new();
+        $this->expectException(\LogicException::class);
+        $instance->schema(MockExceptionClass3::class);
+    }
+
+    public function testSchemaException4()
+    {
+        $instance = Validator::new();
+        $this->expectException(\LogicException::class);
+        $instance->schema(MockExceptionClass4::class);
+    }
+
+    public function testExecuteRootObject()
     {
         $expectedSuccess         = false;
         $expectedValidateResults = [
@@ -69,7 +114,24 @@ class ValidatorTest extends TestCase
         $this->assertValidatorClass($expectedSuccess, $expectedValidateResults, $result);
     }
 
-    public function testPattern001()
+    public function testExecuteInnerObject()
+    {
+        $expectedSuccess         = false;
+        $expectedValidateResults = [
+            new ValidateResult(false, 'mail', 'field is required.'),
+            new ValidateResult(false, 'tell1', 'field is required.'),
+            new ValidateResult(false, 'tell2', 'field is required.'),
+        ];
+
+        $input = [];
+
+        $validator = Validator::new();
+        $result    = $validator->schema(MockInnerObjectClass1::class)->execute($input);
+        $this->assertInstanceOf(ValidatorResult::class, $result);
+        $this->assertValidatorClass($expectedSuccess, $expectedValidateResults, $result);
+    }
+
+    public function testExecuteNestObject()
     {
         $expectedSuccess         = false;
         $expectedValidateResults = [
@@ -215,4 +277,36 @@ class MockInnerObjectClass2
     /** @var string */
     #[Field]
     public $description = '';
+}
+
+#[RootObject]
+class MockSuccessClass1
+{
+}
+#[InnerObject]
+class MockSuccessClass2
+{
+}
+
+class MockExceptionClass1
+{
+    // RootObjectまたはInnerObjectの指定がないときにexceptionが発生するかテストするクラス
+}
+
+#[RootObject, RootObject]
+class MockExceptionClass2
+{
+    // RootObjectを複数指定したときにexceptionが発生するかテストするクラス
+}
+
+#[InnerObject, InnerObject]
+class MockExceptionClass3
+{
+    // InnerObjectを複数指定したときにexceptionが発生するかテストするクラス
+}
+
+#[RootObject, InnerObject]
+class MockExceptionClass4
+{
+    // RootObject, InnerObjectを混在指定したときにexceptionが発生するかテストするクラス
 }
