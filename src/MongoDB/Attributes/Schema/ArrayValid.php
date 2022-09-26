@@ -11,6 +11,6 @@ namespace Selen\MongoDB\Attributes\Schema;
 use Attribute;
 
 #[Attribute(Attribute::TARGET_PROPERTY)]
-class Value implements SchemaMarkerInterface
+class ArrayValid implements SchemaMarkerInterface
 {
 }

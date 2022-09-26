@@ -7,30 +7,30 @@ declare(strict_types=1);
  * @copyright 2022 hazuki3417 all rights reserved.
  */
 
-namespace Selen\MongoDB\Attributes\Schema\ArrayValue\Test;
+namespace Selen\MongoDB\Attributes\Schema\ArrayValid\Test;
 
 use PHPUnit\Framework\TestCase;
-use Selen\MongoDB\Attributes\Schema\ArrayValue;
+use Selen\MongoDB\Attributes\Schema\ArrayValid;
 
 /**
  * @requires PHP >= 8.0
- * @coversDefaultClass \Selen\MongoDB\Attributes\Schema\ArrayValue
+ * @coversDefaultClass \Selen\MongoDB\Attributes\Schema\ArrayValid
  *
- * @group Selen/MongoDB/Attributes/Schema/ArrayValue
+ * @group Selen/MongoDB/Attributes/Schema/ArrayValid
  *
- * @see \Selen\MongoDB\Attributes\Schema\ArrayValue
+ * @see \Selen\MongoDB\Attributes\Schema\ArrayValid
  *
  * [command]
- * php ./vendor/bin/phpunit --group=Selen/MongoDB/Attributes/Schema/ArrayValue
+ * php ./vendor/bin/phpunit --group=Selen/MongoDB/Attributes/Schema/ArrayValid
  *
  * @internal
  */
-class ArrayValueTest extends TestCase
+class ArrayValidTest extends TestCase
 {
     public function testConstruct()
     {
-        $instance = new ArrayValue();
+        $instance = new ArrayValid();
 
-        $this->assertInstanceOf(ArrayValue::class, $instance);
+        $this->assertInstanceOf(ArrayValid::class, $instance);
     }
 }

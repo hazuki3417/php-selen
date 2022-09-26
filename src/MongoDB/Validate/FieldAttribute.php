@@ -10,9 +10,9 @@ namespace Selen\MongoDB\Validate;
 
 use ReflectionAttribute;
 use ReflectionProperty;
-use Selen\MongoDB\Attributes\Schema\ArrayValue;
+use Selen\MongoDB\Attributes\Schema\ArrayValid;
 use Selen\MongoDB\Attributes\Schema\Field;
-use Selen\MongoDB\Attributes\Schema\Value;
+use Selen\MongoDB\Attributes\Schema\Valid;
 use Selen\MongoDB\Attributes\Validate\ValueValidateInterface;
 
 class FieldAttribute
@@ -21,10 +21,10 @@ class FieldAttribute
     public $fieldAttribute;
 
     /** @var \ReflectionAttribute|null */
-    public $valueAttribute;
+    public $validAttribute;
 
     /** @var \ReflectionAttribute|null */
-    public $arrayValueAttribute;
+    public $arrayValidAttribute;
 
     /** @var \ReflectionAttribute[] */
     public $validateAttributes = [];
@@ -35,14 +35,14 @@ class FieldAttribute
     {
         $this->reflectionProperty  = $reflectionProperty;
         $this->fieldAttribute      = self::extractFieldAttribute($reflectionProperty);
-        $this->valueAttribute      = self::extractValueAttribute($reflectionProperty);
-        $this->arrayValueAttribute = self::extractArrayValueAttribute($reflectionProperty);
+        $this->validAttribute      = self::extractValidAttribute($reflectionProperty);
+        $this->arrayValidAttribute = self::extractArrayValidAttribute($reflectionProperty);
 
-        $isConflictAttribute = $this->valueAttribute !== null && $this->arrayValueAttribute !== null;
+        $isConflictAttribute = $this->validAttribute !== null && $this->arrayValidAttribute !== null;
 
         if ($isConflictAttribute) {
             $format = 'Invalid attribute specification. %s and %s cannot be specified together.';
-            $mes    = \sprintf($format, Value::class, ArrayValue);
+            $mes    = \sprintf($format, Valid::class, ArrayValid::class);
             throw new \LogicException($mes);
         }
 
@@ -67,9 +67,9 @@ class FieldAttribute
         return \current($attributes);
     }
 
-    public static function extractValueAttribute(ReflectionProperty $reflectionProperty)
+    public static function extractValidAttribute(ReflectionProperty $reflectionProperty)
     {
-        $attributes = $reflectionProperty->getAttributes(Value::class);
+        $attributes = $reflectionProperty->getAttributes(Valid::class);
 
         if ($attributes === []) {
             return;
@@ -79,15 +79,15 @@ class FieldAttribute
 
         if ($expectedAttributeCount !== count($attributes)) {
             $format = 'Invalid attribute specification. Only one "%s" can be specified.';
-            $mes    = \sprintf($format, Value::class);
+            $mes    = \sprintf($format, Valid::class);
             throw new \LogicException($mes);
         }
         return \current($attributes);
     }
 
-    public static function extractArrayValueAttribute(ReflectionProperty $reflectionProperty)
+    public static function extractArrayValidAttribute(ReflectionProperty $reflectionProperty)
     {
-        $attributes = $reflectionProperty->getAttributes(ArrayValue::class);
+        $attributes = $reflectionProperty->getAttributes(ArrayValid::class);
 
         if ($attributes === []) {
             return;
@@ -97,7 +97,7 @@ class FieldAttribute
 
         if ($expectedAttributeCount !== count($attributes)) {
             $format = 'Invalid attribute specification. Only one "%s" can be specified.';
-            $mes    = \sprintf($format, ArrayValue::class);
+            $mes    = \sprintf($format, ArrayValid::class);
             throw new \LogicException($mes);
         }
         return \current($attributes);
@@ -115,17 +115,17 @@ class FieldAttribute
 
     public function isInnerObjectExists(): bool
     {
-        return $this->valueAttribute !== null || $this->arrayValueAttribute !== null;
+        return $this->validAttribute !== null || $this->arrayValidAttribute !== null;
     }
 
-    public function isValueObjectDefine(): bool
+    public function isValidObjectDefine(): bool
     {
-        return !\is_null($this->valueAttribute);
+        return !\is_null($this->validAttribute);
     }
 
     public function isArrayObjectDefine(): bool
     {
-        return !\is_null($this->arrayValueAttribute);
+        return !\is_null($this->arrayValidAttribute);
     }
 
     public static function isFieldAttributeExists(ReflectionProperty $reflectionProperty)

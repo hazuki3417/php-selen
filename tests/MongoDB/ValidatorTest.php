@@ -10,11 +10,11 @@ declare(strict_types=1);
 namespace Selen\MongoDB\Validator\Test;
 
 use PHPUnit\Framework\TestCase;
-use Selen\MongoDB\Attributes\Schema\ArrayValue;
+use Selen\MongoDB\Attributes\Schema\ArrayValid;
 use Selen\MongoDB\Attributes\Schema\Field;
 use Selen\MongoDB\Attributes\Schema\InnerObject;
 use Selen\MongoDB\Attributes\Schema\RootObject;
-use Selen\MongoDB\Attributes\Schema\Value;
+use Selen\MongoDB\Attributes\Schema\Valid;
 use Selen\MongoDB\Attributes\Validate\Type;
 use Selen\MongoDB\Validate\Model\ValidateResult;
 use Selen\MongoDB\Validate\Model\ValidatorResult;
@@ -235,11 +235,11 @@ class MockRootObjectClass
     public $name = '';
 
     /** @var MockInnerObjectClass1 */
-    #[Field, Value(MockInnerObjectClass1::class)]
+    #[Field, Valid(MockInnerObjectClass1::class)]
     public $meta;
 
     /** @var MockInnerObjectClass2[] */
-    #[Field, ArrayValue(MockInnerObjectClass2::class)]
+    #[Field, ArrayValid(MockInnerObjectClass2::class)]
     public $items;
 
     /** @var \MongoDB\BSON\UTCDateTime */

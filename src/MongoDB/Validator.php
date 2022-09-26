@@ -112,9 +112,9 @@ class Validator
                 // ネストされた定義なら再帰処理を行う
                 $passRecursionInput = [];
 
-                if ($fieldAttribute->isValueObjectDefine()) {
+                if ($fieldAttribute->isValidObjectDefine()) {
                     // valueがobjectのときの処理
-                    $attributeName = \current($fieldAttribute->valueAttribute->getArguments());
+                    $attributeName = \current($fieldAttribute->validAttribute->getArguments());
 
                     $reflectionClass = new ReflectionClass($attributeName);
                     ObjectAttribute::extractInnerObjectAttribute($reflectionClass);
@@ -133,7 +133,7 @@ class Validator
 
                 if ($fieldAttribute->isArrayObjectDefine()) {
                     // valueがarray objectのときの処理
-                    $attributeName = \current($fieldAttribute->arrayValueAttribute->getArguments());
+                    $attributeName = \current($fieldAttribute->arrayValidAttribute->getArguments());
 
                     $reflectionClass = new ReflectionClass($attributeName);
                     ObjectAttribute::extractInnerObjectAttribute($reflectionClass);
