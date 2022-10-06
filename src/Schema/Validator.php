@@ -121,18 +121,49 @@ class Validator
                     continue;
                 }
 
+                // 値バリデーションのループ（値のバリデーションは複数指定可能）
                 foreach ($define->valueValidateExecutes as $execute) {
-                    $validateResult = $define->isAssocArrayDefine() ?
-                        $this->valueValidate($execute, $input[$define->key->getName()]) :
-                        $this->valueValidate($execute, $input);
-                    $this->validateResults[] = $validateResult;
+                    if ($define->isAssocArrayDefine()) {
+                        // 連想配列のときの値バリデーション処理
+                        $validateResult = $this->valueValidate($execute, $input[$define->key->getName()]);
 
-                    if ($validateResult->getResult()) {
-                        // 検証結果が合格の場合は控えている検証処理を実行する
+                        $this->validateResults[] = $validateResult;
+
+                        if (!$validateResult->getResult()) {
+                            // 検証結果が不合格の場合は控えている検証処理は実行しない
+                            break;
+                        }
+                        // 検証結果が合格の場合は控えている検証処理を実行する。
                         continue;
                     }
-                    // 検証結果が不合格の場合は控えている検証処理は実行しない
-                    break;
+
+                    if ($define->isIndexArrayDefine()) {
+                        // 要素配列のときの値バリデーション処理
+                        $keyValues = $input;
+                        /** @var bool $oneLoopResult 配列要素すべてのバリデーションが合格ならtrue、それ以外ならfalse */
+                        $oneLoopValidateResult = true;
+                        /** @var bool $oneLoopResult 配列要素すべてのバリデーション結果を保持 */
+                        $oneLoopValidateResults = [];
+
+                        foreach ($keyValues as $key => $value) {
+                            $this->arrayPath->setCurrentPath(\sprintf('[%s]', $key));
+                            $validateResult          = $this->valueValidate($execute, $value);
+                            $oneLoopResult[]         = $validateResult;
+                            $this->validateResults[] = $validateResult;
+
+                            if (!$validateResult->getResult()) {
+                                $oneLoopValidateResult = false;
+                            }
+                        }
+                        $this->validateResults = \array_merge($this->validateResults, $oneLoopValidateResults);
+
+                        if (!$oneLoopValidateResult) {
+                            // 配列要素のうち1つでもバリデーション違反した場合は、控えている検証処理は実行しない
+                            break;
+                        }
+                        // 配列要素すべてのバリデーションを合格した場合は、控えている検証処理を実行する。
+                        continue;
+                    }
                 }
                 continue;
             }

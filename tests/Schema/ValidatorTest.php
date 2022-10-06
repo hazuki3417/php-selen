@@ -13,6 +13,8 @@ use PHPUnit\Framework\TestCase;
 use Selen\Schema\Validate\ArrayDefine;
 use Selen\Schema\Validate\Define;
 use Selen\Schema\Validate\Model\ValidateResult;
+use Selen\Schema\Validate\Values\ArrayType;
+use Selen\Schema\Validate\Values\Type;
 use Selen\Schema\Validate\ValueValidateInterface;
 use Selen\Schema\Validator;
 
@@ -334,7 +336,12 @@ class ValidatorTest extends TestCase
     {
         $expectedSuccess         = false;
         $expectedValidateResults = [
-            new ValidateResult(false, '[]', 'Invalid value type. Values in array expected string type.'),
+            new ValidateResult(true, '[0]'),
+            new ValidateResult(false, '[1]', 'Invalid value type. Values in array expected string type.'),
+            new ValidateResult(true, '[2]'),
+            new ValidateResult(true, '[3]'),
+            new ValidateResult(false, '[4]', 'Invalid value type. Values in array expected string type.'),
+            new ValidateResult(true, '[5]'),
         ];
 
         $callableIsString = function ($value, $result) {
@@ -458,6 +465,60 @@ class ValidatorTest extends TestCase
         $input = [
             'key1' => 'string',
             'key2' => 0,
+        ];
+
+        $validator = Validator::new();
+        $result    = $validator->arrayDefine($define)->execute($input);
+        $this->assertValidatorClass($expectedSuccess, $expectedValidateResults, $result);
+    }
+
+    /**
+     * @group test
+     * 値のバリデーションテスト（配列要素のバリデーションパターン1）
+     */
+    public function testPattern105()
+    {
+        /**
+         * NOTE: 配列要素内の値バリデーション定義方法は2通りあります
+         *       1. 配列を受け取れるバリデーションクラス or callable処理を実装する
+         *       2. noKeyを定義し、noKeyのバリデーション定義にリテラル値を受け取れるバリデーションクラス or callableを実装する
+         *          違いはバリデーション位置の詳細度が変わるだけ。（1より2のほうが詳細）
+         */
+        $expectedSuccess         = false;
+        $expectedValidateResults = [
+            new ValidateResult(true, 'key1'),
+            // バリデーション定義方法1の結果
+            new ValidateResult(false, 'key1', 'Invalid type. expected array element type string.'),
+
+            new ValidateResult(true, 'key2'),
+            // バリデーション定義方法2の結果
+            new ValidateResult(true, 'key2.[0]'),
+            new ValidateResult(false, 'key2.[1]', 'Invalid type. expected type string.'),
+            new ValidateResult(true, 'key2.[2]'),
+        ];
+
+        $define = new ArrayDefine(
+            Define::key('key1', true)->value(new ArrayType('string')),
+            Define::key('key2', true)->arrayDefine(
+                /**
+                 * NOTE: noKeyを指定した場合、バリデーションメソッド（execute,callableの第一引数）に渡される値は
+                 *       配列要素の値。配列まるごと渡されるわけではないので注意。
+                 */
+                Define::noKey()->value(new Type('string'))
+            )
+        );
+
+        $input = [
+            'key1' => [
+                'value1',
+                0,
+                'value3',
+            ],
+            'key2' => [
+                'value1',
+                0,
+                'value3',
+            ],
         ];
 
         $validator = Validator::new();
