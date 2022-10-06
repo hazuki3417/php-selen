@@ -73,11 +73,8 @@ class TypeTest extends TestCase
      */
     public function testExecute($expected, $input)
     {
-        $validateResult = new ValidateResult();
-
         $instance = new Type(...$input['type']);
-
-        $verify = $instance->execute($input['value'], $validateResult);
+        $verify   = $instance->execute($input['value'], new ValidateResult());
 
         $this->assertInstanceOf(ValidateResult::class, $verify);
         $this->assertSame($expected->getResult(), $verify->getResult());
