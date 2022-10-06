@@ -7,7 +7,7 @@ declare(strict_types=1);
  * @copyright 2022 hazuki3417 all rights reserved.
  */
 
-namespace Selen\MongoDB\Validate\Model\ValidatorResult\Test;
+namespace Tests\Selen\MongoDB\Validate\Model\ValidatorResult;
 
 use PHPUnit\Framework\TestCase;
 use Selen\MongoDB\Validate\Model\ValidateResult;

@@ -7,7 +7,7 @@ declare(strict_types=1);
  * @copyright 2022 hazuki3417 all rights reserved.
  */
 
-namespace Selen\Schema\Validate\Values\ArrayType\Test;
+namespace Tests\Selen\Schema\Validate\Values\ArrayType;
 
 use PHPUnit\Framework\TestCase;
 use Selen\Schema\Validate\Model\ValidateResult;

@@ -7,7 +7,7 @@ declare(strict_types=1);
  * @copyright 2021 hazuki3417 all rights reserved.
  */
 
-namespace Selen\Str\Date\Test;
+namespace Tests\Selen\Str\Date;
 
 use PHPUnit\Framework\TestCase;
 use Selen\Str\Date\Week;

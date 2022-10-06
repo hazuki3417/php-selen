@@ -7,7 +7,7 @@ declare(strict_types=1);
  * @copyright 2022 hazuki3417 all rights reserved.
  */
 
-namespace Selen\MongoDB\Attributes\Schema\ArrayValid\Test;
+namespace Tests\Selen\MongoDB\Attributes\Schema\ArrayValid;
 
 use PHPUnit\Framework\TestCase;
 use Selen\MongoDB\Attributes\Schema\ArrayValid;

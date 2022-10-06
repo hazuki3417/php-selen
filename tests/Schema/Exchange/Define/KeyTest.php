@@ -7,7 +7,7 @@ declare(strict_types=1);
  * @copyright 2021 hazuki3417 all rights reserved.
  */
 
-namespace Selen\Schema\Exchange\Define\Key\Test;
+namespace Tests\Selen\Schema\Exchange\Define\Key;
 
 use PHPUnit\Framework\TestCase;
 use Selen\Schema\Exchange\Define\Key;

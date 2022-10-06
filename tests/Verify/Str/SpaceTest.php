@@ -7,7 +7,7 @@ declare(strict_types=1);
  * @copyright 2021 hazuki3417 all rights reserved.
  */
 
-namespace Selen\Verify\Str\Space\Test;
+namespace Tests\Selen\Verify\Str\Space;
 
 use PHPUnit\Framework\TestCase;
 use Selen\Verify\Str\Space;

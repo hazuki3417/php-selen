@@ -7,7 +7,7 @@ declare(strict_types=1);
  * @copyright 2021 hazuki3417 all rights reserved.
  */
 
-namespace Selen\Schema\Exchanger\Define\Test;
+namespace Tests\Selen\Schema\Exchanger\Define;
 
 use DateTime;
 use PHPUnit\Framework\TestCase;
