@@ -486,10 +486,6 @@ class ValidatorTest extends TestCase
          */
         $expectedSuccess         = false;
         $expectedValidateResults = [
-            new ValidateResult(true, 'key1'),
-            // バリデーション定義方法1の結果
-            new ValidateResult(false, 'key1', 'Invalid type. expected array element type string.'),
-
             new ValidateResult(true, 'key2'),
             // バリデーション定義方法2の結果
             new ValidateResult(true, 'key2.[0]'),
@@ -498,7 +494,6 @@ class ValidatorTest extends TestCase
         ];
 
         $define = new ArrayDefine(
-            Define::key('key1', true)->value(new ArrayType('string')),
             Define::key('key2', true)->arrayDefine(
                 /**
                  * NOTE: noKeyを指定した場合、バリデーションメソッド（execute,callableの第一引数）に渡される値は
@@ -509,11 +504,6 @@ class ValidatorTest extends TestCase
         );
 
         $input = [
-            'key1' => [
-                'value1',
-                0,
-                'value3',
-            ],
             'key2' => [
                 'value1',
                 0,
