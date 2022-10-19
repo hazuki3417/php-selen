@@ -12,5 +12,13 @@ use Selen\Schema\Validate\Model\ValidateResult;
 
 interface ValueValidateInterface
 {
+    /**
+     * バリデーションを実行します
+     *
+     * @param mixed $value バリデーション対象の値を渡します
+     * @param \Selen\Schema\Validate\Model\ValidateResult $result バリデーション結果を格納するインスタンスを渡します
+     *
+     * @return \Selen\Schema\Validate\Model\ValidateResult バリデーション結果を返します
+     */
     public function execute($value, ValidateResult $result): ValidateResult;
 }
