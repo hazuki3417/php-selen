@@ -13,7 +13,6 @@ use PHPUnit\Framework\TestCase;
 use Selen\Schema\Validate\ArrayDefine;
 use Selen\Schema\Validate\Define;
 use Selen\Schema\Validate\Model\ValidateResult;
-use Selen\Schema\Validate\Values\ArrayType;
 use Selen\Schema\Validate\Values\Type;
 use Selen\Schema\Validate\ValueValidateInterface;
 use Selen\Schema\Validator;
