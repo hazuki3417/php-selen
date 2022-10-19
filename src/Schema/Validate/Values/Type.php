@@ -14,6 +14,9 @@ use Selen\Schema\Validate\ValueValidateInterface;
 
 class Type implements ValueValidateInterface
 {
+    /** @var string */
+    protected $messageFormat = 'Invalid type. expected type %s.';
+
     /** @var string[] */
     private $names;
 
@@ -28,8 +31,7 @@ class Type implements ValueValidateInterface
             return $result;
         }
 
-        $format = 'Invalid type. expected type %s.';
-        $mes    = \sprintf($format, \implode(', ', $this->names));
+        $mes = \sprintf($this->messageFormat, \implode(', ', $this->names));
         return $result->setResult(false)->setMessage($mes);
     }
 }

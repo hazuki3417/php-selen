@@ -13,6 +13,9 @@ use Selen\Schema\Validate\ValueValidateInterface;
 
 class Enum implements ValueValidateInterface
 {
+    /** @var string */
+    protected $messageFormat = 'Invalid value. expected value %s.';
+
     /** @var string[] */
     private $allowValues;
 
@@ -33,8 +36,7 @@ class Enum implements ValueValidateInterface
             $this->allowValues[$index] = $this->surround($allowValue);
         }
 
-        $format = 'Invalid value. expected value %s.';
-        $mes    = \sprintf($format, \implode(', ', $this->allowValues));
+        $mes = \sprintf($this->messageFormat, \implode(', ', $this->allowValues));
         return $result->setResult(false)->setMessage($mes);
     }
 
