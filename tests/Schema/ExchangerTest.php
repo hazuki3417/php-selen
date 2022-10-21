@@ -61,12 +61,9 @@ class ExchangerTest extends TestCase
                         'value2',
                     ],
                     'define' => new ArrayDefine(
-                        // keyを指定しない場合、callableの引数には配列がそのまま渡されます
-                        Define::noKey()->value(function ($values) {
-                            foreach ($values as $key => $value) {
-                                $values[$key] = $value .= ' + add string';
-                            }
-                            return $values;
+                        // keyを指定しない場合、callableの引数には配列内の要素値が渡されます
+                        Define::noKey()->value(function ($value) {
+                            return $value . ' + add string';
                         })
                     ),
                     'keyExchangeExecute'   => null,
@@ -407,6 +404,105 @@ class ExchangerTest extends TestCase
                             // string型の値を持つものにはすべて接尾辞を追加
                             return $value . ' add string';
                         }
+                        return $value;
+                    },
+                ],
+            ],
+            'pattern012' => [
+                'expected' => [
+                    'loginId' => 'user-620f1d9dc7636af90c0d73f6',
+                    'linkIds' => [
+                        'user-630f1d9dc7636af90c0d73f6',
+                        'user-630f1d9dc7636af90c0d73f7',
+                        'user-630f1d9dc7636af90c0d73f8',
+                        'user-630f1d9dc7636af90c0d73f9',
+                        'user-630f1d9dc7636af90c0d7400',
+                    ],
+                    'testKey' => [
+                        'nameIds' => [
+                            'user-640f1d9dc7636af90c0d73f6',
+                            'user-640f1d9dc7636af90c0d73f7',
+                            'user-640f1d9dc7636af90c0d73f8',
+                            'user-640f1d9dc7636af90c0d73f9',
+                            'user-640f1d9dc7636af90c0d7400',
+                        ],
+                        'uuid' => 'user-650f1d9dc7636af90c0d73f6',
+                    ],
+                ],
+                'input' => [
+                    'value' => [
+                        'loginId' => '620f1d9dc7636af90c0d73f6',
+                        'linkIds' => [
+                            '630f1d9dc7636af90c0d73f6',
+                            '630f1d9dc7636af90c0d73f7',
+                            '630f1d9dc7636af90c0d73f8',
+                            '630f1d9dc7636af90c0d73f9',
+                            '630f1d9dc7636af90c0d7400',
+                        ],
+                        'testKey' => [
+                            'nameIds' => [
+                                '640f1d9dc7636af90c0d73f6',
+                                '640f1d9dc7636af90c0d73f7',
+                                '640f1d9dc7636af90c0d73f8',
+                                '640f1d9dc7636af90c0d73f9',
+                                '640f1d9dc7636af90c0d7400',
+                            ],
+                            'uuid' => '650f1d9dc7636af90c0d73f6',
+                        ],
+                    ],
+                    'define'             => new ArrayDefine(),
+                    'keyExchangeExecute' => function ($key) {
+                        // keyの変換はテストしないのでそのまま返す
+                        return $key;
+                    },
+                    'valueExchangeExecute' => function ($value) {
+                        if (\is_string($value)) {
+                            // string型の値を持つものにはすべて接頭辞を追加
+                            return 'user-' . $value;
+                        }
+                        return $value;
+                    },
+                ],
+            ],
+            'pattern013' => [
+                'expected' => [
+                    'loginId' => '620f1d9dc7636af90c0d73f6',
+                    'linkIds' => [
+                        'user-630f1d9dc7636af90c0d73f6',
+                        'user-630f1d9dc7636af90c0d73f7',
+                        'user-630f1d9dc7636af90c0d73f8',
+                        'user-630f1d9dc7636af90c0d73f9',
+                        'user-630f1d9dc7636af90c0d7400',
+                    ],
+                ],
+                'input' => [
+                    'value' => [
+                        'loginId' => '620f1d9dc7636af90c0d73f6',
+                        'linkIds' => [
+                            '630f1d9dc7636af90c0d73f6',
+                            '630f1d9dc7636af90c0d73f7',
+                            '630f1d9dc7636af90c0d73f8',
+                            '630f1d9dc7636af90c0d73f9',
+                            '630f1d9dc7636af90c0d7400',
+                        ],
+                    ],
+                    'define' => new ArrayDefine(
+                        Define::key('linkIds')->arrayDefine(
+                            Define::noKey()->value(function ($value) {
+                                if (\is_string($value)) {
+                                    // string型の値を持つものにはすべて接頭辞を追加
+                                    return 'user-' . $value;
+                                }
+                                return $value;
+                            })
+                        )
+                    ),
+                    'keyExchangeExecute' => function ($key) {
+                        // keyの変換はテストしないのでそのまま返す
+                        return $key;
+                    },
+                    'valueExchangeExecute' => function ($value) {
+                        // valueの変換はテストしないのでそのまま返す
                         return $value;
                     },
                 ],

@@ -193,7 +193,9 @@ class Exchanger
 
                 if ($define->isIndexArrayDefine()) {
                     // key定義なしのときの処理
-                    $input = $this->valueExchange($define->valueExchangeExecute, $input);
+                    foreach ($input as $key => $value) {
+                        $input[$key] = $this->valueExchange($define->valueExchangeExecute, $value);
+                    }
                     continue;
                 }
             }
