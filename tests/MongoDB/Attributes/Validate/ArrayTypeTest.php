@@ -15,6 +15,7 @@ use Selen\MongoDB\Validate\Model\ValidateResult;
 
 /**
  * @requires PHP >= 8.0
+ *
  * @coversDefaultClass \Selen\MongoDB\Attributes\Validate\ArrayType
  *
  * @group Selen/MongoDB/Attributes/Validate/ArrayType
@@ -61,6 +62,12 @@ class ArrayTypeTest extends TestCase
                 'input'    => [
                     'type'  => ['int', 'string'],
                     'value' => ['value1', 'value2', 0, true],
+                ], ],
+            'pattern005' => [
+                'expected' => new ValidateResult(false, '', 'Invalid type. expected array element type int, string.'),
+                'input'    => [
+                    'type'  => ['int', 'string'],
+                    'value' => '',
                 ], ],
         ];
     }
