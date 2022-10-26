@@ -18,7 +18,7 @@ runner:
 	docker run -t --rm -v ${PWD}:/var/www/html -w /var/www/html php:${IMAGE_TAG} ${COMMAND}
 
 php-cs-fixer: IMAGE_TAG +=8.0-alpine
-php-cs-fixer: COMMAND +=php vendor/bin/php-cs-fixer fix
+php-cs-fixer: COMMAND +=php vendor/bin/php-cs-fixer fix -vvv --diff
 php-cs-fixer: runner;
 
 generate-api-coverage: IMAGE_TAG +=7.2-alpine
