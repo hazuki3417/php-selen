@@ -10,6 +10,7 @@ declare(strict_types=1);
 namespace Tests\Selen\Schema\Exchanger\Define;
 
 use DateTime;
+use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
 use Selen\Schema\Exchange\ArrayDefine;
 use Selen\Schema\Exchange\Define;
@@ -535,5 +536,19 @@ class ExchangerTest extends TestCase
                 ->arrayDefine($define)
                 ->execute($value)
         );
+    }
+
+    public function testKeyException()
+    {
+        $exchanger = Exchanger::new();
+        $this->expectException(InvalidArgumentException::class);
+        $exchanger->key([]);
+    }
+
+    public function testValueException()
+    {
+        $exchanger = Exchanger::new();
+        $this->expectException(InvalidArgumentException::class);
+        $exchanger->value([]);
     }
 }
