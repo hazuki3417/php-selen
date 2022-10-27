@@ -7,7 +7,7 @@ declare(strict_types=1);
  * @copyright 2022 hazuki3417 all rights reserved.
  */
 
-namespace Tests\Selen\MongoDB\Validator\Attributes\Type;
+namespace Tests\Selen\MongoDB\Validator\Attributes;
 
 use PHPUnit\Framework\TestCase;
 use Selen\MongoDB\Validator\Attributes\Type;
