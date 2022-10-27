@@ -472,7 +472,6 @@ class ValidatorTest extends TestCase
     }
 
     /**
-     * @group test
      * 値のバリデーションテスト（配列要素のバリデーションパターン1）
      */
     public function testPattern105()
