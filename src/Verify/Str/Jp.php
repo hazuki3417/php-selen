@@ -39,14 +39,4 @@ class Jp
 
         return 0 < preg_match($pattern, $str);
     }
-
-    /**
-     * 日本語の記号一覧文字を返します.
-     *
-     * @return array
-     */
-    public static function symbols()
-    {
-        return ['・', 'ー', 'ヽ', 'ヾ', 'ヿ', '゙', '', '゚', '゛', '゜', 'ゝ', 'ゞ', 'ゟ'];
-    }
 }
