@@ -18,12 +18,14 @@ use Selen\MongoDB\Attributes\Schema;
  */
 class SchemaLoader
 {
-    public ReflectionClass $reflectionClass;
+    /** @var \ReflectionClass */
+    public $reflectionClass;
 
-    public ReflectionAttribute|null $attributeSchema;
+    /** @var \ReflectionAttribute|null */
+    public $attributeSchema;
 
     /** @var \Selen\MongoDB\Attribute\SchemaFieldLoader[] */
-    public array $fieldLoaders;
+    public $fieldLoaders;
 
     /**
      * @throws \LogicException 属性の指定が不正なときに発生します

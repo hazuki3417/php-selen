@@ -21,7 +21,8 @@ class Schema implements SchemaMarkerInterface
         self::TYPE_ROOT,
         self::TYPE_INNER,
     ];
-    public string $type;
+    /** @var string */
+    public $type;
 
     public function __construct(string $type)
     {

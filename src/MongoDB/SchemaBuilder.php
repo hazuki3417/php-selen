@@ -15,9 +15,12 @@ use Selen\MongoDB\Builder\UpdateSchema;
 
 class SchemaBuilder
 {
-    public string $schemaClassName;
-    public InsertSchema $insert;
-    public UpdateSchema $update;
+    /** @var string */
+    public $schemaClassName;
+    /** @var \Selen\MongoDB\Builder\InsertSchema */
+    public $insert;
+    /** @var \Selen\MongoDB\Builder\UpdateSchema */
+    public $update;
 
     public function __construct(string $schemaClassName)
     {

@@ -21,8 +21,10 @@ class Nest implements AttributeMarkerInterface
         self::TYPE_OBJECT,
         self::TYPE_ARRAY_OBJECT,
     ];
-    public string $type;
-    public string $schemaClassName;
+    /** @var string */
+    public $type;
+    /** @var string */
+    public $schemaClassName;
 
     public function __construct(string $type, string $schemaClassName)
     {
