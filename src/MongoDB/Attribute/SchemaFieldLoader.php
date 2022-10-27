@@ -11,6 +11,7 @@ namespace Selen\MongoDB\Attribute;
 use LogicException;
 use ReflectionAttribute;
 use ReflectionProperty;
+use Selen\MongoDB\Attributes\Nest;
 use Selen\MongoDB\Attributes\SchemaField;
 
 /**
@@ -22,14 +23,13 @@ class SchemaFieldLoader
 
     public ReflectionAttribute|null $attributeFieldSchema;
 
+    public ReflectionAttribute|null $attributeNest;
+
     public function __construct(ReflectionProperty $reflectionProperty)
     {
         $this->reflectionProperty = $reflectionProperty;
 
-        $attributes = $reflectionProperty->getAttributes(
-            SchemaFieldMarkerInterface::class,
-            ReflectionAttribute::IS_INSTANCEOF
-        );
+        $attributes = $this->fetchAttributes(SchemaFieldMarkerInterface::class);
 
         if (1 < count($attributes)) {
             $format = 'Invalid attribute specification. Only one "%s" can be specified.';
@@ -38,10 +38,11 @@ class SchemaFieldLoader
         }
 
         $this->attributeFieldSchema = \array_shift($attributes);
+        $this->attributeNest        = $this->fetchAttribute(Nest::class);
     }
 
     /**
-     * 属性を取得します
+     * 属性を取得します（1件）
      *
      * @param string $attributeName 取得する属性名を渡します
      *
@@ -54,5 +55,20 @@ class SchemaFieldLoader
             ReflectionAttribute::IS_INSTANCEOF
         );
         return \array_shift($attributes);
+    }
+
+    /**
+     * 属性を取得します（n件）
+     *
+     * @param string $attributeName 取得する属性名を渡します
+     *
+     * @return \ReflectionAttribute[] 存在する場合は属性を保持した配列を、存在しない場合は空配列を返します
+     */
+    public function fetchAttributes(string $attributeName)
+    {
+        return $this->reflectionProperty->getAttributes(
+            $attributeName,
+            ReflectionAttribute::IS_INSTANCEOF
+        );
     }
 }

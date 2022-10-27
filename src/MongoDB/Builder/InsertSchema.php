@@ -28,7 +28,7 @@ class InsertSchema implements SchemaBuilderInterface
         $schema = [];
 
         foreach ($this->schemaLoader->fieldLoaders as $fieldLoader) {
-            $attributeNest  = $fieldLoader->fetchAttribute(Nest::class);
+            $attributeNest  = $fieldLoader->attributeNest;
             $attributeBuild = $fieldLoader->fetchAttribute(Build::class);
 
             $isNestedValueBuild = $attributeNest !== null && $attributeBuild !== null;

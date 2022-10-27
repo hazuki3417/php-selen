@@ -42,7 +42,7 @@ class UpdateSchema implements SchemaBuilderInterface
             // 入力側のkeyが定義側に存在したとき
             $fieldLoader = $this->schemaLoader->fieldLoaders[$key];
 
-            $attributeNest  = $fieldLoader->fetchAttribute(Nest::class);
+            $attributeNest  = $fieldLoader->attributeNest;
             $attributeBuild = $fieldLoader->fetchAttribute(Build::class);
 
             $isNestedValueBuild = $attributeNest !== null && $attributeBuild !== null;
