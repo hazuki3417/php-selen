@@ -535,7 +535,7 @@ class ValidatorTest extends TestCase
             /** @var \Selen\Schema\Validate\Model\ValidateResult $result */
             return \preg_match('/[\d]{3}-[\d]{4}/', $value) ?
                     $result->setResult(true) :
-                    $result->setResult(false)->setMessage("Invalid value format. Expected pattern '/[\d]{3}-[\d]{4}/'.");
+                    $result->setResult(false)->setMessage("Invalid value format. Expected pattern '/[\\d]{3}-[\\d]{4}/'.");
         };
 
         $define = new ArrayDefine(

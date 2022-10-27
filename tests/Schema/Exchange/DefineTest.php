@@ -9,9 +9,11 @@ declare(strict_types=1);
 
 namespace Tests\Selen\Schema\Exchange\Define;
 
+use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
 use Selen\Schema\Exchange\Define;
 use Selen\Schema\Exchange\ValueExchangeInterface;
+use ValueError;
 
 /**
  * @coversDefaultClass \Selen\Schema\Exchange\Define
@@ -30,16 +32,122 @@ use Selen\Schema\Exchange\ValueExchangeInterface;
  */
 class DefineTest extends TestCase
 {
-    public function testKey()
+    public function dataProviderKey()
     {
-        $this->assertInstanceOf(Define::class, Define::key('keyName'));
-        $this->assertInstanceOf(Define::class, Define::key(0));
+        return [
+            'pattern001' => [
+                'expected' => Define::class,
+                'input'    => [
+                    'name'    => 'keyName',
+                    'action'  => Define::KEY_ACTION_NONE,
+                    'execute' => null,
+                ],
+            ],
+            'pattern002' => [
+                'expected' => Define::class,
+                'input'    => [
+                    'name'    => 'keyName',
+                    'action'  => Define::KEY_ACTION_ADD,
+                    'execute' => null,
+                ],
+            ],
+            'pattern003' => [
+                'expected' => Define::class,
+                'input'    => [
+                    'name'    => 'keyName',
+                    'action'  => Define::KEY_ACTION_REMOVE,
+                    'execute' => null,
+                ],
+            ],
+            'pattern004' => [
+                'expected' => Define::class,
+                'input'    => [
+                    'name'    => 'keyName',
+                    'action'  => Define::KEY_ACTION_RENAME,
+                    'execute' => null,
+                ],
+            ],
+            'pattern005' => [
+                'expected' => Define::class,
+                'input'    => [
+                    'name'    => 'keyName',
+                    'action'  => Define::KEY_ACTION_NONE,
+                    'execute' => null,
+                ],
+            ],
+            'pattern006' => [
+                'expected' => Define::class,
+                'input'    => [
+                    'name'    => 'keyName',
+                    'action'  => Define::KEY_ACTION_NONE,
+                    'execute' => function ($key) {return $key; },
+                ],
+            ],
+        ];
     }
 
-    public function testKeyException()
+    /**
+     * @dataProvider dataProviderKey
+     *
+     * @param mixed $expected
+     * @param mixed $input
+     */
+    public function testKey($expected, $input)
     {
-        $this->expectException(\InvalidArgumentException::class);
-        Define::key(null);
+        [
+            'name'    => $name,
+            'action'  => $action,
+            'execute' => $execute,
+        ] = $input;
+
+        $this->assertInstanceOf($expected, Define::key($name, $action, $execute));
+    }
+    public function dataProviderKeyException()
+    {
+        return [
+            'pattern001' => [
+                'expected' => InvalidArgumentException::class,
+                'input'    => [
+                    'name'    => null,
+                    'action'  => Define::KEY_ACTION_NONE,
+                    'execute' => null,
+                ],
+            ],
+            'pattern002' => [
+                'expected' => ValueError::class,
+                'input'    => [
+                    'name'    => 'keyName',
+                    'action'  => 'action',
+                    'execute' => null,
+                ],
+            ],
+            'pattern003' => [
+                'expected' => InvalidArgumentException::class,
+                'input'    => [
+                    'name'    => 'keyName',
+                    'action'  => Define::KEY_ACTION_REMOVE,
+                    'execute' => [],
+                ],
+            ],
+        ];
+    }
+
+    /**
+     * @dataProvider dataProviderKeyException
+     *
+     * @param mixed $expected
+     * @param mixed $input
+     */
+    public function testKeyException($expected, $input)
+    {
+        [
+            'name'    => $name,
+            'action'  => $action,
+            'execute' => $execute,
+        ] = $input;
+
+        $this->expectException($expected);
+        Define::key($name, $action, $execute);
     }
 
     public function testNoKey()
