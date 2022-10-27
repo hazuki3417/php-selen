@@ -64,7 +64,7 @@ class Type
                 $status = is_numeric($data);
 
                 break;
-            // case self::NAME_OBJECT:
+                // case self::NAME_OBJECT:
             //     $status = is_object($data);
             //     break;
             case self::NAME_SCALAR:

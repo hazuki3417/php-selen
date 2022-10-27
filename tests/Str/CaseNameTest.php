@@ -69,6 +69,7 @@ class CaseTest extends TestCase
 
     /**
      * @dataProvider dataProviderKebab
+     *
      * @group Selen/Str/Case::kebab
      *
      * @param mixed $expected
@@ -121,6 +122,7 @@ class CaseTest extends TestCase
 
     /**
      * @dataProvider dataProviderSnake
+     *
      * @group Selen/Str/Case::snake
      *
      * @param mixed $expected
@@ -173,6 +175,7 @@ class CaseTest extends TestCase
 
     /**
      * @dataProvider dataProviderPascal
+     *
      * @group Selen/Str/Case::pascal
      *
      * @param mixed $expected
@@ -225,6 +228,7 @@ class CaseTest extends TestCase
 
     /**
      * @dataProvider dataProviderCamel
+     *
      * @group Selen/Str/Case::camel
      *
      * @param mixed $expected
@@ -246,6 +250,7 @@ class CaseTest extends TestCase
 
     /**
      * @dataProvider dataProviderUpper
+     *
      * @group Selen/Str/Case::upper
      *
      * @param mixed $expected
@@ -267,6 +272,7 @@ class CaseTest extends TestCase
 
     /**
      * @dataProvider dataProviderLower
+     *
      * @group Selen/Str/Case::lower
      *
      * @param mixed $expected

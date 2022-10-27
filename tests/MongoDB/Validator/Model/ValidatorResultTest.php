@@ -15,6 +15,7 @@ use Selen\MongoDB\Validator\Model\ValidatorResult;
 
 /**
  * @requires PHP >= 8.0
+ *
  * @coversDefaultClass \Selen\MongoDB\Validator\Model\ValidatorResult
  *
  * @group Selen
