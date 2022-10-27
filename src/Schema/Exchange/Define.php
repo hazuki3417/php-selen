@@ -221,8 +221,7 @@ class Define
      */
     public function isValueExchange(): bool
     {
-        // NOTE: defineConflictでチェックしているので、片方のみの判定でも良い
-        return $this->valueExchangeExecute !== null && $this->arrayDefine === null;
+        return $this->arrayDefine === null;
     }
 
     /**
@@ -232,8 +231,7 @@ class Define
      */
     public function nestedTypeDefineExists(): bool
     {
-        // NOTE: defineConflictでチェックしているので、片方のみの判定でも良い
-        return $this->valueExchangeExecute === null && $this->arrayDefine !== null;
+        return $this->arrayDefine !== null;
     }
 
     private static function isAllowKeyAction(string $name)

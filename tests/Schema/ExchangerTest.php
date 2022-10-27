@@ -508,6 +508,29 @@ class ExchangerTest extends TestCase
                     },
                 ],
             ],
+            'pattern014' => [
+                'expected' => [
+                    'key2' => '620f1d9dc7636af90c0d73f6',
+                    'key3' => '620f1d9dc7636af90c0d73f6',
+                    // NOTE: key名を変換するexecuteがなくても（null）順番は変わる
+                    'key1' => '620f1d9dc7636af90c0d73f6',
+                ],
+                'input' => [
+                    'value' => [
+                        'key1' => '620f1d9dc7636af90c0d73f6',
+                        'key2' => '620f1d9dc7636af90c0d73f6',
+                        'key3' => '620f1d9dc7636af90c0d73f6',
+                    ],
+                    'define' => new ArrayDefine(
+                        // executeにnullを設定した場合、keyの変換処理は行わない
+                        Define::key('key1', Define::KEY_ACTION_RENAME, null),
+                        // executeにnullを設定した場合、valueの変換処理は行わない
+                        Define::key('key2')->value(null),
+                    ),
+                    'keyExchangeExecute'   => null,
+                    'valueExchangeExecute' => null,
+                ],
+            ],
         ];
     }
 
