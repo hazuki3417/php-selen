@@ -50,21 +50,6 @@ class Validator
     }
 
     /**
-     * 追加キーの検証を行うかどうか指定します
-     *
-     * TODO: 本体処理は未実装。
-     *
-     * @param bool $verify 追加キーの検証を行う場合はtrueを、行わない場合はfalseを渡します
-     *
-     * @return \Selen\Schema\Validator
-     */
-    public function additionalKey(bool $verify = false): Validator
-    {
-        $this->additionalKey = $verify;
-        return $this;
-    }
-
-    /**
      * key・valueの検証処理を設定します（個別設定）
      *
      * @return \Selen\Schema\Validator
