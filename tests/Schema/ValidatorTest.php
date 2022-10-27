@@ -515,6 +515,49 @@ class ValidatorTest extends TestCase
     }
 
     /**
+     * @group aaaa
+     * 値のバリデーションテスト（複数のバリデーション指定）
+     */
+    public function testPattern106()
+    {
+        $expectedSuccess         = true;
+        $expectedValidateResults = [
+            new ValidateResult(true, 'key2'),
+            new ValidateResult(true, 'key2.[0]'),
+            new ValidateResult(true, 'key2.[1]'),
+            new ValidateResult(true, 'key2.[2]'),
+            new ValidateResult(true, 'key2.[0]'),
+            new ValidateResult(true, 'key2.[1]'),
+            new ValidateResult(true, 'key2.[2]'),
+        ];
+
+        $callableStringPattern = function ($value, $result) {
+            /** @var \Selen\Schema\Validate\Model\ValidateResult $result */
+            return \preg_match('/[\d]{3}-[\d]{4}/', $value) ?
+                    $result->setResult(true) :
+                    $result->setResult(false)->setMessage("Invalid value format. Expected pattern '/[\d]{3}-[\d]{4}/'.");
+        };
+
+        $define = new ArrayDefine(
+            Define::key('key2', true)->arrayDefine(
+                Define::noKey()->value(new Type('string'), $callableStringPattern)
+            )
+        );
+
+        $input = [
+            'key2' => [
+                '000-0000',
+                '000-0001',
+                '000-0002',
+            ],
+        ];
+
+        $validator = Validator::new();
+        $result    = $validator->arrayDefine($define)->execute($input);
+        $this->assertValidatorClass($expectedSuccess, $expectedValidateResults, $result);
+    }
+
+    /**
      * Validatorクラスの返り値を検証するメソッド
      *
      * @param bool $expectedSuccess
