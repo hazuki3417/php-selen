@@ -192,16 +192,6 @@ class Define
     }
 
     /**
-     * 変換処理を実行するか判定します。
-     *
-     * @return bool 変換する場合はtrueを、それ以外の場合はfalseを返します
-     */
-    public function isExchange(): bool
-    {
-        return $this->isKeyExchange() || $this->isValueExchange();
-    }
-
-    /**
      * keyの変換処理を実行するか判定します。
      *
      * @return bool 変換する場合はtrueを、それ以外の場合はfalseを返します
