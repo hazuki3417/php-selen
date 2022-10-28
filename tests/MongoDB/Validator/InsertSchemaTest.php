@@ -20,8 +20,8 @@ use Selen\MongoDB\Validator\Attributes\ArrayType;
 use Selen\MongoDB\Validator\Attributes\Enum;
 use Selen\MongoDB\Validator\Attributes\Type;
 use Selen\MongoDB\Validator\InsertSchema;
+use Selen\MongoDB\Validator\Model\ValidateResult;
 use Selen\MongoDB\Validator\Model\ValidatorResult;
-use Selen\Schema\Validate\Model\ValidateResult;
 
 /**
  * @requires PHP >= 8.0
