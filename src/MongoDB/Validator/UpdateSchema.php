@@ -67,21 +67,13 @@ class UpdateSchema implements SchemaValidatorInterface
             $key = $fieldLoader->reflectionProperty->getName();
             $this->arrayPath->setCurrentPath($key);
 
-            $keyValidator       = new Key($this->arrayPath);
-            $keyValidatorResult = $keyValidator->execute($key, $keyValue);
-
-            if ($keyValidatorResult->failure()) {
-                $this->addValidateResults(...$keyValidatorResult->getValidateResults());
-                continue;
-            }
-
             if ($isValueValidateExecute) {
                 // 値のバリデーション処理
                 $valueValidator       = new Value($this->arrayPath, $attributeValueValidates);
                 $valueValidatorResult = $valueValidator->execute($key, $keyValue);
-                $this->addValidateResults(...$valueValidatorResult->getValidateResults());
 
                 if ($valueValidatorResult->failure()) {
+                    $this->addValidateResults(...$valueValidatorResult->getValidateResults());
                     // 値チェックに違反したら控えている処理は実行しない
                     continue;
                 }
@@ -141,7 +133,10 @@ class UpdateSchema implements SchemaValidatorInterface
                     }
 
                     $nestValidatorResult = $nestValidator->execute($object);
-                    $this->addValidateResults(...$nestValidatorResult->getValidateResults());
+
+                    if ($nestValidatorResult->failure()) {
+                        $this->addValidateResults(...$nestValidatorResult->getValidateResults());
+                    }
                     continue;
                 }
 
@@ -180,7 +175,10 @@ class UpdateSchema implements SchemaValidatorInterface
                     }
 
                     $nestValidatorResult = $nestValidator->execute($object);
-                    $this->addValidateResults(...$nestValidatorResult->getValidateResults());
+
+                    if ($nestValidatorResult->failure()) {
+                        $this->addValidateResults(...$nestValidatorResult->getValidateResults());
+                    }
                 }
                 $nestValidator->arrayPath->up();
                 continue;

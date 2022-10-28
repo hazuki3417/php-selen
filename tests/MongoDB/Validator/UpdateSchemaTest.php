@@ -19,6 +19,7 @@ use Selen\MongoDB\Attributes\SchemaField;
 use Selen\MongoDB\Validator\Attributes\ArrayType;
 use Selen\MongoDB\Validator\Attributes\Enum;
 use Selen\MongoDB\Validator\Attributes\Type;
+use Selen\MongoDB\Validator\Model\ValidateResult;
 use Selen\MongoDB\Validator\Model\ValidatorResult;
 use Selen\MongoDB\Validator\UpdateSchema;
 
@@ -51,14 +52,536 @@ class UpdateSchemaTest extends TestCase
     public function dataProviderExecute()
     {
         return [
-            'validPattern:none validate' => [
+            'validPattern:none validate all values strings' => [
                 'expected' => [
-                    'validateResults' => [],
                     'success'         => true,
+                    'validateResults' => [
+                    ],
                 ],
                 'input' => [
                     'contractArgs' => UpdateSchemaTestMockNoneValidateObject::class,
-                    'executeArgs'  => [],
+                    'executeArgs'  => [
+                        'rootObjField1' => '',
+                        'rootObjField2' => '',
+                        'rootObjField3' => '',
+                        'rootObjField4' => '',
+                        'rootObjField5' => '',
+                    ],
+                ],
+            ],
+            'validPattern:none validate all values boolean' => [
+                'expected' => [
+                    'success'         => true,
+                    'validateResults' => [
+                    ],
+                ],
+                'input' => [
+                    'contractArgs' => UpdateSchemaTestMockNoneValidateObject::class,
+                    'executeArgs'  => [
+                        'rootObjField1' => true,
+                        'rootObjField2' => true,
+                        'rootObjField3' => true,
+                        'rootObjField4' => true,
+                        'rootObjField5' => true,
+                    ],
+                ],
+            ],
+            'validPattern:passed validation have all the data' => [
+                'expected' => [
+                    'success'         => true,
+                    'validateResults' => [
+                    ],
+                ],
+                'input' => [
+                    'contractArgs' => UpdateSchemaTestMockRootObject::class,
+                    'executeArgs'  => [
+                        'rootObjField1' => 'string value1',
+                        'rootObjField2' => 10,
+                        'rootObjField3' => 'string value2',
+                        'rootObjField4' => [
+                            'nestObjField1' => 'string nest value1',
+                            'nestObjField2' => true,
+                            'nestObjField3' => [
+                                'string nest value2',
+                                'string nest value3',
+                                'string nest value4',
+                            ],
+                            'nestObjField4' => [1, 2, 3, 4],
+                        ],
+                        'rootObjField5' => [
+                            [
+                                'nestObjItemField1' => 'man',
+                                'nestObjItemField2' => new DateTime(),
+                            ],
+                            [
+                                'nestObjItemField1' => 'woman',
+                                'nestObjItemField2' => new DateTime(),
+                            ],
+                        ],
+                        'rootObjField6' => [
+                            'nestObjField1' => 'string nest value1',
+                            'nestObjField2' => true,
+                            'nestObjField3' => [],
+                            'nestObjField4' => [],
+                        ],
+                        'rootObjField7' => [
+                            [
+                                'nestObjItemField1' => 'man',
+                                'nestObjItemField2' => new DateTime(),
+                            ],
+                        ],
+                        // 定義側に存在しないフィールドは無視される
+                        'rootObjField0' => 'string value1',
+                    ],
+                ],
+            ],
+            'validPattern:passed validation rootObjField7 === []' => [
+                'expected' => [
+                    'success'         => true,
+                    'validateResults' => [
+                    ],
+                ],
+                'input' => [
+                    'contractArgs' => UpdateSchemaTestMockRootObject::class,
+                    'executeArgs'  => [
+                        'rootObjField1' => 'string value1',
+                        'rootObjField2' => 10,
+                        'rootObjField3' => 'string value2',
+                        'rootObjField4' => [
+                            'nestObjField1' => 'string nest value1',
+                            'nestObjField2' => true,
+                            'nestObjField3' => [
+                                'string nest value2',
+                                'string nest value3',
+                                'string nest value4',
+                            ],
+                            'nestObjField4' => [1, 2, 3, 4],
+                        ],
+                        'rootObjField5' => [
+                            [
+                                'nestObjItemField1' => 'man',
+                                'nestObjItemField2' => new DateTime(),
+                            ],
+                            [
+                                'nestObjItemField1' => 'woman',
+                                'nestObjItemField2' => new DateTime(),
+                            ],
+                        ],
+                        'rootObjField6' => [
+                            'nestObjField1' => 'string nest value1',
+                            'nestObjField2' => true,
+                            'nestObjField3' => [],
+                            'nestObjField4' => [],
+                        ],
+                        'rootObjField7' => [],
+                    ],
+                ],
+            ],
+            'validPattern:passed validation rootObjField7 === null' => [
+                'expected' => [
+                    'success'         => true,
+                    'validateResults' => [
+                    ],
+                ],
+                'input' => [
+                    'contractArgs' => UpdateSchemaTestMockRootObject::class,
+                    'executeArgs'  => [
+                        'rootObjField1' => 'string value1',
+                        'rootObjField2' => 10,
+                        'rootObjField3' => 'string value2',
+                        'rootObjField4' => [
+                            'nestObjField1' => 'string nest value1',
+                            'nestObjField2' => true,
+                            'nestObjField3' => [
+                                'string nest value2',
+                                'string nest value3',
+                                'string nest value4',
+                            ],
+                            'nestObjField4' => [1, 2, 3, 4],
+                        ],
+                        'rootObjField5' => [
+                            [
+                                'nestObjItemField1' => 'man',
+                                'nestObjItemField2' => new DateTime(),
+                            ],
+                            [
+                                'nestObjItemField1' => 'woman',
+                                'nestObjItemField2' => new DateTime(),
+                            ],
+                        ],
+                        'rootObjField6' => [
+                            'nestObjField1' => 'string nest value1',
+                            'nestObjField2' => true,
+                            'nestObjField3' => [],
+                            'nestObjField4' => [],
+                        ],
+                        'rootObjField7' => null,
+                    ],
+                ],
+            ],
+            'validPattern:passed validation rootObjField6 === null' => [
+                'expected' => [
+                    'success'         => true,
+                    'validateResults' => [
+                    ],
+                ],
+                'input' => [
+                    'contractArgs' => UpdateSchemaTestMockRootObject::class,
+                    'executeArgs'  => [
+                        'rootObjField1' => 'string value1',
+                        'rootObjField2' => 10,
+                        'rootObjField3' => 'string value2',
+                        'rootObjField4' => [
+                            'nestObjField1' => 'string nest value1',
+                            'nestObjField2' => true,
+                            'nestObjField3' => [
+                                'string nest value2',
+                                'string nest value3',
+                                'string nest value4',
+                            ],
+                            'nestObjField4' => [1, 2, 3, 4],
+                        ],
+                        'rootObjField5' => [
+                            [
+                                'nestObjItemField1' => 'man',
+                                'nestObjItemField2' => new DateTime(),
+                            ],
+                            [
+                                'nestObjItemField1' => 'woman',
+                                'nestObjItemField2' => new DateTime(),
+                            ],
+                        ],
+                        'rootObjField6' => null,
+                        'rootObjField7' => null,
+                    ],
+                ],
+            ],
+            'validPattern:passed validation rootObjField5 === []' => [
+                'expected' => [
+                    'success'         => true,
+                    'validateResults' => [
+                    ],
+                ],
+                'input' => [
+                    'contractArgs' => UpdateSchemaTestMockRootObject::class,
+                    'executeArgs'  => [
+                        'rootObjField1' => 'string value1',
+                        'rootObjField2' => 10,
+                        'rootObjField3' => 'string value2',
+                        'rootObjField4' => [
+                            'nestObjField1' => 'string nest value1',
+                            'nestObjField2' => true,
+                            'nestObjField3' => [
+                                'string nest value2',
+                                'string nest value3',
+                                'string nest value4',
+                            ],
+                            'nestObjField4' => [1, 2, 3, 4],
+                        ],
+                        'rootObjField5' => [],
+                        'rootObjField6' => null,
+                        'rootObjField7' => null,
+                    ],
+                ],
+            ],
+            'invalidPattern:key validate. missing key' => [
+                'expected' => [
+                    // UpdateSchemaはinputに存在するkeyのみバリデーションする
+                    'success'         => true,
+                    'validateResults' => [
+                    ],
+                ],
+                'input' => [
+                    'contractArgs' => UpdateSchemaTestMockRootObject::class,
+                    'executeArgs'  => [
+                        'rootObjField1' => 'string value1',
+                        // 'rootObjField2' => 10,
+                        'rootObjField3' => 'string value2',
+                        'rootObjField4' => [
+                            'nestObjField1' => 'string nest value1',
+                            // 'nestObjField2' => true,
+                            'nestObjField3' => [
+                                'string nest value2',
+                                'string nest value3',
+                                'string nest value4',
+                            ],
+                            'nestObjField4' => [1, 2, 3, 4],
+                        ],
+                        'rootObjField5' => [
+                            [
+                                'nestObjItemField1' => 'man',
+                                'nestObjItemField2' => new DateTime(),
+                            ],
+                            [
+                                'nestObjItemField1' => 'man',
+                                // 'nestObjItemField2' => new DateTime(),
+                            ],
+                        ],
+                        'rootObjField6' => [
+                            'nestObjField1' => 'string nest value1',
+                            'nestObjField2' => true,
+                            'nestObjField3' => [
+                                'string nest value2',
+                                'string nest value3',
+                                'string nest value4',
+                            ],
+                            // 'nestObjField4' => [1, 2, 3, 4],
+                        ],
+                        'rootObjField7' => [
+                            [
+                                // 'nestObjItemField1' => 'man',
+                                'nestObjItemField2' => new DateTime(),
+                            ],
+                        ],
+                    ],
+                ],
+            ],
+            'invalidPattern:value validate' => [
+                'expected' => [
+                    'success'         => false,
+                    'validateResults' => [
+                        new ValidateResult(false, 'rootObjField2', 'Invalid type. expected type int.'),
+                        new ValidateResult(false, 'rootObjField4.nestObjField2', 'Invalid type. expected type bool.'),
+                        new ValidateResult(false, 'rootObjField5.[1].nestObjItemField1', "Invalid value. expected value 'man', 'woman'."),
+                        new ValidateResult(false, 'rootObjField6.nestObjField4', 'Invalid type. expected array element type int.'),
+                        new ValidateResult(false, 'rootObjField7.[0].nestObjItemField1', "Invalid value. expected value 'man', 'woman'."),
+                    ],
+                ],
+                'input' => [
+                    'contractArgs' => UpdateSchemaTestMockRootObject::class,
+                    'executeArgs'  => [
+                        'rootObjField1' => 'string value1',
+                        'rootObjField2' => true,
+                        'rootObjField3' => 'string value2',
+                        'rootObjField4' => [
+                            'nestObjField1' => 'string nest value1',
+                            'nestObjField2' => [],
+                            'nestObjField3' => [
+                                'string nest value2',
+                                'string nest value3',
+                                'string nest value4',
+                            ],
+                            'nestObjField4' => [1, 2, 3, 4],
+                        ],
+                        'rootObjField5' => [
+                            [
+                                'nestObjItemField1' => 'man',
+                                'nestObjItemField2' => new DateTime(),
+                            ],
+                            [
+                                'nestObjItemField1' => 'formal',
+                                'nestObjItemField2' => new DateTime(),
+                            ],
+                        ],
+                        'rootObjField6' => [
+                            'nestObjField1' => 'string nest value1',
+                            'nestObjField2' => true,
+                            'nestObjField3' => [
+                                'string nest value2',
+                                'string nest value3',
+                                'string nest value4',
+                            ],
+                            'nestObjField4' => [1, 2, 3, '4'],
+                        ],
+                        'rootObjField7' => [
+                            [
+                                'nestObjItemField1' => 'formal',
+                                'nestObjItemField2' => new DateTime(),
+                            ],
+                        ],
+                    ],
+                ],
+            ],
+            'invalidPattern:array format validate rootObjField4 === ""' => [
+                'expected' => [
+                    'success'         => false,
+                    'validateResults' => [
+                        new ValidateResult(false, 'rootObjField4', 'Invalid value. Expect "' . UpdateSchemaTestMockInnerObject::class . '" schema for array type'),
+                    ],
+                ],
+                'input' => [
+                    'contractArgs' => UpdateSchemaTestMockRootObject::class,
+                    'executeArgs'  => [
+                        'rootObjField1' => 'string value1',
+                        'rootObjField2' => 10,
+                        'rootObjField3' => 'string value2',
+                        // Objectに相当する部分にリテラル値を渡したときの挙動
+                        'rootObjField4' => '',
+                        'rootObjField5' => [],
+                        'rootObjField6' => null,
+                        'rootObjField7' => null,
+                    ],
+                ],
+            ],
+            'invalidPattern:array format validate rootObjField4 === []' => [
+                'expected' => [
+                    'success'         => false,
+                    'validateResults' => [
+                        new ValidateResult(false, 'rootObjField4', 'Invalid value. Expect "' . UpdateSchemaTestMockInnerObject::class . '" schema for array type'),
+                    ],
+                ],
+                'input' => [
+                    'contractArgs' => UpdateSchemaTestMockRootObject::class,
+                    'executeArgs'  => [
+                        'rootObjField1' => 'string value1',
+                        'rootObjField2' => 10,
+                        'rootObjField3' => 'string value2',
+                        // Objectに相当する部分に空配列を渡したときの挙動
+                        'rootObjField4' => [],
+                        'rootObjField5' => [],
+                        'rootObjField6' => null,
+                        'rootObjField7' => null,
+                    ],
+                ],
+            ],
+            'invalidPattern:array format validate rootObjField5 === [\'\']' => [
+                'expected' => [
+                    'success'         => false,
+                    'validateResults' => [
+                        new ValidateResult(false, 'rootObjField5.[0]', 'Invalid value. Expect "' . UpdateSchemaTestMockInnerObjectItem::class . '" schema for array type'),
+                    ],
+                ],
+                'input' => [
+                    'contractArgs' => UpdateSchemaTestMockRootObject::class,
+                    'executeArgs'  => [
+                        'rootObjField1' => 'string value1',
+                        'rootObjField2' => 10,
+                        'rootObjField3' => 'string value2',
+                        'rootObjField4' => [
+                            'nestObjField1' => 'string nest value1',
+                            'nestObjField2' => true,
+                            'nestObjField3' => [
+                                'string nest value2',
+                                'string nest value3',
+                                'string nest value4',
+                            ],
+                            'nestObjField4' => [1, 2, 3, 4],
+                        ],
+                        // ArrayObjectの1要素に相当する部分にリテラル値を渡したときの挙動
+                        'rootObjField5' => [''],
+                        'rootObjField6' => null,
+                        'rootObjField7' => null,
+                    ],
+                ],
+            ],
+            'invalidPattern:array format validate rootObjField5 === [[]]' => [
+                'expected' => [
+                    'success'         => false,
+                    'validateResults' => [
+                        new ValidateResult(false, 'rootObjField5.[0]', 'Invalid value. Expect "' . UpdateSchemaTestMockInnerObjectItem::class . '" schema for array type'),
+                    ],
+                ],
+                'input' => [
+                    'contractArgs' => UpdateSchemaTestMockRootObject::class,
+                    'executeArgs'  => [
+                        'rootObjField1' => 'string value1',
+                        'rootObjField2' => 10,
+                        'rootObjField3' => 'string value2',
+                        'rootObjField4' => [
+                            'nestObjField1' => 'string nest value1',
+                            'nestObjField2' => true,
+                            'nestObjField3' => [
+                                'string nest value2',
+                                'string nest value3',
+                                'string nest value4',
+                            ],
+                            'nestObjField4' => [1, 2, 3, 4],
+                        ],
+                        // ArrayObjectの1要素に相当する部分に空配列を渡したときの挙動
+                        'rootObjField5' => [[]],
+                        'rootObjField6' => null,
+                        'rootObjField7' => null,
+                    ],
+                ],
+            ],
+            'invalidPattern:array format validate rootObjField6 === []' => [
+                'expected' => [
+                    'success'         => false,
+                    'validateResults' => [
+                        new ValidateResult(false, 'rootObjField6', 'Invalid value. Expect "' . UpdateSchemaTestMockInnerObject::class . '" schema for array type'),
+                    ],
+                ],
+                'input' => [
+                    'contractArgs' => UpdateSchemaTestMockRootObject::class,
+                    'executeArgs'  => [
+                        'rootObjField1' => 'string value1',
+                        'rootObjField2' => 10,
+                        'rootObjField3' => 'string value2',
+                        'rootObjField4' => [
+                            'nestObjField1' => 'string nest value1',
+                            'nestObjField2' => true,
+                            'nestObjField3' => [
+                                'string nest value2',
+                                'string nest value3',
+                                'string nest value4',
+                            ],
+                            'nestObjField4' => [1, 2, 3, 4],
+                        ],
+                        'rootObjField5' => [],
+                        // Objectに相当する部分に空配列を渡したときの挙動
+                        'rootObjField6' => [],
+                        'rootObjField7' => null,
+                    ],
+                ],
+            ],
+            'invalidPattern:array format validate rootObjField7 === [\'\']' => [
+                'expected' => [
+                    'success'         => false,
+                    'validateResults' => [
+                        new ValidateResult(false, 'rootObjField7.[0]', 'Invalid value. Expect "' . UpdateSchemaTestMockInnerObjectItem::class . '" schema for array type'),
+                    ],
+                ],
+                'input' => [
+                    'contractArgs' => UpdateSchemaTestMockRootObject::class,
+                    'executeArgs'  => [
+                        'rootObjField1' => 'string value1',
+                        'rootObjField2' => 10,
+                        'rootObjField3' => 'string value2',
+                        'rootObjField4' => [
+                            'nestObjField1' => 'string nest value1',
+                            'nestObjField2' => true,
+                            'nestObjField3' => [
+                                'string nest value2',
+                                'string nest value3',
+                                'string nest value4',
+                            ],
+                            'nestObjField4' => [1, 2, 3, 4],
+                        ],
+                        'rootObjField5' => [],
+                        'rootObjField6' => null,
+                        // ArrayObjectの1要素に相当する部分に空配列を渡したときの挙動
+                        'rootObjField7' => [''],
+                    ],
+                ],
+            ],
+            'invalidPattern:array format validate rootObjField7 === [[]]' => [
+                'expected' => [
+                    'success'         => false,
+                    'validateResults' => [
+                        new ValidateResult(false, 'rootObjField7.[0]', 'Invalid value. Expect "' . UpdateSchemaTestMockInnerObjectItem::class . '" schema for array type'),
+                    ],
+                ],
+                'input' => [
+                    'contractArgs' => UpdateSchemaTestMockRootObject::class,
+                    'executeArgs'  => [
+                        'rootObjField1' => 'string value1',
+                        'rootObjField2' => 10,
+                        'rootObjField3' => 'string value2',
+                        'rootObjField4' => [
+                            'nestObjField1' => 'string nest value1',
+                            'nestObjField2' => true,
+                            'nestObjField3' => [
+                                'string nest value2',
+                                'string nest value3',
+                                'string nest value4',
+                            ],
+                            'nestObjField4' => [1, 2, 3, 4],
+                        ],
+                        'rootObjField5' => [],
+                        'rootObjField6' => null,
+                        // ArrayObjectの1要素に相当する部分に空配列を渡したときの挙動
+                        'rootObjField7' => [[]],
+                    ],
                 ],
             ],
         ];
@@ -149,10 +672,10 @@ class UpdateSchemaTestMockNoneValidateObject
     #[SchemaField]
     public $rootObjField3 = 'val';
 
-    #[SchemaField, Nest('object', UpdateSchemaTestMockInnerObject::class)]
+    #[SchemaField]
     public $rootObjField4;
 
-    #[SchemaField, Nest('arrayObject', UpdateSchemaTestMockInnerObjectItem::class)]
+    #[SchemaField]
     public $rootObjField5;
 
     // NOTE: fieldとして扱わないプロパティ
