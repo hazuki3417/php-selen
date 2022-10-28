@@ -56,7 +56,6 @@ class KeyTest extends TestCase
                 'expected' => [
                     'success'            => true,
                     'getValidateResults' => [
-                        new ValidateResult(true, 'keyName'),
                     ],
                 ],
                 'input' => [

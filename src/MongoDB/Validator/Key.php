@@ -25,15 +25,17 @@ class Key
     public function execute(string $key, array $input): ValidatorResult
     {
         $this->arrayPath->setCurrentPath($key);
-        $arrayPathStr   = ArrayPath::toString($this->arrayPath->getPaths());
-        $validateResult = new ValidateResult();
-        $validateResult->setArrayPath($arrayPathStr);
 
         if (\array_key_exists($key, $input)) {
-            $validateResult->setResult(true);
-        } else {
-            $validateResult->setResult(false)->setMessage('field is required.');
+            return new ValidatorResult();
         }
+
+        $validateResult = new ValidateResult(
+            false,
+            ArrayPath::toString($this->arrayPath->getPaths()),
+            'field is required.'
+        );
+
         return new ValidatorResult($validateResult);
     }
 }
