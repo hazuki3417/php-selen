@@ -69,9 +69,9 @@ class InsertSchema implements SchemaValidatorInterface
                 // 値のバリデーション処理
                 $valueValidator       = new Value($this->arrayPath, $attributeValueValidates);
                 $valueValidatorResult = $valueValidator->execute($key, $input);
-                $this->addValidateResults(...$valueValidatorResult->getValidateResults());
 
                 if ($valueValidatorResult->failure()) {
+                    $this->addValidateResults(...$valueValidatorResult->getValidateResults());
                     // 値チェックに違反したら控えている処理は実行しない
                     continue;
                 }
@@ -131,7 +131,10 @@ class InsertSchema implements SchemaValidatorInterface
                     }
 
                     $nestValidatorResult = $nestValidator->execute($object);
-                    $this->addValidateResults(...$nestValidatorResult->getValidateResults());
+
+                    if ($nestValidatorResult->failure()) {
+                        $this->addValidateResults(...$nestValidatorResult->getValidateResults());
+                    }
                     continue;
                 }
 
@@ -170,7 +173,10 @@ class InsertSchema implements SchemaValidatorInterface
                     }
 
                     $nestValidatorResult = $nestValidator->execute($object);
-                    $this->addValidateResults(...$nestValidatorResult->getValidateResults());
+
+                    if ($nestValidatorResult->failure()) {
+                        $this->addValidateResults(...$nestValidatorResult->getValidateResults());
+                    }
                 }
                 $nestValidator->arrayPath->up();
                 continue;

@@ -33,14 +33,16 @@ class Value
         $validateResult = new ValidateResult();
         $validateResult->setArrayPath($arrayPathStr);
 
-        /** @var \Selen\MongoDB\Validator\Model\ValidateResult[] */
-        $validateResults = [];
-
+        /** @var \Selen\MongoDB\Validator\Model\ValidateResult */
         foreach ($this->attributeValueValidates as $attributeValueValidate) {
             /** @var \Selen\MongoDB\Validator\ValueValidateInterface */
             $valueValidateInstance = $attributeValueValidate->newInstance();
-            $validateResults[]     = $valueValidateInstance->execute($input[$key], $validateResult);
+            $validateResult        = $valueValidateInstance->execute($input[$key], $validateResult);
+
+            if (!$validateResult->getResult()) {
+                return new ValidatorResult($validateResult);
+            }
         }
-        return new ValidatorResult(...$validateResults);
+        return new ValidatorResult();
     }
 }
