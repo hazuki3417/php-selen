@@ -83,8 +83,8 @@ class UpdateSchemaTest extends TestCase
         $result          = $updateSchema->execute($executeArgs);
 
         [
-            'validateResults' => $expectedValidateResults,
             'success'         => $expectedSuccess,
+            'validateResults' => $expectedValidateResults,
         ] = $expected;
 
         $this->assertInstanceOf(ValidatorResult::class, $result);
