@@ -145,10 +145,39 @@ class Exchanger
         foreach ($arrayDefine->defines as $define) {
             if ($define->nestedTypeDefineExists()) {
                 // ネストされた定義なら再帰処理を行う
-                $input[$define->key->getName()] = $this->defineRoutine(
-                    $input[$define->key->getName()],
-                    $define->arrayDefine
-                );
+
+                if ($define->key->getName() !== null) {
+                    // ネストされた定義 + keyがnull以外のとき = keyありのArrayObject形式の定義
+                    // assoc配列の変換処理
+                    if (!\array_key_exists($define->key->getName(), $input)) {
+                        continue;
+                    }
+
+                    // 定義したkeyに一致するkeyがinput側にあったとき
+                    $input[$define->key->getName()] = $this->defineRoutine(
+                        $input[$define->key->getName()],
+                        $define->arrayDefine
+                    );
+                    continue;
+                }
+                // ネストされた定義 + keyがnullのとき = keyなしのArrayObject形式の定義
+                $inputItems = $input;
+
+                if (!\is_array($inputItems)) {
+                    // inputItemsが配列以外のときは何もしない
+                    continue;
+                }
+
+                foreach ($inputItems as $index => $inputItem) {
+                    if (!\is_array($inputItem)) {
+                        // inputItemが配列以外のときは何もしない
+                        continue;
+                    }
+                    $input[$index] = $this->defineRoutine(
+                        $input[$index],
+                        $define->arrayDefine
+                    );
+                }
                 continue;
             }
 

@@ -531,6 +531,52 @@ class ExchangerTest extends TestCase
                     'valueExchangeExecute' => null,
                 ],
             ],
+            'pattern015' => [
+                'expected' => [
+                    'objects' => [
+                        [
+                            'id'   => 'prefix-ユニークID1',
+                            'name' => '名前1',
+                        ],
+                        [
+                            'id'   => 'prefix-ユニークID2',
+                            'name' => '名前2',
+                        ],
+                        [
+                            'id'   => 'prefix-ユニークID3',
+                            'name' => '名前3',
+                        ],                    ],
+                ],
+                'input' => [
+                    'value' => [
+                        'objects' => [
+                            [
+                                'id'   => 'ユニークID1',
+                                'name' => '名前1',
+                            ],
+                            [
+                                'id'   => 'ユニークID2',
+                                'name' => '名前2',
+                            ],
+                            [
+                                'id'   => 'ユニークID3',
+                                'name' => '名前3',
+                            ],
+                        ],
+                    ],
+                    'define' => new ArrayDefine(
+                        Define::key('objects')->arrayDefine(
+                            Define::noKey()->arrayDefine(
+                                Define::key('id')->value(function ($value) {
+                                    return 'prefix-' . $value;
+                                })
+                            )
+                        ),
+                    ),
+                    'keyExchangeExecute'   => null,
+                    'valueExchangeExecute' => null,
+                ],
+            ],
         ];
     }
 
