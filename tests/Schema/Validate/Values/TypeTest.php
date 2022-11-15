@@ -44,13 +44,15 @@ class TypeTest extends TestCase
                 'input'    => [
                     'type'  => ['string'],
                     'value' => 'true',
-                ], ],
+                ],
+            ],
             'pattern002' => [
                 'expected' => new ValidateResult(false, '', 'Invalid type. expected type string.'),
                 'input'    => [
                     'type'  => ['string'],
                     'value' => true,
-                ], ],
+                ],
+            ],
         ];
     }
 
@@ -62,12 +64,11 @@ class TypeTest extends TestCase
      */
     public function testExecute($expected, $input)
     {
-        $instance = new Type(...$input['type']);
-        $verify   = $instance->execute($input['value'], new ValidateResult());
+        $actual = (new Type(...$input['type']))->execute($input['value'], new ValidateResult());
 
-        $this->assertInstanceOf(ValidateResult::class, $verify);
-        $this->assertSame($expected->getResult(), $verify->getResult());
-        $this->assertSame($expected->getArrayPath(), $verify->getArrayPath());
-        $this->assertSame($expected->getMessage(), $verify->getMessage());
+        $this->assertInstanceOf(ValidateResult::class, $actual);
+        $this->assertSame($expected->getResult(), $actual->getResult());
+        $this->assertSame($expected->getArrayPath(), $actual->getArrayPath());
+        $this->assertSame($expected->getMessage(), $actual->getMessage());
     }
 }

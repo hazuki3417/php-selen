@@ -31,9 +31,7 @@ class TypeTest extends TestCase
 {
     public function testConstruct()
     {
-        $instance = new Type();
-
-        $this->assertInstanceOf(Type::class, $instance);
+        $this->assertInstanceOf(Type::class, new Type('string'));
     }
 
     public function dataProviderExecute()
@@ -74,15 +72,11 @@ class TypeTest extends TestCase
      */
     public function testExecute($expected, $input)
     {
-        $validateResult = new ValidateResult();
+        $actual = (new Type(...$input['type']))->execute($input['value'], new ValidateResult());
 
-        $instance = new Type(...$input['type']);
-
-        $verify = $instance->execute($input['value'], $validateResult);
-
-        $this->assertInstanceOf(ValidateResult::class, $verify);
-        $this->assertSame($expected->getResult(), $verify->getResult());
-        $this->assertSame($expected->getMessage(), $verify->getMessage());
-        $this->assertSame($expected->getArrayPath(), $verify->getArrayPath());
+        $this->assertInstanceOf(ValidateResult::class, $actual);
+        $this->assertSame($expected->getResult(), $actual->getResult());
+        $this->assertSame($expected->getArrayPath(), $actual->getArrayPath());
+        $this->assertSame($expected->getMessage(), $actual->getMessage());
     }
 }

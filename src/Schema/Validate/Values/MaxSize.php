@@ -42,9 +42,10 @@ class MaxSize implements ValueValidateInterface
      */
     public function execute($value, ValidateResult $result): ValidateResult
     {
+        // NOTE: 配列型以外が来たときはバリデーションを行わない
         if (!\is_array($value)) {
-            $mes = 'Not supported. Validation that can only support array type.';
-            throw new LogicException($mes);
+            $mes = 'Skip validation. Executed only when the value is of array type';
+            return $result->setResult(true)->setMessage($mes);
         }
 
         if ($this->size < \count($value)) {

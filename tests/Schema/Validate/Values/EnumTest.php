@@ -44,37 +44,43 @@ class EnumTest extends TestCase
                 'input'    => [
                     'type'  => ['main', 'sub'],
                     'value' => 'main',
-                ], ],
+                ],
+            ],
             'pattern002' => [
                 'expected' => new ValidateResult(false, '', "Invalid value. expected value 'main', 'sub'."),
                 'input'    => [
                     'type'  => ['main', 'sub'],
                     'value' => 'mai',
-                ], ],
+                ],
+            ],
             'pattern003' => [
                 'expected' => new ValidateResult(true),
                 'input'    => [
                     'type'  => ['main', 'sub', true, 0],
                     'value' => 'sub',
-                ], ],
+                ],
+            ],
             'pattern004' => [
                 'expected' => new ValidateResult(false, '', "Invalid value. expected value 'main', true, 0."),
                 'input'    => [
                     'type'  => ['main', true, 0],
                     'value' => [],
-                ], ],
+                ],
+            ],
             'pattern005' => [
                 'expected' => new ValidateResult(false, '', "Invalid value. expected value 'main', true, null."),
                 'input'    => [
                     'type'  => ['main', true, null],
                     'value' => [],
-                ], ],
+                ],
+            ],
             'pattern006' => [
                 'expected' => new ValidateResult(false, '', "Invalid value. expected value 'main', false, 0.1."),
                 'input'    => [
                     'type'  => ['main', false, 0.1],
                     'value' => [],
-                ], ],
+                ],
+            ],
         ];
     }
 
@@ -86,12 +92,11 @@ class EnumTest extends TestCase
      */
     public function testExecute($expected, $input)
     {
-        $instance = new Enum(...$input['type']);
-        $verify   = $instance->execute($input['value'], new ValidateResult());
+        $actual = (new Enum(...$input['type']))->execute($input['value'], new ValidateResult());
 
-        $this->assertInstanceOf(ValidateResult::class, $verify);
-        $this->assertSame($expected->getResult(), $verify->getResult());
-        $this->assertSame($expected->getArrayPath(), $verify->getArrayPath());
-        $this->assertSame($expected->getMessage(), $verify->getMessage());
+        $this->assertInstanceOf(ValidateResult::class, $actual);
+        $this->assertSame($expected->getResult(), $actual->getResult());
+        $this->assertSame($expected->getArrayPath(), $actual->getArrayPath());
+        $this->assertSame($expected->getMessage(), $actual->getMessage());
     }
 }

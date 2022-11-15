@@ -9,7 +9,6 @@ declare(strict_types=1);
 
 namespace Tests\Selen\MongoDB\Validator\Attributes;
 
-use LogicException;
 use PHPUnit\Framework\TestCase;
 use Selen\MongoDB\Validator\Attributes\Regex;
 use Selen\MongoDB\Validator\Model\ValidateResult;
@@ -35,63 +34,30 @@ class RegexTest extends TestCase
         $this->assertInstanceOf(Regex::class, new Regex('^[0-9]$'));
     }
 
-    public function dataProviderExecuteException()
-    {
-        return [
-            'invalidDataType: value is not string type' => [
-                'expected' => [
-                    'expectException'        => LogicException::class,
-                    'expectExceptionMessage' => 'Not supported. Validation that can only support string type.',
-                ],
-                'input' => [
-                    'pattern' => '^[0-9]+$',
-                    'value'   => 10,
-                ],
-            ],
-        ];
-    }
-
-    /**
-     * @dataProvider dataProviderExecuteException
-     *
-     * @param mixed $expected
-     * @param mixed $input
-     */
-    public function testExecuteException($expected, $input)
-    {
-        [
-            'pattern' => $pattern,
-            'value'   => $value,
-        ] = $input;
-
-        [
-            'expectException'        => $expectException,
-            'expectExceptionMessage' => $expectExceptionMessage,
-        ] = $expected;
-
-        $instance = new Regex($pattern);
-
-        $this->expectException($expectException);
-        $this->expectExceptionMessage($expectExceptionMessage);
-
-        $instance->execute($value, new ValidateResult());
-    }
-
     public function dataProviderExecute()
     {
         return [
-            "validDataType: value is '10'" => [
+            'validDataType: value not subject to validation' => [
+                'expected' => new ValidateResult(true, '', 'Skip validation. Executed only when the value is of string type'),
+                'input'    => [
+                    'pattern' => '^[0-9]+$',
+                    'value'   => null,
+                ],
+            ],
+            'validDataType: matches a regular expression' => [
                 'expected' => new ValidateResult(true),
                 'input'    => [
                     'pattern' => '^[0-9]+$',
                     'value'   => '10',
-                ], ],
-            "invalidDataType: value is 'a'" => [
+                ],
+            ],
+            'invalidDataType: does not match regular expression' => [
                 'expected' => new ValidateResult(false, '', 'Invalid value. expected value ^[0-9]+$.'),
                 'input'    => [
                     'pattern' => '^[0-9]+$',
                     'value'   => 'a',
-                ], ],
+                ],
+            ],
         ];
     }
 
@@ -108,12 +74,11 @@ class RegexTest extends TestCase
             'value'   => $value,
         ] = $input;
 
-        $instance = new Regex($pattern);
-        $verify   = $instance->execute($value, new ValidateResult());
+        $actual = (new Regex($pattern))->execute($value, new ValidateResult());
 
-        $this->assertInstanceOf(ValidateResult::class, $verify);
-        $this->assertSame($expected->getResult(), $verify->getResult());
-        $this->assertSame($expected->getArrayPath(), $verify->getArrayPath());
-        $this->assertSame($expected->getMessage(), $verify->getMessage());
+        $this->assertInstanceOf(ValidateResult::class, $actual);
+        $this->assertSame($expected->getResult(), $actual->getResult());
+        $this->assertSame($expected->getArrayPath(), $actual->getArrayPath());
+        $this->assertSame($expected->getMessage(), $actual->getMessage());
     }
 }

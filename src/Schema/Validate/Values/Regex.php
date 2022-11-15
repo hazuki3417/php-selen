@@ -8,7 +8,6 @@
 
 namespace Selen\Schema\Validate\Values;
 
-use LogicException;
 use Selen\Schema\Validate\Model\ValidateResult;
 use Selen\Schema\Validate\ValueValidateInterface;
 
@@ -27,10 +26,10 @@ class Regex implements ValueValidateInterface
 
     public function execute($value, ValidateResult $result): ValidateResult
     {
-        // NOTE: string型以外が来るのは想定していないので例外にする
+        // NOTE: string型以外が来たときはバリデーションを行わない
         if (!\is_string($value)) {
-            $mes = 'Not supported. Validation that can only support string type.';
-            throw new LogicException($mes);
+            $mes = 'Skip validation. Executed only when the value is of string type';
+            return $result->setResult(true)->setMessage($mes);
         }
 
         if (!\preg_match("/{$this->pattern}/", $value)) {

@@ -9,7 +9,6 @@
 namespace Selen\Schema\Validate\Values;
 
 use InvalidArgumentException;
-use LogicException;
 use Selen\Schema\Validate\Model\ValidateResult;
 use Selen\Schema\Validate\ValueValidateInterface;
 
@@ -48,8 +47,8 @@ class Min implements ValueValidateInterface
         $allowType = \is_int($value) || \is_float($value);
 
         if (!$allowType) {
-            $mes = 'Not supported. Validation that supports int and float types.';
-            throw new LogicException($mes);
+            $mes = 'Skip validation. Executed only when the value is of type int or float';
+            return $result->setResult(true)->setMessage($mes);
         }
 
         if ($value < $this->threshold) {
