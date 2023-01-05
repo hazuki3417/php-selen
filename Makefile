@@ -28,6 +28,10 @@ generate-api-coverage: runner;
 generate-api-document:
 	docker-compose run --rm php-documentor
 
+test-verify: IMAGE_TAG +=alpine
+test-verify: COMMAND +=php vendor/bin/phpunit --group=verify
+test-verify: runner;
+
 test-all:
 	make test-php-latest && \
 	make test-php-8.1 && \
