@@ -216,6 +216,9 @@ class Exchanger
                 // valueの変換処理
                 if ($define->isAssocArrayDefine()) {
                     // key定義ありのときの処理
+
+                    // TODO: 定義側にはkeyが存在するが、入力側にはkeyがないときundefinedが発生する。考慮されていないので修正し、テストする。
+
                     $input[$define->key->getName()] = $this->valueExchange($define->valueExchangeExecute, $input[$define->key->getName()]);
                     continue;
                 }
