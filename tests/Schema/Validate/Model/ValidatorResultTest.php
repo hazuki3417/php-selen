@@ -46,18 +46,6 @@ class ValidatorResultTest extends TestCase
         $this->assertInstanceOf(ValidatorResult::class, $instance);
     }
 
-    public function testConstructException1()
-    {
-        $this->expectException(\LogicException::class);
-        new ValidatorResult();
-    }
-
-    public function testConstructException2()
-    {
-        $this->expectException(\LogicException::class);
-        new ValidatorResult(...[]);
-    }
-
     public function dataProviderSuccess()
     {
         $successValidateResultStub = $this->createSuccessValidateResultStub();

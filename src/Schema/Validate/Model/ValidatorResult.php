@@ -23,10 +23,6 @@ class ValidatorResult
      */
     public function __construct(ValidateResult ...$validateResults)
     {
-        if (count($validateResults) <= 0) {
-            throw new \LogicException('ValidateResult does not exist.');
-        }
-
         $this->validateResults = $validateResults;
 
         foreach ($this->validateResults as $validateResult) {
