@@ -17,9 +17,6 @@ use Selen\Schema\Validate\ValueValidateInterface;
 
 class Validator
 {
-    /** @var bool */
-    private $additionalKey = false;
-
     /** @var \Selen\Schema\Validate\ArrayDefine */
     private $arrayDefine;
 
