@@ -75,7 +75,13 @@ class Define
      */
     public function value(...$executes)
     {
-        if ($this->defineConflict()) {
+        if ($this->haveCalledValue) {
+            // value()->value()という呼び出し方をしたときに発生する
+            throw new \LogicException('Invalid method call. value method cannot be called back to back.');
+        }
+
+        if ($this->haveCalledArrayDefine) {
+            // arrayDefine()->value()という呼び出し方をしたときに発生する
             throw new \LogicException('Invalid method call. cannot call value method after arrayDefine.');
         }
 
@@ -107,8 +113,9 @@ class Define
      */
     public function arrayDefine(Define ...$define)
     {
-        if ($this->defineConflict()) {
-            throw new \LogicException('Invalid method call. cannot call arrayDefine method after value.');
+        if ($this->haveCalledArrayDefine) {
+            // arrayDefine()->arrayDefine()という呼び出し方をしたときに発生する
+            throw new \LogicException('Invalid method call. arrayDefine method cannot be called back to back.');
         }
 
         // NOTE: 引数の指定がない場合はそのまま通す（エラーにしない）
@@ -158,7 +165,6 @@ class Define
      */
     public function isValueValidate(): bool
     {
-        // NOTE: defineConflictでチェックしているので、片方のみの判定でも良い
         return $this->valueValidateExecutes !== null && $this->arrayDefine === null;
     }
 
@@ -169,17 +175,6 @@ class Define
      */
     public function nestedTypeDefineExists(): bool
     {
-        // NOTE: defineConflictでチェックしているので、片方のみの判定でも良い
         return $this->valueValidateExecutes === null && $this->arrayDefine !== null;
-    }
-
-    /**
-     * 定義呼び出しが競合しているか確認します
-     *
-     * @return bool 競合する場合はtrueを、それ以外の場合はfalseを返します
-     */
-    private function defineConflict()
-    {
-        return $this->haveCalledValue || $this->haveCalledArrayDefine;
     }
 }

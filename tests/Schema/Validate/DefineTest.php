@@ -31,73 +31,7 @@ use Selen\Schema\Validate\ValueValidateInterface;
  */
 class DefineTest extends TestCase
 {
-    public function testKey()
-    {
-        $this->assertInstanceOf(Define::class, Define::key('keyName', true));
-        $this->assertInstanceOf(Define::class, Define::key(0, true));
-    }
-
-    public function testKeyException()
-    {
-        $this->expectException(\InvalidArgumentException::class);
-        Define::key(null, true);
-    }
-
-    public function testNoKey()
-    {
-        $this->assertInstanceOf(Define::class, Define::noKey());
-    }
-
-    public function testValue1()
-    {
-        $key = Define::key('keyName', true);
-        $this->assertInstanceOf(Define::class, $key->value());
-    }
-
-    public function testValueException1()
-    {
-        // NOTE: 配列形式の定義と変換の定義は同時に呼び出すことはできない
-        $key = Define::key('keyName', true)->arrayDefine();
-
-        $this->expectException(\LogicException::class);
-        $key->value();
-    }
-
-    public function testValue2()
-    {
-        $key = Define::noKey();
-        $this->assertInstanceOf(Define::class, $key->value());
-    }
-
-    public function testValueException2()
-    {
-        // NOTE: 配列形式の定義と変換の定義は同時に呼び出すことはできない
-        $key = Define::noKey()->arrayDefine();
-
-        $this->expectException(\LogicException::class);
-        $key->value();
-    }
-
-    public function testValue3()
-    {
-        $key = Define::noKey();
-        $this->assertInstanceOf(Define::class, $key->value(
-            function () {}
-        ));
-    }
-
-    public function testValueException3()
-    {
-        // NOTE: 配列形式の定義と変換の定義は同時に呼び出すことはできない
-        $key = Define::noKey()->arrayDefine();
-
-        $this->expectException(\LogicException::class);
-        $key->value(
-            true
-        );
-    }
-
-    public function testValue4()
+    public function dataProviderKeyAndNoKeyCall()
     {
         $validateResultStub = $this->createStub(ValidateResult::class);
         $valueValidateStub  = $this->createStub(ValueValidateInterface::class);
@@ -107,42 +41,203 @@ class DefineTest extends TestCase
         $this->assertInstanceOf(Define::class, $key->value(
             $valueValidateStub
         ));
+
+        return [
+            'callKeyAndIndexTypeString' => [
+                'expected' => Define::class,
+                'input'    => Define::key('keyName', true),
+            ],
+            'callKeyAndIndexTypeInteger' => [
+                'expected' => Define::class,
+                'input'    => Define::key(0, true),
+            ],
+            'callNoKey' => [
+                'expected' => Define::class,
+                'input'    => Define::noKey(),
+            ],
+            'callKeyAfterValue' => [
+                'expected' => Define::class,
+                'input'    => Define::key('keyName', true)->value(),
+            ],
+            'callNoKeyAfterValue' => [
+                'expected' => Define::class,
+                'input'    => Define::noKey()->value(),
+            ],
+            'callKeyAndAfterValueArgCallableType' => [
+                'expected' => Define::class,
+                'input'    => Define::key('keyName', true)->value(function () {}),
+            ],
+            'callNoKeyAndAfterValueArgCallableType' => [
+                'expected' => Define::class,
+                'input'    => Define::noKey()->value(function () {}),
+            ],
+            'callKeyAndAfterValueArgInstanceType' => [
+                'expected' => Define::class,
+                'input'    => Define::key('keyName', true)->value($valueValidateStub),
+            ],
+            'callNoKeyAndAfterValueArgInstanceType' => [
+                'expected' => Define::class,
+                'input'    => Define::noKey()->value($valueValidateStub),
+            ],
+        ];
     }
 
-    public function testArrayDefine1()
+    /**
+     * @dataProvider dataProviderKeyAndNoKeyCall
+     *
+     * テスト内容:
+     *  - メソッドの呼び出し方
+     *  - value()メソッドの引数が許容する値の型をチェック
+     *
+     * @param mixed $expected
+     * @param mixed $input
+     */
+    public function testKeyAndNoKeyCall($expected, $input)
     {
-        $key = Define::key('keyName', true);
-        $this->assertInstanceOf(Define::class, $key->arrayDefine());
+        $this->assertInstanceOf($expected, $input);
     }
 
-    public function testArrayDefineException1()
+    public function dataProviderKeyAndNoKeyCallException()
     {
-        // NOTE: 配列形式の定義と変換の定義は同時に呼び出すことはできない
-        $key = Define::key('keyName', true)->value();
+        return [
+            'callKeyAndIndexTypeNull' => [
+                'expected' => \InvalidArgumentException::class,
+                'input'    => [
+                    'keyArgs' => [null, true],
+                ],
+            ],
+        ];
+    }
+    /**
+     * @dataProvider dataProviderKeyAndNoKeyCallException
+     *
+     * テスト内容:
+     *  - value()メソッドの引数が許容できない値をチェック
+     *
+     * @param mixed $expected
+     * @param mixed $input
+     */
+    public function testKeyAndNoKeyCallException($expected, $input)
+    {
+        [
+            'keyArgs' => $keyArgs
+        ] = $input;
 
-        $this->expectException(\LogicException::class);
-        $key->arrayDefine();
+        $this->expectException($expected);
+        Define::key(...$keyArgs);
     }
 
-    public function testArrayDefine2()
+    public function dataProviderCallPatternSuccess()
     {
-        $key = Define::noKey();
-        $this->assertInstanceOf(Define::class, $key->arrayDefine());
+        return [
+            'callPattern: Define::key()->value()' => [
+                'expected' => Define::class,
+                'callback' => function () {
+                    return Define::key('keyName', true)->value();
+                },
+            ],
+            'callPattern: Define::key()->arrayDefine()' => [
+                'expected' => Define::class,
+                'callback' => function () {
+                    return Define::key('keyName', true)->arrayDefine();
+                },
+            ],
+            'callPattern: Define::key()->value()->arrayDefine()' => [
+                'expected' => Define::class,
+                'callback' => function () {
+                    return Define::key('keyName', true)->value()->arrayDefine();
+                },
+            ],
+            'callPattern: Define::noKey()->value()' => [
+                'expected' => Define::class,
+                'callback' => function () {
+                    return Define::noKey()->value();
+                },
+            ],
+            'callPattern: Define::noKey()->arrayDefine()' => [
+                'expected' => Define::class,
+                'callback' => function () {
+                    return Define::noKey()->arrayDefine();
+                },
+            ],
+            'callPattern: Define::noKey()->value()->arrayDefine()' => [
+                'expected' => Define::class,
+                'callback' => function () {
+                    return Define::noKey()->value()->arrayDefine();
+                },
+            ],
+        ];
     }
 
-    public function testArrayDefineException2()
+    /**
+     * @dataProvider dataProviderCallPatternSuccess
+     *
+     * テスト内容
+     * - 許容されるメソッドチェーンのパターンをテスト
+     *
+     * @param mixed $expected
+     * @param mixed $callback
+     */
+    public function testCallPatternSuccess($expected, $callback)
     {
-        // NOTE: 配列形式の定義と変換の定義は同時に呼び出すことはできない
-        $key = Define::noKey()->value();
-
-        $this->expectException(\LogicException::class);
-        $key->arrayDefine();
+        $this->assertInstanceOf($expected, ($callback)());
     }
 
-    public function testArrayDefine3()
+    public function dataProviderCallPatternFailure()
     {
-        $key = Define::noKey();
-        $this->assertInstanceOf(Define::class, $key->arrayDefine());
+        return [
+            'callPattern: Define::key()->value()->value()' => [
+                'expected' => \LogicException::class,
+                'callback' => function () {
+                    return Define::key('keyName', true)->value()->value();
+                },
+            ],
+            'callPattern: Define::key()->arrayDefine()->arrayDefine()' => [
+                'expected' => \LogicException::class,
+                'callback' => function () {
+                    return Define::key('keyName', true)->arrayDefine()->arrayDefine();
+                },
+            ],
+            'callPattern: Define::key()->arrayDefine()->value()' => [
+                'expected' => \LogicException::class,
+                'callback' => function () {
+                    return Define::key('keyName', true)->arrayDefine()->value();
+                },
+            ],
+            'callPattern: Define::noKey()->value()->value()' => [
+                'expected' => \LogicException::class,
+                'callback' => function () {
+                    return Define::noKey()->value()->value();
+                },
+            ],
+            'callPattern: Define::noKey()->arrayDefine()->arrayDefine()' => [
+                'expected' => \LogicException::class,
+                'callback' => function () {
+                    return Define::noKey()->arrayDefine()->arrayDefine();
+                },
+            ],
+            'callPattern: Define::noKey()->arrayDefine()->value()' => [
+                'expected' => \LogicException::class,
+                'callback' => function () {
+                    return Define::noKey()->arrayDefine()->value();
+                },
+            ],
+        ];
+    }
+
+    /**
+     * @dataProvider dataProviderCallPatternFailure
+     *
+     * テスト内容
+     * - 許容されないメソッドチェーンのパターンをテスト
+     *
+     * @param mixed $expected
+     * @param mixed $callback
+     */
+    public function testCallPatternFailure($expected, $callback)
+    {
+        $this->expectException($expected);
+        ($callback)();
     }
 
     public function testArrayDefineException3()
