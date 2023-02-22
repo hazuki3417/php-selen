@@ -477,7 +477,6 @@ class ValidatorTest extends TestCase
     }
 
     /**
-     * @group aaaa
      * 値のバリデーションテスト（複数のバリデーション指定）
      */
     public function testPattern106()
