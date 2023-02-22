@@ -35,7 +35,7 @@ class Enum implements ValueValidateInterface
             $this->allowValues[$index] = $this->surround($allowValue);
         }
 
-        $format = 'Invalid value. expected value %s.';
+        $format = 'Invalid value. Expected value %s.';
         $mes    = \sprintf($format, \implode(', ', $this->allowValues));
         return $result->setResult(false)->setMessage($mes);
     }

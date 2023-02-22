@@ -14,7 +14,7 @@ use Selen\Schema\Validate\ValueValidateInterface;
 class Regex implements ValueValidateInterface
 {
     /** @var string */
-    protected $messageFormat = 'Invalid value. expected value %s.';
+    protected $messageFormat = 'Invalid value. Expected value %s.';
 
     /** @var string */
     private $pattern;

@@ -54,7 +54,7 @@ class RegexTest extends TestCase
                 ],
             ],
             'invalidDataType: does not match regular expression' => [
-                'expected' => new ValidateResult(false, '', 'Invalid value. expected value ^[0-9]+$.'),
+                'expected' => new ValidateResult(false, '', 'Invalid value. Expected value ^[0-9]+$.'),
                 'input'    => [
                     'pattern' => '^[0-9]+$',
                     'value'   => 'a',
