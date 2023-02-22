@@ -128,20 +128,16 @@ class Validator
                         $keyValues = $input;
                         /** @var bool 配列要素すべてのバリデーションが合格ならtrue、それ以外ならfalse */
                         $oneLoopValidateResult = true;
-                        /** @var bool 配列要素すべてのバリデーション結果を保持 */
-                        $oneLoopValidateResults = [];
 
                         foreach ($keyValues as $key => $value) {
                             $this->arrayPath->setCurrentPath(\sprintf('[%s]', $key));
                             $validateResult          = $this->valueValidate($execute, $value);
-                            $oneLoopResult[]         = $validateResult;
                             $this->validateResults[] = $validateResult;
 
                             if (!$validateResult->getResult()) {
                                 $oneLoopValidateResult = false;
                             }
                         }
-                        $this->validateResults = \array_merge($this->validateResults, $oneLoopValidateResults);
 
                         if (!$oneLoopValidateResult) {
                             // 配列要素のうち1つでもバリデーション違反した場合は、控えている検証処理は実行しない
