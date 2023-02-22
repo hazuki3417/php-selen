@@ -122,9 +122,9 @@ class Validator
                     if ($define->isIndexArrayDefine()) {
                         // 要素配列のときの値バリデーション処理
                         $keyValues = $input;
-                        /** @var bool $oneLoopResult 配列要素すべてのバリデーションが合格ならtrue、それ以外ならfalse */
+                        /** @var bool 配列要素すべてのバリデーションが合格ならtrue、それ以外ならfalse */
                         $oneLoopValidateResult = true;
-                        /** @var bool $oneLoopResult 配列要素すべてのバリデーション結果を保持 */
+                        /** @var bool 配列要素すべてのバリデーション結果を保持 */
                         $oneLoopValidateResults = [];
 
                         foreach ($keyValues as $key => $value) {
