@@ -342,8 +342,8 @@ class InsertSchemaTest extends TestCase
                 'expected' => [
                     'success'         => false,
                     'validateResults' => [
-                        new ValidateResult(false, 'rootObjField2', 'Invalid type. expected type int.'),
-                        new ValidateResult(false, 'rootObjField4.nestObjField2', 'Invalid type. expected type bool.'),
+                        new ValidateResult(false, 'rootObjField2', 'Invalid type. Expected type int.'),
+                        new ValidateResult(false, 'rootObjField4.nestObjField2', 'Invalid type. Expected type bool.'),
                         new ValidateResult(false, 'rootObjField5.[1].nestObjItemField1', "Invalid value. expected value 'man', 'woman'."),
                         new ValidateResult(false, 'rootObjField6.nestObjField4', 'Invalid type. expected array element type int.'),
                         new ValidateResult(false, 'rootObjField7.[0].nestObjItemField1', "Invalid value. expected value 'man', 'woman'."),

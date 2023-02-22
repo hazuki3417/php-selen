@@ -450,7 +450,7 @@ class ValidatorTest extends TestCase
         $expectedSuccess         = false;
         $expectedValidateResults = [
             // バリデーション定義方法2の結果
-            new ValidateResult(false, 'key2.[1]', 'Invalid type. expected type string.'),
+            new ValidateResult(false, 'key2.[1]', 'Invalid type. Expected type string.'),
         ];
 
         $define = new ArrayDefine(

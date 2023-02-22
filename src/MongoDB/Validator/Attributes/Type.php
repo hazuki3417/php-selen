@@ -30,7 +30,7 @@ class Type implements ValueValidateInterface
             return $result->setResult(true);
         }
 
-        $format = 'Invalid type. expected type %s.';
+        $format = 'Invalid type. Expected type %s.';
         $mes    = \sprintf($format, \implode(', ', $this->names));
         return $result->setResult(false)->setMessage($mes);
     }
