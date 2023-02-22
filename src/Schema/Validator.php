@@ -113,10 +113,10 @@ class Validator
                         // 連想配列のときの値バリデーション処理
                         $validateResult = $this->valueValidate($execute, $input[$define->key->getName()]);
 
-                        $this->validateResults[] = $validateResult;
-
                         if (!$validateResult->getResult()) {
                             // 検証結果が不合格の場合は控えている検証処理は実行しない
+                            // 失敗したときのみ結果を保持する
+                            $this->validateResults[] = $validateResult;
                             break;
                         }
                         // 検証結果が合格の場合は控えている検証処理を実行する。

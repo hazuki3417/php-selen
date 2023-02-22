@@ -271,9 +271,7 @@ class ValidatorTest extends TestCase
     {
         $expectedSuccess         = false;
         $expectedValidateResults = [
-            new ValidateResult(true, 'key1'),
             new ValidateResult(false, 'key2', 'Invalid value type. Expected string type.'),
-            new ValidateResult(true, 'key3'),
             new ValidateResult(false, 'key4', 'Invalid value type. Expected string type.'),
         ];
 
@@ -383,7 +381,6 @@ class ValidatorTest extends TestCase
     {
         $expectedSuccess         = false;
         $expectedValidateResults = [
-            new ValidateResult(true, 'key1'),
             new ValidateResult(false, 'key2', 'Invalid value type. Expected string type.'),
         ];
 
@@ -416,7 +413,6 @@ class ValidatorTest extends TestCase
     {
         $expectedSuccess         = false;
         $expectedValidateResults = [
-            new ValidateResult(true, 'key1'),
             new ValidateResult(false, 'key2', 'Invalid value type. Expected string type.'),
         ];
 
