@@ -70,8 +70,6 @@ class ValidatorTest extends TestCase
     {
         $expectedSuccess         = true;
         $expectedValidateResults = [
-            new ValidateResult(true, 'key1'),
-            new ValidateResult(true, 'key2'),
         ];
 
         $define = new ArrayDefine(
@@ -181,27 +179,6 @@ class ValidatorTest extends TestCase
     {
         $expectedSuccess         = true;
         $expectedValidateResults = [
-            // NOTE: コメントアウトされた行は記録されない想定の検証結果
-            new ValidateResult(true, 'key1'),
-            new ValidateResult(true, 'key1.key1-1'),
-            new ValidateResult(true, 'key1.key1-1.key1-1-1'),
-            new ValidateResult(true, 'key1.key1-1.key1-1-3'),
-
-            new ValidateResult(true, 'key2.key2-1'),
-            new ValidateResult(true, 'key2.key2-1.key2-1-1'),
-            new ValidateResult(true, 'key2.key2-1.key2-1-3'),
-
-            new ValidateResult(true, 'key3.key3-1.key3-1-1'),
-            new ValidateResult(true, 'key3.key3-1.key3-1-3'),
-
-            new ValidateResult(true, 'key4'),
-            new ValidateResult(true, 'key4.[0].key4-1-1'),
-            new ValidateResult(true, 'key4.[0].key4-1-3'),
-            new ValidateResult(true, 'key4.[1].key4-1-1'),
-            new ValidateResult(true, 'key4.[1].key4-1-3'),
-
-            new ValidateResult(true, 'key5.[0].key5-1-1'),
-            new ValidateResult(true, 'key5.[0].key5-1-3'),
         ];
 
         $define = new ArrayDefine(
@@ -295,8 +272,6 @@ class ValidatorTest extends TestCase
         $expectedSuccess         = false;
         $expectedValidateResults = [
             new ValidateResult(true, 'key1'),
-            new ValidateResult(true, 'key1'),
-            new ValidateResult(true, 'key2'),
             new ValidateResult(false, 'key2', 'Invalid value type. Expected string type.'),
             new ValidateResult(true, 'key3'),
             new ValidateResult(false, 'key4', 'Invalid value type. Expected string type.'),
@@ -409,7 +384,6 @@ class ValidatorTest extends TestCase
         $expectedSuccess         = false;
         $expectedValidateResults = [
             new ValidateResult(true, 'key1'),
-            new ValidateResult(true, 'key1'),
             new ValidateResult(false, 'key2', 'Invalid value type. Expected string type.'),
         ];
 
@@ -442,7 +416,6 @@ class ValidatorTest extends TestCase
     {
         $expectedSuccess         = false;
         $expectedValidateResults = [
-            new ValidateResult(true, 'key1'),
             new ValidateResult(true, 'key1'),
             new ValidateResult(false, 'key2', 'Invalid value type. Expected string type.'),
         ];
@@ -484,7 +457,6 @@ class ValidatorTest extends TestCase
          */
         $expectedSuccess         = false;
         $expectedValidateResults = [
-            new ValidateResult(true, 'key2'),
             // バリデーション定義方法2の結果
             new ValidateResult(true, 'key2.[0]'),
             new ValidateResult(false, 'key2.[1]', 'Invalid type. expected type string.'),
@@ -522,7 +494,6 @@ class ValidatorTest extends TestCase
     {
         $expectedSuccess         = true;
         $expectedValidateResults = [
-            new ValidateResult(true, 'key2'),
             new ValidateResult(true, 'key2.[0]'),
             new ValidateResult(true, 'key2.[1]'),
             new ValidateResult(true, 'key2.[2]'),
