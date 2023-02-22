@@ -131,11 +131,11 @@ class Validator
 
                         foreach ($keyValues as $key => $value) {
                             $this->arrayPath->setCurrentPath(\sprintf('[%s]', $key));
-                            $validateResult          = $this->valueValidate($execute, $value);
-                            $this->validateResults[] = $validateResult;
+                            $validateResult = $this->valueValidate($execute, $value);
 
                             if (!$validateResult->getResult()) {
-                                $oneLoopValidateResult = false;
+                                $oneLoopValidateResult   = false;
+                                $this->validateResults[] = $validateResult;
                             }
                         }
 

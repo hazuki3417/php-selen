@@ -308,12 +308,8 @@ class ValidatorTest extends TestCase
     {
         $expectedSuccess         = false;
         $expectedValidateResults = [
-            new ValidateResult(true, '[0]'),
             new ValidateResult(false, '[1]', 'Invalid value type. Values in array expected string type.'),
-            new ValidateResult(true, '[2]'),
-            new ValidateResult(true, '[3]'),
             new ValidateResult(false, '[4]', 'Invalid value type. Values in array expected string type.'),
-            new ValidateResult(true, '[5]'),
         ];
 
         $callableIsString = function ($value, $result) {
@@ -454,9 +450,7 @@ class ValidatorTest extends TestCase
         $expectedSuccess         = false;
         $expectedValidateResults = [
             // バリデーション定義方法2の結果
-            new ValidateResult(true, 'key2.[0]'),
             new ValidateResult(false, 'key2.[1]', 'Invalid type. expected type string.'),
-            new ValidateResult(true, 'key2.[2]'),
         ];
 
         $define = new ArrayDefine(
@@ -490,12 +484,6 @@ class ValidatorTest extends TestCase
     {
         $expectedSuccess         = true;
         $expectedValidateResults = [
-            new ValidateResult(true, 'key2.[0]'),
-            new ValidateResult(true, 'key2.[1]'),
-            new ValidateResult(true, 'key2.[2]'),
-            new ValidateResult(true, 'key2.[0]'),
-            new ValidateResult(true, 'key2.[1]'),
-            new ValidateResult(true, 'key2.[2]'),
         ];
 
         $callableStringPattern = function ($value, $result) {
