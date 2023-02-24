@@ -30,11 +30,6 @@ use Selen\Schema\Validate\Values\StrNotEmpty;
  *
  * @internal
  */
-/**
- * @internal
- *
- * @coversNothing
- */
 class StrNotEmptyTest extends TestCase
 {
     public function testConstruct()

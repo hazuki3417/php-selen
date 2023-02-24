@@ -30,11 +30,6 @@ use Selen\Schema\Validate\Values\ArrayNotEmpty;
  *
  * @internal
  */
-/**
- * @internal
- *
- * @coversNothing
- */
 class ArrayNotEmptyTest extends TestCase
 {
     public function testConstruct()
