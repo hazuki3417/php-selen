@@ -8,7 +8,7 @@ declare(strict_types=1);
  * @copyright 2023 hazuki3417 all rights reserved.
  */
 
-namespace Tests\Unit\Exchange\Values;
+namespace Tests\Selen\Schema\Validate\Values;
 
 use PHPUnit\Framework\TestCase;
 use Selen\Schema\Validate\Model\ValidateResult;
