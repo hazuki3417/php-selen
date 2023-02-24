@@ -13,8 +13,8 @@ use PHPUnit\Framework\TestCase;
 use Selen\Schema\Validate\ArrayDefine;
 use Selen\Schema\Validate\Define;
 use Selen\Schema\Validate\Model\ValidateResult;
+use Selen\Schema\Validate\Values\Regex;
 use Selen\Schema\Validate\Values\Type;
-use Selen\Schema\Validate\ValueValidateInterface;
 use Selen\Schema\Validator;
 
 /**
@@ -30,509 +30,677 @@ use Selen\Schema\Validator;
  * php ./vendor/bin/phpunit --group=Selen/Schema/Validator
  *
  * @internal
+ *
+ * TODO: input側のkeyをチェックする処理を実装する
+ *       noKey()を呼び出したとき > string型のkey指定をできないようにする
+ *       key()を呼び出したとき > intまたはstring型の数字をkey指定できないようにする
+ *       またこれらのテストコードを実装する
  */
 class ValidatorTest extends TestCase
 {
-    /**
-     * NOTE: 入力値と期待値の定義が複雑なため、メソッド単位でテストパターンを記載
-     *       dataProviderを使うと可読性が下がるため
-     */
-
-    /**
-     * keyのバリデーションテスト（1次元配列）
-     */
-    public function testPattern000()
+    public function dataProviderValueAndExecute()
     {
-        $expectedSuccess         = false;
-        $expectedValidateResults = [
-            new ValidateResult(false, 'key1', 'key is required.'),
-            new ValidateResult(false, 'key2', 'key is required.'),
+        return [
+            'validPattern: No validation definition' => [
+                'expected' => [
+                    'result'          => true,
+                    'validateResults' => [
+                    ],
+                ],
+                'input' => [
+                    'arrayDefine' => new ArrayDefine(
+                    ),
+                    'execute' => [
+                    ],
+                ],
+            ],
+            'validPattern: [noKey()] Validation definition using class instance' => [
+                'expected' => [
+                    'result'          => true,
+                    'validateResults' => [
+                    ],
+                ],
+                'input' => [
+                    'arrayDefine' => new ArrayDefine(
+                        Define::noKey()->value(new Type('string'))
+                    ),
+                    'execute' => [
+                        'target-string',
+                    ],
+                ],
+            ],
+            'validPattern: [noKey()] Validation definition using callback function' => [
+                'expected' => [
+                    'result'          => true,
+                    'validateResults' => [
+                    ],
+                ],
+                'input' => [
+                    'arrayDefine' => new ArrayDefine(
+                        Define::noKey()->value(function ($value, $result) {
+                            // @var Selen\Schema\Validate\Model\ValidateResult $result
+                            return \is_string($value) ?
+                                    $result->setResult(true) :
+                                    $result->setResult(false)->setMessage('Invalid type. Expected type string.');
+                        })
+                    ),
+                    'execute' => [
+                        'target-string',
+                    ],
+                ],
+            ],
+            'validPattern: [key()] Validation definition using class instance' => [
+                'expected' => [
+                    'result'          => true,
+                    'validateResults' => [
+                    ],
+                ],
+                'input' => [
+                    'arrayDefine' => new ArrayDefine(
+                        Define::key('keyName', true)->value(new Type('string'))
+                    ),
+                    'execute' => [
+                        'keyName' => 'target-string',
+                    ],
+                ],
+            ],
+            'validPattern: [key()] Validation definition using callback function' => [
+                'expected' => [
+                    'result'          => true,
+                    'validateResults' => [
+                    ],
+                ],
+                'input' => [
+                    'arrayDefine' => new ArrayDefine(
+                        Define::key('keyName', true)->value(function ($value, $result) {
+                            // @var Selen\Schema\Validate\Model\ValidateResult $result
+                            return \is_string($value) ?
+                                    $result->setResult(true) :
+                                    $result->setResult(false)->setMessage('Invalid type. Expected type string.');
+                        })
+                    ),
+                    'execute' => [
+                        'keyName' => 'target-string',
+                    ],
+                ],
+            ],
         ];
-
-        $define = new ArrayDefine(
-            Define::key('key1', true),
-            Define::key('key2', true),
-            Define::key('key3', false),
-            Define::key('key4', false)
-        );
-
-        $input = [];
-
-        $validator = Validator::new();
-        $result    = $validator->arrayDefine($define)->execute($input);
-        $this->assertValidatorClass($expectedSuccess, $expectedValidateResults, $result);
     }
 
     /**
-     * keyのバリデーションテスト（1次元配列）
-     */
-    public function testPattern001()
-    {
-        $expectedSuccess         = true;
-        $expectedValidateResults = [
-        ];
-
-        $define = new ArrayDefine(
-            Define::key('key1', true),
-            Define::key('key2', true),
-            Define::key('key3', false),
-            Define::key('key4', false)
-        );
-
-        $input = [
-            'key1' => '0',
-            'key2' => '0',
-            'key3' => '0',
-            // 'key4' => '0',
-        ];
-
-        $validator = Validator::new();
-        $result    = $validator->arrayDefine($define)->execute($input);
-        $this->assertValidatorClass($expectedSuccess, $expectedValidateResults, $result);
-    }
-
-    /**
-     * keyのバリデーションテスト（多次元配列）
+     * テスト内容
+     * - バリデーション定義なしで実行したときの挙動を確認
+     * - クラスインスタンスを使ったバリデーション定義ができること
+     * - コールバック関数を使ったバリデーション定義ができること
      *
-     * @param mixed $expectedSuccess
-     * @param mixed $expectedValidateResults
-     * @param mixed $result
-     */
-    public function testPattern010()
-    {
-        $expectedSuccess         = false;
-        $expectedValidateResults = [
-            // NOTE: コメントアウトされた行は記録されない想定の検証結果
-            new ValidateResult(false, 'key1', 'key is required.'),
-            new ValidateResult(false, 'key4', 'key is required.'),
-        ];
-
-        $define = new ArrayDefine(
-            Define::key('key1', true)->arrayDefine(
-                Define::key('key1-1', true)->arrayDefine(
-                    Define::key('key1-1-1', true),
-                    Define::key('key1-1-2', false),
-                    Define::key('key1-1-3', true)
-                )
-            ),
-            Define::key('key2', false)->arrayDefine(
-                Define::key('key2-1', true)->arrayDefine(
-                    Define::key('key2-1-1', true),
-                    Define::key('key2-1-2', false),
-                    Define::key('key2-1-3', true)
-                )
-            ),
-            Define::key('key3', false)->arrayDefine(
-                Define::key('key3-1', false)->arrayDefine(
-                    Define::key('key3-1-1', true),
-                    Define::key('key3-1-2', false),
-                    Define::key('key3-1-3', true)
-                )
-            ),
-            Define::key('key4', true)->arrayDefine(
-                Define::noKey()->arrayDefine(
-                    Define::key('key4-1-1', true),
-                    Define::key('key4-1-2', false),
-                    Define::key('key4-1-3', true)
-                )
-            ),
-            Define::key('key5', false)->arrayDefine(
-                Define::noKey()->arrayDefine(
-                    Define::key('key5-1-1', true),
-                    Define::key('key5-1-2', false),
-                    Define::key('key5-1-3', true)
-                )
-            )
-        );
-
-        $input = [];
-
-        $validator = Validator::new();
-        $result    = $validator->arrayDefine($define)->execute($input);
-        $this->assertValidatorClass($expectedSuccess, $expectedValidateResults, $result);
-    }
-
-    /**
-     * keyのバリデーションテスト（多次元配列）
+     * @dataProvider dataProviderValueAndExecute
      *
-     * @param mixed $expectedSuccess
-     * @param mixed $expectedValidateResults
-     * @param mixed $result
+     * @param mixed $expected
+     * @param mixed $input
      */
-    public function testPattern011()
+    public function testValueAndExecute($expected, $input)
     {
-        $expectedSuccess         = true;
-        $expectedValidateResults = [
-        ];
+        [
+            'result'          => $result,
+            'validateResults' => $validateResults,
+        ] = $expected;
 
-        $define = new ArrayDefine(
-            Define::key('key1', true)->arrayDefine(
-                Define::key('key1-1', true)->arrayDefine(
-                    Define::key('key1-1-1', true),
-                    Define::key('key1-1-2', false),
-                    Define::key('key1-1-3', true)
-                )
-            ),
-            Define::key('key2', false)->arrayDefine(
-                Define::key('key2-1', true)->arrayDefine(
-                    Define::key('key2-1-1', true),
-                    Define::key('key2-1-2', false),
-                    Define::key('key2-1-3', true)
-                )
-            ),
-            Define::key('key3', false)->arrayDefine(
-                Define::key('key3-1', false)->arrayDefine(
-                    Define::key('key3-1-1', true),
-                    Define::key('key3-1-2', false),
-                    Define::key('key3-1-3', true)
-                )
-            ),
-            Define::key('key4', true)->arrayDefine(
-                Define::noKey()->arrayDefine(
-                    Define::key('key4-1-1', true),
-                    Define::key('key4-1-2', false),
-                    Define::key('key4-1-3', true)
-                )
-            ),
-            Define::key('key5', false)->arrayDefine(
-                Define::noKey()->arrayDefine(
-                    Define::key('key5-1-1', true),
-                    Define::key('key5-1-2', false),
-                    Define::key('key5-1-3', true)
-                )
-            )
-        );
+        [
+            'arrayDefine' => $arrayDefine,
+            'execute'     => $execute,
+        ] = $input;
 
-        $input = [
-            'key1' => [
-                'key1-1' => [
-                    'key1-1-1' => 0,
-                    'key1-1-2' => 0,
-                    'key1-1-3' => 0,
+        $validator    = Validator::new();
+        $actualResult = $validator->arrayDefine($arrayDefine)->execute($execute);
+        $this->assertValidatorClass($result, $validateResults, $actualResult);
+    }
+
+    public function dataProviderOneDimensionalArrayWithNoKey()
+    {
+        $valStr    = new Type('string');
+        $valStrNum = new Regex('^[0-9]+$');
+
+        return [
+            'validPattern: No validation definition' => [
+                'expected' => [
+                    'result'          => true,
+                    'validateResults' => [
+                    ],
+                ],
+                'input' => [
+                    'arrayDefine' => new ArrayDefine(
+                        Define::noKey()
+                    ),
+                    'execute' => [
+                        'keyName' => 'target-string',
+                    ],
                 ],
             ],
-            'key2' => [
-                'key2-1' => [
-                    'key2-1-1' => 0,
-                    'key2-1-3' => 0,
+            'validPattern: call the value function with no arguments' => [
+                'expected' => [
+                    'result'          => true,
+                    'validateResults' => [
+                    ],
+                ],
+                'input' => [
+                    'arrayDefine' => new ArrayDefine(
+                        Define::noKey()->value()
+                    ),
+                    'execute' => [
+                        'keyName' => 'target-string',
+                    ],
                 ],
             ],
-            'key3' => [
-                'key3-1' => [
-                    'key3-1-1' => 0,
-                    'key3-1-2' => 0,
-                    'key3-1-3' => 0,
+
+            /**
+             * 値バリデーションが1つのときのテスト
+             */
+            'validPattern: one value validation (one element, one type)' => [
+                'expected' => [
+                    'result'          => true,
+                    'validateResults' => [
+                    ],
+                ],
+                'input' => [
+                    'arrayDefine' => new ArrayDefine(
+                        Define::noKey()->value($valStr)
+                    ),
+                    'execute' => [
+                        'target-string',
+                    ],
                 ],
             ],
-            'key4' => [
-                [
-                    'key4-1-1' => 0,
-                    'key4-1-3' => 0,
+            'invalidPattern: one value validation (one element, one type)' => [
+                'expected' => [
+                    'result'          => false,
+                    'validateResults' => [
+                        new ValidateResult(false, '[0]', 'Invalid type. Expected type string.'),
+                    ],
                 ],
-                [
-                    'key4-1-1' => 0,
-                    'key4-1-3' => 0,
+                'input' => [
+                    'arrayDefine' => new ArrayDefine(
+                        Define::noKey()->value($valStr)
+                    ),
+                    'execute' => [
+                        1,
+                    ],
                 ],
             ],
-            'key5' => [
-                [
-                    'key5-1-1' => 0,
-                    'key5-1-2' => 0,
-                    'key5-1-3' => 0,
+            'validPattern: one value validation (multiple element, one type)' => [
+                'expected' => [
+                    'result'          => true,
+                    'validateResults' => [
+                    ],
+                ],
+                'input' => [
+                    'arrayDefine' => new ArrayDefine(
+                        Define::noKey()->value($valStr)
+                    ),
+                    'execute' => [
+                        'target-string1',
+                        'target-string2',
+                    ],
+                ],
+            ],
+
+            'invalidPattern: one value validation (multiple element, one type)' => [
+                'expected' => [
+                    'result'          => false,
+                    'validateResults' => [
+                        new ValidateResult(false, '[0]', 'Invalid type. Expected type string.'),
+                        new ValidateResult(false, '[1]', 'Invalid type. Expected type string.'),
+                    ],
+                ],
+                'input' => [
+                    'arrayDefine' => new ArrayDefine(
+                        Define::noKey()->value($valStr)
+                    ),
+                    'execute' => [
+                        1,
+                        2,
+                    ],
+                ],
+            ],
+            'invalidPattern: one value validation (multiple element, multiple types)' => [
+                'expected' => [
+                    'result'          => false,
+                    'validateResults' => [
+                        new ValidateResult(false, '[1]', 'Invalid type. Expected type string.'),
+                    ],
+                ],
+                'input' => [
+                    'arrayDefine' => new ArrayDefine(
+                        Define::noKey()->value($valStr)
+                    ),
+                    'execute' => [
+                        'target-string1',
+                        2,
+                    ],
+                ],
+            ],
+
+            /**
+             * 値のバリデーションが複数のときのテスト
+             */
+            'validPattern: multiple validations (one element)' => [
+                'expected' => [
+                    'result'          => true,
+                    'validateResults' => [
+                    ],
+                ],
+                'input' => [
+                    'arrayDefine' => new ArrayDefine(
+                        Define::noKey()->value($valStr, $valStrNum)
+                    ),
+                    'execute' => [
+                        '12345',
+                    ],
+                ],
+            ],
+            'validPattern: multiple validations (multiple element）' => [
+                'expected' => [
+                    'result'          => true,
+                    'validateResults' => [
+                    ],
+                ],
+                'input' => [
+                    'arrayDefine' => new ArrayDefine(
+                        Define::noKey()->value($valStr, $valStrNum)
+                    ),
+                    'execute' => [
+                        '12345',
+                        '67890',
+                    ],
+                ],
+            ],
+            /**
+             * NOTE: 下記の内容を確認
+             *       - 1つめのバリデーションチェックが不合格となった場合、控えているバリデーションチェック行われないこと
+             */
+            'invalidPattern: multiple validations (one element, failed the first)' => [
+                'expected' => [
+                    'result'          => false,
+                    'validateResults' => [
+                        new ValidateResult(false, '[0]', 'Invalid type. Expected type string.'),
+                    ],
+                ],
+                'input' => [
+                    'arrayDefine' => new ArrayDefine(
+                        Define::noKey()->value($valStr, $valStrNum)
+                    ),
+                    'execute' => [
+                        1,
+                    ],
+                ],
+            ],
+            /**
+             * NOTE: 下記の内容を確認
+             *       - 配列要素分のバリデーションチェックが行われること
+             *       - 1要素の中で1つめのバリデーションチェックが不合格となった場合、控えているバリデーションチェック行われないこと
+             */
+            'invalidPattern: multiple validations (multiple element, failed the first)' => [
+                'expected' => [
+                    'result'          => false,
+                    'validateResults' => [
+                        new ValidateResult(false, '[0]', 'Invalid type. Expected type string.'),
+                        new ValidateResult(false, '[1]', 'Invalid type. Expected type string.'),
+                    ],
+                ],
+                'input' => [
+                    'arrayDefine' => new ArrayDefine(
+                        Define::noKey()->value($valStr, $valStrNum)
+                    ),
+                    'execute' => [
+                        1,
+                        3,
+                    ],
+                ],
+            ],
+            /**
+             * NOTE: 下記の内容を確認
+             *       - 1つめのバリデーションチェックが合格となった場合、2つめのバリデーションチェックが動くこと
+             */
+            'invalidPattern: multiple validations (one element, failed on the second)' => [
+                'expected' => [
+                    'result'          => false,
+                    'validateResults' => [
+                        new ValidateResult(false, '[0]', 'Invalid value. Expected value ^[0-9]+$.'),
+                    ],
+                ],
+                'input' => [
+                    'arrayDefine' => new ArrayDefine(
+                        Define::noKey()->value($valStr, $valStrNum)
+                    ),
+                    'execute' => [
+                        '12a45',
+                    ],
+                ],
+            ],
+            /**
+             * NOTE: 下記の内容を確認
+             *       - 配列要素分のバリデーションチェックが行われること
+             *       - 1要素の中で1つめのバリデーションチェックが合格となった場合、2つめのバリデーションチェックが動くこと
+             */
+            'invalidPattern: multiple validations (multiple element, failed on the second)' => [
+                'expected' => [
+                    'result'          => false,
+                    'validateResults' => [
+                        new ValidateResult(false, '[0]', 'Invalid value. Expected value ^[0-9]+$.'),
+                        new ValidateResult(false, '[1]', 'Invalid value. Expected value ^[0-9]+$.'),
+                    ],
+                ],
+                'input' => [
+                    'arrayDefine' => new ArrayDefine(
+                        Define::noKey()->value($valStr, $valStrNum)
+                    ),
+                    'execute' => [
+                        '123a5',
+                        '67b90',
+                    ],
+                ],
+            ],
+            /**
+             * NOTE: 下記の内容を確認
+             *       - input側で要素番号または要素名が指定されても動くこと（TODO: 仕様検討が必要）
+             */
+            'validPattern: Test if there is a key specification in the input array (key is int)' => [
+                'expected' => [
+                    'result'          => true,
+                    'validateResults' => [
+                    ],
+                ],
+                'input' => [
+                    'arrayDefine' => new ArrayDefine(
+                        Define::noKey()->value($valStr)
+                    ),
+                    'execute' => [
+                        1 => 'target-string',
+                    ],
+                ],
+            ],
+            /**
+             * NOTE: 下記の内容を確認
+             *       - input側で要素番号または要素名が指定されても動くこと（TODO: 仕様検討が必要）
+             */
+            'validPattern: Test if there is a key specification in the input array (key is string number)' => [
+                'expected' => [
+                    'result'          => true,
+                    'validateResults' => [
+                    ],
+                ],
+                'input' => [
+                    'arrayDefine' => new ArrayDefine(
+                        Define::noKey()->value($valStr)
+                    ),
+                    'execute' => [
+                        '1' => 'target-string',
+                    ],
+                ],
+            ],
+            /**
+             * NOTE: 下記の内容を確認
+             *       - input側で要素番号または要素名が指定されても動くこと（TODO: 仕様検討が必要）
+             */
+            'validPattern: Test if there is a key specification in the input array (key is string)' => [
+                'expected' => [
+                    'result'          => true,
+                    'validateResults' => [
+                    ],
+                ],
+                'input' => [
+                    'arrayDefine' => new ArrayDefine(
+                        Define::noKey()->value($valStr)
+                    ),
+                    'execute' => [
+                        'keyName' => 'target-string',
+                    ],
+                ],
+            ],
+            /**
+             * NOTE: 下記の内容を確認
+             *       - input側で要素番号または要素名が指定されても動くこと（TODO: 仕様検討が必要）
+             *       - バリデーション不合格となった値のパスはinput側の値が利用されていること
+             */
+            'invalidPattern: Test if there is a key specification in the input array (key is int)' => [
+                'expected' => [
+                    'result'          => false,
+                    'validateResults' => [
+                        new ValidateResult(false, '[1]', 'Invalid type. Expected type string.'),
+                    ],
+                ],
+                'input' => [
+                    'arrayDefine' => new ArrayDefine(
+                        Define::noKey()->value($valStr)
+                    ),
+                    'execute' => [
+                        1 => true,
+                    ],
+                ],
+            ],
+            /**
+             * NOTE: 下記の内容を確認
+             *       - input側で要素番号または要素名が指定されても動くこと（TODO: 仕様検討が必要）
+             *       - バリデーション不合格となった値のパスはinput側の値が利用されていること
+             */
+            'invalidPattern: Test if there is a key specification in the input array (key is string number)' => [
+                'expected' => [
+                    'result'          => false,
+                    'validateResults' => [
+                        new ValidateResult(false, '[1]', 'Invalid type. Expected type string.'),
+                    ],
+                ],
+                'input' => [
+                    'arrayDefine' => new ArrayDefine(
+                        Define::noKey()->value($valStr)
+                    ),
+                    'execute' => [
+                        '1' => true,
+                    ],
+                ],
+            ],
+            /**
+             * NOTE: 下記の内容を確認
+             *       - input側で要素番号または要素名が指定されても動くこと（TODO: 仕様検討が必要）
+             *       - バリデーション不合格となった値のパスはinput側の値が利用されていること
+             */
+            'invalidPattern: Test if there is a key specification in the input array (key is string)' => [
+                'expected' => [
+                    'result'          => false,
+                    'validateResults' => [
+                        new ValidateResult(false, '[keyName]', 'Invalid type. Expected type string.'),
+                    ],
+                ],
+                'input' => [
+                    'arrayDefine' => new ArrayDefine(
+                        Define::noKey()->value($valStr)
+                    ),
+                    'execute' => [
+                        'keyName' => true,
+                    ],
                 ],
             ],
         ];
-
-        $validator = Validator::new();
-        $result    = $validator->arrayDefine($define)->execute($input);
-        $this->assertValidatorClass($expectedSuccess, $expectedValidateResults, $result);
     }
 
     /**
-     * 値のバリデーションテスト（1次元配列）
+     * テスト内容
+     * - noKey()を使用した一次元配列の定義パターンをテスト
+     *
+     * @dataProvider dataProviderOneDimensionalArrayWithNoKey
+     *
+     * @param mixed $expected
+     * @param mixed $input
      */
-    public function testPattern100()
+    public function testOneDimensionalArrayWithNoKey($expected, $input)
     {
-        $expectedSuccess         = false;
-        $expectedValidateResults = [
-            new ValidateResult(false, 'key2', 'Invalid value type. Expected string type.'),
-            new ValidateResult(false, 'key4', 'Invalid value type. Expected string type.'),
-        ];
+        [
+            'result'          => $result,
+            'validateResults' => $validateResults,
+        ] = $expected;
 
-        $callableIsString = function ($value, $result) {
-            // @var Selen\Schema\Validate\Model\ValidateResult $result
-            return \is_string($value) ?
-                    $result->setResult(true) :
-                    $result->setResult(false)->setMessage('Invalid value type. Expected string type.');
-        };
+        [
+            'arrayDefine' => $arrayDefine,
+            'execute'     => $execute,
+        ] = $input;
 
-        $define = new ArrayDefine(
-            Define::key('key1', true)->value($callableIsString),
-            Define::key('key2', true)->value($callableIsString),
-            Define::key('key3', false)->value($callableIsString),
-            Define::key('key4', false)->value($callableIsString)
-        );
-
-        $input = [
-            'key1' => 'string',
-            'key2' => 0,
-            'key3' => 'string',
-            'key4' => 0,
-        ];
-
-        $validator = Validator::new();
-        $result    = $validator->arrayDefine($define)->execute($input);
-        $this->assertValidatorClass($expectedSuccess, $expectedValidateResults, $result);
+        $validator    = Validator::new();
+        $actualResult = $validator->arrayDefine($arrayDefine)->execute($execute);
+        $this->assertValidatorClass($result, $validateResults, $actualResult);
     }
 
-    /**
-     * 値のバリデーションテスト（1次元配列）
-     */
-    public function testPattern101()
+    public function dataProviderOneDimensionalArrayWithKey()
     {
-        $expectedSuccess         = false;
-        $expectedValidateResults = [
-            new ValidateResult(false, '[1]', 'Invalid value type. Values in array expected string type.'),
-            new ValidateResult(false, '[4]', 'Invalid value type. Values in array expected string type.'),
-        ];
+        $valStr    = new Type('string');
+        $valStrNum = new Regex('^[0-9]+$');
 
-        $callableIsString = function ($value, $result) {
-            // @var array $value
-            // @var Selen\Schema\Validate\Model\ValidateResult $result
-            return \is_string($value) ?
-                    $result->setResult(true) :
-                    $result->setResult(false)->setMessage('Invalid value type. Values in array expected string type.');
-        };
+        return [
+            'validPattern: no key validation (one key)' => [
+                'expected' => [
+                    'result'          => true,
+                    'validateResults' => [
+                    ],
+                ],
+                'input' => [
+                    'arrayDefine' => new ArrayDefine(
+                        Define::key('keyName', false),
+                    ),
+                    'execute' => [
+                        'key' => 'target-string',
+                    ],
+                ],
+            ],
+            'validPattern: with key validation (one key)' => [
+                'expected' => [
+                    'result'          => true,
+                    'validateResults' => [
+                    ],
+                ],
+                'input' => [
+                    'arrayDefine' => new ArrayDefine(
+                        Define::key('keyName', true)
+                    ),
+                    'execute' => [
+                        'keyName' => 'target-string',
+                    ],
+                ],
+            ],
+            'invalidPattern: with key validation (one key)' => [
+                'expected' => [
+                    'result'          => false,
+                    'validateResults' => [
+                        new ValidateResult(false, 'keyName', 'key is required.'),
+                    ],
+                ],
+                'input' => [
+                    'arrayDefine' => new ArrayDefine(
+                        Define::key('keyName', true)
+                    ),
+                    'execute' => [
+                        'key' => 'target-string',
+                    ],
+                ],
+            ],
 
-        $define = new ArrayDefine(
-            Define::noKey()->value($callableIsString)
-        );
-
-        $input = [
-            'string0',
-            0,
-            'string2',
-            'string3',
-            true,
-            'string5',
-        ];
-
-        $validator = Validator::new();
-        $result    = $validator->arrayDefine($define)->execute($input);
-        $this->assertValidatorClass($expectedSuccess, $expectedValidateResults, $result);
-    }
-
-    /**
-     * 値のバリデーションテスト（1次元配列）定義は存在するが、定義に対応するinput値が存在しないケース
-     */
-    public function testPattern102()
-    {
-        $expectedSuccess         = false;
-        $expectedValidateResults = [
-            new ValidateResult(false, 'key1', 'key is required.'),
-            // new ValidateResult(false, 'key2', 'Invalid value type. Expected string type.'),
-        ];
-
-        $callableIsString = function ($value, $result) {
-            // @var Selen\Schema\Validate\Model\ValidateResult $result
-            return \is_string($value) ?
-                    $result->setResult(true) :
-                    $result->setResult(false)->setMessage('Invalid value type. Expected string type.');
-        };
-
-        $define = new ArrayDefine(
-            Define::key('key1', true)->value($callableIsString),
-            Define::key('key2', false)->value($callableIsString)
-        );
-
-        $input = [
-            // 'key2' => 0
-        ];
-
-        $validator = Validator::new();
-        $result    = $validator->arrayDefine($define)->execute($input);
-        $this->assertValidatorClass($expectedSuccess, $expectedValidateResults, $result);
-    }
-
-    /**
-     * 値のバリデーションテスト（1次元配列）定義は存在し、定義に対応するinput値が存在するケース
-     */
-    public function testPattern103()
-    {
-        $expectedSuccess         = false;
-        $expectedValidateResults = [
-            new ValidateResult(false, 'key2', 'Invalid value type. Expected string type.'),
-        ];
-
-        $callableIsString = function ($value, $result) {
-            // @var Selen\Schema\Validate\Model\ValidateResult $result
-            return \is_string($value) ?
-                    $result->setResult(true) :
-                    $result->setResult(false)->setMessage('Invalid value type. Expected string type.');
-        };
-
-        $define = new ArrayDefine(
-            Define::key('key1', true)->value($callableIsString),
-            Define::key('key2', false)->value($callableIsString)
-        );
-
-        $input = [
-            'key1' => 'string',
-            'key2' => 0,
-        ];
-
-        $validator = Validator::new();
-        $result    = $validator->arrayDefine($define)->execute($input);
-        $this->assertValidatorClass($expectedSuccess, $expectedValidateResults, $result);
-    }
-
-    /**
-     * 値のバリデーションテスト（1次元配列）interfaceを使用した値バリデーション実装
-     */
-    public function testPattern104()
-    {
-        $expectedSuccess         = false;
-        $expectedValidateResults = [
-            new ValidateResult(false, 'key2', 'Invalid value type. Expected string type.'),
-        ];
-
-        $validateResultStub1 = new ValidateResult(true, 'key1');
-        $validateResultStub2 = new ValidateResult(false, 'key2', 'Invalid value type. Expected string type.');
-
-        $valueValidateStub1 = $this->createStub(ValueValidateInterface::class);
-        $valueValidateStub1->method('execute')->willReturn($validateResultStub1);
-
-        $valueValidateStub2 = $this->createStub(ValueValidateInterface::class);
-        $valueValidateStub2->method('execute')->willReturn($validateResultStub2);
-
-        $define = new ArrayDefine(
-            Define::key('key1', true)->value($valueValidateStub1),
-            Define::key('key2', false)->value($valueValidateStub2)
-        );
-
-        $input = [
-            'key1' => 'string',
-            'key2' => 0,
-        ];
-
-        $validator = Validator::new();
-        $result    = $validator->arrayDefine($define)->execute($input);
-        $this->assertValidatorClass($expectedSuccess, $expectedValidateResults, $result);
-    }
-
-    /**
-     * 値のバリデーションテスト（配列要素のバリデーションパターン1）
-     */
-    public function testPattern105()
-    {
-        /**
-         * NOTE: 配列要素内の値バリデーション定義方法は2通りあります
-         *       1. 配列を受け取れるバリデーションクラス or callable処理を実装する
-         *       2. noKeyを定義し、noKeyのバリデーション定義にリテラル値を受け取れるバリデーションクラス or callableを実装する
-         *          違いはバリデーション位置の詳細度が変わるだけ。（1より2のほうが詳細）
-         */
-        $expectedSuccess         = false;
-        $expectedValidateResults = [
-            // バリデーション定義方法2の結果
-            new ValidateResult(false, 'key2.[1]', 'Invalid type. Expected type string.'),
-        ];
-
-        $define = new ArrayDefine(
-            Define::key('key2', true)->arrayDefine(
-                /**
-                 * NOTE: noKeyを指定した場合、バリデーションメソッド（execute,callableの第一引数）に渡される値は
-                 *       配列要素の値。配列まるごと渡されるわけではないので注意。
-                 */
-                Define::noKey()->value(new Type('string'))
-            )
-        );
-
-        $input = [
-            'key2' => [
-                'value1',
-                0,
-                'value3',
+            'validPattern: do not verify multiple keys (multiple key)' => [
+                'expected' => [
+                    'result'          => true,
+                    'validateResults' => [
+                    ],
+                ],
+                'input' => [
+                    'arrayDefine' => new ArrayDefine(
+                        Define::key('keyName1', false),
+                        Define::key('keyName2', false),
+                    ),
+                    'execute' => [
+                        'key1' => 'target-string',
+                        'key2' => 'target-string',
+                    ],
+                ],
+            ],
+            'validPattern: Validate multiple keys (multiple key)' => [
+                'expected' => [
+                    'result'          => true,
+                    'validateResults' => [
+                    ],
+                ],
+                'input' => [
+                    'arrayDefine' => new ArrayDefine(
+                        Define::key('keyName1', true),
+                        Define::key('keyName2', true),
+                    ),
+                    'execute' => [
+                        'keyName1' => 'target-string',
+                        'keyName2' => 'target-string',
+                    ],
+                ],
+            ],
+            'invalidPattern: Validate multiple keys (multiple key)' => [
+                'expected' => [
+                    'result'          => false,
+                    'validateResults' => [
+                        new ValidateResult(false, 'keyName1', 'key is required.'),
+                        new ValidateResult(false, 'keyName2', 'key is required.'),
+                    ],
+                ],
+                'input' => [
+                    'arrayDefine' => new ArrayDefine(
+                        Define::key('keyName1', true),
+                        Define::key('keyName2', true),
+                    ),
+                    'execute' => [
+                        'key1' => 'target-string',
+                        'key2' => 'target-string',
+                    ],
+                ],
+            ],
+            'invalidPattern: Mixed with and without key verification (multiple key)' => [
+                'expected' => [
+                    'result'          => false,
+                    'validateResults' => [
+                        new ValidateResult(false, 'keyName2', 'key is required.'),
+                    ],
+                ],
+                'input' => [
+                    'arrayDefine' => new ArrayDefine(
+                        Define::key('keyName1', false),
+                        Define::key('keyName2', true),
+                    ),
+                    'execute' => [
+                        'key1' => 'target-string',
+                        'key2' => 'target-string',
+                    ],
+                ],
             ],
         ];
-
-        $validator = Validator::new();
-        $result    = $validator->arrayDefine($define)->execute($input);
-        $this->assertValidatorClass($expectedSuccess, $expectedValidateResults, $result);
     }
 
     /**
-     * 値のバリデーションテスト（複数のバリデーション指定）
+     * テスト内容
+     * - key()を使用した一次元配列の定義パターンをテスト
+     *
+     * @dataProvider dataProviderOneDimensionalArrayWithKey
+     *
+     * @group verify2
+     *
+     * @param mixed $expected
+     * @param mixed $input
      */
-    public function testPattern106()
+    public function testOneDimensionalArrayWithKey($expected, $input)
     {
-        $expectedSuccess         = true;
-        $expectedValidateResults = [
-        ];
+        [
+            'result'          => $result,
+            'validateResults' => $validateResults,
+        ] = $expected;
 
-        $callableStringPattern = function ($value, $result) {
-            /** @var \Selen\Schema\Validate\Model\ValidateResult $result */
-            return \preg_match('/[\d]{3}-[\d]{4}/', $value) ?
-                    $result->setResult(true) :
-                    $result->setResult(false)->setMessage("Invalid value format. Expected pattern '/[\\d]{3}-[\\d]{4}/'.");
-        };
+        [
+            'arrayDefine' => $arrayDefine,
+            'execute'     => $execute,
+        ] = $input;
 
-        $define = new ArrayDefine(
-            Define::key('key2', true)->arrayDefine(
-                Define::noKey()->value(new Type('string'), $callableStringPattern)
-            )
-        );
-
-        $input = [
-            'key2' => [
-                '000-0000',
-                '000-0001',
-                '000-0002',
-            ],
-        ];
-
-        $validator = Validator::new();
-        $result    = $validator->arrayDefine($define)->execute($input);
-        $this->assertValidatorClass($expectedSuccess, $expectedValidateResults, $result);
-    }
-
-    /**
-     * @group verify
-     * 値のバリデーションテスト（複数のバリデーション指定）
-     */
-    public function testPattern107()
-    {
-        $expectedSuccess         = true;
-        $expectedValidateResults = [
-        ];
-
-        $define = new ArrayDefine(
-            Define::noKey()->value()
-                ->arrayDefine(
-                    Define::noKey()->value(new Type('string'))
-                )
-        );
-        // $define = new ArrayDefine(
-        //     Define::key('parent', true)->value()
-        //         ->arrayDefine(
-        //             Define::noKey()->value(new Type('string'))
-        //         )
-        // );
-
-        $input = [
-            [
-                'aaaa',
-                'aaaa',
-            ],
-            // 'parent' => [
-            //     '000-0000',
-            //     '000-0001',
-            //     '000-0002',
-            // ],
-        ];
-
-        $validator = Validator::new();
-        $result    = $validator->arrayDefine($define)->execute($input);
-        $this->assertValidatorClass($expectedSuccess, $expectedValidateResults, $result);
+        $validator    = Validator::new();
+        $actualResult = $validator->arrayDefine($arrayDefine)->execute($execute);
+        $this->assertValidatorClass($result, $validateResults, $actualResult);
     }
 
     /**
