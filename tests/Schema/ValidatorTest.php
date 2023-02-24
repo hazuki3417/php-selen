@@ -104,23 +104,7 @@ class ValidatorTest extends TestCase
         $expectedValidateResults = [
             // NOTE: コメントアウトされた行は記録されない想定の検証結果
             new ValidateResult(false, 'key1', 'key is required.'),
-            new ValidateResult(false, 'key1.key1-1', 'key is required.'),
-            new ValidateResult(false, 'key1.key1-1.key1-1-1', 'key is required.'),
-            new ValidateResult(false, 'key1.key1-1.key1-1-3', 'key is required.'),
-
-            new ValidateResult(false, 'key2.key2-1', 'key is required.'),
-            new ValidateResult(false, 'key2.key2-1.key2-1-1', 'key is required.'),
-            new ValidateResult(false, 'key2.key2-1.key2-1-3', 'key is required.'),
-
-            new ValidateResult(false, 'key3.key3-1.key3-1-1', 'key is required.'),
-            new ValidateResult(false, 'key3.key3-1.key3-1-3', 'key is required.'),
-
             new ValidateResult(false, 'key4', 'key is required.'),
-            new ValidateResult(false, 'key4.[0].key4-1-1', 'key is required.'),
-            new ValidateResult(false, 'key4.[0].key4-1-3', 'key is required.'),
-
-            new ValidateResult(false, 'key5.[0].key5-1-1', 'key is required.'),
-            new ValidateResult(false, 'key5.[0].key5-1-3', 'key is required.'),
         ];
 
         $define = new ArrayDefine(
@@ -504,6 +488,46 @@ class ValidatorTest extends TestCase
                 '000-0001',
                 '000-0002',
             ],
+        ];
+
+        $validator = Validator::new();
+        $result    = $validator->arrayDefine($define)->execute($input);
+        $this->assertValidatorClass($expectedSuccess, $expectedValidateResults, $result);
+    }
+
+    /**
+     * @group verify
+     * 値のバリデーションテスト（複数のバリデーション指定）
+     */
+    public function testPattern107()
+    {
+        $expectedSuccess         = true;
+        $expectedValidateResults = [
+        ];
+
+        $define = new ArrayDefine(
+            Define::noKey()->value()
+                ->arrayDefine(
+                    Define::noKey()->value(new Type('string'))
+                )
+        );
+        // $define = new ArrayDefine(
+        //     Define::key('parent', true)->value()
+        //         ->arrayDefine(
+        //             Define::noKey()->value(new Type('string'))
+        //         )
+        // );
+
+        $input = [
+            [
+                'aaaa',
+                'aaaa',
+            ],
+            // 'parent' => [
+            //     '000-0000',
+            //     '000-0001',
+            //     '000-0002',
+            // ],
         ];
 
         $validator = Validator::new();

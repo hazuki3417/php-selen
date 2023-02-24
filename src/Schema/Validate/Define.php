@@ -165,7 +165,7 @@ class Define
      */
     public function isValueValidate(): bool
     {
-        return $this->valueValidateExecutes !== null && $this->arrayDefine === null;
+        return $this->valueValidateExecutes !== null;
     }
 
     /**
@@ -175,6 +175,6 @@ class Define
      */
     public function nestedTypeDefineExists(): bool
     {
-        return $this->valueValidateExecutes === null && $this->arrayDefine !== null;
+        return $this->arrayDefine !== null;
     }
 }

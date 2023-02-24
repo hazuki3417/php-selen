@@ -98,15 +98,24 @@ class Validator
                 if (!$validateResult->getResult()) {
                     // 失敗したときのみ結果を保持する
                     $this->validateResults[] = $validateResult;
+                    continue;
                 }
+            }
+
+            if ($this->isUndefinedArrayKey($define, $input)) {
+                // keyの検証が不要で、input側にkeyがないときに実行される処理
+                continue;
             }
 
             if ($define->isValueValidate()) {
                 // valueの検証処理
-                if ($this->isSkipValueValidate($define, $input)) {
-                    continue;
-                }
 
+                /**
+                 * TODO: 先にisAssocArrayDefine(),isIndexArrayDefine()を判定し、その後にループしたら判定する数が減りそう
+                 * TODO: バリデーションの処理順を統一する。x軸を型定義、y軸を配列の要素名として説明（2次元配列をイメージ）
+                 *       isAssocArrayDefine(): x軸を先に処理してから、y軸を処理する
+                 *       isIndexArrayDefine(): y軸を処理してから、x軸を処理する
+                 */
                 // 値バリデーションのループ（値のバリデーションは複数指定可能）
                 foreach ($define->valueValidateExecutes as $execute) {
                     if ($define->isAssocArrayDefine()) {
@@ -147,25 +156,28 @@ class Validator
                         continue;
                     }
                 }
-                continue;
             }
 
+            /**
+             * TODO: Define::key()で配列要素名を指定するときに数値または数字のkey名を指定できるか確認
+             *       指定できる場合は、指定できないようにしたほうがよいかを含めて検討する（それ次第で下記の実装が変わる）
+             */
             if ($define->nestedTypeDefineExists()) {
                 // ネストされた定義なら再帰処理を行う
-                $passRecursionInput = [];
-
                 if ($define->isAssocArrayDefine()) {
-                    if (\array_key_exists($define->key->getName(), $input)) {
-                        $passRecursionInput = $input[$define->key->getName()];
+                    $passRecursionInput = $input[$define->key->getName()];
+                    // 値が配列以外の場合は値のバリデーションエラーとする。（ネストされた定義 = 配列形式のため）
+                    if (!\is_array($passRecursionInput)) {
+                        // keyは存在するが、値が配列型以外の場合はエラーとする
+                        $this->validateResults[] = new ValidateResult(
+                            false,
+                            $this->getArrayPathStr(),
+                            'Invalid value. Expecting a value of assoc array type.'
+                        );
+                        continue;
                     }
 
-                    /**
-                     * keyに対応する値が配列以外の場合は、値の形式が不正。
-                     * そのため空配列を渡して処理を継続させる。
-                     * ネストされた定義 = inputの値は配列形式を期待している
-                     */
-                    $passRecursionInput = \is_array($passRecursionInput)
-                        ? $passRecursionInput : [];
+                    // keyが存在する + 値が配列型なら再帰処理する
                     $this->defineRoutine(
                         $passRecursionInput,
                         $define->arrayDefine
@@ -174,11 +186,23 @@ class Validator
 
                 if ($define->isIndexArrayDefine()) {
                     // NOTE: inputが空の場合は検証処理を実行するために2次元配列を返す
-                    $passRecursionInput = $input === [] ? [[]] : $input;
+                    $items = $input === [] ? [[]] : $input;
 
-                    foreach ($passRecursionInput as $index => $item) {
+                    foreach ($items as $index => $item) {
                         $path = \sprintf('[%s]', $index);
                         $this->arrayPath->setCurrentPath($path);
+
+                        $isNoKeyArrayDefineFormat = \is_numeric($index) && \is_array($item);
+
+                        // indexを数値または数字文字列以外を指定している場合はエラーとする
+                        if (!$isNoKeyArrayDefineFormat) {
+                            $this->validateResults[] = new ValidateResult(
+                                false,
+                                $this->getArrayPathStr(),
+                                'Invalid value. Expecting a value of index array type.'
+                            );
+                            continue;
+                        }
                         $this->defineRoutine(
                             $item,
                             $define->arrayDefine
@@ -191,18 +215,19 @@ class Validator
     }
 
     /**
-     * 値のバリデーション処理をスキップするかどうか確認します
+     * 定義されたkeyが入力側に存在しないかどうか確認します
      *
      * @param \Selen\Schema\Validator\Define $define
      *
-     * @return bool スキップする場合はtrueを、それ以外の場合はfalseを返します
+     * @return bool 存在しない場合はtrueを、それ以外の場合はfalseを返します
      */
-    private function isSkipValueValidate(Define $define, array $input): bool
+    private function isUndefinedArrayKey(Define $define, array $input): bool
     {
         // NOTE: 定義側のkey名はnullを許容していない。nullのときはindex array定義なので検証は必要
         if ($define->key->getName() === null) {
             return false;
         }
+        // 定義したkeyがinput側に存在しない場合、要素参照するとUndefinedが発生するため検証は不要
         return !array_key_exists($define->key->getName(), $input);
     }
 
