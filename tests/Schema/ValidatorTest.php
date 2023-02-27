@@ -54,7 +54,7 @@ class ValidatorTest extends TestCase
                     ],
                 ],
             ],
-            'validPattern: [noKey()] Validation definition using class instance' => [
+            'validPattern: [noKey()->arrayDefine()] Validation definition using class instance' => [
                 'expected' => [
                     'result'          => true,
                     'validateResults' => [
@@ -69,7 +69,7 @@ class ValidatorTest extends TestCase
                     ],
                 ],
             ],
-            'validPattern: [noKey()] Validation definition using callback function' => [
+            'validPattern: [noKey()->arrayDefine()] Validation definition using callback function' => [
                 'expected' => [
                     'result'          => true,
                     'validateResults' => [
@@ -956,7 +956,7 @@ class ValidatorTest extends TestCase
             /**
              * 要素配列定義に->arrayDefine()を呼び出したときの動作を確認する
              */
-            'validPattern: [noKey()] no data' => [
+            'validPattern: [noKey()->arrayDefine()] no data' => [
                 'expected' => [
                     'result'          => true,
                     'validateResults' => [
@@ -970,7 +970,7 @@ class ValidatorTest extends TestCase
                     ],
                 ],
             ],
-            'validPattern: [noKey()] one element, value type is array' => [
+            'validPattern: [noKey()->arrayDefine()] one element, value type is array' => [
                 'expected' => [
                     'result'          => true,
                     'validateResults' => [
@@ -985,7 +985,7 @@ class ValidatorTest extends TestCase
                     ],
                 ],
             ],
-            'invalidPattern: [noKey()] one element, value type is string' => [
+            'invalidPattern: [noKey()->arrayDefine()] one element, value type is string' => [
                 'expected' => [
                     'result'          => false,
                     'validateResults' => [
@@ -1001,7 +1001,7 @@ class ValidatorTest extends TestCase
                     ],
                 ],
             ],
-            'invalidPattern: [noKey()] one element, key is assoc array type' => [
+            'invalidPattern: [noKey()->arrayDefine()] one element, key is assoc array type' => [
                 'expected' => [
                     'result'          => false,
                     'validateResults' => [
@@ -1017,7 +1017,7 @@ class ValidatorTest extends TestCase
                     ],
                 ],
             ],
-            'validPattern: [noKey()] multiple elements, value type is array' => [
+            'validPattern: [noKey()->arrayDefine()] multiple elements, value type is array' => [
                 'expected' => [
                     'result'          => true,
                     'validateResults' => [
@@ -1033,7 +1033,7 @@ class ValidatorTest extends TestCase
                     ],
                 ],
             ],
-            'invalidPattern: [noKey()] multiple element, value type is array and string' => [
+            'invalidPattern: [noKey()->arrayDefine()] multiple element, value type is array and string' => [
                 'expected' => [
                     'result'          => false,
                     'validateResults' => [
@@ -1050,7 +1050,7 @@ class ValidatorTest extends TestCase
                     ],
                 ],
             ],
-            'invalidPattern: [noKey()] multiple element, key is index and assoc type' => [
+            'invalidPattern: [noKey()->arrayDefine()] multiple element, key is index and assoc type' => [
                 'expected' => [
                     'result'          => false,
                     'validateResults' => [
@@ -1067,7 +1067,7 @@ class ValidatorTest extends TestCase
                     ],
                 ],
             ],
-            'invalidPattern: [noKey()] multiple element, key is index and assoc type, value is string and array type' => [
+            'invalidPattern: [noKey()->arrayDefine()] multiple element, key is index and assoc type, value is string and array type' => [
                 'expected' => [
                     'result'          => false,
                     'validateResults' => [
@@ -1091,10 +1091,131 @@ class ValidatorTest extends TestCase
                     ],
                 ],
             ],
+            'validPattern: [noKey()->value()->arrayDefine()] one element, value type is array' => [
+                'expected' => [
+                    'result'          => true,
+                    'validateResults' => [
+                    ],
+                ],
+                'input' => [
+                    'arrayDefine' => new ArrayDefine(
+                        Define::noKey()->value()->arrayDefine()
+                    ),
+                    'execute' => [
+                        [],
+                    ],
+                ],
+            ],
+            'invalidPattern: [noKey()->value()->arrayDefine()] one element, value type is string' => [
+                'expected' => [
+                    'result'          => false,
+                    'validateResults' => [
+                        new ValidateResult(false, '[0]', 'Invalid value. Expecting a value of index array type.'),
+                    ],
+                ],
+                'input' => [
+                    'arrayDefine' => new ArrayDefine(
+                        Define::noKey()->value()->arrayDefine()
+                    ),
+                    'execute' => [
+                        '',
+                    ],
+                ],
+            ],
+            'invalidPattern: [noKey()->value()->arrayDefine()] one element, key is assoc array type' => [
+                'expected' => [
+                    'result'          => false,
+                    'validateResults' => [
+                        new ValidateResult(false, '[index]', 'Invalid value. Expecting a value of index array type.'),
+                    ],
+                ],
+                'input' => [
+                    'arrayDefine' => new ArrayDefine(
+                        Define::noKey()->value()->arrayDefine()
+                    ),
+                    'execute' => [
+                        'index' => [],
+                    ],
+                ],
+            ],
+            'validPattern: [noKey()->value()->arrayDefine()] multiple elements, value type is array' => [
+                'expected' => [
+                    'result'          => true,
+                    'validateResults' => [
+                    ],
+                ],
+                'input' => [
+                    'arrayDefine' => new ArrayDefine(
+                        Define::noKey()->value()->arrayDefine()
+                    ),
+                    'execute' => [
+                        [],
+                        [],
+                    ],
+                ],
+            ],
+            'invalidPattern: [noKey()->value()->arrayDefine()] multiple element, value type is array and string' => [
+                'expected' => [
+                    'result'          => false,
+                    'validateResults' => [
+                        new ValidateResult(false, '[1]', 'Invalid value. Expecting a value of index array type.'),
+                    ],
+                ],
+                'input' => [
+                    'arrayDefine' => new ArrayDefine(
+                        Define::noKey()->value()->arrayDefine()
+                    ),
+                    'execute' => [
+                        [],
+                        '',
+                    ],
+                ],
+            ],
+            'invalidPattern: [noKey()->value()->arrayDefine()] multiple element, key is index and assoc type' => [
+                'expected' => [
+                    'result'          => false,
+                    'validateResults' => [
+                        new ValidateResult(false, '[index2]', 'Invalid value. Expecting a value of index array type.'),
+                    ],
+                ],
+                'input' => [
+                    'arrayDefine' => new ArrayDefine(
+                        Define::noKey()->value()->arrayDefine()
+                    ),
+                    'execute' => [
+                        [],
+                        'index2' => [],
+                    ],
+                ],
+            ],
+            'invalidPattern: [noKey()->value()->arrayDefine()] multiple element, key is index and assoc type, value is string and array type' => [
+                'expected' => [
+                    'result'          => false,
+                    'validateResults' => [
+                        // key指定が不正
+                        new ValidateResult(false, '[index1]', 'Invalid value. Expecting a value of index array type.'),
+                        // value指定が不正
+                        new ValidateResult(false, '[1]', 'Invalid value. Expecting a value of index array type.'),
+                        // key・value指定が不正
+                        new ValidateResult(false, '[index2]', 'Invalid value. Expecting a value of index array type.'),
+                    ],
+                ],
+                'input' => [
+                    'arrayDefine' => new ArrayDefine(
+                        Define::noKey()->value()->arrayDefine()
+                    ),
+                    'execute' => [
+                        [],
+                        'index1' => [],
+                        '',
+                        'index2' => '',
+                    ],
+                ],
+            ],
             /**
              * 連想配列定義に->arrayDefine()を呼び出したときの動作を確認する
              */
-            'validPattern: [key()] no data' => [
+            'validPattern: [key()->arrayDefine()] no data' => [
                 'expected' => [
                     'result'          => true,
                     'validateResults' => [
@@ -1109,7 +1230,7 @@ class ValidatorTest extends TestCase
                 ],
             ],
 
-            'validPattern: [key()] key optional, no value matches key' => [
+            'validPattern: [key()->arrayDefine()] key optional, no value matches key' => [
                 'expected' => [
                     'result'          => true,
                     'validateResults' => [
@@ -1124,7 +1245,7 @@ class ValidatorTest extends TestCase
                     ],
                 ],
             ],
-            'validPattern: [key()] key optional, key has matching value, value is array' => [
+            'validPattern: [key()->arrayDefine()] key optional, key has matching value, value is array' => [
                 'expected' => [
                     'result'          => true,
                     'validateResults' => [
@@ -1139,7 +1260,7 @@ class ValidatorTest extends TestCase
                     ],
                 ],
             ],
-            'invalidPattern: [key()] key optional, key has matching value, value is string' => [
+            'invalidPattern: [key()->arrayDefine()] key optional, key has matching value, value is string' => [
                 'expected' => [
                     'result'          => false,
                     'validateResults' => [
@@ -1155,7 +1276,7 @@ class ValidatorTest extends TestCase
                     ],
                 ],
             ],
-            'invalidPattern: [key()] key required, no value matches key' => [
+            'invalidPattern: [key()->arrayDefine()] key required, no value matches key' => [
                 'expected' => [
                     'result'          => false,
                     'validateResults' => [
@@ -1171,7 +1292,7 @@ class ValidatorTest extends TestCase
                     ],
                 ],
             ],
-            'validPattern: [key()] key required, key has matching value, value is array' => [
+            'validPattern: [key()->arrayDefine()] key required, key has matching value, value is array' => [
                 'expected' => [
                     'result'          => true,
                     'validateResults' => [
@@ -1186,7 +1307,7 @@ class ValidatorTest extends TestCase
                     ],
                 ],
             ],
-            'invalidPattern: [key()] key required, key has matching value, value is string' => [
+            'invalidPattern: [key()->arrayDefine()] key required, key has matching value, value is string' => [
                 'expected' => [
                     'result'          => false,
                     'validateResults' => [
@@ -1202,6 +1323,114 @@ class ValidatorTest extends TestCase
                     ],
                 ],
             ],
+            'validPattern: [key()->value()->arrayDefine()] no data' => [
+                'expected' => [
+                    'result'          => true,
+                    'validateResults' => [
+                    ],
+                ],
+                'input' => [
+                    'arrayDefine' => new ArrayDefine(
+                        Define::key('keyName', false)->value()->arrayDefine()
+                    ),
+                    'execute' => [
+                    ],
+                ],
+            ],
+
+            'validPattern: [key()->value()->arrayDefine()] key optional, no value matches key' => [
+                'expected' => [
+                    'result'          => true,
+                    'validateResults' => [
+                    ],
+                ],
+                'input' => [
+                    'arrayDefine' => new ArrayDefine(
+                        Define::key('keyName', false)->value()->arrayDefine()
+                    ),
+                    'execute' => [
+                        [],
+                    ],
+                ],
+            ],
+            'validPattern: [key()->value()->arrayDefine()] key optional, key has matching value, value is array' => [
+                'expected' => [
+                    'result'          => true,
+                    'validateResults' => [
+                    ],
+                ],
+                'input' => [
+                    'arrayDefine' => new ArrayDefine(
+                        Define::key('keyName', false)->value()->arrayDefine()
+                    ),
+                    'execute' => [
+                        'keyName' => [],
+                    ],
+                ],
+            ],
+            'invalidPattern: [key()->value()->arrayDefine()] key optional, key has matching value, value is string' => [
+                'expected' => [
+                    'result'          => false,
+                    'validateResults' => [
+                        new ValidateResult(false, 'keyName', 'Invalid value. Expecting a value of assoc array type.'),
+                    ],
+                ],
+                'input' => [
+                    'arrayDefine' => new ArrayDefine(
+                        Define::key('keyName', false)->value()->arrayDefine()
+                    ),
+                    'execute' => [
+                        'keyName' => '',
+                    ],
+                ],
+            ],
+            'invalidPattern: [key()->value()->arrayDefine()] key required, no value matches key' => [
+                'expected' => [
+                    'result'          => false,
+                    'validateResults' => [
+                        new ValidateResult(false, 'keyName', 'key is required.'),
+                    ],
+                ],
+                'input' => [
+                    'arrayDefine' => new ArrayDefine(
+                        Define::key('keyName', true)->value()->arrayDefine()
+                    ),
+                    'execute' => [
+                        [],
+                    ],
+                ],
+            ],
+            'validPattern: [key()->value()->arrayDefine()] key required, key has matching value, value is array' => [
+                'expected' => [
+                    'result'          => true,
+                    'validateResults' => [
+                    ],
+                ],
+                'input' => [
+                    'arrayDefine' => new ArrayDefine(
+                        Define::key('keyName', true)->value()->arrayDefine()
+                    ),
+                    'execute' => [
+                        'keyName' => [],
+                    ],
+                ],
+            ],
+            'invalidPattern: [key()->value()->arrayDefine()] key required, key has matching value, value is string' => [
+                'expected' => [
+                    'result'          => false,
+                    'validateResults' => [
+                        new ValidateResult(false, 'keyName', 'Invalid value. Expecting a value of assoc array type.'),
+                    ],
+                ],
+                'input' => [
+                    'arrayDefine' => new ArrayDefine(
+                        Define::key('keyName', true)->value()->arrayDefine()
+                    ),
+                    'execute' => [
+                        'keyName' => '',
+                    ],
+                ],
+            ],
         ];
     }
 
@@ -1210,6 +1439,8 @@ class ValidatorTest extends TestCase
      * - 配列をネストして定義するパターンをテスト
      *
      * @dataProvider dataProviderDefinesNestedArrays
+     *
+     * @group verify
      *
      * @param mixed $expected
      * @param mixed $input
