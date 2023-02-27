@@ -7,7 +7,7 @@ declare(strict_types=1);
  * @copyright 2022 hazuki3417 all rights reserved.
  */
 
-namespace Tests\Unit\Exchange\Values;
+namespace Tests\Selen\Schema\Validate\Values;
 
 use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
