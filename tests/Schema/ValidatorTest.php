@@ -155,7 +155,7 @@ class ValidatorTest extends TestCase
         $this->assertValidatorClass($result, $validateResults, $actualResult);
     }
 
-    public function dataProviderOneDimensionalArrayWithNoKey()
+    public function dataProviderValueValidateForOneDimensionalArrayWithNoKey()
     {
         $valStr    = new Type('string');
         $valStrNum = new Regex('^[0-9]+$');
@@ -526,12 +526,12 @@ class ValidatorTest extends TestCase
      * テスト内容
      * - noKey()を使用した一次元配列の定義パターンをテスト
      *
-     * @dataProvider dataProviderOneDimensionalArrayWithNoKey
+     * @dataProvider dataProviderValueValidateForOneDimensionalArrayWithNoKey
      *
      * @param mixed $expected
      * @param mixed $input
      */
-    public function testOneDimensionalArrayWithNoKey($expected, $input)
+    public function testValueValidateForOneDimensionalArrayWithNoKey($expected, $input)
     {
         [
             'result'          => $result,
@@ -548,12 +548,12 @@ class ValidatorTest extends TestCase
         $this->assertValidatorClass($result, $validateResults, $actualResult);
     }
 
-    public function dataProviderOneDimensionalArrayWithKey()
+    public function dataProviderKeyValidateForOneDimensionalArrayWithKey()
     {
-        $valStr    = new Type('string');
-        $valStrNum = new Regex('^[0-9]+$');
-
         return [
+            /**
+             * keyのバリデーションが1つのときのテスト
+             */
             'validPattern: no key validation (one key)' => [
                 'expected' => [
                     'result'          => true,
@@ -600,7 +600,9 @@ class ValidatorTest extends TestCase
                     ],
                 ],
             ],
-
+            /**
+             * keyのバリデーションが複数のときのテスト
+             */
             'validPattern: do not verify multiple keys (multiple key)' => [
                 'expected' => [
                     'result'          => true,
@@ -654,6 +656,9 @@ class ValidatorTest extends TestCase
                     ],
                 ],
             ],
+            /**
+             * keyのバリデーションが混在するときのテスト
+             */
             'invalidPattern: Mixed with and without key verification (multiple key)' => [
                 'expected' => [
                     'result'          => false,
@@ -678,15 +683,256 @@ class ValidatorTest extends TestCase
     /**
      * テスト内容
      * - key()を使用した一次元配列の定義パターンをテスト
+     * - keyバリデーションのみの組み合わせテスト
      *
-     * @dataProvider dataProviderOneDimensionalArrayWithKey
-     *
-     * @group verify2
+     * @dataProvider dataProviderKeyValidateForOneDimensionalArrayWithKey
      *
      * @param mixed $expected
      * @param mixed $input
      */
-    public function testOneDimensionalArrayWithKey($expected, $input)
+    public function testKeyValidateForOneDimensionalArrayWithKey($expected, $input)
+    {
+        [
+            'result'          => $result,
+            'validateResults' => $validateResults,
+        ] = $expected;
+
+        [
+            'arrayDefine' => $arrayDefine,
+            'execute'     => $execute,
+        ] = $input;
+
+        $validator    = Validator::new();
+        $actualResult = $validator->arrayDefine($arrayDefine)->execute($execute);
+        $this->assertValidatorClass($result, $validateResults, $actualResult);
+    }
+
+    public function dataProviderKeyValueValidateForOneDimensionalArrayWithKey()
+    {
+        $valStr    = new Type('string');
+        $valStrNum = new Regex('^[0-9]+$');
+
+        return [
+            /**
+             * key・valueのバリデーションが混在するときのテスト
+             */
+            'validPattern: no validate (one key)' => [
+                'expected' => [
+                    'result'          => true,
+                    'validateResults' => [
+                    ],
+                ],
+                'input' => [
+                    'arrayDefine' => new ArrayDefine(
+                        Define::key('keyName', false)->value(),
+                    ),
+                    'execute' => [
+                        'keyName' => 'target-string',
+                    ],
+                ],
+            ],
+            'validPattern: key only validate (one key)' => [
+                'expected' => [
+                    'result'          => true,
+                    'validateResults' => [
+                    ],
+                ],
+                'input' => [
+                    'arrayDefine' => new ArrayDefine(
+                        Define::key('keyName', true)->value()
+                    ),
+                    'execute' => [
+                        'keyName' => 'target-string',
+                    ],
+                ],
+            ],
+            'invalidPattern: key only validate (one key)' => [
+                'expected' => [
+                    'result'          => false,
+                    'validateResults' => [
+                        new ValidateResult(false, 'keyName', 'key is required.'),
+                    ],
+                ],
+                'input' => [
+                    'arrayDefine' => new ArrayDefine(
+                        Define::key('keyName', true)->value()
+                    ),
+                    'execute' => [
+                        'key' => 'target-string',
+                    ],
+                ],
+            ],
+            // NOTE: keyがoptional指定で、入力側に存在しないときは値バリデーションが実施されないことを確認
+            'validPattern: value only validate (one key, input key does not match definition)' => [
+                'expected' => [
+                    'result'          => true,
+                    'validateResults' => [
+                    ],
+                ],
+                'input' => [
+                    'arrayDefine' => new ArrayDefine(
+                        Define::key('keyName', false)->value($valStr)
+                    ),
+                    'execute' => [
+                        'key' => 1,
+                    ],
+                ],
+            ],
+            // NOTE: keyがoptional指定で入力側に存在するときは値バリデーションが実施されることを確認
+            'validPattern: value only validate (one key, input key matches definition)' => [
+                'expected' => [
+                    'result'          => true,
+                    'validateResults' => [
+                    ],
+                ],
+                'input' => [
+                    'arrayDefine' => new ArrayDefine(
+                        Define::key('keyName', false)->value($valStr)
+                    ),
+                    'execute' => [
+                        'keyName' => 'target-string',
+                    ],
+                ],
+            ],
+            // NOTE: keyがoptional指定で入力側に存在するときは値バリデーションが実施されることを確認
+            'invalidPattern: value only validate (one key, input key matches definition)' => [
+                'expected' => [
+                    'result'          => false,
+                    'validateResults' => [
+                        new ValidateResult(false, 'keyName', 'Invalid type. Expected type string.'),
+                    ],
+                ],
+                'input' => [
+                    'arrayDefine' => new ArrayDefine(
+                        Define::key('keyName', false)->value($valStr)
+                    ),
+                    'execute' => [
+                        'keyName' => 1,
+                    ],
+                ],
+            ],
+            // NOTE: keyがrequired指定で、入力側に存在しないときは値バリデーションが実施されないことを確認
+            'invalidPattern: key and value validate (one key, input key does not match definition)' => [
+                'expected' => [
+                    'result'          => false,
+                    'validateResults' => [
+                        new ValidateResult(false, 'keyName', 'key is required.'),
+                    ],
+                ],
+                'input' => [
+                    'arrayDefine' => new ArrayDefine(
+                        Define::key('keyName', true)->value($valStr)
+                    ),
+                    'execute' => [
+                        'key' => 1,
+                    ],
+                ],
+            ],
+            // NOTE: keyがrequired指定で入力側に存在するときは値バリデーションが実施されることを確認
+            'validPattern: key and value validate (one key, input key matches definition)' => [
+                'expected' => [
+                    'result'          => true,
+                    'validateResults' => [
+                    ],
+                ],
+                'input' => [
+                    'arrayDefine' => new ArrayDefine(
+                        Define::key('keyName', true)->value($valStr)
+                    ),
+                    'execute' => [
+                        'keyName' => 'target-string',
+                    ],
+                ],
+            ],
+            // NOTE: keyがrequired指定で入力側に存在するときは値バリデーションが実施されることを確認
+            'invalidPattern: key and value validate (one key, input key matches definition)' => [
+                'expected' => [
+                    'result'          => false,
+                    'validateResults' => [
+                        new ValidateResult(false, 'keyName', 'Invalid type. Expected type string.'),
+                    ],
+                ],
+                'input' => [
+                    'arrayDefine' => new ArrayDefine(
+                        Define::key('keyName', true)->value($valStr)
+                    ),
+                    'execute' => [
+                        'keyName' => 1,
+                    ],
+                ],
+            ],
+            /**
+             * 値のバリデーションが複数のときのテスト
+             */
+            'validPattern: key and value validate (one key, multiple validations)' => [
+                'expected' => [
+                    'result'          => true,
+                    'validateResults' => [
+                    ],
+                ],
+                'input' => [
+                    'arrayDefine' => new ArrayDefine(
+                        Define::key('keyName', true)->value($valStr, $valStrNum)
+                    ),
+                    'execute' => [
+                        'keyName' => '12345',
+                    ],
+                ],
+            ],
+            /**
+             * NOTE: 下記の内容を確認
+             *       - 1つめのバリデーションチェックが不合格となった場合、控えているバリデーションチェック行われないこと
+             */
+            'invalidPattern: key and value validate (one key, multiple validations, failed the first)' => [
+                'expected' => [
+                    'result'          => false,
+                    'validateResults' => [
+                        new ValidateResult(false, 'keyName', 'Invalid type. Expected type string.'),
+                    ],
+                ],
+                'input' => [
+                    'arrayDefine' => new ArrayDefine(
+                        Define::key('keyName', true)->value($valStr, $valStrNum)
+                    ),
+                    'execute' => [
+                        'keyName' => 1,
+                    ],
+                ],
+            ],
+            /**
+             * NOTE: 下記の内容を確認
+             *       - 1つめのバリデーションチェックが合格となった場合、2つめのバリデーションチェックが動くこと
+             */
+            'invalidPattern: key and value validate (one key, multiple validations, failed on the second)' => [
+                'expected' => [
+                    'result'          => false,
+                    'validateResults' => [
+                        new ValidateResult(false, 'keyName', 'Invalid value. Expected value ^[0-9]+$.'),
+                    ],
+                ],
+                'input' => [
+                    'arrayDefine' => new ArrayDefine(
+                        Define::key('keyName', true)->value($valStr, $valStrNum)
+                    ),
+                    'execute' => [
+                        'keyName' => '12a45',
+                    ],
+                ],
+            ],
+        ];
+    }
+
+    /**
+     * テスト内容
+     * - key()を使用した一次元配列の定義パターンをテスト
+     * - key＿valueバリデーションの組み合わせテスト
+     *
+     * @dataProvider dataProviderKeyValueValidateForOneDimensionalArrayWithKey
+     *
+     * @param mixed $expected
+     * @param mixed $input
+     */
+    public function testKeyValueValidateForOneDimensionalArrayWithKey($expected, $input)
     {
         [
             'result'          => $result,
