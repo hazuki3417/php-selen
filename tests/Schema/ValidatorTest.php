@@ -950,6 +950,479 @@ class ValidatorTest extends TestCase
         $this->assertValidatorClass($result, $validateResults, $actualResult);
     }
 
+    public function dataProviderDefinesNestedArrays()
+    {
+        return [
+            /**
+             * 要素配列定義に->arrayDefine()を呼び出したときの動作を確認する
+             */
+            'validPattern: [noKey()] no data' => [
+                'expected' => [
+                    'result'          => true,
+                    'validateResults' => [
+                    ],
+                ],
+                'input' => [
+                    'arrayDefine' => new ArrayDefine(
+                        Define::noKey()->arrayDefine()
+                    ),
+                    'execute' => [
+                    ],
+                ],
+            ],
+            'validPattern: [noKey()] one element, value type is array' => [
+                'expected' => [
+                    'result'          => true,
+                    'validateResults' => [
+                    ],
+                ],
+                'input' => [
+                    'arrayDefine' => new ArrayDefine(
+                        Define::noKey()->arrayDefine()
+                    ),
+                    'execute' => [
+                        [],
+                    ],
+                ],
+            ],
+            'invalidPattern: [noKey()] one element, value type is string' => [
+                'expected' => [
+                    'result'          => false,
+                    'validateResults' => [
+                        new ValidateResult(false, '[0]', 'Invalid value. Expecting a value of index array type.'),
+                    ],
+                ],
+                'input' => [
+                    'arrayDefine' => new ArrayDefine(
+                        Define::noKey()->arrayDefine()
+                    ),
+                    'execute' => [
+                        '',
+                    ],
+                ],
+            ],
+            'invalidPattern: [noKey()] one element, key is assoc array type' => [
+                'expected' => [
+                    'result'          => false,
+                    'validateResults' => [
+                        new ValidateResult(false, '[index]', 'Invalid value. Expecting a value of index array type.'),
+                    ],
+                ],
+                'input' => [
+                    'arrayDefine' => new ArrayDefine(
+                        Define::noKey()->arrayDefine()
+                    ),
+                    'execute' => [
+                        'index' => [],
+                    ],
+                ],
+            ],
+            'validPattern: [noKey()] multiple elements, value type is array' => [
+                'expected' => [
+                    'result'          => true,
+                    'validateResults' => [
+                    ],
+                ],
+                'input' => [
+                    'arrayDefine' => new ArrayDefine(
+                        Define::noKey()->arrayDefine()
+                    ),
+                    'execute' => [
+                        [],
+                        [],
+                    ],
+                ],
+            ],
+            'invalidPattern: [noKey()] multiple element, value type is array and string' => [
+                'expected' => [
+                    'result'          => false,
+                    'validateResults' => [
+                        new ValidateResult(false, '[1]', 'Invalid value. Expecting a value of index array type.'),
+                    ],
+                ],
+                'input' => [
+                    'arrayDefine' => new ArrayDefine(
+                        Define::noKey()->arrayDefine()
+                    ),
+                    'execute' => [
+                        [],
+                        '',
+                    ],
+                ],
+            ],
+            'invalidPattern: [noKey()] multiple element, key is index and assoc type' => [
+                'expected' => [
+                    'result'          => false,
+                    'validateResults' => [
+                        new ValidateResult(false, '[index2]', 'Invalid value. Expecting a value of index array type.'),
+                    ],
+                ],
+                'input' => [
+                    'arrayDefine' => new ArrayDefine(
+                        Define::noKey()->arrayDefine()
+                    ),
+                    'execute' => [
+                        [],
+                        'index2' => [],
+                    ],
+                ],
+            ],
+            'invalidPattern: [noKey()] multiple element, key is index and assoc type, value is string and array type' => [
+                'expected' => [
+                    'result'          => false,
+                    'validateResults' => [
+                        // key指定が不正
+                        new ValidateResult(false, '[index1]', 'Invalid value. Expecting a value of index array type.'),
+                        // value指定が不正
+                        new ValidateResult(false, '[1]', 'Invalid value. Expecting a value of index array type.'),
+                        // key・value指定が不正
+                        new ValidateResult(false, '[index2]', 'Invalid value. Expecting a value of index array type.'),
+                    ],
+                ],
+                'input' => [
+                    'arrayDefine' => new ArrayDefine(
+                        Define::noKey()->arrayDefine()
+                    ),
+                    'execute' => [
+                        [],
+                        'index1' => [],
+                        '',
+                        'index2' => '',
+                    ],
+                ],
+            ],
+            /**
+             * 連想配列定義に->arrayDefine()を呼び出したときの動作を確認する
+             */
+            'validPattern: [key()] no data' => [
+                'expected' => [
+                    'result'          => true,
+                    'validateResults' => [
+                    ],
+                ],
+                'input' => [
+                    'arrayDefine' => new ArrayDefine(
+                        Define::key('keyName', false)->arrayDefine()
+                    ),
+                    'execute' => [
+                    ],
+                ],
+            ],
+
+            'validPattern: [key()] key optional, no value matches key' => [
+                'expected' => [
+                    'result'          => true,
+                    'validateResults' => [
+                    ],
+                ],
+                'input' => [
+                    'arrayDefine' => new ArrayDefine(
+                        Define::key('keyName', false)->arrayDefine()
+                    ),
+                    'execute' => [
+                        [],
+                    ],
+                ],
+            ],
+            'validPattern: [key()] key optional, key has matching value, value is array' => [
+                'expected' => [
+                    'result'          => true,
+                    'validateResults' => [
+                    ],
+                ],
+                'input' => [
+                    'arrayDefine' => new ArrayDefine(
+                        Define::key('keyName', false)->arrayDefine()
+                    ),
+                    'execute' => [
+                        'keyName' => [],
+                    ],
+                ],
+            ],
+            'invalidPattern: [key()] key optional, key has matching value, value is string' => [
+                'expected' => [
+                    'result'          => false,
+                    'validateResults' => [
+                        new ValidateResult(false, 'keyName', 'Invalid value. Expecting a value of assoc array type.'),
+                    ],
+                ],
+                'input' => [
+                    'arrayDefine' => new ArrayDefine(
+                        Define::key('keyName', false)->arrayDefine()
+                    ),
+                    'execute' => [
+                        'keyName' => '',
+                    ],
+                ],
+            ],
+            'invalidPattern: [key()] key required, no value matches key' => [
+                'expected' => [
+                    'result'          => false,
+                    'validateResults' => [
+                        new ValidateResult(false, 'keyName', 'key is required.'),
+                    ],
+                ],
+                'input' => [
+                    'arrayDefine' => new ArrayDefine(
+                        Define::key('keyName', true)->arrayDefine()
+                    ),
+                    'execute' => [
+                        [],
+                    ],
+                ],
+            ],
+            'validPattern: [key()] key required, key has matching value, value is array' => [
+                'expected' => [
+                    'result'          => true,
+                    'validateResults' => [
+                    ],
+                ],
+                'input' => [
+                    'arrayDefine' => new ArrayDefine(
+                        Define::key('keyName', true)->arrayDefine()
+                    ),
+                    'execute' => [
+                        'keyName' => [],
+                    ],
+                ],
+            ],
+            'invalidPattern: [key()] key required, key has matching value, value is string' => [
+                'expected' => [
+                    'result'          => false,
+                    'validateResults' => [
+                        new ValidateResult(false, 'keyName', 'Invalid value. Expecting a value of assoc array type.'),
+                    ],
+                ],
+                'input' => [
+                    'arrayDefine' => new ArrayDefine(
+                        Define::key('keyName', true)->arrayDefine()
+                    ),
+                    'execute' => [
+                        'keyName' => '',
+                    ],
+                ],
+            ],
+        ];
+    }
+
+    /**
+     * テスト内容
+     * - 配列をネストして定義するパターンをテスト
+     *
+     * @dataProvider dataProviderDefinesNestedArrays
+     *
+     * @param mixed $expected
+     * @param mixed $input
+     */
+    public function testDefinesNestedArrays($expected, $input)
+    {
+        [
+            'result'          => $result,
+            'validateResults' => $validateResults,
+        ] = $expected;
+
+        [
+            'arrayDefine' => $arrayDefine,
+            'execute'     => $execute,
+        ] = $input;
+
+        $validator    = Validator::new();
+        $actualResult = $validator->arrayDefine($arrayDefine)->execute($execute);
+        $this->assertValidatorClass($result, $validateResults, $actualResult);
+    }
+
+    public function dataProviderCombinedOfIndexArrayAndIndexArray()
+    {
+        $valStr    = new Type('string');
+        $valStrNum = new Regex('^[0-9]+$');
+
+        return [
+            'validPattern: ' => [
+                'expected' => [
+                    'result'          => true,
+                    'validateResults' => [
+                    ],
+                ],
+                'input' => [
+                    'arrayDefine' => new ArrayDefine(
+                    ),
+                    'execute' => [
+                    ],
+                ],
+            ],
+        ];
+    }
+
+    /**
+     * テスト内容
+     * - 要素配列に要素配列をネストする定義パターンをテスト
+     *
+     * @dataProvider dataProviderCombinedOfIndexArrayAndIndexArray
+     *
+     * @param mixed $expected
+     * @param mixed $input
+     */
+    public function testCombinedOfIndexArrayAndIndexArray($expected, $input)
+    {
+        [
+            'result'          => $result,
+            'validateResults' => $validateResults,
+        ] = $expected;
+
+        [
+            'arrayDefine' => $arrayDefine,
+            'execute'     => $execute,
+        ] = $input;
+
+        $validator    = Validator::new();
+        $actualResult = $validator->arrayDefine($arrayDefine)->execute($execute);
+        $this->assertValidatorClass($result, $validateResults, $actualResult);
+    }
+
+    public function dataProviderCombinedOfIndexArrayAndAssocArray()
+    {
+        $valStr    = new Type('string');
+        $valStrNum = new Regex('^[0-9]+$');
+
+        return [
+            'validPattern: ' => [
+                'expected' => [
+                    'result'          => true,
+                    'validateResults' => [
+                    ],
+                ],
+                'input' => [
+                    'arrayDefine' => new ArrayDefine(
+                    ),
+                    'execute' => [
+                    ],
+                ],
+            ],
+        ];
+    }
+
+    /**
+     * テスト内容
+     * - 要素配列に連想配列をネストする定義パターンをテスト
+     *
+     * @dataProvider dataProviderCombinedOfIndexArrayAndAssocArray
+     *
+     * @param mixed $expected
+     * @param mixed $input
+     */
+    public function testCombinedOfIndexArrayAndAssocArray($expected, $input)
+    {
+        [
+            'result'          => $result,
+            'validateResults' => $validateResults,
+        ] = $expected;
+
+        [
+            'arrayDefine' => $arrayDefine,
+            'execute'     => $execute,
+        ] = $input;
+
+        $validator    = Validator::new();
+        $actualResult = $validator->arrayDefine($arrayDefine)->execute($execute);
+        $this->assertValidatorClass($result, $validateResults, $actualResult);
+    }
+
+    public function dataProviderCombinedOfAssocArrayAndAssocArray()
+    {
+        $valStr    = new Type('string');
+        $valStrNum = new Regex('^[0-9]+$');
+
+        return [
+            'validPattern: ' => [
+                'expected' => [
+                    'result'          => true,
+                    'validateResults' => [
+                    ],
+                ],
+                'input' => [
+                    'arrayDefine' => new ArrayDefine(
+                    ),
+                    'execute' => [
+                    ],
+                ],
+            ],
+        ];
+    }
+
+    /**
+     * テスト内容
+     * - 連想配列に連想配列をネストする定義パターンをテスト
+     *
+     * @dataProvider dataProviderCombinedOfAssocArrayAndAssocArray
+     *
+     * @param mixed $expected
+     * @param mixed $input
+     */
+    public function testCombinedOfAssocArrayAndAssocArray($expected, $input)
+    {
+        [
+            'result'          => $result,
+            'validateResults' => $validateResults,
+        ] = $expected;
+
+        [
+            'arrayDefine' => $arrayDefine,
+            'execute'     => $execute,
+        ] = $input;
+
+        $validator    = Validator::new();
+        $actualResult = $validator->arrayDefine($arrayDefine)->execute($execute);
+        $this->assertValidatorClass($result, $validateResults, $actualResult);
+    }
+
+    public function dataProviderCombinedOfAssocArrayAndIndexArray()
+    {
+        $valStr    = new Type('string');
+        $valStrNum = new Regex('^[0-9]+$');
+
+        return [
+            'validPattern: ' => [
+                'expected' => [
+                    'result'          => true,
+                    'validateResults' => [
+                    ],
+                ],
+                'input' => [
+                    'arrayDefine' => new ArrayDefine(
+                    ),
+                    'execute' => [
+                    ],
+                ],
+            ],
+        ];
+    }
+
+    /**
+     * テスト内容
+     * - 連想配列に要素配列をネストする定義パターンをテスト
+     *
+     * @dataProvider dataProviderCombinedOfAssocArrayAndIndexArray
+     *
+     * @param mixed $expected
+     * @param mixed $input
+     */
+    public function testCombinedOfAssocArrayAndIndexArray($expected, $input)
+    {
+        [
+            'result'          => $result,
+            'validateResults' => $validateResults,
+        ] = $expected;
+
+        [
+            'arrayDefine' => $arrayDefine,
+            'execute'     => $execute,
+        ] = $input;
+
+        $validator    = Validator::new();
+        $actualResult = $validator->arrayDefine($arrayDefine)->execute($execute);
+        $this->assertValidatorClass($result, $validateResults, $actualResult);
+    }
+
     /**
      * Validatorクラスの返り値を検証するメソッド
      *
