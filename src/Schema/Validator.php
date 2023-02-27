@@ -261,7 +261,7 @@ class Validator
             $validateResult :
             $validateResult
                 ->setResult(false)
-                ->setMessage('key is required.');
+                ->setMessage('Key is required.');
     }
 
     /**

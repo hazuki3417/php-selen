@@ -364,7 +364,7 @@ class ValidatorTest extends TestCase
                 'expected' => [
                     'result'          => false,
                     'validateResults' => [
-                        new ValidateResult(false, '[0]', 'Invalid value. Expected value ^[0-9]+$.'),
+                        new ValidateResult(false, '[0]', 'Invalid value. Expected value pattern ^[0-9]+$.'),
                     ],
                 ],
                 'input' => [
@@ -385,8 +385,8 @@ class ValidatorTest extends TestCase
                 'expected' => [
                     'result'          => false,
                     'validateResults' => [
-                        new ValidateResult(false, '[0]', 'Invalid value. Expected value ^[0-9]+$.'),
-                        new ValidateResult(false, '[1]', 'Invalid value. Expected value ^[0-9]+$.'),
+                        new ValidateResult(false, '[0]', 'Invalid value. Expected value pattern ^[0-9]+$.'),
+                        new ValidateResult(false, '[1]', 'Invalid value. Expected value pattern ^[0-9]+$.'),
                     ],
                 ],
                 'input' => [
@@ -588,7 +588,7 @@ class ValidatorTest extends TestCase
                 'expected' => [
                     'result'          => false,
                     'validateResults' => [
-                        new ValidateResult(false, 'keyName', 'key is required.'),
+                        new ValidateResult(false, 'keyName', 'Key is required.'),
                     ],
                 ],
                 'input' => [
@@ -641,8 +641,8 @@ class ValidatorTest extends TestCase
                 'expected' => [
                     'result'          => false,
                     'validateResults' => [
-                        new ValidateResult(false, 'keyName1', 'key is required.'),
-                        new ValidateResult(false, 'keyName2', 'key is required.'),
+                        new ValidateResult(false, 'keyName1', 'Key is required.'),
+                        new ValidateResult(false, 'keyName2', 'Key is required.'),
                     ],
                 ],
                 'input' => [
@@ -663,7 +663,7 @@ class ValidatorTest extends TestCase
                 'expected' => [
                     'result'          => false,
                     'validateResults' => [
-                        new ValidateResult(false, 'keyName2', 'key is required.'),
+                        new ValidateResult(false, 'keyName2', 'Key is required.'),
                     ],
                 ],
                 'input' => [
@@ -750,7 +750,7 @@ class ValidatorTest extends TestCase
                 'expected' => [
                     'result'          => false,
                     'validateResults' => [
-                        new ValidateResult(false, 'keyName', 'key is required.'),
+                        new ValidateResult(false, 'keyName', 'Key is required.'),
                     ],
                 ],
                 'input' => [
@@ -816,7 +816,7 @@ class ValidatorTest extends TestCase
                 'expected' => [
                     'result'          => false,
                     'validateResults' => [
-                        new ValidateResult(false, 'keyName', 'key is required.'),
+                        new ValidateResult(false, 'keyName', 'Key is required.'),
                     ],
                 ],
                 'input' => [
@@ -907,7 +907,7 @@ class ValidatorTest extends TestCase
                 'expected' => [
                     'result'          => false,
                     'validateResults' => [
-                        new ValidateResult(false, 'keyName', 'Invalid value. Expected value ^[0-9]+$.'),
+                        new ValidateResult(false, 'keyName', 'Invalid value. Expected value pattern ^[0-9]+$.'),
                     ],
                 ],
                 'input' => [
@@ -1280,7 +1280,7 @@ class ValidatorTest extends TestCase
                 'expected' => [
                     'result'          => false,
                     'validateResults' => [
-                        new ValidateResult(false, 'keyName', 'key is required.'),
+                        new ValidateResult(false, 'keyName', 'Key is required.'),
                     ],
                 ],
                 'input' => [
@@ -1388,7 +1388,7 @@ class ValidatorTest extends TestCase
                 'expected' => [
                     'result'          => false,
                     'validateResults' => [
-                        new ValidateResult(false, 'keyName', 'key is required.'),
+                        new ValidateResult(false, 'keyName', 'Key is required.'),
                     ],
                 ],
                 'input' => [
