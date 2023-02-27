@@ -185,8 +185,12 @@ class Validator
                 }
 
                 if ($define->isIndexArrayDefine()) {
-                    // NOTE: inputが空の場合は検証処理を実行するために2次元配列を返す
-                    $items = $input === [] ? [[]] : $input;
+                    if ($input === []) {
+                        // NOTE: index配列 + 空配列のときは値がないときなのでバリデーションしない
+                        continue;
+                    }
+
+                    $items = $input;
 
                     foreach ($items as $index => $item) {
                         $path = \sprintf('[%s]', $index);

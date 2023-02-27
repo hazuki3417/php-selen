@@ -1464,9 +1464,6 @@ class ValidatorTest extends TestCase
 
     public function dataProviderCombinedOfIndexArrayAndIndexArray()
     {
-        $valStr    = new Type('string');
-        $valStrNum = new Regex('^[0-9]+$');
-
         return [
             'validPattern: ' => [
                 'expected' => [
@@ -1512,9 +1509,6 @@ class ValidatorTest extends TestCase
 
     public function dataProviderCombinedOfIndexArrayAndAssocArray()
     {
-        $valStr    = new Type('string');
-        $valStrNum = new Regex('^[0-9]+$');
-
         return [
             'validPattern: ' => [
                 'expected' => [
@@ -1560,9 +1554,6 @@ class ValidatorTest extends TestCase
 
     public function dataProviderCombinedOfAssocArrayAndAssocArray()
     {
-        $valStr    = new Type('string');
-        $valStrNum = new Regex('^[0-9]+$');
-
         return [
             'validPattern: ' => [
                 'expected' => [
@@ -1608,11 +1599,8 @@ class ValidatorTest extends TestCase
 
     public function dataProviderCombinedOfAssocArrayAndIndexArray()
     {
-        $valStr    = new Type('string');
-        $valStrNum = new Regex('^[0-9]+$');
-
         return [
-            'validPattern: ' => [
+            'validPattern: 1D empty array for items key is allowed' => [
                 'expected' => [
                     'result'          => true,
                     'validateResults' => [
@@ -1620,8 +1608,69 @@ class ValidatorTest extends TestCase
                 ],
                 'input' => [
                     'arrayDefine' => new ArrayDefine(
+                        Define::key('items', true)->value()->arrayDefine(
+                            Define::noKey()->arrayDefine(
+                                Define::key('name', true)->value(new Type('string')),
+                                Define::key('kana', true)->value(new Type('string')),
+                                Define::key('age', true)->value(new Type('int')),
+                            )
+                        )
                     ),
                     'execute' => [
+                        'items' => [],
+                    ],
+                ],
+            ],
+            'invalidPattern: 2D empty array for items key is not allowed' => [
+                'expected' => [
+                    'result'          => false,
+                    'validateResults' => [
+                        new ValidateResult(false, 'items.[0].name', 'Key is required.'),
+                        new ValidateResult(false, 'items.[0].kana', 'Key is required.'),
+                        new ValidateResult(false, 'items.[0].age', 'Key is required.'),
+                    ],
+                ],
+                'input' => [
+                    'arrayDefine' => new ArrayDefine(
+                        Define::key('items', true)->value()->arrayDefine(
+                            Define::noKey()->arrayDefine(
+                                Define::key('name', true)->value(new Type('string')),
+                                Define::key('kana', true)->value(new Type('string')),
+                                Define::key('age', true)->value(new Type('int')),
+                            )
+                        )
+                    ),
+                    'execute' => [
+                        'items' => [
+                            [],
+                        ],
+                    ],
+                ],
+            ],
+            'validPattern: 2D arrays with keys are allowed' => [
+                'expected' => [
+                    'result'          => true,
+                    'validateResults' => [
+                    ],
+                ],
+                'input' => [
+                    'arrayDefine' => new ArrayDefine(
+                        Define::key('items', true)->value()->arrayDefine(
+                            Define::noKey()->arrayDefine(
+                                Define::key('name', true)->value(new Type('string')),
+                                Define::key('kana', true)->value(new Type('string')),
+                                Define::key('age', true)->value(new Type('int')),
+                            )
+                        )
+                    ),
+                    'execute' => [
+                        'items' => [
+                            [
+                                'name' => 'target-string',
+                                'kana' => 'target-string',
+                                'age'  => 20,
+                            ],
+                        ],
                     ],
                 ],
             ],
