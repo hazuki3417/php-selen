@@ -989,7 +989,7 @@ class ValidatorTest extends TestCase
                 'expected' => [
                     'result'          => false,
                     'validateResults' => [
-                        new ValidateResult(false, '[0]', 'Invalid value. Expecting a value of index array type.'),
+                        new ValidateResult(false, '[0]', 'Invalid value. Expecting a value of array type.'),
                     ],
                 ],
                 'input' => [
@@ -1005,7 +1005,7 @@ class ValidatorTest extends TestCase
                 'expected' => [
                     'result'          => false,
                     'validateResults' => [
-                        new ValidateResult(false, '[index]', 'Invalid value. Expecting a value of index array type.'),
+                        new ValidateResult(false, '[index]', 'Invalid key. Expecting indexed array type.'),
                     ],
                 ],
                 'input' => [
@@ -1037,7 +1037,7 @@ class ValidatorTest extends TestCase
                 'expected' => [
                     'result'          => false,
                     'validateResults' => [
-                        new ValidateResult(false, '[1]', 'Invalid value. Expecting a value of index array type.'),
+                        new ValidateResult(false, '[1]', 'Invalid value. Expecting a value of array type.'),
                     ],
                 ],
                 'input' => [
@@ -1054,7 +1054,7 @@ class ValidatorTest extends TestCase
                 'expected' => [
                     'result'          => false,
                     'validateResults' => [
-                        new ValidateResult(false, '[index2]', 'Invalid value. Expecting a value of index array type.'),
+                        new ValidateResult(false, '[index2]', 'Invalid key. Expecting indexed array type.'),
                     ],
                 ],
                 'input' => [
@@ -1072,11 +1072,11 @@ class ValidatorTest extends TestCase
                     'result'          => false,
                     'validateResults' => [
                         // key指定が不正
-                        new ValidateResult(false, '[index1]', 'Invalid value. Expecting a value of index array type.'),
+                        new ValidateResult(false, '[index1]', 'Invalid key. Expecting indexed array type.'),
                         // value指定が不正
-                        new ValidateResult(false, '[1]', 'Invalid value. Expecting a value of index array type.'),
+                        new ValidateResult(false, '[1]', 'Invalid value. Expecting a value of array type.'),
                         // key・value指定が不正
-                        new ValidateResult(false, '[index2]', 'Invalid value. Expecting a value of index array type.'),
+                        new ValidateResult(false, '[index2]', 'Invalid key. Expecting indexed array type.'),
                     ],
                 ],
                 'input' => [
@@ -1110,7 +1110,7 @@ class ValidatorTest extends TestCase
                 'expected' => [
                     'result'          => false,
                     'validateResults' => [
-                        new ValidateResult(false, '[0]', 'Invalid value. Expecting a value of index array type.'),
+                        new ValidateResult(false, '[0]', 'Invalid value. Expecting a value of array type.'),
                     ],
                 ],
                 'input' => [
@@ -1126,7 +1126,7 @@ class ValidatorTest extends TestCase
                 'expected' => [
                     'result'          => false,
                     'validateResults' => [
-                        new ValidateResult(false, '[index]', 'Invalid value. Expecting a value of index array type.'),
+                        new ValidateResult(false, '[index]', 'Invalid key. Expecting indexed array type.'),
                     ],
                 ],
                 'input' => [
@@ -1158,7 +1158,7 @@ class ValidatorTest extends TestCase
                 'expected' => [
                     'result'          => false,
                     'validateResults' => [
-                        new ValidateResult(false, '[1]', 'Invalid value. Expecting a value of index array type.'),
+                        new ValidateResult(false, '[1]', 'Invalid value. Expecting a value of array type.'),
                     ],
                 ],
                 'input' => [
@@ -1175,7 +1175,7 @@ class ValidatorTest extends TestCase
                 'expected' => [
                     'result'          => false,
                     'validateResults' => [
-                        new ValidateResult(false, '[index2]', 'Invalid value. Expecting a value of index array type.'),
+                        new ValidateResult(false, '[index2]', 'Invalid key. Expecting indexed array type.'),
                     ],
                 ],
                 'input' => [
@@ -1193,11 +1193,11 @@ class ValidatorTest extends TestCase
                     'result'          => false,
                     'validateResults' => [
                         // key指定が不正
-                        new ValidateResult(false, '[index1]', 'Invalid value. Expecting a value of index array type.'),
+                        new ValidateResult(false, '[index1]', 'Invalid key. Expecting indexed array type.'),
                         // value指定が不正
-                        new ValidateResult(false, '[1]', 'Invalid value. Expecting a value of index array type.'),
+                        new ValidateResult(false, '[1]', 'Invalid value. Expecting a value of array type.'),
                         // key・value指定が不正
-                        new ValidateResult(false, '[index2]', 'Invalid value. Expecting a value of index array type.'),
+                        new ValidateResult(false, '[index2]', 'Invalid key. Expecting indexed array type.'),
                     ],
                 ],
                 'input' => [
@@ -1264,7 +1264,7 @@ class ValidatorTest extends TestCase
                 'expected' => [
                     'result'          => false,
                     'validateResults' => [
-                        new ValidateResult(false, 'keyName', 'Invalid value. Expecting a value of assoc array type.'),
+                        new ValidateResult(false, 'keyName', 'Invalid value. Expecting a value of array type.'),
                     ],
                 ],
                 'input' => [
@@ -1311,7 +1311,7 @@ class ValidatorTest extends TestCase
                 'expected' => [
                     'result'          => false,
                     'validateResults' => [
-                        new ValidateResult(false, 'keyName', 'Invalid value. Expecting a value of assoc array type.'),
+                        new ValidateResult(false, 'keyName', 'Invalid value. Expecting a value of array type.'),
                     ],
                 ],
                 'input' => [
@@ -1372,7 +1372,7 @@ class ValidatorTest extends TestCase
                 'expected' => [
                     'result'          => false,
                     'validateResults' => [
-                        new ValidateResult(false, 'keyName', 'Invalid value. Expecting a value of assoc array type.'),
+                        new ValidateResult(false, 'keyName', 'Invalid value. Expecting a value of array type.'),
                     ],
                 ],
                 'input' => [
@@ -1419,7 +1419,7 @@ class ValidatorTest extends TestCase
                 'expected' => [
                     'result'          => false,
                     'validateResults' => [
-                        new ValidateResult(false, 'keyName', 'Invalid value. Expecting a value of assoc array type.'),
+                        new ValidateResult(false, 'keyName', 'Invalid value. Expecting a value of array type.'),
                     ],
                 ],
                 'input' => [

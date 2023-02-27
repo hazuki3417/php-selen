@@ -172,7 +172,7 @@ class Validator
                         $this->validateResults[] = new ValidateResult(
                             false,
                             $this->getArrayPathStr(),
-                            'Invalid value. Expecting a value of assoc array type.'
+                            'Invalid value. Expecting a value of array type.'
                         );
                         continue;
                     }
@@ -192,14 +192,21 @@ class Validator
                         $path = \sprintf('[%s]', $index);
                         $this->arrayPath->setCurrentPath($path);
 
-                        $isNoKeyArrayDefineFormat = \is_numeric($index) && \is_array($item);
-
-                        // indexを数値または数字文字列以外を指定している場合はエラーとする
-                        if (!$isNoKeyArrayDefineFormat) {
+                        if (\is_string($index)) {
+                            // 要素名に文字列が指定されている = 連想配列
                             $this->validateResults[] = new ValidateResult(
                                 false,
                                 $this->getArrayPathStr(),
-                                'Invalid value. Expecting a value of index array type.'
+                                'Invalid key. Expecting indexed array type.'
+                            );
+                            continue;
+                        }
+
+                        if (!\is_array($item)) {
+                            $this->validateResults[] = new ValidateResult(
+                                false,
+                                $this->getArrayPathStr(),
+                                'Invalid value. Expecting a value of array type.'
                             );
                             continue;
                         }
