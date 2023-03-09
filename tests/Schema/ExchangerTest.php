@@ -628,6 +628,24 @@ class ExchangerTest extends TestCase
                     'valueExchangeExecute' => null,
                 ],
             ],
+            // 定義側にkeyが存在し、入力側にkeyがないときのテスト
+            'pattern017' => [
+                'expected' => [
+                    'id' => 'parentId',
+                ],
+                'input' => [
+                    'value' => [
+                        'id' => 'parentId',
+                    ],
+                    'define' => new ArrayDefine(
+                        Define::key('key')->value(function ($value) {
+                            return 'suffix-' . $value;
+                        }),
+                    ),
+                    'keyExchangeExecute'   => null,
+                    'valueExchangeExecute' => null,
+                ],
+            ],
         ];
     }
 

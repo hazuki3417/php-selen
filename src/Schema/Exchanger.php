@@ -37,7 +37,7 @@ class Exchanger
      *
      * @return \Selen\Schema\Exchanger
      */
-    public static function new()
+    public static function new(): Exchanger
     {
         return new self();
     }
@@ -49,7 +49,7 @@ class Exchanger
      *
      * @return \Selen\Schema\Exchanger
      */
-    public function key($execute)
+    public function key($execute): Exchanger
     {
         /** @var bool[] */
         $allowTypeList = [
@@ -76,7 +76,7 @@ class Exchanger
      *
      * @return \Selen\Schema\Exchanger
      */
-    public function value($execute)
+    public function value($execute): Exchanger
     {
         /** @var bool[] */
         $allowTypeList = [
@@ -99,11 +99,11 @@ class Exchanger
     /**
      * key・valueの変換処理を設定します（個別設定）
      *
-     * @return \Selen\Schema\Exchanger
-     *
      * @param ?\Selen\Schema\Exchange\ArrayDefine $arrayDefine
+     *
+     * @return \Selen\Schema\Exchanger
      */
-    public function arrayDefine(?ArrayDefine $arrayDefine)
+    public function arrayDefine(?ArrayDefine $arrayDefine): Exchanger
     {
         $this->arrayDefine = $arrayDefine;
         return $this;
@@ -217,9 +217,17 @@ class Exchanger
                 if ($define->isAssocArrayDefine()) {
                     // key定義ありのときの処理
 
-                    // TODO: 定義側にはkeyが存在するが、入力側にはkeyがないときundefinedが発生する。考慮されていないので修正し、テストする。
+                    $keyExists = \array_key_exists($define->key->getName(), $input);
 
-                    $input[$define->key->getName()] = $this->valueExchange($define->valueExchangeExecute, $input[$define->key->getName()]);
+                    if (!$keyExists) {
+                        // NOTE: 定義側にkeyが存在し、入力側にkeyがないときは処理しない
+                        continue;
+                    }
+
+                    $input[$define->key->getName()] = $this->valueExchange(
+                            $define->valueExchangeExecute,
+                            $input[$define->key->getName()]
+                        );
                     continue;
                 }
 
