@@ -13,19 +13,19 @@ use PHPUnit\Framework\TestCase;
 use Selen\Str\CaseName;
 
 /**
- * @coversDefaultClass \Selen\Str\Case
+ * @coversDefaultClass \Selen\Str\CaseName
  *
  * @group Selen/Str
- * @group Selen/Str/Case
+ * @group Selen/Str/CaseName
  *
- * @see \Selen\Str\Case
+ * @see \Selen\Str\CaseName
  *
  * [command]
- * php ./vendor/bin/phpunit --group=Selen/Str/Case
+ * php ./vendor/bin/phpunit --group=Selen/Str/CaseName
  *
  * @internal
  */
-class CaseTest extends TestCase
+class CaseNameTest extends TestCase
 {
     public function dataProviderKebab()
     {
@@ -70,7 +70,7 @@ class CaseTest extends TestCase
     /**
      * @dataProvider dataProviderKebab
      *
-     * @group Selen/Str/Case::kebab
+     * @group Selen/Str/CaseName::kebab
      *
      * @param mixed $expected
      * @param mixed $input
@@ -123,7 +123,7 @@ class CaseTest extends TestCase
     /**
      * @dataProvider dataProviderSnake
      *
-     * @group Selen/Str/Case::snake
+     * @group Selen/Str/CaseName::snake
      *
      * @param mixed $expected
      * @param mixed $input
@@ -176,7 +176,7 @@ class CaseTest extends TestCase
     /**
      * @dataProvider dataProviderPascal
      *
-     * @group Selen/Str/Case::pascal
+     * @group Selen/Str/CaseName::pascal
      *
      * @param mixed $expected
      * @param mixed $input
@@ -229,7 +229,7 @@ class CaseTest extends TestCase
     /**
      * @dataProvider dataProviderCamel
      *
-     * @group Selen/Str/Case::camel
+     * @group Selen/Str/CaseName::camel
      *
      * @param mixed $expected
      * @param mixed $input
@@ -251,7 +251,7 @@ class CaseTest extends TestCase
     /**
      * @dataProvider dataProviderUpper
      *
-     * @group Selen/Str/Case::upper
+     * @group Selen/Str/CaseName::upper
      *
      * @param mixed $expected
      * @param mixed $input
@@ -273,7 +273,7 @@ class CaseTest extends TestCase
     /**
      * @dataProvider dataProviderLower
      *
-     * @group Selen/Str/Case::lower
+     * @group Selen/Str/CaseName::lower
      *
      * @param mixed $expected
      * @param mixed $input
