@@ -17,16 +17,7 @@ use Selen\Schema\Validate\Values\ArrayNotEmpty;
 /**
  * @coversDefaultClass \Selen\Schema\Validate\Values\ArrayNotEmpty
  *
- * @group Selen
- * @group Selen/Schema
- * @group Selen/Schema/Validate
- * @group Selen/Schema/Validate/Values
- * @group Selen/Schema/Validate/Values/ArrayNotEmpty
- *
  * @see \Selen\Schema\Validate\Values\ArrayNotEmpty
- *
- * [command]
- * php ./vendor/bin/phpunit --group=Selen/Schema/Validate/Values/ArrayNotEmpty
  *
  * @internal
  */

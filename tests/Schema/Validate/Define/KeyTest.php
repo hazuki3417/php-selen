@@ -15,16 +15,7 @@ use Selen\Schema\Validate\Define\Key;
 /**
  * @coversDefaultClass \Selen\Schema\Validate\Define\Key
  *
- * @group Selen
- * @group Selen/Schema
- * @group Selen/Schema/Validate
- * @group Selen/Schema/Validate/Define
- * @group Selen/Schema/Validate/Define/Key
- *
  * @see \Selen\Schema\Validate\Define\Key
- *
- * [command]
- * php ./vendor/bin/phpunit --group=Selen/Schema/Validate/Define/Key
  *
  * @internal
  */

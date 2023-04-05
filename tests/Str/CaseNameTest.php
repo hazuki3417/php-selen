@@ -15,13 +15,7 @@ use Selen\Str\CaseName;
 /**
  * @coversDefaultClass \Selen\Str\CaseName
  *
- * @group Selen/Str
- * @group Selen/Str/CaseName
- *
  * @see \Selen\Str\CaseName
- *
- * [command]
- * php ./vendor/bin/phpunit --group=Selen/Str/CaseName
  *
  * @internal
  */
@@ -69,8 +63,6 @@ class CaseNameTest extends TestCase
 
     /**
      * @dataProvider dataProviderKebab
-     *
-     * @group Selen/Str/CaseName::kebab
      *
      * @param mixed $expected
      * @param mixed $input
@@ -123,8 +115,6 @@ class CaseNameTest extends TestCase
     /**
      * @dataProvider dataProviderSnake
      *
-     * @group Selen/Str/CaseName::snake
-     *
      * @param mixed $expected
      * @param mixed $input
      */
@@ -175,8 +165,6 @@ class CaseNameTest extends TestCase
 
     /**
      * @dataProvider dataProviderPascal
-     *
-     * @group Selen/Str/CaseName::pascal
      *
      * @param mixed $expected
      * @param mixed $input
@@ -229,8 +217,6 @@ class CaseNameTest extends TestCase
     /**
      * @dataProvider dataProviderCamel
      *
-     * @group Selen/Str/CaseName::camel
-     *
      * @param mixed $expected
      * @param mixed $input
      */
@@ -251,8 +237,6 @@ class CaseNameTest extends TestCase
     /**
      * @dataProvider dataProviderUpper
      *
-     * @group Selen/Str/CaseName::upper
-     *
      * @param mixed $expected
      * @param mixed $input
      */
@@ -272,8 +256,6 @@ class CaseNameTest extends TestCase
 
     /**
      * @dataProvider dataProviderLower
-     *
-     * @group Selen/Str/CaseName::lower
      *
      * @param mixed $expected
      * @param mixed $input

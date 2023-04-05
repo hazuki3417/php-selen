@@ -15,13 +15,7 @@ use Selen\Str\Alphabet;
 /**
  * @coversDefaultClass \Selen\Str\Alphabet
  *
- * @group Selen/Str
- * @group Selen/Str/Alphabet
- *
  * @see \Selen\Str\Alphabet
- *
- * [command]
- * php ./vendor/bin/phpunit --group=Selen/Str/Alphabet
  *
  * @internal
  */

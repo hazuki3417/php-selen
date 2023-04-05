@@ -17,16 +17,7 @@ use Selen\Schema\Validate\Values\MaxLength;
 /**
  * @coversDefaultClass \Selen\Schema\Validate\Values\MaxLength
  *
- * @group Selen
- * @group Selen/Schema
- * @group Selen/Schema/Validate
- * @group Selen/Schema/Validate/Values
- * @group Selen/Schema/Validate/Values/MaxLength
- *
  * @see \Selen\Schema\Validate\Values\MaxLength
- *
- * [command]
- * php ./vendor/bin/phpunit --group=Selen/Schema/Validate/Values/MaxLength
  *
  * @internal
  */

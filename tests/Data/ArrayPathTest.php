@@ -15,14 +15,7 @@ use Selen\Data\ArrayPath;
 /**
  * @coversDefaultClass \Selen\Data\ArrayPath
  *
- * @group Selen
- * @group Selen/Data
- * @group Selen/Data/ArrayPath
- *
  * @see \Selen\Data\ArrayPath
- *
- * [command]
- * php ./vendor/bin/phpunit --group=Selen/Data/ArrayPath
  *
  * @internal
  */

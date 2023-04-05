@@ -28,15 +28,7 @@ use Selen\MongoDB\Validator\UpdateSchema;
  *
  * @coversDefaultClass \Selen\MongoDB\Validator\UpdateSchema
  *
- * @group Selen
- * @group Selen/MongoDB
- * @group Selen/MongoDB/Validator
- * @group Selen/MongoDB/Validator/UpdateSchema
- *
  * @see \Selen\MongoDB\Validator\UpdateSchema
- *
- * [command]
- * php ./vendor/bin/phpunit --group=Selen/MongoDB/Validator/UpdateSchema
  *
  * @internal
  */

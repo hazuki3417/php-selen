@@ -24,15 +24,7 @@ use Selen\MongoDB\Validator\ValueValidateInterface;
  *
  * @coversDefaultClass \Selen\MongoDB\Validator\Value
  *
- * @group Selen
- * @group Selen/MongoDB
- * @group Selen/MongoDB/Validator
- * @group Selen/MongoDB/Validator/Value
- *
  * @see \Selen\MongoDB\Validator\Value
- *
- * [command]
- * php ./vendor/bin/phpunit --group=Selen/MongoDB/Validator/Value
  *
  * @internal
  */

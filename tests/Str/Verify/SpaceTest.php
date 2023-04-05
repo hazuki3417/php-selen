@@ -15,13 +15,7 @@ use Selen\Str\Verify\Space;
 /**
  * @coversDefaultClass \Selen\Str\Verify\Space
  *
- * @group Selen/Str/Verify
- * @group Selen/Str/Verify/Space
- *
  * @see \Selen\Str\Verify\Space
- *
- * [command]
- * php ./vendor/bin/phpunit --group=Selen/Str/Verify/Space
  *
  * @internal
  */

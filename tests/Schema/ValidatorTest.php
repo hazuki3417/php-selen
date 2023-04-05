@@ -20,14 +20,7 @@ use Selen\Schema\Validator;
 /**
  * @coversDefaultClass \Selen\Schema\Validator
  *
- * @group Selen
- * @group Selen/Schema
- * @group Selen/Schema/Validator
- *
  * @see \Selen\Schema\Validator
- *
- * [command]
- * php ./vendor/bin/phpunit --group=Selen/Schema/Validator
  *
  * @internal
  *
@@ -1439,8 +1432,6 @@ class ValidatorTest extends TestCase
      * - 配列をネストして定義するパターンをテスト
      *
      * @dataProvider dataProviderDefinesNestedArrays
-     *
-     * @group verify
      *
      * @param mixed $expected
      * @param mixed $input

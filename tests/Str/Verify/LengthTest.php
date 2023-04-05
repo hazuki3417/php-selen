@@ -16,13 +16,7 @@ use Selen\Str\Verify\Length;
 /**
  * @coversDefaultClass \Selen\Str\Verify\Length
  *
- * @group Selen/Str/Verify
- * @group Selen/Str/Verify/Length
- *
  * @see \Selen\Str\Verify\Length
- *
- * [command]
- * php ./vendor/bin/phpunit --group=Selen/Verify/Str/Length
  *
  * @internal
  */

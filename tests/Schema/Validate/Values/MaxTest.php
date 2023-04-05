@@ -17,16 +17,7 @@ use Selen\Schema\Validate\Values\Max;
 /**
  * @coversDefaultClass \Selen\Schema\Validate\Values\Max
  *
- * @group Selen
- * @group Selen/Schema
- * @group Selen/Schema/Validate
- * @group Selen/Schema/Validate/Values
- * @group Selen/Schema/Validate/Values/Max
- *
  * @see \Selen\Schema\Validate\Values\Max
- *
- * [command]
- * php ./vendor/bin/phpunit --group=Selen/Schema/Validate/Values/Max
  *
  * @internal
  */

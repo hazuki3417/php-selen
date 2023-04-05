@@ -15,14 +15,7 @@ use Selen\Data\Structure\Queue;
 /**
  * @coversDefaultClass \Selen\Data\Structure\Queue
  *
- * @group Selen/Data
- * @group Selen/Data/Structure
- * @group Selen/Data/Structure/Queue
- *
  * @see \Selen\Data\Structure\Queue
- *
- * [command]
- * php ./vendor/bin/phpunit --group=Selen/Data/Structure/Queue
  *
  * @internal
  */

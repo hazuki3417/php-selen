@@ -18,12 +18,7 @@ use Selen\MongoDB\Validator\Model\ValidateResult;
  *
  * @coversDefaultClass \Selen\MongoDB\Validator\Attributes\Enum
  *
- * @group Selen/MongoDB/Validator/Attributes/Enum
- *
  * @see \Selen\MongoDB\Validator\Attributes\Enum
- *
- * [command]
- * php ./vendor/bin/phpunit --group=Selen/MongoDB/Validator/Attributes/Enum
  *
  * @internal
  */

@@ -15,15 +15,7 @@ use Selen\Data\Memo\Str\MinLength;
 /**
  * @coversDefaultClass \Selen\Data\Memo\Str\MinLength
  *
- * @group Selen/Data
- * @group Selen/Data/Memo
- * @group Selen/Data/Memo/Str
- * @group Selen/Data/Memo/Str/MinLength
- *
  * @see \Selen\Data\Memo\Str\MinLength
- *
- * [command]
- * php ./vendor/bin/phpunit --group=Selen/Data/Memo/Str/MinLength
  *
  * @internal
  */

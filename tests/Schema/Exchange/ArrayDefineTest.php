@@ -16,15 +16,7 @@ use Selen\Schema\Exchange\Define;
 /**
  * @coversDefaultClass \Selen\Schema\Exchange\ArrayDefine
  *
- * @group Selen
- * @group Selen/Schema
- * @group Selen/Schema/Exchange
- * @group Selen/Schema/Exchange/ArrayDefine
- *
  * @see \Selen\Schema\Exchange\ArrayDefine
- *
- * [command]
- * php ./vendor/bin/phpunit --group=Selen/Schema/Exchange/ArrayDefine
  *
  * @internal
  */

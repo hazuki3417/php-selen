@@ -18,12 +18,7 @@ use Selen\MongoDB\Validator\Model\ValidateResult;
  *
  * @coversDefaultClass \Selen\MongoDB\Validator\Attributes\ArrayType
  *
- * @group Selen/MongoDB/Validator/Attributes/ArrayType
- *
  * @see \Selen\MongoDB\Validator\Attributes\ArrayType
- *
- * [command]
- * php ./vendor/bin/phpunit --group=Selen/MongoDB/Validator/Attributes/ArrayType
  *
  * @internal
  */

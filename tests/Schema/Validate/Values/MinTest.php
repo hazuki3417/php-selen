@@ -17,16 +17,7 @@ use Selen\Schema\Validate\Values\Min;
 /**
  * @coversDefaultClass \Selen\Schema\Validate\Values\Min
  *
- * @group Selen
- * @group Selen/Schema
- * @group Selen/Schema/Validate
- * @group Selen/Schema/Validate/Values
- * @group Selen/Schema/Validate/Values/Min
- *
  * @see \Selen\Schema\Validate\Values\Min
- *
- * [command]
- * php ./vendor/bin/phpunit --group=Selen/Schema/Validate/Values/Min
  *
  * @internal
  */

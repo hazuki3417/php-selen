@@ -15,14 +15,7 @@ use Selen\Data\Structure\Collection;
 /**
  * @coversDefaultClass \Selen\Data\Structure\Collection
  *
- * @group Selen/Data
- * @group Selen/Data/Structure
- * @group Selen/Data/Structure/Collection
- *
  * @see \Selen\Data\Structure\Collection
- *
- * [command]
- * php ./vendor/bin/phpunit --group=Selen/Data/Structure/Collection
  *
  * @internal
  */

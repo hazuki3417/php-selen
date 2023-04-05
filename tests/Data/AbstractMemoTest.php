@@ -15,13 +15,7 @@ use Selen\Data\AbstractMemo;
 /**
  * @coversDefaultClass \Selen\Data\AbstractMemo
  *
- * @group Selen/Data
- * @group Selen/Data/AbstractMemo
- *
  * @see \Selen\Data\AbstractMemo
- *
- * [command]
- * php ./vendor/bin/phpunit --group=Selen/Data/AbstractMemo
  *
  * @internal
  */

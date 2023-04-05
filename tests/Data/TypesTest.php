@@ -15,13 +15,7 @@ use Selen\Data\Types;
 /**
  * @coversDefaultClass \Selen\Data\Types
  *
- * @group Selen/Data
- * @group Selen/Data/Types
- *
  * @see \Selen\Data\Types
- *
- * [command]
- * php ./vendor/bin/phpunit --group=Selen/Data/Types
  *
  * @internal
  */

@@ -15,15 +15,7 @@ use Selen\Data\Memo\Str\MaxLength;
 /**
  * @coversDefaultClass \Selen\Data\Memo\Str\MaxLength
  *
- * @group Selen/Data
- * @group Selen/Data/Memo
- * @group Selen/Data/Memo/Str
- * @group Selen/Data/Memo/Str/MaxLength
- *
  * @see \Selen\Data\Memo\Str\MaxLength
- *
- * [command]
- * php ./vendor/bin/phpunit --group=Selen/Data/Memo/Str/MaxLength
  *
  * @internal
  */

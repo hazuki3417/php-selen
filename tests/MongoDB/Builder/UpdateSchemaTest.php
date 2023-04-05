@@ -24,15 +24,7 @@ use Selen\MongoDB\Builder\UpdateSchema;
  *
  * @coversDefaultClass \Selen\MongoDB\Builder\UpdateSchema
  *
- * @group Selen
- * @group Selen/MongoDB
- * @group Selen/MongoDB/Builder
- * @group Selen/MongoDB/Builder/UpdateSchema
- *
  * @see \Selen\MongoDB\Builder\UpdateSchema
- *
- * [command]
- * php ./vendor/bin/phpunit --group=Selen/MongoDB/Builder/UpdateSchema
  *
  * @internal
  */

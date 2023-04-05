@@ -23,15 +23,7 @@ use Selen\MongoDB\Builder\InsertSchema;
  *
  * @coversDefaultClass \Selen\MongoDB\Builder\InsertSchema
  *
- * @group Selen
- * @group Selen/MongoDB
- * @group Selen/MongoDB/Builder
- * @group Selen/MongoDB/Builder/InsertSchema
- *
  * @see \Selen\MongoDB\Builder\InsertSchema
- *
- * [command]
- * php ./vendor/bin/phpunit --group=Selen/MongoDB/Builder/InsertSchema
  *
  * @internal
  */

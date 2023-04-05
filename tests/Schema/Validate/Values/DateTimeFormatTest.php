@@ -17,16 +17,7 @@ use Selen\Schema\Validate\Values\DateTimeFormat;
 /**
  * @coversDefaultClass \Selen\Schema\Validate\Values\DateTimeFormat
  *
- * @group Selen
- * @group Selen/Schema
- * @group Selen/Schema/Validate
- * @group Selen/Schema/Validate/Values
- * @group Selen/Schema/Validate/Values/DateTimeFormat
- *
  * @see \Selen\Schema\Validate\Values\DateTimeFormat
- *
- * [command]
- * php ./vendor/bin/phpunit --group=Selen/Schema/Validate/Values/DateTimeFormat
  *
  * @internal
  */

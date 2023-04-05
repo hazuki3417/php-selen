@@ -20,15 +20,7 @@ use Selen\MongoDB\Attributes\SchemaField;
  *
  * @coversDefaultClass \Selen\MongoDB\Attribute\SchemaFieldLoader
  *
- * @group Selen
- * @group Selen/MongoDB
- * @group Selen/MongoDB/Attribute
- * @group Selen/MongoDB/Attribute/SchemaFieldLoader
- *
  * @see \Selen\MongoDB\Attribute\SchemaFieldLoader
- *
- * [command]
- * php ./vendor/bin/phpunit --group=Selen/MongoDB/Attribute/SchemaFieldLoader
  *
  * @internal
  */

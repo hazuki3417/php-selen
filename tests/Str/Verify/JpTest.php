@@ -15,13 +15,7 @@ use Selen\Str\Verify\Jp;
 /**
  * @coversDefaultClass \Selen\Str\Verify\Jp
  *
- * @group Selen/Str/Verify
- * @group Selen/Str/Verify/Jp
- *
  * @see \Selen\Str\Verify\Jp
- *
- * [command]
- * php ./vendor/bin/phpunit --group=Selen/Verify/Str/Jp
  *
  * @internal
  */

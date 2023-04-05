@@ -18,15 +18,7 @@ use Selen\MongoDB\Attributes\Schema;
  *
  * @coversDefaultClass \Selen\MongoDB\Attributes\Schema
  *
- * @group Selen
- * @group Selen/MongoDB
- * @group Selen/MongoDB/Attributes
- * @group Selen/MongoDB/Attributes/Schema
- *
  * @see \Selen\MongoDB\Attributes\Schema
- *
- * [command]
- * php ./vendor/bin/phpunit --group=Selen/MongoDB/Attributes/Schema
  *
  * @internal
  */

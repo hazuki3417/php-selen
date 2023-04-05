@@ -18,15 +18,7 @@ use Selen\MongoDB\Attributes\Nest;
  *
  * @coversDefaultClass \Selen\MongoDB\Attributes\Nest
  *
- * @group Selen
- * @group Selen/MongoDB
- * @group Selen/MongoDB/Attributes
- * @group Selen/MongoDB/Attributes/Nest
- *
  * @see \Selen\MongoDB\Attributes\Nest
- *
- * [command]
- * php ./vendor/bin/phpunit --group=Selen/MongoDB/Attributes/Nest
  *
  * @internal
  */

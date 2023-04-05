@@ -15,13 +15,7 @@ use Selen\Str\Random;
 /**
  * @coversDefaultClass \Selen\Str\Random
  *
- * @group Selen/Str
- * @group Selen/Str/Random
- *
  * @see \Selen\Str\Random
- *
- * [command]
- * php ./vendor/bin/phpunit --group=Selen/Str/Random
  *
  * @internal
  */

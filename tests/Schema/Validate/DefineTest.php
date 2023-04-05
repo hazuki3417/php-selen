@@ -17,15 +17,7 @@ use Selen\Schema\Validate\ValueValidateInterface;
 /**
  * @coversDefaultClass \Selen\Schema\Validate\Define
  *
- * @group Selen
- * @group Selen/Schema
- * @group Selen/Schema/Validate
- * @group Selen/Schema/Validate/Define
- *
  * @see \Selen\Schema\Validate\Define
- *
- * [command]
- * php ./vendor/bin/phpunit --group=Selen/Schema/Validate/Define
  *
  * @internal
  */

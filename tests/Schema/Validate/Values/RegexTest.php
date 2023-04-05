@@ -16,16 +16,7 @@ use Selen\Schema\Validate\Values\Regex;
 /**
  * @coversDefaultClass \Selen\Schema\Validate\Values\Regex
  *
- * @group Selen
- * @group Selen/Schema
- * @group Selen/Schema/Validate
- * @group Selen/Schema/Validate/Values
- * @group Selen/Schema/Validate/Values/Regex
- *
  * @see \Selen\Schema\Validate\Values\Regex
- *
- * [command]
- * php ./vendor/bin/phpunit --group=Selen/Schema/Validate/Values/Regex
  *
  * @internal
  */

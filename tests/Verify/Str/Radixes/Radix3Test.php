@@ -15,13 +15,7 @@ use Selen\Verify\Str\Radixes\Radix3;
 /**
  * @coversDefaultClass \Selen\Verify\Str\Radixes\Radix3
  *
- * @group Selen/Verify/Str/Radixes
- * @group Selen/Verify/Str/Radixes/Radix3
- *
  * @see \Selen\Verify\Str\Radixes\Radix3
- *
- * [command]
- * php ./vendor/bin/phpunit --group=Selen/Verify/Str/Radixes/Radix3
  *
  * @internal
  */

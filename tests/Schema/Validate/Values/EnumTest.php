@@ -16,16 +16,7 @@ use Selen\Schema\Validate\Values\Enum;
 /**
  * @coversDefaultClass \Selen\Schema\Validate\Values\Enum
  *
- * @group Selen
- * @group Selen/Schema
- * @group Selen/Schema/Validate
- * @group Selen/Schema/Validate/Values
- * @group Selen/Schema/Validate/Values/Enum
- *
  * @see \Selen\Schema\Validate\Values\Enum
- *
- * [command]
- * php ./vendor/bin/phpunit --group=Selen/Schema/Validate/Values/Enum
  *
  * @internal
  */

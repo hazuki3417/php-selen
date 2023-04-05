@@ -20,15 +20,7 @@ use Selen\MongoDB\Validator\UpdateSchema;
  *
  * @coversDefaultClass \Selen\MongoDB\SchemaValidator
  *
- * @group Selen
- * @group Selen/MongoDB
- * @group Selen/MongoDB
- * @group Selen/MongoDB/SchemaValidator
- *
  * @see \Selen\MongoDB\SchemaValidator
- *
- * [command]
- * php ./vendor/bin/phpunit --group=Selen/MongoDB/SchemaValidator
  *
  * @internal
  */

@@ -17,16 +17,7 @@ use Selen\MongoDB\Validator\Model\ValidateResult;
  *
  * @coversDefaultClass \Selen\MongoDB\Validator\Model\ValidateResult
  *
- * @group Selen
- * @group Selen/MongoDB
- * @group Selen/MongoDB/Validator
- * @group Selen/MongoDB/Validator/Model
- * @group Selen/MongoDB/Validator/Model/ValidateResult
- *
  * @see \Selen\MongoDB\Validator\Model\ValidateResult
- *
- * [command]
- * php ./vendor/bin/phpunit --group=Selen/MongoDB/Validator/Model/ValidateResult
  *
  * @internal
  */

@@ -20,15 +20,7 @@ use Selen\MongoDB\SchemaBuilder;
  *
  * @coversDefaultClass \Selen\MongoDB\SchemaBuilder
  *
- * @group Selen
- * @group Selen/MongoDB
- * @group Selen/MongoDB
- * @group Selen/MongoDB/SchemaBuilder
- *
  * @see \Selen\MongoDB\SchemaBuilder
- *
- * [command]
- * php ./vendor/bin/phpunit --group=Selen/MongoDB/SchemaBuilder
  *
  * @internal
  */

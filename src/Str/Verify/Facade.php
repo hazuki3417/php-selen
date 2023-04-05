@@ -8,15 +8,11 @@
 
 namespace Selen\Str\Verify;
 
-use Selen\Str\Verify\Width;
-use Selen\Str\Verify\Length;
-use Selen\Str\Verify\Space;
-
 class Facade
 {
     private function __construct(string $val)
     {
-        $this->str    = $val;
+        $this->str = $val;
     }
 
     public static function set(string $val): Facade

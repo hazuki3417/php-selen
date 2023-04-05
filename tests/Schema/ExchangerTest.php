@@ -22,14 +22,7 @@ use Selen\Str\CaseName;
 /**
  * @coversDefaultClass \Selen\Schema\Exchanger
  *
- * @group Selen
- * @group Selen/Schema
- * @group Selen/Schema/Exchanger
- *
  * @see \Selen\Schema\Exchanger
- *
- * [command]
- * php ./vendor/bin/phpunit --group=Selen/Schema/Exchanger
  *
  * @internal
  */

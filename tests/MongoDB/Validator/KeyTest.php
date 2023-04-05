@@ -20,12 +20,7 @@ use Selen\MongoDB\Validator\Model\ValidatorResult;
  *
  * @coversDefaultClass \Selen\MongoDB\Validator\Key
  *
- * @group Selen/MongoDB/Validator/Key
- *
  * @see \Selen\MongoDB\Validator\Key
- *
- * [command]
- * php ./vendor/bin/phpunit --group=Selen/MongoDB/Validator/Key
  *
  * @internal
  */

@@ -15,14 +15,7 @@ use Selen\Str\Verify\Width\Full;
 /**
  * @coversDefaultClass \Selen\Str\Verify\Width\Full
  *
- * @group Selen/Str/Verify
- * @group Selen/Str/Verify/Width
- * @group Selen/Str/Verify/Width/Full
- *
  * @see \Selen\Str\Verify\Width\Full
- *
- * [command]
- * php ./vendor/bin/phpunit --group=Selen/Str/Verify/Width/Full
  *
  * @internal
  */

@@ -15,12 +15,7 @@ use Selen\BoolUtil;
 /**
  * @coversDefaultClass \Selen\BoolUtil
  *
- * @group Selen/BoolUtil
- *
  * @see \Selen\BoolUtil
- *
- * [command]
- * php ./vendor/bin/phpunit --group=Selen/BoolUtil
  *
  * @internal
  */

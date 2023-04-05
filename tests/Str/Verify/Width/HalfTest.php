@@ -15,14 +15,7 @@ use Selen\Str\Verify\Width\Half;
 /**
  * @coversDefaultClass \Selen\Str\Verify\Width\Half
  *
- * @group Selen/Str/Verify
- * @group Selen/Str/Verify/Width
- * @group Selen/Str/Verify/Width/Half
- *
  * @see \Selen\Str\Verify\Width\Half
- *
- * [command]
- * php ./vendor/bin/phpunit --group=Selen/Str/Verify/Width/Half
  *
  * @internal
  */
@@ -77,8 +70,6 @@ class HalfTest extends TestCase
     /**
      * @dataProvider dataProviderExist
      *
-     * @group verify
-     *
      * @param mixed $expected
      * @param mixed $input
      */
@@ -130,8 +121,6 @@ class HalfTest extends TestCase
 
     /**
      * @dataProvider dataProviderNotExist
-     *
-     * @group verify2
      *
      * @param mixed $expected
      * @param mixed $input
@@ -236,8 +225,6 @@ class HalfTest extends TestCase
 
     /**
      * @dataProvider dataProviderNotOnly
-     *
-     * @group verify
      *
      * @param mixed $expected
      * @param mixed $input

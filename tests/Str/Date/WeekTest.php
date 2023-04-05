@@ -15,13 +15,7 @@ use Selen\Str\Date\Week;
 /**
  * @coversDefaultClass \Selen\Str\Week
  *
- * @group Selen/Str
- * @group Selen/Str/Week
- *
  * @see \Selen\Str\Week
- *
- * [command]
- * php ./vendor/bin/phpunit --group=Selen/Str/Week
  *
  * @internal
  */

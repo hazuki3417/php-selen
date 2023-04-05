@@ -16,16 +16,7 @@ use Selen\Schema\Validate\Values\Type;
 /**
  * @coversDefaultClass \Selen\Schema\Validate\Values\Type
  *
- * @group Selen
- * @group Selen/Schema
- * @group Selen/Schema/Validate
- * @group Selen/Schema/Validate/Values
- * @group Selen/Schema/Validate/Values/Type
- *
  * @see \Selen\Schema\Validate\Values\Type
- *
- * [command]
- * php ./vendor/bin/phpunit --group=Selen/Schema/Validate/Values/Type
  *
  * @internal
  */

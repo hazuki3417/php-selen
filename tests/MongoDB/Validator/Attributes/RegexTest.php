@@ -18,12 +18,7 @@ use Selen\MongoDB\Validator\Model\ValidateResult;
  *
  * @coversDefaultClass \Selen\MongoDB\Validator\Attributes\Regex
  *
- * @group Selen/MongoDB/Validator/Attributes/Regex
- *
  * @see \Selen\MongoDB\Validator\Attributes\Regex
- *
- * [command]
- * php ./vendor/bin/phpunit --group=Selen/MongoDB/Validator/Attributes/Regex
  *
  * @internal
  */

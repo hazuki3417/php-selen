@@ -15,13 +15,7 @@ use Selen\Data\ArrayType;
 /**
  * @coversDefaultClass \Selen\Data\ArrayType
  *
- * @group Selen/Data
- * @group Selen/Data/ArrayType
- *
  * @see \Selen\Data\ArrayType
- *
- * [command]
- * php ./vendor/bin/phpunit --group=Selen/Data/ArrayType
  *
  * @internal
  */

@@ -18,15 +18,7 @@ use ValueError;
 /**
  * @coversDefaultClass \Selen\Schema\Exchange\Define
  *
- * @group Selen
- * @group Selen/Schema
- * @group Selen/Schema/Exchange
- * @group Selen/Schema/Exchange/Define
- *
  * @see \Selen\Schema\Exchange\Define
- *
- * [command]
- * php ./vendor/bin/phpunit --group=Selen/Schema/Exchange/Define
  *
  * @internal
  */

@@ -15,16 +15,7 @@ use Selen\Schema\Validate\Model\ValidateResult;
 /**
  * @coversDefaultClass \Selen\Validate\Model\ValidateResult
  *
- * @group Selen
- * @group Selen/Schema
- * @group Selen/Schema/Validate
- * @group Selen/Schema/Validate/Model
- * @group Selen/Schema/Validate/Model/ValidateResult
- *
  * @see \Selen\Schema\Validate\Model\ValidateResult
- *
- * [command]
- * php ./vendor/bin/phpunit --group=Selen/Schema/Validate/Model/ValidateResult
  *
  * @internal
  */

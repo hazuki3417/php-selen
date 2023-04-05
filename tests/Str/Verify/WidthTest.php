@@ -17,13 +17,7 @@ use Selen\Str\Verify\Width\Half;
 /**
  * @coversDefaultClass \Selen\Str\Verify\Width
  *
- * @group Selen/Str/Verify
- * @group Selen/Str/Verify/Width
- *
  * @see \Selen\Str\Verify\Width
- *
- * [command]
- * php ./vendor/bin/phpunit --group=Selen/Str/Verify/Width/Width
  *
  * @internal
  */

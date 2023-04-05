@@ -15,13 +15,7 @@ use Selen\Data\ArrayDepth;
 /**
  * @coversDefaultClass \Selen\Data\ArrayDepth
  *
- * @group Selen/Data
- * @group Selen/Data/ArrayDepth
- *
  * @see \Selen\Data\ArrayDepth
- *
- * [command]
- * php ./vendor/bin/phpunit --group=Selen/Data/ArrayDepth
  *
  * @internal
  */

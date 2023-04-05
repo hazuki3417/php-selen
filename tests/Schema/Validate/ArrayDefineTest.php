@@ -16,15 +16,7 @@ use Selen\Schema\Validate\Define;
 /**
  * @coversDefaultClass \Selen\Schema\Validate\ArrayDefine
  *
- * @group Selen
- * @group Selen/Schema
- * @group Selen/Schema/Validate
- * @group Selen/Schema/Validate/ArrayDefine
- *
  * @see \Selen\Schema\Validate\ArrayDefine
- *
- * [command]
- * php ./vendor/bin/phpunit --group=Selen/Schema/Validate/ArrayDefine
  *
  * @internal
  */

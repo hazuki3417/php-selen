@@ -15,16 +15,7 @@ use Selen\Schema\Exchange\Define\Key;
 /**
  * @coversDefaultClass \Selen\Schema\Exchange\Define\Key
  *
- * @group Selen
- * @group Selen/Schema
- * @group Selen/Schema/Exchange
- * @group Selen/Schema/Exchange/Define
- * @group Selen/Schema/Exchange/Define/Key
- *
  * @see \Selen\Schema\Exchange\Define\Key
- *
- * [command]
- * php ./vendor/bin/phpunit --group=Selen/Schema/Exchange/Define/Key
  *
  * @internal
  */

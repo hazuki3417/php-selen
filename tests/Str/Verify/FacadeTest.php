@@ -11,19 +11,14 @@ namespace Tests\Selen\Str\Verify;
 
 use PHPUnit\Framework\TestCase;
 use Selen\Str\Verify\Facade;
-use Selen\Str\Verify\Width;
 use Selen\Str\Verify\Length;
 use Selen\Str\Verify\Space;
+use Selen\Str\Verify\Width;
 
 /**
  * @coversDefaultClass \Selen\Str\Verify\Facade
  *
- * @group Selen/Str/Verify/Facade
- *
  * @see \Selen\Str\Verify\Facade
- *
- * [command]
- * php ./vendor/bin/phpunit --group=Selen/Str/Verify/Facade
  *
  * @internal
  */

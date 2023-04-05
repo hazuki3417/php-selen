@@ -17,15 +17,7 @@ use Selen\MongoDB\Attributes\SchemaField;
  *
  * @coversDefaultClass \Selen\MongoDB\Attributes\SchemaField
  *
- * @group Selen
- * @group Selen/MongoDB
- * @group Selen/MongoDB/Attributes
- * @group Selen/MongoDB/Attributes/SchemaField
- *
  * @see \Selen\MongoDB\Attributes\SchemaField
- *
- * [command]
- * php ./vendor/bin/phpunit --group=Selen/MongoDB/Attributes/SchemaField
  *
  * @internal
  */

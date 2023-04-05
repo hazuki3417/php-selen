@@ -28,15 +28,7 @@ use Selen\MongoDB\Validator\Model\ValidatorResult;
  *
  * @coversDefaultClass \Selen\MongoDB\Validator\InsertSchema
  *
- * @group Selen
- * @group Selen/MongoDB
- * @group Selen/MongoDB/Validator
- * @group Selen/MongoDB/Validator/InsertSchema
- *
  * @see \Selen\MongoDB\Validator\InsertSchema
- *
- * [command]
- * php ./vendor/bin/phpunit --group=Selen/MongoDB/Validator/InsertSchema
  *
  * @internal
  */
