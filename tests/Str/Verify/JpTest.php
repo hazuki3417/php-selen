@@ -15,8 +15,8 @@ use Selen\Str\Verify\Jp;
 /**
  * @coversDefaultClass \Selen\Str\Verify\Jp
  *
- * @group Selen/Verify/Str
- * @group Selen/Verify/Str/Jp
+ * @group Selen/Str/Verify
+ * @group Selen/Str/Verify/Jp
  *
  * @see \Selen\Str\Verify\Jp
  *

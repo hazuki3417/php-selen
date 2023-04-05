@@ -7,21 +7,21 @@ declare(strict_types=1);
  * @copyright 2021 hazuki3417 all rights reserved.
  */
 
-namespace Tests\Selen\Verify\Str\Space;
+namespace Tests\Selen\Str\Verify\Space;
 
 use PHPUnit\Framework\TestCase;
-use Selen\Verify\Str\Space;
+use Selen\Str\Verify\Space;
 
 /**
- * @coversDefaultClass \Selen\Verify\Str\Space
+ * @coversDefaultClass \Selen\Str\Verify\Space
  *
- * @group Selen/Verify/Str
- * @group Selen/Verify/Str/Space
+ * @group Selen/Str/Verify
+ * @group Selen/Str/Verify/Space
  *
- * @see \Selen\Verify\Str\Space
+ * @see \Selen\Str\Verify\Space
  *
  * [command]
- * php ./vendor/bin/phpunit --group=Selen/Verify/Str/Space
+ * php ./vendor/bin/phpunit --group=Selen/Str/Verify/Space
  *
  * @internal
  */

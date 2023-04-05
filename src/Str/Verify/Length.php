@@ -6,11 +6,11 @@
  * @copyright 2021 hazuki3417 all rights reserved.
  */
 
-namespace Selen\Verify\Str;
+namespace Selen\Str\Verify;
 
 use LogicException;
 
-class Length implements LengthInterface
+class Length
 {
     private $str;
 

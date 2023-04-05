@@ -8,7 +8,7 @@
 
 namespace Selen\Str\Verify\Width;
 
-class Half extends AbstractWidth implements WidthInterface
+class Half extends AbstractWidth
 {
     private function __construct(string $val)
     {

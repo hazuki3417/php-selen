@@ -11,15 +11,15 @@ namespace Tests\Selen\Verify\Str;
 
 use LogicException;
 use PHPUnit\Framework\TestCase;
-use Selen\Verify\Str\Length;
+use Selen\Str\Verify\Length;
 
 /**
- * @coversDefaultClass \Selen\Verify\Str\Length
+ * @coversDefaultClass \Selen\Str\Verify\Length
  *
- * @group Selen/Verify/Str
- * @group Selen/Verify/Str/Length
+ * @group Selen/Str/Verify
+ * @group Selen/Str/Verify/Length
  *
- * @see \Selen\Verify\Str\Length
+ * @see \Selen\Str\Verify\Length
  *
  * [command]
  * php ./vendor/bin/phpunit --group=Selen/Verify/Str/Length

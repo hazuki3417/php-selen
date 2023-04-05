@@ -6,9 +6,9 @@
  * @copyright 2021 hazuki3417 all rights reserved.
  */
 
-namespace Selen\Verify\Str;
+namespace Selen\Str\Verify;
 
-class Space implements StatusInterface
+class Space
 {
     private $str;
 

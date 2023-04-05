@@ -24,6 +24,11 @@ abstract class AbstractWidth
         $this->str = $val;
     }
 
+    abstract public function exist(): bool;
+    abstract public function notExist(): bool;
+    abstract public function only(): bool;
+    abstract public function notOnly(): bool;
+
     /**
      * すべて全角文字だった場合の横幅の長さを計算します
      *
