@@ -10,7 +10,6 @@ namespace Selen\Str\Verify;
 
 class Jp
 {
-
     /**
      * ひらがなかどうか確認します。（Unicode範囲：U+3041~U+3096）
      *

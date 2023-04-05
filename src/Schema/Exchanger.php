@@ -225,9 +225,9 @@ class Exchanger
                     }
 
                     $input[$define->key->getName()] = $this->valueExchange(
-                            $define->valueExchangeExecute,
-                            $input[$define->key->getName()]
-                        );
+                        $define->valueExchangeExecute,
+                        $input[$define->key->getName()]
+                    );
                     continue;
                 }
 
