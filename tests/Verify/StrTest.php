@@ -10,10 +10,10 @@ declare(strict_types=1);
 namespace Tests\Selen\Verify\Str;
 
 use PHPUnit\Framework\TestCase;
+use Selen\Str\Verify\Width;
 use Selen\Verify\Str;
 use Selen\Verify\Str\Length;
 use Selen\Verify\Str\Space;
-use Selen\Verify\Str\Width;
 
 /**
  * @coversDefaultClass \Selen\Verify\Str

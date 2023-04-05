@@ -6,18 +6,16 @@
  * @copyright 2021 hazuki3417 all rights reserved.
  */
 
-namespace Selen\Verify\Str\Width;
+namespace Selen\Str\Verify\Width;
 
-use Selen\Verify\Str\StatusInterface;
-
-class Half extends AbstractWidth implements StatusInterface
+class Full extends AbstractWidth implements WidthInterface
 {
     private function __construct(string $val)
     {
         $this->str = $val;
     }
 
-    public static function set(string $val): Half
+    public static function set(string $val): Full
     {
         return new self($val);
     }
@@ -27,7 +25,7 @@ class Half extends AbstractWidth implements StatusInterface
         if ($this->str === '') {
             return false;
         }
-        return $this->getStrWidth() !== $this->calcStrAllFullWidth();
+        return $this->getStrWidth() !== $this->calcStrAllHalfWidth();
     }
 
     public function notExist(): bool
@@ -35,7 +33,7 @@ class Half extends AbstractWidth implements StatusInterface
         if ($this->str === '') {
             return true;
         }
-        return $this->getStrWidth() === $this->calcStrAllFullWidth();
+        return $this->getStrWidth() === $this->calcStrAllHalfWidth();
     }
 
     public function only(): bool
@@ -43,7 +41,7 @@ class Half extends AbstractWidth implements StatusInterface
         if ($this->str === '') {
             return false;
         }
-        return $this->getStrWidth() === $this->calcStrAllHalfWidth();
+        return $this->getStrWidth() === $this->calcStrAllFullWidth();
     }
 
     public function notOnly(): bool
@@ -51,6 +49,6 @@ class Half extends AbstractWidth implements StatusInterface
         if ($this->str === '') {
             return true;
         }
-        return $this->getStrWidth() !== $this->calcStrAllHalfWidth();
+        return $this->getStrWidth() !== $this->calcStrAllFullWidth();
     }
 }

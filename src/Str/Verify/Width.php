@@ -6,12 +6,12 @@
  * @copyright 2021 hazuki3417 all rights reserved.
  */
 
-namespace Selen\Verify\Str;
+namespace Selen\Str\Verify;
 
-use Selen\Verify\Str\Width\Full;
-use Selen\Verify\Str\Width\Half;
+use Selen\Str\Verify\Width\Full;
+use Selen\Str\Verify\Width\Half;
 
-class Width implements WidthInterface
+class Width
 {
     private $str;
 
@@ -25,12 +25,12 @@ class Width implements WidthInterface
         return new self($val);
     }
 
-    public function full(): StatusInterface
+    public function full()
     {
         return Full::set($this->str);
     }
 
-    public function half(): StatusInterface
+    public function half()
     {
         return Half::set($this->str);
     }

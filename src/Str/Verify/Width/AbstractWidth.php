@@ -6,7 +6,7 @@
  * @copyright 2023 hazuki3417 all rights reserved.
  */
 
-namespace Selen\Verify\Str\Width;
+namespace Selen\Str\Verify\Width;
 
 abstract class AbstractWidth
 {

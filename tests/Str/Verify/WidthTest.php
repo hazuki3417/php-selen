@@ -10,20 +10,20 @@ declare(strict_types=1);
 namespace Tests\Selen\Verify\Str;
 
 use PHPUnit\Framework\TestCase;
-use Selen\Verify\Str\Width;
-use Selen\Verify\Str\Width\Full;
-use Selen\Verify\Str\Width\Half;
+use Selen\Str\Verify\Width;
+use Selen\Str\Verify\Width\Full;
+use Selen\Str\Verify\Width\Half;
 
 /**
- * @coversDefaultClass \Selen\Verify\Str\Width
+ * @coversDefaultClass \Selen\Str\Verify\Width
  *
- * @group Selen/Verify/Str
- * @group Selen/Verify/Str/Width
+ * @group Selen/Str/Verify
+ * @group Selen/Str/Verify/Width
  *
- * @see \Selen\Verify\Str\Width
+ * @see \Selen\Str\Verify\Width
  *
  * [command]
- * php ./vendor/bin/phpunit --group=Selen/Verify/Str/Width/Width
+ * php ./vendor/bin/phpunit --group=Selen/Str/Verify/Width/Width
  *
  * @internal
  */

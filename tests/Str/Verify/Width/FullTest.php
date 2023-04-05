@@ -7,53 +7,53 @@ declare(strict_types=1);
  * @copyright 2021 hazuki3417 all rights reserved.
  */
 
-namespace Tests\Selen\Verify\Str\Width;
+namespace Tests\Selen\Str\Verify\Width;
 
 use PHPUnit\Framework\TestCase;
-use Selen\Verify\Str\Width\Half;
+use Selen\Str\Verify\Width\Full;
 
 /**
- * @coversDefaultClass \Selen\Verify\Str\Width\Half
+ * @coversDefaultClass \Selen\Str\Verify\Width\Full
  *
- * @group Selen/Verify/Str
- * @group Selen/Verify/Str/Width
- * @group Selen/Verify/Str/Width/Half
+ * @group Selen/Str/Verify
+ * @group Selen/Str/Verify/Width
+ * @group Selen/Str/Verify/Width/Full
  *
- * @see \Selen\Verify\Str\Width\Half
+ * @see \Selen\Str\Verify\Width\Full
  *
  * [command]
- * php ./vendor/bin/phpunit --group=Selen/Verify/Str/Width/Half
+ * php ./vendor/bin/phpunit --group=Selen/Str/Verify/Width/Full
  *
  * @internal
  */
-class HalfTest extends TestCase
+class FullTest extends TestCase
 {
     public function testConstruct()
     {
-        $this->assertInstanceOf(Half::class, Half::set(''));
+        $this->assertInstanceOf(Full::class, Full::set(''));
     }
 
     public function dataProviderExist()
     {
         return [
             // 全角1字
-            'pattern: 001' => ['expected' => false, 'input' => 'あ'],
-            'pattern: 002' => ['expected' => false, 'input' => 'ａ'],
-            'pattern: 003' => ['expected' => false, 'input' => 'Ａ'],
-            'pattern: 004' => ['expected' => false, 'input' => '１'],
+            'pattern: 001' => ['expected' => true, 'input' => 'あ'],
+            'pattern: 002' => ['expected' => true, 'input' => 'ａ'],
+            'pattern: 003' => ['expected' => true, 'input' => 'Ａ'],
+            'pattern: 004' => ['expected' => true, 'input' => '１'],
             // 半角1字
-            'pattern: 005' => ['expected' => true, 'input' => 'a'],
-            'pattern: 006' => ['expected' => true, 'input' => 'A'],
-            'pattern: 007' => ['expected' => true, 'input' => '1'],
+            'pattern: 005' => ['expected' => false, 'input' => 'a'],
+            'pattern: 006' => ['expected' => false, 'input' => 'A'],
+            'pattern: 007' => ['expected' => false, 'input' => '1'],
             // 全角2字以上
-            'pattern: 008' => ['expected' => false, 'input' => 'あい'],
-            'pattern: 009' => ['expected' => false, 'input' => 'ａｉ'],
-            'pattern: 010' => ['expected' => false, 'input' => 'ＡＩ'],
-            'pattern: 011' => ['expected' => false, 'input' => '１２'],
+            'pattern: 008' => ['expected' => true, 'input' => 'あい'],
+            'pattern: 009' => ['expected' => true, 'input' => 'ａｉ'],
+            'pattern: 010' => ['expected' => true, 'input' => 'ＡＩ'],
+            'pattern: 011' => ['expected' => true, 'input' => '１２'],
             // 半角2字以上
-            'pattern: 012' => ['expected' => true, 'input' => 'ab'],
-            'pattern: 013' => ['expected' => true, 'input' => 'AB'],
-            'pattern: 014' => ['expected' => true, 'input' => '12'],
+            'pattern: 012' => ['expected' => false, 'input' => 'ab'],
+            'pattern: 013' => ['expected' => false, 'input' => 'AB'],
+            'pattern: 014' => ['expected' => false, 'input' => '12'],
             // 全角半角混同（英小文字）
             'pattern: 015' => ['expected' => true, 'input' => 'あa'],
             'pattern: 016' => ['expected' => true, 'input' => 'ａa'],
@@ -77,37 +77,35 @@ class HalfTest extends TestCase
     /**
      * @dataProvider dataProviderExist
      *
-     * @group verify
-     *
      * @param mixed $expected
      * @param mixed $input
      */
     public function testExist($expected, $input)
     {
-        $this->assertSame($expected, (Half::set($input))->exist());
+        $this->assertSame($expected, (Full::set($input))->exist());
     }
 
     public function dataProviderNotExist()
     {
         return [
             // 全角1字
-            'pattern: 001' => ['expected' => true, 'input' => 'あ'],
-            'pattern: 002' => ['expected' => true, 'input' => 'ａ'],
-            'pattern: 003' => ['expected' => true, 'input' => 'Ａ'],
-            'pattern: 004' => ['expected' => true, 'input' => '１'],
+            'pattern: 001' => ['expected' => false, 'input' => 'あ'],
+            'pattern: 002' => ['expected' => false, 'input' => 'ａ'],
+            'pattern: 003' => ['expected' => false, 'input' => 'Ａ'],
+            'pattern: 004' => ['expected' => false, 'input' => '１'],
             // 半角1字
-            'pattern: 005' => ['expected' => false, 'input' => 'a'],
-            'pattern: 006' => ['expected' => false, 'input' => 'A'],
-            'pattern: 007' => ['expected' => false, 'input' => '1'],
+            'pattern: 005' => ['expected' => true, 'input' => 'a'],
+            'pattern: 006' => ['expected' => true, 'input' => 'A'],
+            'pattern: 007' => ['expected' => true, 'input' => '1'],
             // 全角2字以上
-            'pattern: 008' => ['expected' => true, 'input' => 'あい'],
-            'pattern: 009' => ['expected' => true, 'input' => 'ａｉ'],
-            'pattern: 010' => ['expected' => true, 'input' => 'ＡＩ'],
-            'pattern: 011' => ['expected' => true, 'input' => '１２'],
+            'pattern: 008' => ['expected' => false, 'input' => 'あい'],
+            'pattern: 009' => ['expected' => false, 'input' => 'ａｉ'],
+            'pattern: 010' => ['expected' => false, 'input' => 'ＡＩ'],
+            'pattern: 011' => ['expected' => false, 'input' => '１２'],
             // 半角2字以上
-            'pattern: 012' => ['expected' => false, 'input' => 'ab'],
-            'pattern: 013' => ['expected' => false, 'input' => 'AB'],
-            'pattern: 014' => ['expected' => false, 'input' => '12'],
+            'pattern: 012' => ['expected' => true, 'input' => 'ab'],
+            'pattern: 013' => ['expected' => true, 'input' => 'AB'],
+            'pattern: 014' => ['expected' => true, 'input' => '12'],
             // 全角半角混同（英小文字）
             'pattern: 015' => ['expected' => false, 'input' => 'あa'],
             'pattern: 016' => ['expected' => false, 'input' => 'ａa'],
@@ -131,37 +129,35 @@ class HalfTest extends TestCase
     /**
      * @dataProvider dataProviderNotExist
      *
-     * @group verify2
-     *
      * @param mixed $expected
      * @param mixed $input
      */
     public function testNotExist($expected, $input)
     {
-        $this->assertSame($expected, (Half::set($input))->notExist());
+        $this->assertSame($expected, (Full::set($input))->notExist());
     }
 
     public function dataProviderOnly()
     {
         return [
             // 全角1字
-            'pattern: 001' => ['expected' => false, 'input' => 'あ'],
-            'pattern: 002' => ['expected' => false, 'input' => 'ａ'],
-            'pattern: 003' => ['expected' => false, 'input' => 'Ａ'],
-            'pattern: 004' => ['expected' => false, 'input' => '１'],
+            'pattern: 001' => ['expected' => true, 'input' => 'あ'],
+            'pattern: 002' => ['expected' => true, 'input' => 'ａ'],
+            'pattern: 003' => ['expected' => true, 'input' => 'Ａ'],
+            'pattern: 004' => ['expected' => true, 'input' => '１'],
             // 半角1字
-            'pattern: 005' => ['expected' => true, 'input' => 'a'],
-            'pattern: 006' => ['expected' => true, 'input' => 'A'],
-            'pattern: 007' => ['expected' => true, 'input' => '1'],
+            'pattern: 005' => ['expected' => false, 'input' => 'a'],
+            'pattern: 006' => ['expected' => false, 'input' => 'A'],
+            'pattern: 007' => ['expected' => false, 'input' => '1'],
             // 全角2字以上
-            'pattern: 008' => ['expected' => false, 'input' => 'あい'],
-            'pattern: 009' => ['expected' => false, 'input' => 'ａｉ'],
-            'pattern: 010' => ['expected' => false, 'input' => 'ＡＩ'],
-            'pattern: 011' => ['expected' => false, 'input' => '１２'],
+            'pattern: 008' => ['expected' => true, 'input' => 'あい'],
+            'pattern: 009' => ['expected' => true, 'input' => 'ａｉ'],
+            'pattern: 010' => ['expected' => true, 'input' => 'ＡＩ'],
+            'pattern: 011' => ['expected' => true, 'input' => '１２'],
             // 半角2字以上
-            'pattern: 012' => ['expected' => true, 'input' => 'ab'],
-            'pattern: 013' => ['expected' => true, 'input' => 'AB'],
-            'pattern: 014' => ['expected' => true, 'input' => '12'],
+            'pattern: 012' => ['expected' => false, 'input' => 'ab'],
+            'pattern: 013' => ['expected' => false, 'input' => 'AB'],
+            'pattern: 014' => ['expected' => false, 'input' => '12'],
             // 全角半角混同（英小文字）
             'pattern: 015' => ['expected' => false, 'input' => 'あa'],
             'pattern: 016' => ['expected' => false, 'input' => 'ａa'],
@@ -190,30 +186,30 @@ class HalfTest extends TestCase
      */
     public function testOnly($expected, $input)
     {
-        $this->assertSame($expected, (Half::set($input))->only());
+        $this->assertSame($expected, (Full::set($input))->only());
     }
 
     public function dataProviderNotOnly()
     {
         return [
             // 全角1字
-            'pattern: 001' => ['expected' => true, 'input' => 'あ'],
-            'pattern: 002' => ['expected' => true, 'input' => 'ａ'],
-            'pattern: 003' => ['expected' => true, 'input' => 'Ａ'],
-            'pattern: 004' => ['expected' => true, 'input' => '１'],
+            'pattern: 001' => ['expected' => false, 'input' => 'あ'],
+            'pattern: 002' => ['expected' => false, 'input' => 'ａ'],
+            'pattern: 003' => ['expected' => false, 'input' => 'Ａ'],
+            'pattern: 004' => ['expected' => false, 'input' => '１'],
             // 半角1字
-            'pattern: 005' => ['expected' => false, 'input' => 'a'],
-            'pattern: 006' => ['expected' => false, 'input' => 'A'],
-            'pattern: 007' => ['expected' => false, 'input' => '1'],
+            'pattern: 005' => ['expected' => true, 'input' => 'a'],
+            'pattern: 006' => ['expected' => true, 'input' => 'A'],
+            'pattern: 007' => ['expected' => true, 'input' => '1'],
             // 全角2字以上
-            'pattern: 008' => ['expected' => true, 'input' => 'あい'],
-            'pattern: 009' => ['expected' => true, 'input' => 'ａｉ'],
-            'pattern: 010' => ['expected' => true, 'input' => 'ＡＩ'],
-            'pattern: 011' => ['expected' => true, 'input' => '１２'],
+            'pattern: 008' => ['expected' => false, 'input' => 'あい'],
+            'pattern: 009' => ['expected' => false, 'input' => 'ａｉ'],
+            'pattern: 010' => ['expected' => false, 'input' => 'ＡＩ'],
+            'pattern: 011' => ['expected' => false, 'input' => '１２'],
             // 半角2字以上
-            'pattern: 012' => ['expected' => false, 'input' => 'ab'],
-            'pattern: 013' => ['expected' => false, 'input' => 'AB'],
-            'pattern: 014' => ['expected' => false, 'input' => '12'],
+            'pattern: 012' => ['expected' => true, 'input' => 'ab'],
+            'pattern: 013' => ['expected' => true, 'input' => 'AB'],
+            'pattern: 014' => ['expected' => true, 'input' => '12'],
             // 全角半角混同（英小文字）
             'pattern: 015' => ['expected' => true, 'input' => 'あa'],
             'pattern: 016' => ['expected' => true, 'input' => 'ａa'],
@@ -237,13 +233,11 @@ class HalfTest extends TestCase
     /**
      * @dataProvider dataProviderNotOnly
      *
-     * @group verify
-     *
      * @param mixed $expected
      * @param mixed $input
      */
     public function testNotOnly($expected, $input)
     {
-        $this->assertSame($expected, (Half::set($input))->notOnly());
+        $this->assertSame($expected, (Full::set($input))->notOnly());
     }
 }

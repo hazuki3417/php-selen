@@ -8,10 +8,10 @@
 
 namespace Selen\Verify;
 
+use Selen\Str\Verify\Width;
 use Selen\Verify\Str\Length;
 use Selen\Verify\Str\Radixes\Radix;
 use Selen\Verify\Str\Space;
-use Selen\Verify\Str\Width;
 
 class Str
 {
