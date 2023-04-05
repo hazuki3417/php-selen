@@ -12,7 +12,7 @@ class Full extends AbstractWidth
 {
     private function __construct(string $val)
     {
-        $this->str = $val;
+        parent::__construct($val);
     }
 
     public static function set(string $val): Full
