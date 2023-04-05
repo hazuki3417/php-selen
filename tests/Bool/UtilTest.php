@@ -10,16 +10,16 @@ declare(strict_types=1);
 namespace Tests\Selen\Str;
 
 use PHPUnit\Framework\TestCase;
-use Selen\BoolUtil;
+use Selen\Bool\Util;
 
 /**
- * @coversDefaultClass \Selen\BoolUtil
+ * @coversDefaultClass \Selen\Bool\Util
  *
- * @see \Selen\BoolUtil
+ * @see \Selen\Bool\Util
  *
  * @internal
  */
-class BoolUtilTest extends TestCase
+class UtilTest extends TestCase
 {
     public function dataProviderToString()
     {
@@ -37,7 +37,7 @@ class BoolUtilTest extends TestCase
      */
     public function testToString($expected, $input)
     {
-        $this->assertSame($expected, BoolUtil::toString($input));
+        $this->assertSame($expected, Util::toString($input));
     }
 
     public function dataProviderOneTrue()
@@ -63,7 +63,7 @@ class BoolUtilTest extends TestCase
      */
     public function testOneTrue($expected, $input)
     {
-        $this->assertSame($expected, BoolUtil::oneTrue(...$input));
+        $this->assertSame($expected, Util::oneTrue(...$input));
     }
 
     public function dataProviderOneFalse()
@@ -89,7 +89,7 @@ class BoolUtilTest extends TestCase
      */
     public function testOneFalse($expected, $input)
     {
-        $this->assertSame($expected, BoolUtil::oneFalse(...$input));
+        $this->assertSame($expected, Util::oneFalse(...$input));
     }
 
     public function dataProviderAnyTrue()
@@ -115,7 +115,7 @@ class BoolUtilTest extends TestCase
      */
     public function testAnyTrue($expected, $input)
     {
-        $this->assertSame($expected, BoolUtil::anyTrue(...$input));
+        $this->assertSame($expected, Util::anyTrue(...$input));
     }
 
     public function dataProviderAnyFalse()
@@ -141,7 +141,7 @@ class BoolUtilTest extends TestCase
      */
     public function testAnyFalse($expected, $input)
     {
-        $this->assertSame($expected, BoolUtil::anyFalse(...$input));
+        $this->assertSame($expected, Util::anyFalse(...$input));
     }
 
     public function dataProviderAllTrue()
@@ -167,7 +167,7 @@ class BoolUtilTest extends TestCase
      */
     public function testAllTrue($expected, $input)
     {
-        $this->assertSame($expected, BoolUtil::allTrue(...$input));
+        $this->assertSame($expected, Util::allTrue(...$input));
     }
 
     public function dataProviderAllFalse()
@@ -193,6 +193,6 @@ class BoolUtilTest extends TestCase
      */
     public function testAllFalse($expected, $input)
     {
-        $this->assertSame($expected, BoolUtil::allFalse(...$input));
+        $this->assertSame($expected, Util::allFalse(...$input));
     }
 }

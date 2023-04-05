@@ -6,9 +6,9 @@
  * @copyright 2022 hazuki3417 all rights reserved.
  */
 
-namespace Selen;
+namespace Selen\Bool;
 
-class BoolUtil
+class Util
 {
     public static function toString(bool $results)
     {
