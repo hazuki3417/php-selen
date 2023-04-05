@@ -10,11 +10,8 @@ namespace Selen\Verify\Str\Width;
 
 use Selen\Verify\Str\StatusInterface;
 
-class Full implements StatusInterface
+class Full extends AbstractWidth implements StatusInterface
 {
-    public const FULL_CHARACTER_WIDTH = 2;
-    private $str;
-
     private function __construct(string $val)
     {
         $this->str = $val;
@@ -30,17 +27,15 @@ class Full implements StatusInterface
         if ($this->str === '') {
             return false;
         }
-        // NOTE: 文字数と文字幅を比較
-        return mb_strlen($this->str) !== mb_strwidth($this->str);
+        return $this->getStrWidth() !== $this->calcStrAllHalfWidth();
     }
 
     public function notExist(): bool
     {
         if ($this->str === '') {
-            return false;
+            return true;
         }
-        // NOTE: 文字数と文字幅を比較
-        return mb_strlen($this->str) === mb_strwidth($this->str);
+        return $this->getStrWidth() === $this->calcStrAllHalfWidth();
     }
 
     public function only(): bool
@@ -48,18 +43,14 @@ class Full implements StatusInterface
         if ($this->str === '') {
             return false;
         }
-        $calcMbStrWidth = mb_strlen($this->str) * self::FULL_CHARACTER_WIDTH;
-
-        return $calcMbStrWidth === mb_strwidth($this->str);
+        return $this->getStrWidth() === $this->calcStrAllFullWidth();
     }
 
     public function notOnly(): bool
     {
         if ($this->str === '') {
-            return false;
+            return true;
         }
-        $calcMbStrWidth = mb_strlen($this->str) * self::FULL_CHARACTER_WIDTH;
-
-        return $calcMbStrWidth !== mb_strwidth($this->str);
+        return $this->getStrWidth() !== $this->calcStrAllFullWidth();
     }
 }

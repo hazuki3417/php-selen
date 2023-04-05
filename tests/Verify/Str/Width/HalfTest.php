@@ -37,46 +37,47 @@ class HalfTest extends TestCase
     {
         return [
             // 全角1字
-            'pattern001' => ['expected' => false, 'input' => 'あ'],
-            'pattern002' => ['expected' => false, 'input' => 'ａ'],
-            'pattern003' => ['expected' => false, 'input' => 'Ａ'],
-            'pattern004' => ['expected' => false, 'input' => '１'],
+            'pattern: 001' => ['expected' => false, 'input' => 'あ'],
+            'pattern: 002' => ['expected' => false, 'input' => 'ａ'],
+            'pattern: 003' => ['expected' => false, 'input' => 'Ａ'],
+            'pattern: 004' => ['expected' => false, 'input' => '１'],
             // 半角1字
-            'pattern005' => ['expected' => true, 'input' => 'a'],
-            'pattern006' => ['expected' => true, 'input' => 'A'],
-            'pattern007' => ['expected' => true, 'input' => '1'],
+            'pattern: 005' => ['expected' => true, 'input' => 'a'],
+            'pattern: 006' => ['expected' => true, 'input' => 'A'],
+            'pattern: 007' => ['expected' => true, 'input' => '1'],
             // 全角2字以上
-            'pattern008' => ['expected' => false, 'input' => 'あい'],
-            'pattern009' => ['expected' => false, 'input' => 'ａｉ'],
-            'pattern010' => ['expected' => false, 'input' => 'ＡＩ'],
-            'pattern011' => ['expected' => false, 'input' => '１２'],
+            'pattern: 008' => ['expected' => false, 'input' => 'あい'],
+            'pattern: 009' => ['expected' => false, 'input' => 'ａｉ'],
+            'pattern: 010' => ['expected' => false, 'input' => 'ＡＩ'],
+            'pattern: 011' => ['expected' => false, 'input' => '１２'],
             // 半角2字以上
-            'pattern012' => ['expected' => true, 'input' => 'ab'],
-            'pattern013' => ['expected' => true, 'input' => 'AB'],
-            'pattern014' => ['expected' => true, 'input' => '12'],
-            // 全角半角混同
-            'pattern015' => ['expected' => false, 'input' => 'あa'],
-            'pattern016' => ['expected' => false, 'input' => 'ａa'],
-            'pattern017' => ['expected' => false, 'input' => 'Ａa'],
-            'pattern018' => ['expected' => false, 'input' => '１a'],
-
-            'pattern019' => ['expected' => false, 'input' => 'あA'],
-            'pattern020' => ['expected' => false, 'input' => 'ａA'],
-            'pattern021' => ['expected' => false, 'input' => 'ＡA'],
-            'pattern022' => ['expected' => false, 'input' => '１A'],
-
-            'pattern023' => ['expected' => false, 'input' => 'あ1'],
-            'pattern024' => ['expected' => false, 'input' => 'ａ1'],
-            'pattern025' => ['expected' => false, 'input' => 'Ａ1'],
-            'pattern026' => ['expected' => false, 'input' => '１1'],
-
+            'pattern: 012' => ['expected' => true, 'input' => 'ab'],
+            'pattern: 013' => ['expected' => true, 'input' => 'AB'],
+            'pattern: 014' => ['expected' => true, 'input' => '12'],
+            // 全角半角混同（英小文字）
+            'pattern: 015' => ['expected' => true, 'input' => 'あa'],
+            'pattern: 016' => ['expected' => true, 'input' => 'ａa'],
+            'pattern: 017' => ['expected' => true, 'input' => 'Ａa'],
+            'pattern: 018' => ['expected' => true, 'input' => '１a'],
+            // 全角半角混同（英大文字）
+            'pattern: 019' => ['expected' => true, 'input' => 'あA'],
+            'pattern: 020' => ['expected' => true, 'input' => 'ａA'],
+            'pattern: 021' => ['expected' => true, 'input' => 'ＡA'],
+            'pattern: 022' => ['expected' => true, 'input' => '１A'],
+            // 全角半角混同（英数字）
+            'pattern: 023' => ['expected' => true, 'input' => 'あ1'],
+            'pattern: 024' => ['expected' => true, 'input' => 'ａ1'],
+            'pattern: 025' => ['expected' => true, 'input' => 'Ａ1'],
+            'pattern: 026' => ['expected' => true, 'input' => '１1'],
             // 例外パターン
-            'pattern027' => ['expected' => false, 'input' => ''],
+            'pattern: 027' => ['expected' => false, 'input' => ''],
         ];
     }
 
     /**
      * @dataProvider dataProviderExist
+     *
+     * @group verify
      *
      * @param mixed $expected
      * @param mixed $input
@@ -90,46 +91,47 @@ class HalfTest extends TestCase
     {
         return [
             // 全角1字
-            'pattern001' => ['expected' => true, 'input' => 'あ'],
-            'pattern002' => ['expected' => true, 'input' => 'ａ'],
-            'pattern003' => ['expected' => true, 'input' => 'Ａ'],
-            'pattern004' => ['expected' => true, 'input' => '１'],
+            'pattern: 001' => ['expected' => true, 'input' => 'あ'],
+            'pattern: 002' => ['expected' => true, 'input' => 'ａ'],
+            'pattern: 003' => ['expected' => true, 'input' => 'Ａ'],
+            'pattern: 004' => ['expected' => true, 'input' => '１'],
             // 半角1字
-            'pattern005' => ['expected' => false, 'input' => 'a'],
-            'pattern006' => ['expected' => false, 'input' => 'A'],
-            'pattern007' => ['expected' => false, 'input' => '1'],
+            'pattern: 005' => ['expected' => false, 'input' => 'a'],
+            'pattern: 006' => ['expected' => false, 'input' => 'A'],
+            'pattern: 007' => ['expected' => false, 'input' => '1'],
             // 全角2字以上
-            'pattern008' => ['expected' => true, 'input' => 'あい'],
-            'pattern009' => ['expected' => true, 'input' => 'ａｉ'],
-            'pattern010' => ['expected' => true, 'input' => 'ＡＩ'],
-            'pattern011' => ['expected' => true, 'input' => '１２'],
+            'pattern: 008' => ['expected' => true, 'input' => 'あい'],
+            'pattern: 009' => ['expected' => true, 'input' => 'ａｉ'],
+            'pattern: 010' => ['expected' => true, 'input' => 'ＡＩ'],
+            'pattern: 011' => ['expected' => true, 'input' => '１２'],
             // 半角2字以上
-            'pattern012' => ['expected' => false, 'input' => 'ab'],
-            'pattern013' => ['expected' => false, 'input' => 'AB'],
-            'pattern014' => ['expected' => false, 'input' => '12'],
-            // 全角半角混同
-            'pattern015' => ['expected' => true, 'input' => 'あa'],
-            'pattern016' => ['expected' => true, 'input' => 'ａa'],
-            'pattern017' => ['expected' => true, 'input' => 'Ａa'],
-            'pattern018' => ['expected' => true, 'input' => '１a'],
-
-            'pattern019' => ['expected' => true, 'input' => 'あA'],
-            'pattern020' => ['expected' => true, 'input' => 'ａA'],
-            'pattern021' => ['expected' => true, 'input' => 'ＡA'],
-            'pattern022' => ['expected' => true, 'input' => '１A'],
-
-            'pattern023' => ['expected' => true, 'input' => 'あ1'],
-            'pattern024' => ['expected' => true, 'input' => 'ａ1'],
-            'pattern025' => ['expected' => true, 'input' => 'Ａ1'],
-            'pattern026' => ['expected' => true, 'input' => '１1'],
-
+            'pattern: 012' => ['expected' => false, 'input' => 'ab'],
+            'pattern: 013' => ['expected' => false, 'input' => 'AB'],
+            'pattern: 014' => ['expected' => false, 'input' => '12'],
+            // 全角半角混同（英小文字）
+            'pattern: 015' => ['expected' => false, 'input' => 'あa'],
+            'pattern: 016' => ['expected' => false, 'input' => 'ａa'],
+            'pattern: 017' => ['expected' => false, 'input' => 'Ａa'],
+            'pattern: 018' => ['expected' => false, 'input' => '１a'],
+            // 全角半角混同（英大文字）
+            'pattern: 019' => ['expected' => false, 'input' => 'あA'],
+            'pattern: 020' => ['expected' => false, 'input' => 'ａA'],
+            'pattern: 021' => ['expected' => false, 'input' => 'ＡA'],
+            'pattern: 022' => ['expected' => false, 'input' => '１A'],
+            // 全角半角混同（英数字）
+            'pattern: 023' => ['expected' => false, 'input' => 'あ1'],
+            'pattern: 024' => ['expected' => false, 'input' => 'ａ1'],
+            'pattern: 025' => ['expected' => false, 'input' => 'Ａ1'],
+            'pattern: 026' => ['expected' => false, 'input' => '１1'],
             // 例外パターン
-            'pattern027' => ['expected' => false, 'input' => ''],
+            'pattern: 027' => ['expected' => true, 'input' => ''],
         ];
     }
 
     /**
      * @dataProvider dataProviderNotExist
+     *
+     * @group verify2
      *
      * @param mixed $expected
      * @param mixed $input
@@ -143,41 +145,40 @@ class HalfTest extends TestCase
     {
         return [
             // 全角1字
-            'pattern001' => ['expected' => false, 'input' => 'あ'],
-            'pattern002' => ['expected' => false, 'input' => 'ａ'],
-            'pattern003' => ['expected' => false, 'input' => 'Ａ'],
-            'pattern004' => ['expected' => false, 'input' => '１'],
+            'pattern: 001' => ['expected' => false, 'input' => 'あ'],
+            'pattern: 002' => ['expected' => false, 'input' => 'ａ'],
+            'pattern: 003' => ['expected' => false, 'input' => 'Ａ'],
+            'pattern: 004' => ['expected' => false, 'input' => '１'],
             // 半角1字
-            'pattern005' => ['expected' => true, 'input' => 'a'],
-            'pattern006' => ['expected' => true, 'input' => 'A'],
-            'pattern007' => ['expected' => true, 'input' => '1'],
+            'pattern: 005' => ['expected' => true, 'input' => 'a'],
+            'pattern: 006' => ['expected' => true, 'input' => 'A'],
+            'pattern: 007' => ['expected' => true, 'input' => '1'],
             // 全角2字以上
-            'pattern008' => ['expected' => false, 'input' => 'あい'],
-            'pattern009' => ['expected' => false, 'input' => 'ａｉ'],
-            'pattern010' => ['expected' => false, 'input' => 'ＡＩ'],
-            'pattern011' => ['expected' => false, 'input' => '１２'],
+            'pattern: 008' => ['expected' => false, 'input' => 'あい'],
+            'pattern: 009' => ['expected' => false, 'input' => 'ａｉ'],
+            'pattern: 010' => ['expected' => false, 'input' => 'ＡＩ'],
+            'pattern: 011' => ['expected' => false, 'input' => '１２'],
             // 半角2字以上
-            'pattern012' => ['expected' => true, 'input' => 'ab'],
-            'pattern013' => ['expected' => true, 'input' => 'AB'],
-            'pattern014' => ['expected' => true, 'input' => '12'],
-            // 全角半角混同
-            'pattern015' => ['expected' => true, 'input' => 'あa'],
-            'pattern016' => ['expected' => true, 'input' => 'ａa'],
-            'pattern017' => ['expected' => true, 'input' => 'Ａa'],
-            'pattern018' => ['expected' => true, 'input' => '１a'],
-
-            'pattern019' => ['expected' => true, 'input' => 'あA'],
-            'pattern020' => ['expected' => true, 'input' => 'ａA'],
-            'pattern021' => ['expected' => true, 'input' => 'ＡA'],
-            'pattern022' => ['expected' => true, 'input' => '１A'],
-
-            'pattern023' => ['expected' => true, 'input' => 'あ1'],
-            'pattern024' => ['expected' => true, 'input' => 'ａ1'],
-            'pattern025' => ['expected' => true, 'input' => 'Ａ1'],
-            'pattern026' => ['expected' => true, 'input' => '１1'],
-
+            'pattern: 012' => ['expected' => true, 'input' => 'ab'],
+            'pattern: 013' => ['expected' => true, 'input' => 'AB'],
+            'pattern: 014' => ['expected' => true, 'input' => '12'],
+            // 全角半角混同（英小文字）
+            'pattern: 015' => ['expected' => false, 'input' => 'あa'],
+            'pattern: 016' => ['expected' => false, 'input' => 'ａa'],
+            'pattern: 017' => ['expected' => false, 'input' => 'Ａa'],
+            'pattern: 018' => ['expected' => false, 'input' => '１a'],
+            // 全角半角混同（英大文字）
+            'pattern: 019' => ['expected' => false, 'input' => 'あA'],
+            'pattern: 020' => ['expected' => false, 'input' => 'ａA'],
+            'pattern: 021' => ['expected' => false, 'input' => 'ＡA'],
+            'pattern: 022' => ['expected' => false, 'input' => '１A'],
+            // 全角半角混同（英数字）
+            'pattern: 023' => ['expected' => false, 'input' => 'あ1'],
+            'pattern: 024' => ['expected' => false, 'input' => 'ａ1'],
+            'pattern: 025' => ['expected' => false, 'input' => 'Ａ1'],
+            'pattern: 026' => ['expected' => false, 'input' => '１1'],
             // 例外パターン
-            'pattern027' => ['expected' => false, 'input' => ''],
+            'pattern: 027' => ['expected' => false, 'input' => ''],
         ];
     }
 
@@ -196,46 +197,47 @@ class HalfTest extends TestCase
     {
         return [
             // 全角1字
-            'pattern001' => ['expected' => true, 'input' => 'あ'],
-            'pattern002' => ['expected' => true, 'input' => 'ａ'],
-            'pattern003' => ['expected' => true, 'input' => 'Ａ'],
-            'pattern004' => ['expected' => true, 'input' => '１'],
+            'pattern: 001' => ['expected' => true, 'input' => 'あ'],
+            'pattern: 002' => ['expected' => true, 'input' => 'ａ'],
+            'pattern: 003' => ['expected' => true, 'input' => 'Ａ'],
+            'pattern: 004' => ['expected' => true, 'input' => '１'],
             // 半角1字
-            'pattern005' => ['expected' => false, 'input' => 'a'],
-            'pattern006' => ['expected' => false, 'input' => 'A'],
-            'pattern007' => ['expected' => false, 'input' => '1'],
+            'pattern: 005' => ['expected' => false, 'input' => 'a'],
+            'pattern: 006' => ['expected' => false, 'input' => 'A'],
+            'pattern: 007' => ['expected' => false, 'input' => '1'],
             // 全角2字以上
-            'pattern008' => ['expected' => true, 'input' => 'あい'],
-            'pattern009' => ['expected' => true, 'input' => 'ａｉ'],
-            'pattern010' => ['expected' => true, 'input' => 'ＡＩ'],
-            'pattern011' => ['expected' => true, 'input' => '１２'],
+            'pattern: 008' => ['expected' => true, 'input' => 'あい'],
+            'pattern: 009' => ['expected' => true, 'input' => 'ａｉ'],
+            'pattern: 010' => ['expected' => true, 'input' => 'ＡＩ'],
+            'pattern: 011' => ['expected' => true, 'input' => '１２'],
             // 半角2字以上
-            'pattern012' => ['expected' => false, 'input' => 'ab'],
-            'pattern013' => ['expected' => false, 'input' => 'AB'],
-            'pattern014' => ['expected' => false, 'input' => '12'],
-            // 全角半角混同
-            'pattern015' => ['expected' => false, 'input' => 'あa'],
-            'pattern016' => ['expected' => false, 'input' => 'ａa'],
-            'pattern017' => ['expected' => false, 'input' => 'Ａa'],
-            'pattern018' => ['expected' => false, 'input' => '１a'],
-
-            'pattern019' => ['expected' => false, 'input' => 'あA'],
-            'pattern020' => ['expected' => false, 'input' => 'ａA'],
-            'pattern021' => ['expected' => false, 'input' => 'ＡA'],
-            'pattern022' => ['expected' => false, 'input' => '１A'],
-
-            'pattern023' => ['expected' => false, 'input' => 'あ1'],
-            'pattern024' => ['expected' => false, 'input' => 'ａ1'],
-            'pattern025' => ['expected' => false, 'input' => 'Ａ1'],
-            'pattern026' => ['expected' => false, 'input' => '１1'],
-
+            'pattern: 012' => ['expected' => false, 'input' => 'ab'],
+            'pattern: 013' => ['expected' => false, 'input' => 'AB'],
+            'pattern: 014' => ['expected' => false, 'input' => '12'],
+            // 全角半角混同（英小文字）
+            'pattern: 015' => ['expected' => true, 'input' => 'あa'],
+            'pattern: 016' => ['expected' => true, 'input' => 'ａa'],
+            'pattern: 017' => ['expected' => true, 'input' => 'Ａa'],
+            'pattern: 018' => ['expected' => true, 'input' => '１a'],
+            // 全角半角混同（英大文字）
+            'pattern: 019' => ['expected' => true, 'input' => 'あA'],
+            'pattern: 020' => ['expected' => true, 'input' => 'ａA'],
+            'pattern: 021' => ['expected' => true, 'input' => 'ＡA'],
+            'pattern: 022' => ['expected' => true, 'input' => '１A'],
+            // 全角半角混同（英数字）
+            'pattern: 023' => ['expected' => true, 'input' => 'あ1'],
+            'pattern: 024' => ['expected' => true, 'input' => 'ａ1'],
+            'pattern: 025' => ['expected' => true, 'input' => 'Ａ1'],
+            'pattern: 026' => ['expected' => true, 'input' => '１1'],
             // 例外パターン
-            'pattern027' => ['expected' => false, 'input' => ''],
+            'pattern: 027' => ['expected' => true, 'input' => ''],
         ];
     }
 
     /**
      * @dataProvider dataProviderNotOnly
+     *
+     * @group verify
      *
      * @param mixed $expected
      * @param mixed $input
