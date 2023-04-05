@@ -6,7 +6,7 @@
  * @copyright 2021 hazuki3417 all rights reserved.
  */
 
-namespace Selen\Str;
+namespace Selen\Str\Exchanger;
 
 /**
  * ケースフォールディングを行うクラス

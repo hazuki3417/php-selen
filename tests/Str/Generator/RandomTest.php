@@ -10,12 +10,12 @@ declare(strict_types=1);
 namespace Tests\Selen\Str;
 
 use PHPUnit\Framework\TestCase;
-use Selen\Str\Random;
+use Selen\Str\Generator\Random;
 
 /**
- * @coversDefaultClass \Selen\Str\Random
+ * @coversDefaultClass \Selen\Str\Generator\Random
  *
- * @see \Selen\Str\Random
+ * @see \Selen\Str\Generator\Random
  *
  * @internal
  */

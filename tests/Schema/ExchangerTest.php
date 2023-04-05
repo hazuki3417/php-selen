@@ -17,7 +17,7 @@ use Selen\Schema\Exchange\Define;
 use Selen\Schema\Exchange\KeyExchangeInterface;
 use Selen\Schema\Exchange\ValueExchangeInterface;
 use Selen\Schema\Exchanger;
-use Selen\Str\CaseName;
+use Selen\Str\Exchanger\CaseName;
 
 /**
  * @coversDefaultClass \Selen\Schema\Exchanger

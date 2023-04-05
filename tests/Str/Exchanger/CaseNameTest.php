@@ -10,12 +10,12 @@ declare(strict_types=1);
 namespace Tests\Selen\Str;
 
 use PHPUnit\Framework\TestCase;
-use Selen\Str\CaseName;
+use Selen\Str\Exchanger\CaseName;
 
 /**
- * @coversDefaultClass \Selen\Str\CaseName
+ * @coversDefaultClass \Selen\Str\Exchanger\CaseName
  *
- * @see \Selen\Str\CaseName
+ * @see \Selen\Str\Exchanger\CaseName
  *
  * @internal
  */
