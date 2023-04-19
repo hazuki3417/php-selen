@@ -10,16 +10,30 @@ namespace Selen\Bool;
 
 class Util
 {
-    public static function toString(bool $result)
+    /**
+     * bool型を真偽値文字列に変換します
+     *
+     * @param bool $value 真偽値を渡します
+     *
+     * @return string 変換した値を返します
+     */
+    public static function toString(bool $value): string
     {
-        return $result ? 'true' : 'false';
+        return $value ? 'true' : 'false';
     }
 
-    public static function oneTrue(bool ...$results): bool
+    /**
+     * trueが1つだけ存在するか確認します
+     *
+     * @return bool 1つだけ存在する場合はtrueを、それ以外の場合はfalseを返します
+     *
+     * @param bool[] $values
+     */
+    public static function oneTrue(bool ...$values): bool
     {
         $count = 0;
 
-        foreach ($results as $result) {
+        foreach ($values as $result) {
             if ($result === true) {
                 ++$count;
             }
@@ -27,11 +41,18 @@ class Util
         return $count === 1;
     }
 
-    public static function oneFalse(bool ...$results): bool
+    /**
+     * falseが1つだけ存在するか確認します
+     *
+     * @return bool 1つだけ存在する場合はtrueを、それ以外の場合はfalseを返します
+     *
+     * @param bool[] $values
+     */
+    public static function oneFalse(bool ...$values): bool
     {
         $count = 0;
 
-        foreach ($results as $result) {
+        foreach ($values as $result) {
             if ($result === false) {
                 ++$count;
             }
@@ -39,9 +60,16 @@ class Util
         return $count === 1;
     }
 
-    public static function anyTrue(bool ...$results): bool
+    /**
+     * trueが存在するか確認します
+     *
+     * @return bool 存在する場合はtrueを、それ以外の場合はfalseを返します
+     *
+     * @param bool[] $values
+     */
+    public static function anyTrue(bool ...$values): bool
     {
-        foreach ($results as $result) {
+        foreach ($values as $result) {
             if ($result === true) {
                 return true;
             }
@@ -49,9 +77,16 @@ class Util
         return false;
     }
 
-    public static function anyFalse(bool ...$results): bool
+    /**
+     * falseが存在するか確認します
+     *
+     * @return bool 存在する場合はtrueを、それ以外の場合はfalseを返します
+     *
+     * @param bool[] $values
+     */
+    public static function anyFalse(bool ...$values): bool
     {
-        foreach ($results as $result) {
+        foreach ($values as $result) {
             if ($result === false) {
                 return true;
             }
@@ -59,27 +94,41 @@ class Util
         return false;
     }
 
-    public static function allTrue(bool ...$results): bool
+    /**
+     * すべてtrueか確認します
+     *
+     * @return bool すべてtrueの場合はtrueを、それ以外の場合はfalseを返します
+     *
+     * @param bool[] $values
+     */
+    public static function allTrue(bool ...$values): bool
     {
         $count = 0;
 
-        foreach ($results as $result) {
+        foreach ($values as $result) {
             if ($result === true) {
                 ++$count;
             }
         }
-        return $count === count($results);
+        return $count === count($values);
     }
 
-    public static function allFalse(bool ...$results): bool
+    /**
+     * すべてfalseか確認します
+     *
+     * @return bool すべてfalseの場合はtrueを、それ以外の場合はfalseを返します
+     *
+     * @param bool[] $values
+     */
+    public static function allFalse(bool ...$values): bool
     {
         $count = 0;
 
-        foreach ($results as $result) {
+        foreach ($values as $result) {
             if ($result === false) {
                 ++$count;
             }
         }
-        return $count === count($results);
+        return $count === count($values);
     }
 }
