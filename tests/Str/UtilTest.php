@@ -10,8 +10,8 @@ declare(strict_types=1);
 namespace Tests\Selen\Str;
 
 use PHPUnit\Framework\TestCase;
-use ValueError;
 use Selen\Str\Util;
+use ValueError;
 
 /**
  * @coversDefaultClass \Selen\Str\Util
