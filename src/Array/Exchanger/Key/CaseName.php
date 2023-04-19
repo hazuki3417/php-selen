@@ -31,7 +31,7 @@ class CaseName
     }
 
     /**
-     * ス配列要素文字をネークケースに変換します
+     * 配列要素文字をスネークケースに変換します
      *
      * @param array $values 変換する配列を渡します
      *
@@ -46,7 +46,7 @@ class CaseName
     }
 
     /**
-     * パ配列要素文字をスカルケースに変換します
+     * 配列要素文字をパスカルケースに変換します
      *
      * @param array $values 変換する配列を渡します
      *
@@ -61,7 +61,7 @@ class CaseName
     }
 
     /**
-     * キ配列要素文字をャメルケースに変換します
+     * 配列要素文字をキャメルケースに変換します
      *
      * @param array $values 変換する配列を渡します
      *
@@ -76,7 +76,7 @@ class CaseName
     }
 
     /**
-     * ロ配列要素文字をーワーケースに変換します
+     * 配列要素文字をローワーケースに変換します
      *
      * @param array $values 変換する配列を渡します
      *
@@ -91,7 +91,7 @@ class CaseName
     }
 
     /**
-     * ア配列要素文字をッパーケースに変換します
+     * 配列要素文字をアッパーケースに変換します
      *
      * @param array $values 変換する配列を渡します
      *
@@ -104,6 +104,7 @@ class CaseName
         };
         return self::routine($values, $callback);
     }
+
     private static function routine(array $values, callable $callback): array
     {
         $tmpArr = [];
