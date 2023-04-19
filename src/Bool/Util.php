@@ -10,9 +10,9 @@ namespace Selen\Bool;
 
 class Util
 {
-    public static function toString(bool $results)
+    public static function toString(bool $result)
     {
-        return $results ? 'true' : 'false';
+        return $result ? 'true' : 'false';
     }
 
     public static function oneTrue(bool ...$results): bool
