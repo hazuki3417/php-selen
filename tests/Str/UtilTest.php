@@ -16,13 +16,7 @@ use ValueError;
 /**
  * @coversDefaultClass \Selen\Str\Util
  *
- * @group Selen/Str
- * @group Selen/Str/Util
- *
  * @see \Selen\Str\Util
- *
- * [command]
- * php ./vendor/bin/phpunit --group=Selen/Str/Util
  *
  * @internal
  */
@@ -50,8 +44,6 @@ class UtilTest extends TestCase
 
     /**
      * @dataProvider dataProviderToBoolException
-     *
-     * @group Selen/Str/Util::ToBoolException
      *
      * @param mixed $expected
      * @param mixed $input
@@ -85,8 +77,6 @@ class UtilTest extends TestCase
 
     /**
      * @dataProvider dataProviderToBool
-     *
-     * @group Selen/Str/Util::ToBool
      *
      * @param mixed $expected
      * @param mixed $input

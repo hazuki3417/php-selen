@@ -15,14 +15,8 @@ use Selen\DateTime\Util;
 
 /**
  * @coversDefaultClass \mixed\Util
- *
- * @group Selen
- * @group Selen/DateTime/Util
- *
+ * * *
  * @see mixed\Util
- *
- * [command]
- * php ./vendor/bin/phpunit --group=Selen/DateTime/Util
  *
  * @internal
  */

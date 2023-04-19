@@ -15,14 +15,8 @@ use Selen\DateTime\Record;
 
 /**
  * @coversDefaultClass \Selen\DateTime
- *
- * @group Selen
- * @group Selen/DateTime
- *
+ * * *
  * @see \Selen\DateTime
- *
- * [command]
- * php ./vendor/bin/phpunit --group=Selen/DateTime
  *
  * @internal
  */

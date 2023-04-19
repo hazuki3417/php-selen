@@ -16,14 +16,8 @@ use ValueError;
 
 /**
  * @coversDefaultClass \Selen\DateTime\Record
- *
- * @group Selen
- * @group Selen/DateTime/Record
- *
+ * * *
  * @see \Selen\DateTime\Record
- *
- * [command]
- * php ./vendor/bin/phpunit --group=Selen/DateTime/Record
  *
  * @internal
  */
