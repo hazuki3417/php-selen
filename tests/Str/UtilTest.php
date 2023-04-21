@@ -55,8 +55,8 @@ class UtilTest extends TestCase
             'errorMessage' => $errorMessage,
         ] = $expected;
 
-        $this->expectError($errorClass);
-        $this->expectErrorMessage($errorMessage);
+        $this->expectException($errorClass);
+        $this->expectExceptionMessage($errorMessage);
 
         Util::toBool($input);
     }
