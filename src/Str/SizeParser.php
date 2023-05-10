@@ -3,7 +3,7 @@
 /**
  * @license MIT
  * @author hazuki3417<hazuki3417@gmail.com>
- * @copyright 2021 hazuki3417 all rights reserved.
+ * @copyright 2023 hazuki3417 all rights reserved.
  */
 
 namespace Selen\Str;
@@ -62,26 +62,53 @@ class SizeParser
      */
     public static function parse(string $value): array
     {
-        $pattern = '/^(\d+)([a-zA-Z]{1,4})$/';
-
-        $allowUnitType = \array_merge(
-            self::UNIT_SI_PREFIX,
-            self::UNIT_BINARY_PREFIX,
-            self::UNIT_OTHER_PREFIX,
-        );
+        $pattern = self::makeRegexPattern();
 
         if (preg_match($pattern, $value, $matches)) {
             [1 => $value,2 => $unit] = $matches;
 
-            if (\in_array($unit, $allowUnitType)) {
-                return [
-                    'value' => (int) $value,
-                    'unit'  => $unit,
-                ];
-            }
+            return [
+                'value' => (int) $value,
+                'unit'  => $unit,
+            ];
         }
-        $format = 'Invalid data format. Specify an integer value for the value, and specify %s for the unit.';
-        $mes    = \sprintf($format, \implode(', ', $allowUnitType));
+        self::throwParseException();
+    }
+
+    /**
+     * string型で表現されたデータ量フォーマットが正しいか検証します
+     *
+     * @param string $value 文字列を渡します
+     *
+     * @return bool 正しい場合はtrueを、それ以外の場合はfalseを返します
+     */
+    public static function validParse(string $value): bool
+    {
+        return \preg_match(self::makeRegexPattern(), $value);
+    }
+
+    /**
+     * string型で表現されたデータ量フォーマットのパースに失敗したときの例外をスローします
+     */
+    public static function throwParseException()
+    {
+        $format = 'Invalid data format. Expected format %s .';
+        $mes    = \sprintf($format, self::makeRegexPattern());
         throw new InvalidArgumentException($mes);
+    }
+
+    /**
+     * string型で表現されたデータ量フォーマットをパースする正規表現パターンを作成します
+     *
+     * @return string 正規表現パターンを返します
+     */
+    private static function makeRegexPattern(): string
+    {
+        $allowUnits = \array_merge(
+            self::UNIT_SI_PREFIX,
+            self::UNIT_BINARY_PREFIX,
+            self::UNIT_OTHER_PREFIX,
+        );
+        return \sprintf('/^(\d+)(%s)$/', \implode('|', $allowUnits));
     }
 }
