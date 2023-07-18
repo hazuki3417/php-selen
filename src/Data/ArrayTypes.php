@@ -10,9 +10,9 @@ namespace Selen\Data;
 
 class ArrayTypes
 {
-    public static function validate(array $data, string ...$typeName): bool
+    public static function validate(array $values, string ...$typeName): bool
     {
-        foreach ($data as $value) {
+        foreach ($values as $value) {
             if (!Types::validate($value, ...$typeName)) {
                 return false;
             }
