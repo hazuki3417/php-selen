@@ -9,34 +9,35 @@
 namespace Selen\MongoDB\Validator\Attributes;
 
 use Attribute;
+use Selen\Data\Enum as DataEnum;
 use Selen\MongoDB\Validator\Model\ValidateResult;
 use Selen\MongoDB\Validator\ValueValidateInterface;
 
 #[Attribute(Attribute::TARGET_PROPERTY)]
 class Enum implements ValueValidateInterface
 {
-    /** @var mixed[] */
+    /** @var array<int,string|int|float|bool|null> */
     private $allowValues;
 
-    public function __construct(...$values)
+    public function __construct(string|int|float|bool|null ...$values)
     {
         $this->allowValues = $values;
     }
 
     public function execute($value, ValidateResult $result): ValidateResult
     {
-        // TODO: enumに配列やオブジェクトは指定できないように修正する
-
-        if (\in_array($value, $this->allowValues, true)) {
+        if (DataEnum::validate($value, ...$this->allowValues)) {
             return $result;
         }
 
-        foreach ($this->allowValues as $index => $allowValue) {
-            $this->allowValues[$index] = $this->surround($allowValue);
+        $viewValues = [];
+
+        foreach ($this->allowValues as $allowValue) {
+            $viewValues[] = $this->surround($allowValue);
         }
 
         $format = 'Invalid value. Expected value %s.';
-        $mes    = \sprintf($format, \implode(', ', $this->allowValues));
+        $mes    = \sprintf($format, \implode(', ', $viewValues));
         return $result->setResult(false)->setMessage($mes);
     }
 
