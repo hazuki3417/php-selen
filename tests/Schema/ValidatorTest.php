@@ -74,7 +74,7 @@ class ValidatorTest extends TestCase
                             // @var Selen\Schema\Validate\Model\ValidateResult $result
                             return \is_string($value) ?
                                     $result->setResult(true) :
-                                    $result->setResult(false)->setMessage('Invalid type. Expected type string.');
+                                    $result->setResult(false)->setMessage('Invalid type. expected type string.');
                         })
                     ),
                     'execute' => [
@@ -109,7 +109,7 @@ class ValidatorTest extends TestCase
                             // @var Selen\Schema\Validate\Model\ValidateResult $result
                             return \is_string($value) ?
                                     $result->setResult(true) :
-                                    $result->setResult(false)->setMessage('Invalid type. Expected type string.');
+                                    $result->setResult(false)->setMessage('Invalid type. expected type string.');
                         })
                     ),
                     'execute' => [
@@ -207,7 +207,7 @@ class ValidatorTest extends TestCase
                 'expected' => [
                     'result'          => false,
                     'validateResults' => [
-                        new ValidateResult(false, '[0]', 'Invalid type. Expected type string.'),
+                        new ValidateResult(false, '[0]', 'Invalid type. expected type string.'),
                     ],
                 ],
                 'input' => [
@@ -240,8 +240,8 @@ class ValidatorTest extends TestCase
                 'expected' => [
                     'result'          => false,
                     'validateResults' => [
-                        new ValidateResult(false, '[0]', 'Invalid type. Expected type string.'),
-                        new ValidateResult(false, '[1]', 'Invalid type. Expected type string.'),
+                        new ValidateResult(false, '[0]', 'Invalid type. expected type string.'),
+                        new ValidateResult(false, '[1]', 'Invalid type. expected type string.'),
                     ],
                 ],
                 'input' => [
@@ -258,7 +258,7 @@ class ValidatorTest extends TestCase
                 'expected' => [
                     'result'          => false,
                     'validateResults' => [
-                        new ValidateResult(false, '[1]', 'Invalid type. Expected type string.'),
+                        new ValidateResult(false, '[1]', 'Invalid type. expected type string.'),
                     ],
                 ],
                 'input' => [
@@ -314,7 +314,7 @@ class ValidatorTest extends TestCase
                 'expected' => [
                     'result'          => false,
                     'validateResults' => [
-                        new ValidateResult(false, '[0]', 'Invalid type. Expected type string.'),
+                        new ValidateResult(false, '[0]', 'Invalid type. expected type string.'),
                     ],
                 ],
                 'input' => [
@@ -335,8 +335,8 @@ class ValidatorTest extends TestCase
                 'expected' => [
                     'result'          => false,
                     'validateResults' => [
-                        new ValidateResult(false, '[0]', 'Invalid type. Expected type string.'),
-                        new ValidateResult(false, '[1]', 'Invalid type. Expected type string.'),
+                        new ValidateResult(false, '[0]', 'Invalid type. expected type string.'),
+                        new ValidateResult(false, '[1]', 'Invalid type. expected type string.'),
                     ],
                 ],
                 'input' => [
@@ -357,7 +357,7 @@ class ValidatorTest extends TestCase
                 'expected' => [
                     'result'          => false,
                     'validateResults' => [
-                        new ValidateResult(false, '[0]', 'Invalid value. Expected value pattern ^[0-9]+$.'),
+                        new ValidateResult(false, '[0]', 'Invalid value. expected value pattern ^[0-9]+$.'),
                     ],
                 ],
                 'input' => [
@@ -378,8 +378,8 @@ class ValidatorTest extends TestCase
                 'expected' => [
                     'result'          => false,
                     'validateResults' => [
-                        new ValidateResult(false, '[0]', 'Invalid value. Expected value pattern ^[0-9]+$.'),
-                        new ValidateResult(false, '[1]', 'Invalid value. Expected value pattern ^[0-9]+$.'),
+                        new ValidateResult(false, '[0]', 'Invalid value. expected value pattern ^[0-9]+$.'),
+                        new ValidateResult(false, '[1]', 'Invalid value. expected value pattern ^[0-9]+$.'),
                     ],
                 ],
                 'input' => [
@@ -458,7 +458,7 @@ class ValidatorTest extends TestCase
                 'expected' => [
                     'result'          => false,
                     'validateResults' => [
-                        new ValidateResult(false, '[1]', 'Invalid type. Expected type string.'),
+                        new ValidateResult(false, '[1]', 'Invalid type. expected type string.'),
                     ],
                 ],
                 'input' => [
@@ -479,7 +479,7 @@ class ValidatorTest extends TestCase
                 'expected' => [
                     'result'          => false,
                     'validateResults' => [
-                        new ValidateResult(false, '[1]', 'Invalid type. Expected type string.'),
+                        new ValidateResult(false, '[1]', 'Invalid type. expected type string.'),
                     ],
                 ],
                 'input' => [
@@ -500,7 +500,7 @@ class ValidatorTest extends TestCase
                 'expected' => [
                     'result'          => false,
                     'validateResults' => [
-                        new ValidateResult(false, '[keyName]', 'Invalid type. Expected type string.'),
+                        new ValidateResult(false, '[keyName]', 'Invalid type. expected type string.'),
                     ],
                 ],
                 'input' => [
@@ -792,7 +792,7 @@ class ValidatorTest extends TestCase
                 'expected' => [
                     'result'          => false,
                     'validateResults' => [
-                        new ValidateResult(false, 'keyName', 'Invalid type. Expected type string.'),
+                        new ValidateResult(false, 'keyName', 'Invalid type. expected type string.'),
                     ],
                 ],
                 'input' => [
@@ -842,7 +842,7 @@ class ValidatorTest extends TestCase
                 'expected' => [
                     'result'          => false,
                     'validateResults' => [
-                        new ValidateResult(false, 'keyName', 'Invalid type. Expected type string.'),
+                        new ValidateResult(false, 'keyName', 'Invalid type. expected type string.'),
                     ],
                 ],
                 'input' => [
@@ -880,7 +880,7 @@ class ValidatorTest extends TestCase
                 'expected' => [
                     'result'          => false,
                     'validateResults' => [
-                        new ValidateResult(false, 'keyName', 'Invalid type. Expected type string.'),
+                        new ValidateResult(false, 'keyName', 'Invalid type. expected type string.'),
                     ],
                 ],
                 'input' => [
@@ -900,7 +900,7 @@ class ValidatorTest extends TestCase
                 'expected' => [
                     'result'          => false,
                     'validateResults' => [
-                        new ValidateResult(false, 'keyName', 'Invalid value. Expected value pattern ^[0-9]+$.'),
+                        new ValidateResult(false, 'keyName', 'Invalid value. expected value pattern ^[0-9]+$.'),
                     ],
                 ],
                 'input' => [

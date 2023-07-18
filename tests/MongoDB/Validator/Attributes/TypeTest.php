@@ -39,7 +39,7 @@ class TypeTest extends TestCase
                     'value' => 1,
                 ], ],
             'pattern002' => [
-                'expected' => new ValidateResult(false, '', 'Invalid type. Expected type int.'),
+                'expected' => new ValidateResult(false, '', 'Invalid type. expected type int.'),
                 'input'    => [
                     'type'  => ['int'],
                     'value' => 1.0,
@@ -51,7 +51,7 @@ class TypeTest extends TestCase
                     'value' => 'value',
                 ], ],
             'pattern004' => [
-                'expected' => new ValidateResult(false, '', 'Invalid type. Expected type int, string.'),
+                'expected' => new ValidateResult(false, '', 'Invalid type. expected type int, string.'),
                 'input'    => [
                     'type'  => ['int', 'string'],
                     'value' => true,

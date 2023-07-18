@@ -92,7 +92,7 @@ class SizeParser
      */
     public static function throwParseException()
     {
-        $format = 'Invalid data format. Expected format %s .';
+        $format = 'Invalid data format. expected format %s .';
         $mes    = \sprintf($format, self::makeRegexPattern());
         throw new InvalidArgumentException($mes);
     }

@@ -16,7 +16,7 @@ use Selen\MongoDB\Validator\ValueValidateInterface;
 class Regex implements ValueValidateInterface
 {
     /** @var string */
-    protected $messageFormat = 'Invalid value. Expected value pattern %s.';
+    protected $messageFormat = 'Invalid value. expected value pattern %s.';
 
     /** @var string */
     private $pattern;

@@ -32,7 +32,7 @@ class DateTimeFormat implements ValueValidateInterface
         $dateTime = DateTime::createFromFormat($this->format, $value);
 
         if ($dateTime === false || $dateTime->format($this->format) !== $value) {
-            $mes = \sprintf('Invalid value. Expected value format %s.', $this->format);
+            $mes = \sprintf('Invalid value. expected value format %s.', $this->format);
             return $result->setResult(false)->setMessage($mes);
         }
 

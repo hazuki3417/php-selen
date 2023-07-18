@@ -15,7 +15,7 @@ use Selen\Schema\Validate\ValueValidateInterface;
 class Type implements ValueValidateInterface
 {
     /** @var string */
-    protected $messageFormat = 'Invalid type. Expected type %s.';
+    protected $messageFormat = 'Invalid type. expected type %s.';
 
     /** @var string[] */
     private $names;

@@ -38,7 +38,7 @@ class TypeTest extends TestCase
                 ],
             ],
             'pattern002' => [
-                'expected' => new ValidateResult(false, '', 'Invalid type. Expected type string.'),
+                'expected' => new ValidateResult(false, '', 'Invalid type. expected type string.'),
                 'input'    => [
                     'type'  => ['string'],
                     'value' => true,

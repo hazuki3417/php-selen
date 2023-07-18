@@ -28,14 +28,14 @@ class UtilTest extends TestCase
             'invalidPattern: 001' => [
                 'expected' => [
                     'errorClass'   => ValueError::class,
-                    'errorMessage' => "Invalid value. Expected value 'true' or 'false'",
+                    'errorMessage' => "Invalid value. expected value 'true' or 'false'",
                 ],
                 'input' => '',
             ],
             'invalidPattern: 002' => [
                 'expected' => [
                     'errorClass'   => ValueError::class,
-                    'errorMessage' => "Invalid value. Expected value 'true' or 'false'",
+                    'errorMessage' => "Invalid value. expected value 'true' or 'false'",
                 ],
                 'input' => 'test',
             ],

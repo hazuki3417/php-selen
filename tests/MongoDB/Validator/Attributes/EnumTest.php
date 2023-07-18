@@ -40,7 +40,7 @@ class EnumTest extends TestCase
                 ],
             ],
             'pattern002' => [
-                'expected' => new ValidateResult(false, '', "Invalid value. Expected value 'main', 'sub'."),
+                'expected' => new ValidateResult(false, '', "Invalid value. expected value 'main', 'sub'."),
                 'input'    => [
                     'type'  => ['main', 'sub'],
                     'value' => 'mai',
@@ -54,21 +54,21 @@ class EnumTest extends TestCase
                 ],
             ],
             'pattern004' => [
-                'expected' => new ValidateResult(false, '', "Invalid value. Expected value 'main', true, 0."),
+                'expected' => new ValidateResult(false, '', "Invalid value. expected value 'main', true, 0."),
                 'input'    => [
                     'type'  => ['main', true, 0],
                     'value' => [],
                 ],
             ],
             'pattern005' => [
-                'expected' => new ValidateResult(false, '', "Invalid value. Expected value 'main', true, null."),
+                'expected' => new ValidateResult(false, '', "Invalid value. expected value 'main', true, null."),
                 'input'    => [
                     'type'  => ['main', true, null],
                     'value' => [],
                 ],
             ],
             'pattern006' => [
-                'expected' => new ValidateResult(false, '', "Invalid value. Expected value 'main', false, 0.1."),
+                'expected' => new ValidateResult(false, '', "Invalid value. expected value 'main', false, 0.1."),
                 'input'    => [
                     'type'  => ['main', false, 0.1],
                     'value' => [],

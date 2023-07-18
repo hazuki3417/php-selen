@@ -208,7 +208,7 @@ class DateTimeFormatTest extends TestCase
             ],
             // ゼロ埋めなし
             'invalidDataType: date format Y-m-d' => [
-                'expected' => new ValidateResult(false, '', 'Invalid value. Expected value format Y-m-d.'),
+                'expected' => new ValidateResult(false, '', 'Invalid value. expected value format Y-m-d.'),
                 'input'    => [
                     'format' => 'Y-m-d',
                     'value'  => '2019-1-1',
@@ -216,7 +216,7 @@ class DateTimeFormatTest extends TestCase
             ],
             // フォーマット違い
             'invalidDataType: date format Y-m-d' => [
-                'expected' => new ValidateResult(false, '', 'Invalid value. Expected value format Y-m-d.'),
+                'expected' => new ValidateResult(false, '', 'Invalid value. expected value format Y-m-d.'),
                 'input'    => [
                     'format' => 'Y-m-d',
                     'value'  => '20190101',
@@ -224,7 +224,7 @@ class DateTimeFormatTest extends TestCase
             ],
             // フォーマット違い
             'invalidDataType: date format Y-m-d' => [
-                'expected' => new ValidateResult(false, '', 'Invalid value. Expected value format Y-m-d.'),
+                'expected' => new ValidateResult(false, '', 'Invalid value. expected value format Y-m-d.'),
                 'input'    => [
                     'format' => 'Y-m-d',
                     'value'  => '2019/01/01',
@@ -232,7 +232,7 @@ class DateTimeFormatTest extends TestCase
             ],
             // 日付に変換できない文字
             'invalidDataType: date format Y-m-d' => [
-                'expected' => new ValidateResult(false, '', 'Invalid value. Expected value format Y-m-d.'),
+                'expected' => new ValidateResult(false, '', 'Invalid value. expected value format Y-m-d.'),
                 'input'    => [
                     'format' => 'Y-m-d',
                     'value'  => '1234-56-78',
@@ -240,7 +240,7 @@ class DateTimeFormatTest extends TestCase
             ],
             // 存在しない日付
             'invalidDataType: date format Y-m-d' => [
-                'expected' => new ValidateResult(false, '', 'Invalid value. Expected value format Y-m-d.'),
+                'expected' => new ValidateResult(false, '', 'Invalid value. expected value format Y-m-d.'),
                 'input'    => [
                     'format' => 'Y-m-d',
                     'value'  => '2019-01-32',
@@ -248,7 +248,7 @@ class DateTimeFormatTest extends TestCase
             ],
             // うるう年じゃないのに29日
             'invalidDataType: date format Y-m-d' => [
-                'expected' => new ValidateResult(false, '', 'Invalid value. Expected value format Y-m-d.'),
+                'expected' => new ValidateResult(false, '', 'Invalid value. expected value format Y-m-d.'),
                 'input'    => [
                     'format' => 'Y-m-d',
                     'value'  => '2017-02-29',
@@ -256,7 +256,7 @@ class DateTimeFormatTest extends TestCase
             ],
             // 存在しない時間
             'invalidDataType: date format H:i' => [
-                'expected' => new ValidateResult(false, '', 'Invalid value. Expected value format H:i.'),
+                'expected' => new ValidateResult(false, '', 'Invalid value. expected value format H:i.'),
                 'input'    => [
                     'format' => 'H:i',
                     'value'  => '24:00',
@@ -264,7 +264,7 @@ class DateTimeFormatTest extends TestCase
             ],
             // 存在しない時間
             'invalidDataType: date format Hi' => [
-                'expected' => new ValidateResult(false, '', 'Invalid value. Expected value format Hi.'),
+                'expected' => new ValidateResult(false, '', 'Invalid value. expected value format Hi.'),
                 'input'    => [
                     'format' => 'Hi',
                     'value'  => '2400',
@@ -272,7 +272,7 @@ class DateTimeFormatTest extends TestCase
             ],
             // 存在しない時間
             'invalidDataType: date format H:i:s' => [
-                'expected' => new ValidateResult(false, '', 'Invalid value. Expected value format H:i:s.'),
+                'expected' => new ValidateResult(false, '', 'Invalid value. expected value format H:i:s.'),
                 'input'    => [
                     'format' => 'H:i:s',
                     'value'  => '24:00:00',
@@ -280,7 +280,7 @@ class DateTimeFormatTest extends TestCase
             ],
             // 存在しない時間
             'invalidDataType: date format His' => [
-                'expected' => new ValidateResult(false, '', 'Invalid value. Expected value format His.'),
+                'expected' => new ValidateResult(false, '', 'Invalid value. expected value format His.'),
                 'input'    => [
                     'format' => 'His',
                     'value'  => '240000',
@@ -288,7 +288,7 @@ class DateTimeFormatTest extends TestCase
             ],
             // フォーマット違い
             'invalidDataType: date format H:i' => [
-                'expected' => new ValidateResult(false, '', 'Invalid value. Expected value format H:i.'),
+                'expected' => new ValidateResult(false, '', 'Invalid value. expected value format H:i.'),
                 'input'    => [
                     'format' => 'H:i',
                     'value'  => '0000',
@@ -296,7 +296,7 @@ class DateTimeFormatTest extends TestCase
             ],
             // フォーマット違い
             'invalidDataType: date format Hi' => [
-                'expected' => new ValidateResult(false, '', 'Invalid value. Expected value format Hi.'),
+                'expected' => new ValidateResult(false, '', 'Invalid value. expected value format Hi.'),
                 'input'    => [
                     'format' => 'Hi',
                     'value'  => '00:00',
@@ -304,7 +304,7 @@ class DateTimeFormatTest extends TestCase
             ],
             // フォーマット違い
             'invalidDataType: date format H:i:s' => [
-                'expected' => new ValidateResult(false, '', 'Invalid value. Expected value format H:i:s.'),
+                'expected' => new ValidateResult(false, '', 'Invalid value. expected value format H:i:s.'),
                 'input'    => [
                     'format' => 'H:i:s',
                     'value'  => '000000',
@@ -312,7 +312,7 @@ class DateTimeFormatTest extends TestCase
             ],
             // フォーマット違い
             'invalidDataType: date format His' => [
-                'expected' => new ValidateResult(false, '', 'Invalid value. Expected value format His.'),
+                'expected' => new ValidateResult(false, '', 'Invalid value. expected value format His.'),
                 'input'    => [
                     'format' => 'His',
                     'value'  => '240000',
@@ -320,7 +320,7 @@ class DateTimeFormatTest extends TestCase
             ],
             // ゼロ埋めなし
             'invalidDataType: date format Y-m-d H:i' => [
-                'expected' => new ValidateResult(false, '', 'Invalid value. Expected value format Y-m-d H:i.'),
+                'expected' => new ValidateResult(false, '', 'Invalid value. expected value format Y-m-d H:i.'),
                 'input'    => [
                     'format' => 'Y-m-d H:i',
                     'value'  => '2019-1-1 1:1',
@@ -328,7 +328,7 @@ class DateTimeFormatTest extends TestCase
             ],
             // フォーマット違い
             'invalidDataType: date format Y-m-d H:i' => [
-                'expected' => new ValidateResult(false, '', 'Invalid value. Expected value format Y-m-d H:i.'),
+                'expected' => new ValidateResult(false, '', 'Invalid value. expected value format Y-m-d H:i.'),
                 'input'    => [
                     'format' => 'Y-m-d H:i',
                     'value'  => '201901010101',
@@ -336,7 +336,7 @@ class DateTimeFormatTest extends TestCase
             ],
             // フォーマット違い
             'invalidDataType: date format Y-m-d H:i' => [
-                'expected' => new ValidateResult(false, '', 'Invalid value. Expected value format Y-m-d H:i.'),
+                'expected' => new ValidateResult(false, '', 'Invalid value. expected value format Y-m-d H:i.'),
                 'input'    => [
                     'format' => 'Y-m-d H:i',
                     'value'  => '2019/01/01 01:01',
@@ -344,7 +344,7 @@ class DateTimeFormatTest extends TestCase
             ],
             // 日付に変換できない文字
             'invalidDataType: date format Y-m-d H:i' => [
-                'expected' => new ValidateResult(false, '', 'Invalid value. Expected value format Y-m-d H:i.'),
+                'expected' => new ValidateResult(false, '', 'Invalid value. expected value format Y-m-d H:i.'),
                 'input'    => [
                     'format' => 'Y-m-d H:i',
                     'value'  => '1234-56-78 00:00',
@@ -352,7 +352,7 @@ class DateTimeFormatTest extends TestCase
             ],
             // 時刻に変換できない文字
             'invalidDataType: date format Y-m-d H:i' => [
-                'expected' => new ValidateResult(false, '', 'Invalid value. Expected value format Y-m-d H:i.'),
+                'expected' => new ValidateResult(false, '', 'Invalid value. expected value format Y-m-d H:i.'),
                 'input'    => [
                     'format' => 'Y-m-d H:i',
                     'value'  => '2019-12-31 99:99',
@@ -360,7 +360,7 @@ class DateTimeFormatTest extends TestCase
             ],
             // 存在しない日付
             'invalidDataType: date format Y-m-d H:i' => [
-                'expected' => new ValidateResult(false, '', 'Invalid value. Expected value format Y-m-d H:i.'),
+                'expected' => new ValidateResult(false, '', 'Invalid value. expected value format Y-m-d H:i.'),
                 'input'    => [
                     'format' => 'Y-m-d H:i',
                     'value'  => '2019-01-32 00:00',
@@ -368,7 +368,7 @@ class DateTimeFormatTest extends TestCase
             ],
             // うるう年じゃないのに29日
             'invalidDataType: date format Y-m-d H:i' => [
-                'expected' => new ValidateResult(false, '', 'Invalid value. Expected value format Y-m-d H:i.'),
+                'expected' => new ValidateResult(false, '', 'Invalid value. expected value format Y-m-d H:i.'),
                 'input'    => [
                     'format' => 'Y-m-d H:i',
                     'value'  => '2017-02-29 00:00',
