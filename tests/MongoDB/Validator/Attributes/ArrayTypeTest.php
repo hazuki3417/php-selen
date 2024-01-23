@@ -24,14 +24,17 @@ use Selen\MongoDB\Validator\Model\ValidateResult;
  */
 class ArrayTypeTest extends TestCase
 {
-    public function testConstruct()
+    public function testConstruct(): void
     {
         $instance = new ArrayType();
 
         $this->assertInstanceOf(ArrayType::class, $instance);
     }
 
-    public function dataProviderExecute()
+    /**
+     * @return array<string, array<string, mixed>>
+     */
+    public function dataProviderExecute(): array
     {
         return [
             'pattern001' => [
@@ -73,7 +76,7 @@ class ArrayTypeTest extends TestCase
      * @param ValidateResult $expected
      * @param mixed          $input
      */
-    public function testExecute($expected, $input)
+    public function testExecute($expected, $input): void
     {
         $validateResult = new ValidateResult();
 

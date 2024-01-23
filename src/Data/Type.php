@@ -12,7 +12,6 @@ class Type
 {
     public const NAME_ARRAY   = 'array';
     public const NAME_BOOL    = 'bool';
-    public const NAME_NUMBER  = 'number';
     public const NAME_DOUBLE  = 'double';
     public const NAME_FLOAT   = 'float';
     public const NAME_INT     = 'int';
@@ -20,35 +19,74 @@ class Type
     public const NAME_LONG    = 'long';
     public const NAME_NULL    = 'null';
     public const NAME_NUMERIC = 'numeric';
-    public const NAME_SCALAR  = 'scalar';
-    public const NAME_STRING  = 'string';
+    // const NAME_OBJECT  = 'object';
+    public const NAME_SCALAR = 'scalar';
+    public const NAME_STRING = 'string';
 
+    /**
+     * 値の型を検証します
+     *
+     * @param mixed  $data     検証する値を指定します
+     * @param string $typeName 型名を指定します
+     */
     public static function validate($data, string $typeName): bool
     {
+        $status = false;
+
         switch ($typeName) {
             case self::NAME_ARRAY:
-                return is_array($data);
+                $status = is_array($data);
+
+                break;
             case self::NAME_BOOL:
-                return is_bool($data);
-            case self::NAME_NUMBER:
-            case self::NAME_FLOAT:
+                $status = is_bool($data);
+
+                break;
             case self::NAME_DOUBLE:
-                return is_float($data);
+                $status = is_double($data);
+
+                break;
+            case self::NAME_FLOAT:
+                $status = is_float($data);
+
+                break;
             case self::NAME_INT:
+                $status = is_int($data);
+
+                break;
             case self::NAME_INTEGER:
+                $status = is_integer($data);
+
+                break;
             case self::NAME_LONG:
-                return is_int($data);
+                $status = is_long($data);
+
+                break;
             case self::NAME_NULL:
-                return is_null($data);
+                $status = is_null($data);
+
+                break;
             case self::NAME_NUMERIC:
-                return is_numeric($data);
+                $status = is_numeric($data);
+
+                break;
+                // case self::NAME_OBJECT:
+            //     $status = is_object($data);
+            //     break;
             case self::NAME_SCALAR:
-                return is_scalar($data);
+                $status = is_scalar($data);
+
+                break;
             case self::NAME_STRING:
-                return is_string($data);
+                $status = is_string($data);
+
+                break;
             default:
+                $status = $data instanceof $typeName;
+
                 break;
         }
-        return $data instanceof $typeName;
+
+        return $status;
     }
 }

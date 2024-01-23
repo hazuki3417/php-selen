@@ -18,9 +18,9 @@ class CaseName
     /**
      * 配列要素文字をケバブケースに変換します
      *
-     * @param array $values 変換する配列を渡します
+     * @param array<mixed,mixed> $values 変換する配列を渡します
      *
-     * @return array 変換後の配列を返します
+     * @return array<mixed,mixed> 変換後の配列を返します
      */
     public static function kebab(array $values): array
     {
@@ -33,9 +33,9 @@ class CaseName
     /**
      * 配列要素文字をスネークケースに変換します
      *
-     * @param array $values 変換する配列を渡します
+     * @param array<mixed,mixed> $values 変換する配列を渡します
      *
-     * @return array 変換後の配列を返します
+     * @return array<mixed,mixed> 変換後の配列を返します
      */
     public static function snake(array $values): array
     {
@@ -48,9 +48,9 @@ class CaseName
     /**
      * 配列要素文字をパスカルケースに変換します
      *
-     * @param array $values 変換する配列を渡します
+     * @param array<mixed,mixed> $values 変換する配列を渡します
      *
-     * @return array 変換後の配列を返します
+     * @return array<mixed,mixed> 変換後の配列を返します
      */
     public static function pascal(array $values): array
     {
@@ -63,9 +63,9 @@ class CaseName
     /**
      * 配列要素文字をキャメルケースに変換します
      *
-     * @param array $values 変換する配列を渡します
+     * @param array<mixed,mixed> $values 変換する配列を渡します
      *
-     * @return array 変換後の配列を返します
+     * @return array<mixed,mixed> 変換後の配列を返します
      */
     public static function camel(array $values): array
     {
@@ -78,9 +78,9 @@ class CaseName
     /**
      * 配列要素文字をローワーケースに変換します
      *
-     * @param array $values 変換する配列を渡します
+     * @param array<mixed,mixed> $values 変換する配列を渡します
      *
-     * @return array 変換後の配列を返します
+     * @return array<mixed,mixed> 変換後の配列を返します
      */
     public static function lower(array $values): array
     {
@@ -93,9 +93,9 @@ class CaseName
     /**
      * 配列要素文字をアッパーケースに変換します
      *
-     * @param array $values 変換する配列を渡します
+     * @param array<mixed,mixed> $values 変換する配列を渡します
      *
-     * @return array 変換後の配列を返します
+     * @return array<mixed,mixed> 変換後の配列を返します
      */
     public static function upper(array $values): array
     {
@@ -105,6 +105,13 @@ class CaseName
         return self::routine($values, $callback);
     }
 
+    /**
+     * 配列要素文字をタイトルケースに変換します
+     *
+     * @param array<mixed,mixed> $values 変換する配列を渡します
+     *
+     * @return array<mixed,mixed> 変換後の配列を返します
+     */
     private static function routine(array $values, callable $callback): array
     {
         $tmpArr = [];

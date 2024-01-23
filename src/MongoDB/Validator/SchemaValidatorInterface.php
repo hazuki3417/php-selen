@@ -12,5 +12,10 @@ use Selen\MongoDB\Validator\Model\ValidatorResult;
 
 interface SchemaValidatorInterface
 {
+    /**
+     * 値の検証を実行します
+     *
+     * @param array<mixed,mixed> $input 検証する値を渡します
+     */
     public function execute(array $input): ValidatorResult;
 }

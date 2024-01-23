@@ -24,6 +24,11 @@ class UpdateSchema implements SchemaBuilderInterface
         $this->schemaLoader = $schemaLoader;
     }
 
+    /**
+     * @param array<mixed,mixed> $input updateする値を渡します
+     *
+     * @return array<mixed,mixed> updateする値を返します
+     */
     public function create(array $input): array
     {
         if ($input === []) {

@@ -12,13 +12,22 @@ use LogicException;
 
 class ArrayDefine
 {
-    /** @var \Selen\Schema\Validate\Define[] key定義 */
+    /** @var Define[] key定義 */
     public $defines;
+
+    /** @var array<int,int|string> key名一覧 */
+    public $keys = [];
+
+    /** @var bool Index配列定義の存在有無 */
+    public bool $indexArrayDefineExists = false;
+
+    /** @var bool Assoc配列定義の存在有無 */
+    public bool $assocArrayDefineExists = false;
 
     /**
      * ArrayDefineインスタンスを生成します
      *
-     * @param Define ...$defines 定義を渡します
+     * @param Define $defines 定義を渡します
      *
      * @return ArrayDefine
      *
@@ -26,12 +35,9 @@ class ArrayDefine
      */
     public function __construct(Define ...$defines)
     {
-        $indexArrayDefineExists = false;
-        $assocArrayDefineExists = false;
-
         foreach ($defines as $define) {
             /** @var bool $isIndexDefineDuplicate index配列の定義が複数存在するか */
-            $isIndexDefineDuplicate = $indexArrayDefineExists && $define->isIndexArrayDefine();
+            $isIndexDefineDuplicate = $this->indexArrayDefineExists && $define->isIndexArrayDefine();
 
             $errMes = 'Illegal combination of Define classes.';
 
@@ -42,14 +48,16 @@ class ArrayDefine
             }
 
             if ($define->isIndexArrayDefine()) {
-                $indexArrayDefineExists = true;
+                $this->indexArrayDefineExists = true;
+                // NOTE: Index配列の場合はkey名の一覧を作らない
             }
 
             if ($define->isAssocArrayDefine()) {
-                $assocArrayDefineExists = true;
+                $this->assocArrayDefineExists = true;
+                $this->keys[]                 = $define->key->getName();
             }
 
-            $isDefineConflict = $indexArrayDefineExists && $assocArrayDefineExists;
+            $isDefineConflict = $this->indexArrayDefineExists && $this->assocArrayDefineExists;
 
             if ($isDefineConflict) {
                 $reasonMes = 'Definitions with and without key are mixed.';

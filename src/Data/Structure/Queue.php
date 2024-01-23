@@ -12,14 +12,15 @@ use Selen\Data\Type;
 
 final class Queue extends AbstractQueue
 {
-    private $typeName;
+    /** @var string 型名またはクラス名 */
+    private string $typeName;
 
     public function __construct(string $typeName)
     {
         $this->typeName = $typeName;
     }
 
-    public function enqueue($object)
+    public function enqueue($object): void
     {
         $isExpectedType = Type::validate($object, $this->typeName);
 

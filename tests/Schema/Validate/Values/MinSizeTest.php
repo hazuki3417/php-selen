@@ -23,12 +23,15 @@ use Selen\Schema\Validate\Values\MinSize;
  */
 class MinSizeTest extends TestCase
 {
-    public function testConstruct()
+    public function testConstruct(): void
     {
         $this->assertInstanceOf(MinSize::class, new MinSize(10));
     }
 
-    public function dataProviderExecuteException()
+    /**
+     * @return array<string, array<string, mixed>>
+     */
+    public function dataProviderExecuteException(): array
     {
         return [
             'invalidDataType: argument value is not int or float' => [
@@ -37,7 +40,7 @@ class MinSizeTest extends TestCase
                     'expectExceptionMessage' => 'Invalid value. Values less than 0 cannot be specified.',
                 ],
                 'input' => [
-                    'size'  => -1,
+                    'args'  => -1,
                     'value' => [],
                 ],
             ],
@@ -50,10 +53,10 @@ class MinSizeTest extends TestCase
      * @param mixed $expected
      * @param mixed $input
      */
-    public function testExecuteException($expected, $input)
+    public function testExecuteException($expected, $input): void
     {
         [
-            'size'  => $size,
+            'args'  => $args,
             'value' => $value,
         ] = $input;
 
@@ -65,37 +68,40 @@ class MinSizeTest extends TestCase
         $this->expectException($expectException);
         $this->expectExceptionMessage($expectExceptionMessage);
 
-        (new MinSize($size))->execute($value, new ValidateResult());
+        (new MinSize($args))->execute($value, new ValidateResult());
     }
 
-    public function dataProviderExecute()
+    /**
+     * @return array<string, array<string, mixed>>
+     */
+    public function dataProviderExecute(): array
     {
         return [
             'validDataType: value not subject to validation' => [
                 'expected' => new ValidateResult(true, '', 'Skip validation. Executed only when the value is of array type'),
                 'input'    => [
-                    'size'  => 5,
+                    'args'  => 5,
                     'value' => null,
                 ],
             ],
-            'validDataType: greater than specified size' => [
+            'validDataType: greater than specified args' => [
                 'expected' => new ValidateResult(true),
                 'input'    => [
-                    'size'  => 5,
+                    'args'  => 5,
                     'value' => [1, 2, 3, 4, 5, 6],
                 ],
             ],
-            'validDataType: same as specified size' => [
+            'validDataType: same as specified args' => [
                 'expected' => new ValidateResult(true),
                 'input'    => [
-                    'size'  => 5,
+                    'args'  => 5,
                     'value' => [1, 2, 3, 4, 5],
                 ],
             ],
-            'invalidDataType: smaller than the specified size' => [
+            'invalidDataType: smaller than the specified args' => [
                 'expected' => new ValidateResult(false, '', 'Invalid value. Please specify an array of 5 or more elements.'),
                 'input'    => [
-                    'size'  => 5,
+                    'args'  => 5,
                     'value' => [1, 2, 3, 4],
                 ],
             ],
@@ -108,14 +114,15 @@ class MinSizeTest extends TestCase
      * @param ValidateResult $expected
      * @param mixed          $input
      */
-    public function testExecute($expected, $input)
+    public function testExecute($expected, $input): void
     {
         [
-            'size'  => $size,
+            'args'  => $args,
             'value' => $value,
         ] = $input;
 
-        $actual = (new MinSize($size))->execute($value, new ValidateResult());
+        $actual = (new MinSize($args))
+            ->execute($value, new ValidateResult());
 
         $this->assertInstanceOf(ValidateResult::class, $actual);
         $this->assertSame($expected->getResult(), $actual->getResult());

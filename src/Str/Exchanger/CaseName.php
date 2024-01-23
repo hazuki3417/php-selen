@@ -9,16 +9,16 @@
 namespace Selen\Str\Exchanger;
 
 /**
- * ケースフォールディングを行うクラス
+ * ケースフォールディングを提供するクラスです
  */
 class CaseName
 {
     /**
-     * ケバブケースに変換します
+     * 文字列をケバブケースに変換します
      *
      * @param string $value 変換する文字列を渡します
      *
-     * @return string 変換後の文字列を返します
+     * @return string 変換した文字列を返します
      */
     public static function kebab(string $value): string
     {
@@ -28,11 +28,11 @@ class CaseName
     }
 
     /**
-     * スネークケースに変換します
+     * 文字列をスネークケースに変換します
      *
      * @param string $value 変換する文字列を渡します
      *
-     * @return string 変換後の文字列を返します
+     * @return string 変換した文字列を返します
      */
     public static function snake(string $value): string
     {
@@ -42,11 +42,11 @@ class CaseName
     }
 
     /**
-     * パスカルケースに変換します
+     * 文字列をパスカルケースに変換します
      *
      * @param string $value 変換する文字列を渡します
      *
-     * @return string 変換後の文字列を返します
+     * @return string 変換した文字列を返します
      */
     public static function pascal(string $value): string
     {
@@ -57,11 +57,11 @@ class CaseName
     }
 
     /**
-     * キャメルケースに変換します
+     * 文字列をキャメルケースに変換します
      *
      * @param string $value 変換する文字列を渡します
      *
-     * @return string 変換後の文字列を返します
+     * @return string 変換した文字列を返します
      */
     public static function camel(string $value): string
     {
@@ -72,11 +72,11 @@ class CaseName
     }
 
     /**
-     * ローワーケースに変換します
+     * 文字列をローワーケースに変換します
      *
      * @param string $value 変換する文字列を渡します
      *
-     * @return string 変換後の文字列を返します
+     * @return string 変換した文字列を返します
      */
     public static function lower(string $value): string
     {
@@ -84,11 +84,11 @@ class CaseName
     }
 
     /**
-     * アッパーケースに変換します
+     * 文字列をアッパーケースに変換します
      *
      * @param string $value 変換する文字列を渡します
      *
-     * @return string 変換後の文字列を返します
+     * @return string 変換した文字列を返します
      */
     public static function upper(string $value): string
     {
@@ -98,9 +98,9 @@ class CaseName
     /**
      * 文字列の前後にある特定の文字（' ', '_', '-'）をトリムします
      *
-     * @param string $value トリムする文字列を渡します
+     * @param string $value 文字列を渡します
      *
-     * @return string トリム後の文字列を返します
+     * @return string トリムした文字列を返します
      */
     private static function trim(string $value): string
     {
@@ -110,10 +110,10 @@ class CaseName
     /**
      * 文字列内にある特定の文字（' ', '_', '-'）を置換します
      *
-     * @param string $delimiter デリミタ文字を指定します
-     * @param string $value     置換対象の文字列を渡します
+     * @param string $delimiter 区切り文字を渡します
+     * @param string $value     変換する文字列を渡します
      *
-     * @return string 置換後の文字列を返します
+     * @return string 変換した文字列を返します
      */
     private static function replaceDelimiter(string $delimiter, string $value): string
     {
@@ -123,9 +123,9 @@ class CaseName
     /**
      * キャメルケースに該当する文字の先頭に区切り文字（' '）を追加します
      *
-     * @param string $value 文字列を渡します
+     * @param string $value 変換する文字列を渡します
      *
-     * @return string 文字列を返します
+     * @return string 変換した文字列を返します
      */
     private static function addCamelCaseDelimiter(string $value): string
     {

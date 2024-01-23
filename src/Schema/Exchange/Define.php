@@ -26,10 +26,10 @@ class Define
     /** @var Key */
     public $key;
 
-    /** @var \Selen\Schema\Exchange\KeyExchangeInterface|callable|null */
+    /** @var KeyExchangeInterface|callable|null */
     public $keyExchangeExecute;
 
-    /** @var \Selen\Schema\Exchange\ValueExchangeInterface|callable|null */
+    /** @var ValueExchangeInterface|callable|null */
     public $valueExchangeExecute;
 
     /** @var ArrayDefine|null */
@@ -52,32 +52,31 @@ class Define
     }
 
     /**
-     * @return Define
+     * 添字配列（index）の定義を生成します
      */
-    public static function noKey()
+    public static function noKey(): Define
     {
         // TODO: noKeyが指定されたときのkeyActionの処理を実装する
         return new self(new Key(null));
     }
 
     /**
-     * @param string|int                                                $name
-     * @param \Selen\Schema\Exchange\KeyExchangeInterface|callable|null $execute
+     * 連想配列（assoc）の定義を生成します
+     *
+     * @param KeyExchangeInterface|callable|null $execute
      *
      * @throws \InvalidArgumentException 引数の型が不正なときに発生します
      * @throws \ValueError               引数の値が不正なときに発生します
-     *
-     * @return Define
      */
-    public static function key($name, string $action = self::KEY_ACTION_NONE, $execute = null)
+    public static function key(string|int $name, string $action = self::KEY_ACTION_NONE, $execute = null): Define
     {
         $format = 'Invalid %s %s. expected %s %s.';
 
-        if ($name === null) {
-            $allowType = ['integer', 'string'];
-            $mes       = \sprintf($format, '$name', 'type', 'type', \implode(', ', $allowType));
-            throw new \InvalidArgumentException($mes);
-        }
+        // if ($name === null) {
+        //     $allowType = ['integer', 'string'];
+        //     $mes       = \sprintf($format, '$name', 'type', 'type', \implode(', ', $allowType));
+        //     throw new \InvalidArgumentException($mes);
+        // }
 
         if (!self::isAllowKeyAction($action)) {
             $mes = \sprintf($format, '$action', 'value', 'value', \implode(', ', self::KEY_ACTIONS));
@@ -119,30 +118,12 @@ class Define
     }
 
     /**
-     * @param \Selen\Schema\Exchange\ValueExchangeInterface|callable|null $execute
-     *
-     * @throws \LogicException           メソッドの呼び出し順が不正なときに発生します
-     * @throws \InvalidArgumentException 引数の型が不正なときに発生します
-     *
-     * @return Define
+     * @throws \LogicException メソッドの呼び出し順が不正なときに発生します
      */
-    public function value($execute = null)
+    public function value(ValueExchangeInterface|callable|null $execute = null): Define
     {
         if ($this->defineConflict()) {
             throw new \LogicException('Invalid method call. cannot call value method after arrayDefine.');
-        }
-
-        $allowTypeList = [
-            \is_null($execute),
-            \is_callable($execute),
-            ($execute instanceof ValueExchangeInterface),
-        ];
-
-        if (!\in_array(true, $allowTypeList, true)) {
-            $format    = 'Invalid %s %s. expected %s %s.';
-            $allowType = [null, 'callable', ValueExchangeInterface::class];
-            $mes       = \sprintf($format, '$execute', 'type', 'type', \implode(', ', $allowType));
-            throw new \InvalidArgumentException($mes);
         }
 
         $this->haveCalledValue      = true;
@@ -153,11 +134,9 @@ class Define
     /**
      * @throws \LogicException メソッドの呼び出し順が不正なときに発生します
      *
-     * @return Define
-     *
-     * @param Define[] $define
+     * @param Define $define 定義を指定します
      */
-    public function arrayDefine(Define ...$define)
+    public function arrayDefine(Define ...$define): Define
     {
         if ($this->defineConflict()) {
             throw new \LogicException('Invalid method call. cannot call arrayDefine method after value.');
@@ -192,6 +171,16 @@ class Define
     }
 
     /**
+     * 変換処理を実行するか判定します。
+     *
+     * @return bool 変換する場合はtrueを、それ以外の場合はfalseを返します
+     */
+    public function isExchange(): bool
+    {
+        return $this->isKeyExchange() || $this->isValueExchange();
+    }
+
+    /**
      * keyの変換処理を実行するか判定します。
      *
      * @return bool 変換する場合はtrueを、それ以外の場合はfalseを返します
@@ -211,7 +200,8 @@ class Define
      */
     public function isValueExchange(): bool
     {
-        return $this->arrayDefine === null;
+        // NOTE: defineConflictでチェックしているので、片方のみの判定でも良い
+        return $this->valueExchangeExecute !== null && $this->arrayDefine === null;
     }
 
     /**
@@ -221,10 +211,11 @@ class Define
      */
     public function nestedTypeDefineExists(): bool
     {
-        return $this->arrayDefine !== null;
+        // NOTE: defineConflictでチェックしているので、片方のみの判定でも良い
+        return $this->valueExchangeExecute === null && $this->arrayDefine !== null;
     }
 
-    private static function isAllowKeyAction(string $name)
+    private static function isAllowKeyAction(string $name): bool
     {
         return \in_array($name, self::KEY_ACTIONS, true);
     }

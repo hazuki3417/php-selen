@@ -1,12 +1,11 @@
 <?php
 
+declare(strict_types=1);
 /**
  * @license MIT
  * @author hazuki3417<hazuki3417@gmail.com>
  * @copyright 2023 hazuki3417 all rights reserved.
  */
-
-declare(strict_types=1);
 
 namespace Tests\Selen\PSR4\Generator\Result;
 
@@ -22,7 +21,10 @@ use Selen\PSR4\Generator\Result\NamespaceResult;
  */
 class NamespaceResultTest extends TestCase
 {
-    public function dataProviderConstruct()
+    /**
+     * @return array<string, array<string, mixed>>
+     */
+    public function dataProviderConstruct(): array
     {
         return [
             'valid: create instance' => [
@@ -45,7 +47,7 @@ class NamespaceResultTest extends TestCase
      * @param mixed $expected
      * @param mixed $input
      */
-    public function testConstruct($expected, $input)
+    public function testConstruct($expected, $input): void
     {
         [
             'exception' => $expectedException,

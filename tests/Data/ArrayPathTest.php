@@ -21,12 +21,12 @@ use Selen\Data\ArrayPath;
  */
 class ArrayPathTest extends TestCase
 {
-    public function testConstruct1()
+    public function testConstruct1(): void
     {
         $this->assertInstanceOf(ArrayPath::class, new ArrayPath());
     }
 
-    public function testDown()
+    public function testDown(): void
     {
         $instance = new ArrayPath();
 
@@ -53,7 +53,7 @@ class ArrayPathTest extends TestCase
         $this->assertSame([1 => '', 2 => '', 3 => ''], $instance->getPaths());
     }
 
-    public function testUp()
+    public function testUp(): void
     {
         $instance = new ArrayPath();
 
@@ -87,7 +87,7 @@ class ArrayPathTest extends TestCase
         $this->assertSame([1 => ''], $instance->getPaths());
     }
 
-    public function testSetCurrentPath()
+    public function testSetCurrentPath(): void
     {
         $instance = new ArrayPath();
 
@@ -118,7 +118,10 @@ class ArrayPathTest extends TestCase
         $this->assertSame([1 => 'key1', 2 => 'renameKey2'], $instance->getPaths());
     }
 
-    public function dataProviderToString()
+    /**
+     * @return array<string, array<string, mixed>>
+     */
+    public function dataProviderToString(): array
     {
         return [
             'pattern001' => ['expected' => '',                         'input' => []],
@@ -135,12 +138,15 @@ class ArrayPathTest extends TestCase
      * @param mixed $expected
      * @param mixed $input
      */
-    public function testToString($expected, $input)
+    public function testToString($expected, $input): void
     {
         $this->assertSame($expected, ArrayPath::toString($input));
     }
 
-    public function dataProviderToArray()
+    /**
+     * @return array<string, array<string, mixed>>
+     */
+    public function dataProviderToArray(): array
     {
         return [
             'pattern001' => ['expected' => [],                                    'input' => ''],
@@ -156,7 +162,7 @@ class ArrayPathTest extends TestCase
      * @param mixed $expected
      * @param mixed $input
      */
-    public function testToArray($expected, $input)
+    public function testToArray($expected, $input): void
     {
         $this->assertSame($expected, ArrayPath::toArray($input));
     }

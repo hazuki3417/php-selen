@@ -14,13 +14,13 @@ use Selen\Schema\Exchange\ValueExchangeInterface;
 
 class Exchanger
 {
-    /** @var \Selen\Schema\Exchange\KeyExchangeInterface|callable|null */
+    /** @var KeyExchangeInterface|callable|null */
     private $keyExchangesExecute;
 
-    /** @var \Selen\Schema\Exchange\ValueExchangeInterface|callable|null */
+    /** @var ValueExchangeInterface|callable|null */
     private $valueExchangesExecute;
 
-    /** @var Exchange\ArrayDefine|null */
+    /** @var ArrayDefine|null */
     private $arrayDefine;
 
     /**
@@ -42,60 +42,26 @@ class Exchanger
 
     /**
      * keyの変換処理を設定します（全体設定）
-     *
-     * @param \Selen\Schema\Exchange\KeyExchangeInterface|callable|null $execute
      */
-    public function key($execute): Exchanger
+    public function key(KeyExchangeInterface|callable|null $execute): Exchanger
     {
-        /** @var bool[] */
-        $allowTypeList = [
-            \is_null($execute),
-            \is_callable($execute),
-            ($execute instanceof KeyExchangeInterface),
-        ];
-
-        if (!\in_array(true, $allowTypeList, true)) {
-            $format    = 'Invalid $execute type. expected type %s.';
-            $allowType = [null, 'callable', KeyExchangeInterface::class];
-            $mes       = \sprintf($format, \implode(', ', $allowType));
-            throw new \InvalidArgumentException($mes);
-        }
-
         $this->keyExchangesExecute = $execute;
         return $this;
     }
 
     /**
      * valueの変換処理を設定します（全体設定）
-     *
-     * @param \Selen\Schema\Exchange\ValueExchangeInterface|callable|null $execute
      */
-    public function value($execute): Exchanger
+    public function value(ValueExchangeInterface|callable|null $execute): Exchanger
     {
-        /** @var bool[] */
-        $allowTypeList = [
-            \is_null($execute),
-            \is_callable($execute),
-            ($execute instanceof KeyExchangeInterface),
-        ];
-
-        if (!\in_array(true, $allowTypeList, true)) {
-            $format    = 'Invalid $execute type. expected type %s.';
-            $allowType = [null, 'callable', KeyExchangeInterface::class];
-            $mes       = \sprintf($format, \implode(', ', $allowType));
-            throw new \InvalidArgumentException($mes);
-        }
-
         $this->valueExchangesExecute = $execute;
         return $this;
     }
 
     /**
      * key・valueの変換処理を設定します（個別設定）
-     *
-     * @param ?\Selen\Schema\Exchange\ArrayDefine $arrayDefine
      */
-    public function arrayDefine(?ArrayDefine $arrayDefine): Exchanger
+    public function arrayDefine(ArrayDefine $arrayDefine = null): Exchanger
     {
         $this->arrayDefine = $arrayDefine;
         return $this;
@@ -104,11 +70,11 @@ class Exchanger
     /**
      * 変換処理を実行します
      *
-     * @param array $input 変換する配列を渡します
+     * @param array<mixed,mixed> $input 変換する配列を渡します
      *
-     * @return array 変換した配列を返します
+     * @return array<mixed,mixed> 変換した配列を返します
      */
-    public function execute(array $input)
+    public function execute(array $input): array
     {
         $input = $this->defineRoutine($input, $this->arrayDefine);
         return $this->inputRoutine($input);
@@ -117,15 +83,15 @@ class Exchanger
     /**
      * 定義した配列形式に変換します（個別設定）
      *
-     * @param array       $input       変換する配列を渡します
-     * @param ArrayDefine $arrayDefine 変換の定義を渡します
+     * @param array<mixed,mixed> $input       変換する配列を渡します
+     * @param ArrayDefine|null   $arrayDefine 変換の定義を渡します
      *
-     * @return array 変換した配列を返します
+     * @return array<mixed,mixed> 変換した配列を返します
      */
     private function defineRoutine(
         array $input,
-        ?ArrayDefine $arrayDefine
-    ) {
+        ArrayDefine $arrayDefine = null
+    ): array {
         if ($arrayDefine === null) {
             // 変換の定義がないときの処理
             return $input;
@@ -238,11 +204,11 @@ class Exchanger
     /**
      * 定義した配列形式に変換します（全体設定）
      *
-     * @param array $input 変換する配列を渡します
+     * @param array<mixed,mixed> $input 変換する配列を渡します
      *
-     * @return array 変換した配列を返します
+     * @return array<mixed,mixed> 変換した配列を返します
      */
-    private function inputRoutine(array $input)
+    private function inputRoutine(array $input): array
     {
         if (!$this->isExchanges()) {
             // 全体の変換処理が定義されていないなら入力値をそのまま返す
@@ -314,8 +280,8 @@ class Exchanger
     /**
      * keyの変換処理を行います
      *
-     * @param \Selen\Schema\Exchange\KeyExchangeInterface|callable|null $execute
-     * @param string                                                    $key
+     * @param Exchange\KeyExchangeInterface|callable|null $execute
+     * @param string                                      $key
      *
      * @return string
      */
@@ -335,8 +301,8 @@ class Exchanger
     /**
      * 値の変換処理を行います
      *
-     * @param \Selen\Schema\Exchange\ValueExchangeInterface|callable|null $execute
-     * @param mixed                                                       $value
+     * @param Exchange\ValueExchangeInterface|callable|null $execute
+     * @param mixed                                         $value
      *
      * @return mixed
      */

@@ -15,7 +15,7 @@ use Selen\File\Validate\Model\ValidatorResult;
 
 class Validator
 {
-    /** @var \Selen\File\Validate\Define[] */
+    /** @var Validate\Define[] */
     private array $defines;
 
     public function __construct(Define ...$defines)
@@ -25,7 +25,7 @@ class Validator
 
     public function execute(string ...$filePaths): ValidatorResult
     {
-        /** @var \Selen\File\Validate\Model\ValidateResult[] */
+        /** @var Validate\Model\ValidateResult[] */
         $validResults = [];
 
         foreach ($filePaths as $filePath) {

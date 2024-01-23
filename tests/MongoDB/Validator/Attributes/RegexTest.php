@@ -24,12 +24,15 @@ use Selen\MongoDB\Validator\Model\ValidateResult;
  */
 class RegexTest extends TestCase
 {
-    public function testConstruct()
+    public function testConstruct(): void
     {
         $this->assertInstanceOf(Regex::class, new Regex('^[0-9]$'));
     }
 
-    public function dataProviderExecute()
+    /**
+     * @return array<string, array<string, mixed>>
+     */
+    public function dataProviderExecute(): array
     {
         return [
             'validDataType: value not subject to validation' => [
@@ -47,7 +50,7 @@ class RegexTest extends TestCase
                 ],
             ],
             'invalidDataType: does not match regular expression' => [
-                'expected' => new ValidateResult(false, '', 'Invalid value. expected value pattern ^[0-9]+$.'),
+                'expected' => new ValidateResult(false, '', 'Invalid value. expected value ^[0-9]+$.'),
                 'input'    => [
                     'pattern' => '^[0-9]+$',
                     'value'   => 'a',
@@ -62,7 +65,7 @@ class RegexTest extends TestCase
      * @param \Selen\Schema\Validate\Model\ValidateResult $expected
      * @param mixed                                       $input
      */
-    public function testExecute($expected, $input)
+    public function testExecute($expected, $input): void
     {
         [
             'pattern' => $pattern,

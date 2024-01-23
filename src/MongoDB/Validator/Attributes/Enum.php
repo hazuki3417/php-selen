@@ -41,22 +41,19 @@ class Enum implements ValueValidateInterface
         return $result->setResult(false)->setMessage($mes);
     }
 
-    public function surround($value)
+    private function surround(string|float|int|bool|null $value): string
     {
-        /**
-         * NOTE: 表示用に値を整形。
-         */
-        if (\is_string($value)) {
-            return "'{$value}'";
+        switch (true) {
+            case \is_string($value):
+                return \sprintf("'%s'", $value);
+            case \is_bool($value):
+                return $value ? 'true' : 'false';
+            case \is_null($value):
+                return 'null';
+            default:
+                // NOTE: float, intのときは抜ける
+                break;
         }
-
-        if (\is_bool($value)) {
-            return $value ? 'true' : 'false';
-        }
-
-        if (\is_null($value)) {
-            return 'null';
-        }
-        return $value;
+        return \sprintf('%s', $value);
     }
 }

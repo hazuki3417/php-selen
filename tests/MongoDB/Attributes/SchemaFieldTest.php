@@ -23,7 +23,10 @@ use Selen\MongoDB\Attributes\SchemaField;
  */
 class SchemaFieldTest extends TestCase
 {
-    public function dataProviderConstruct()
+    /**
+     * @return array<string, array<string, mixed>>
+     */
+    public function dataProviderConstruct(): array
     {
         return [
             'pattern001' => [
@@ -41,7 +44,7 @@ class SchemaFieldTest extends TestCase
      * @param mixed $expected
      * @param mixed $input
      */
-    public function testConstruct($expected, $input)
+    public function testConstruct($expected, $input): void
     {
         [
             'instanceOf' => $expectedInstanceOf,

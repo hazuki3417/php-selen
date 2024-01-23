@@ -7,7 +7,7 @@ declare(strict_types=1);
  * @copyright 2021 hazuki3417 all rights reserved.
  */
 
-namespace Tests\Selen\Schema\Validate\Define;
+namespace Tests\Selen\Schema\Validate;
 
 use PHPUnit\Framework\TestCase;
 use Selen\Schema\Validate\Define;
@@ -23,7 +23,10 @@ use Selen\Schema\Validate\ValueValidateInterface;
  */
 class DefineTest extends TestCase
 {
-    public function dataProviderKeyAndNoKeyCall()
+    /**
+     * @return array<string, array<string, mixed>>
+     */
+    public function dataProviderKeyAndNoKeyCall(): array
     {
         $validateResultStub = $this->createStub(ValidateResult::class);
         $valueValidateStub  = $this->createStub(ValueValidateInterface::class);
@@ -84,42 +87,15 @@ class DefineTest extends TestCase
      * @param mixed $expected
      * @param mixed $input
      */
-    public function testKeyAndNoKeyCall($expected, $input)
+    public function testKeyAndNoKeyCall($expected, $input): void
     {
         $this->assertInstanceOf($expected, $input);
     }
 
-    public function dataProviderKeyAndNoKeyCallException()
-    {
-        return [
-            'callKeyAndIndexTypeNull' => [
-                'expected' => \InvalidArgumentException::class,
-                'input'    => [
-                    'keyArgs' => [null, true],
-                ],
-            ],
-        ];
-    }
     /**
-     * @dataProvider dataProviderKeyAndNoKeyCallException
-     *
-     * テスト内容:
-     *  - value()メソッドの引数が許容できない値をチェック
-     *
-     * @param mixed $expected
-     * @param mixed $input
+     * @return array<string, array<string, mixed>>
      */
-    public function testKeyAndNoKeyCallException($expected, $input)
-    {
-        [
-            'keyArgs' => $keyArgs
-        ] = $input;
-
-        $this->expectException($expected);
-        Define::key(...$keyArgs);
-    }
-
-    public function dataProviderCallPatternSuccess()
+    public function dataProviderCallPatternSuccess(): array
     {
         return [
             'callPattern: Define::key()->value()' => [
@@ -170,12 +146,15 @@ class DefineTest extends TestCase
      * @param mixed $expected
      * @param mixed $callback
      */
-    public function testCallPatternSuccess($expected, $callback)
+    public function testCallPatternSuccess($expected, $callback): void
     {
         $this->assertInstanceOf($expected, ($callback)());
     }
 
-    public function dataProviderCallPatternFailure()
+    /**
+     * @return array<string, array<string, mixed>>
+     */
+    public function dataProviderCallPatternFailure(): array
     {
         return [
             'callPattern: Define::key()->value()->value()' => [
@@ -226,20 +205,16 @@ class DefineTest extends TestCase
      * @param mixed $expected
      * @param mixed $callback
      */
-    public function testCallPatternFailure($expected, $callback)
+    public function testCallPatternFailure($expected, $callback): void
     {
         $this->expectException($expected);
         ($callback)();
     }
 
-    public function testArrayDefineException3()
-    {
-        // NOTE: 変換処理の引数のcallableまたはValueValidateInterface以外のものを指定
-        $this->expectException(\InvalidArgumentException::class);
-        $key = Define::noKey()->value('string');
-    }
-
-    public function dataProviderIsIndexArrayDefine()
+    /**
+     * @return array<string, array<string, mixed>>
+     */
+    public function dataProviderIsIndexArrayDefine(): array
     {
         return [
             'pattern001' => ['expected' => false, 'input' => Define::key('str', true)],
@@ -255,13 +230,16 @@ class DefineTest extends TestCase
      * @param mixed $expected
      * @param mixed $input
      */
-    public function testIsIndexArrayDefine($expected, $input)
+    public function testIsIndexArrayDefine($expected, $input): void
     {
         // @var \Selen\Schema\Validate\Define $input
         $this->assertSame($expected, $input->isIndexArrayDefine());
     }
 
-    public function dataProviderIsAssocArrayDefine()
+    /**
+     * @return array<string, array<string, mixed>>
+     */
+    public function dataProviderIsAssocArrayDefine(): array
     {
         return [
             'pattern001' => ['expected' => true,  'input' => Define::key('str', true)],
@@ -277,12 +255,15 @@ class DefineTest extends TestCase
      * @param mixed  $expected
      * @param Define $input
      */
-    public function testIsAssocArrayDefine($expected, $input)
+    public function testIsAssocArrayDefine($expected, $input): void
     {
         $this->assertSame($expected, $input->isAssocArrayDefine());
     }
 
-    public function dataProviderIsKeyValidate()
+    /**
+     * @return array<string, array<string, mixed>>
+     */
+    public function dataProviderIsKeyValidate(): array
     {
         return [
             'pattern001' => ['expected' => true, 'input' => Define::key('keyName', true)],
@@ -297,12 +278,15 @@ class DefineTest extends TestCase
      * @param mixed  $expected
      * @param Define $input
      */
-    public function testIsKeyValidate($expected, $input)
+    public function testIsKeyValidate($expected, $input): void
     {
         $this->assertSame($expected, $input->isKeyValidate());
     }
 
-    public function dataProviderIsValueValidate()
+    /**
+     * @return array<string, array<string, mixed>>
+     */
+    public function dataProviderIsValueValidate(): array
     {
         return [
             'pattern001' => ['expected' => false, 'input' => Define::key('keyName', true)],
@@ -325,12 +309,15 @@ class DefineTest extends TestCase
      * @param mixed  $expected
      * @param Define $input
      */
-    public function testIsValueValidate($expected, $input)
+    public function testIsValueValidate($expected, $input): void
     {
         $this->assertSame($expected, $input->isValueValidate());
     }
 
-    public function dataProviderNestedTypeDefineExists()
+    /**
+     * @return array<string, array<string, mixed>>
+     */
+    public function dataProviderNestedTypeDefineExists(): array
     {
         return [
             'pattern001' => ['expected' => false, 'input' => Define::key('str', true)],
@@ -356,7 +343,7 @@ class DefineTest extends TestCase
      * @param mixed  $expected
      * @param Define $input
      */
-    public function testNestedTypeDefineExists($expected, $input)
+    public function testNestedTypeDefineExists($expected, $input): void
     {
         $this->assertSame($expected, $input->nestedTypeDefineExists());
     }

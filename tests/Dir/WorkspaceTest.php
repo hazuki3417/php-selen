@@ -22,7 +22,10 @@ use Selen\Dir\Workspace;
  */
 class WorkspaceTest extends TestCase
 {
-    public function dataProviderConstruct()
+    /**
+     * @return array<string, array<string, mixed>>
+     */
+    public function dataProviderConstruct(): array
     {
         return [
             'validPattern: 001' => [
@@ -38,12 +41,15 @@ class WorkspaceTest extends TestCase
      * @param mixed $expected
      * @param mixed $input
      */
-    public function testConstruct($expected, $input)
+    public function testConstruct($expected, $input): void
     {
         $this->assertInstanceOf($expected, new Workspace($input));
     }
 
-    public function dataProviderGetPath()
+    /**
+     * @return array<string, array<string, mixed>>
+     */
+    public function dataProviderGetPath(): array
     {
         return [
             'validPattern: 001' => [
@@ -59,13 +65,16 @@ class WorkspaceTest extends TestCase
      * @param mixed $expected
      * @param mixed $input
      */
-    public function testGetPath($expected, $input)
+    public function testGetPath($expected, $input): void
     {
         $instance = new Workspace($input);
         $this->assertSame($expected, $instance->getPath());
     }
 
-    public function dataProviderCreate()
+    /**
+     * @return array<string, array<string, mixed>>
+     */
+    public function dataProviderCreate(): array
     {
         return [
             'validPattern: 001' => [
@@ -82,7 +91,7 @@ class WorkspaceTest extends TestCase
      *
      * @param mixed $input
      */
-    public function testCreate($input)
+    public function testCreate($input): void
     {
         $this->assertDirectoryDoesNotExist($input);
 
@@ -92,7 +101,10 @@ class WorkspaceTest extends TestCase
         $this->assertDirectoryExists($input);
     }
 
-    public function dataProviderCreateException()
+    /**
+     * @return array<string, array<string, mixed>>
+     */
+    public function dataProviderCreateException(): array
     {
         return [
             'invalidPattern: 001' => [
@@ -108,7 +120,7 @@ class WorkspaceTest extends TestCase
      * @param mixed $expected
      * @param mixed $input
      */
-    public function testCreateException($expected, $input)
+    public function testCreateException($expected, $input): void
     {
         \mkdir($input, 0777, true);
         $this->assertDirectoryExists($input);
@@ -118,7 +130,10 @@ class WorkspaceTest extends TestCase
         $instance->create();
     }
 
-    public function dataProviderRemove()
+    /**
+     * @return array<string, array<string, mixed>>
+     */
+    public function dataProviderRemove(): array
     {
         $pattern1 = '/tmp/phpunit/remove-pattern1';
         $pattern2 = '/tmp/phpunit/remove-pattern2';
@@ -158,7 +173,7 @@ class WorkspaceTest extends TestCase
      * @param callable $callback
      * @param mixed    $input
      */
-    public function testRemove($callback, $input)
+    public function testRemove($callback, $input): void
     {
         $this->assertDirectoryDoesNotExist($input);
 
@@ -173,7 +188,10 @@ class WorkspaceTest extends TestCase
         $this->assertDirectoryDoesNotExist($input);
     }
 
-    public function dataProviderDestruct()
+    /**
+     * @return array<string, array<string, mixed>>
+     */
+    public function dataProviderDestruct(): array
     {
         return [
             'validPattern: 001' => [
@@ -190,7 +208,7 @@ class WorkspaceTest extends TestCase
      *
      * @param mixed $input
      */
-    public function testDestruct($input)
+    public function testDestruct($input): void
     {
         $this->assertDirectoryDoesNotExist($input);
 

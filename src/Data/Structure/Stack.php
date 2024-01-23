@@ -12,14 +12,15 @@ use Selen\Data\Type;
 
 final class Stack extends AbstractStack
 {
-    private $typeName;
+    /** @var string 型名またはクラス名 */
+    private string $typeName;
 
     public function __construct(string $typeName)
     {
         $this->typeName = $typeName;
     }
 
-    public function push($object)
+    public function push($object): void
     {
         $isExpectedType = Type::validate($object, $this->typeName);
 

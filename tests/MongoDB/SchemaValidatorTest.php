@@ -26,7 +26,7 @@ use Selen\MongoDB\Validator\UpdateSchema;
  */
 class SchemaValidatorTest extends TestCase
 {
-    public function testConstruct()
+    public function testConstruct(): void
     {
         $instance = new SchemaValidator(SchemaValidatorTestMockRootObject::class);
         $this->assertInstanceOf(SchemaValidator::class, $instance);

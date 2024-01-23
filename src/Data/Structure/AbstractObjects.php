@@ -10,8 +10,14 @@ namespace Selen\Data\Structure;
 
 abstract class AbstractObjects implements ObjectsInterface
 {
-    protected $objects = [];
+    /** @var array<mixed,mixed> オブジェクト */
+    protected array $objects = [];
 
+    /**
+     * 新しいオブジェクトを作成します。
+     *
+     * @param array<mixed,mixed> $objects オブジェクトを渡します
+     */
     public function __construct(array $objects)
     {
         $this->objects = $objects;
@@ -32,7 +38,7 @@ abstract class AbstractObjects implements ObjectsInterface
         return count($this->objects);
     }
 
-    public function clear()
+    public function clear(): void
     {
         $this->objects = [];
     }

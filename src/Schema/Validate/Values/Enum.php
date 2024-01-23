@@ -16,18 +16,16 @@ class Enum implements ValueValidateInterface
     /** @var string */
     protected $messageFormat = 'Invalid value. expected value %s.';
 
-    /** @var string[] */
+    /** @var array<mixed,string|float|int|bool|null> */
     private $allowValues;
 
-    public function __construct(...$values)
+    public function __construct(string|float|int|bool|null ...$values)
     {
         $this->allowValues = $values;
     }
 
     public function execute($value, ValidateResult $result): ValidateResult
     {
-        // TODO: enumに配列やオブジェクトは指定できないように修正する
-
         if (\in_array($value, $this->allowValues, true)) {
             return $result;
         }
@@ -40,22 +38,19 @@ class Enum implements ValueValidateInterface
         return $result->setResult(false)->setMessage($mes);
     }
 
-    private function surround($value)
+    private function surround(string|float|int|bool|null $value): string
     {
-        /**
-         * NOTE: 表示用に値を整形。
-         */
-        if (\is_string($value)) {
-            return "'{$value}'";
+        switch (true) {
+            case \is_string($value):
+                return \sprintf("'%s'", $value);
+            case \is_bool($value):
+                return $value ? 'true' : 'false';
+            case \is_null($value):
+                return 'null';
+            default:
+                // NOTE: float, intのときは抜ける
+                break;
         }
-
-        if (\is_bool($value)) {
-            return $value ? 'true' : 'false';
-        }
-
-        if (\is_null($value)) {
-            return 'null';
-        }
-        return $value;
+        return \sprintf('%s', $value);
     }
 }

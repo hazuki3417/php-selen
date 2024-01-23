@@ -22,10 +22,10 @@ class SchemaFieldLoader
     /** @var ReflectionProperty */
     public $reflectionProperty;
 
-    /** @var \ReflectionAttribute|null */
+    /** @var \ReflectionAttribute<SchemaFieldMarkerInterface>|null */
     public $attributeFieldSchema;
 
-    /** @var \ReflectionAttribute|null */
+    /** @var \ReflectionAttribute<Nest>|null */
     public $attributeNest;
 
     public function __construct(ReflectionProperty $reflectionProperty)
@@ -49,7 +49,7 @@ class SchemaFieldLoader
      *
      * @param string $attributeName 取得する属性名を渡します
      *
-     * @return \ReflectionAttribute|null 存在する場合は属性を、存在しない場合はnullを返します
+     * @return \ReflectionAttribute<object>|null 存在する場合は属性を、存在しない場合はnullを返します
      */
     public function fetchAttribute(string $attributeName)
     {
@@ -65,7 +65,7 @@ class SchemaFieldLoader
      *
      * @param string $attributeName 取得する属性名を渡します
      *
-     * @return \ReflectionAttribute[] 存在する場合は属性を保持した配列を、存在しない場合は空配列を返します
+     * @return \ReflectionAttribute<object>[] 存在する場合は属性を保持した配列を、存在しない場合は空配列を返します
      */
     public function fetchAttributes(string $attributeName)
     {

@@ -24,7 +24,10 @@ use Selen\MongoDB\Attributes\Schema;
  */
 class SchemaTest extends TestCase
 {
-    public function dataProviderConstruct()
+    /**
+     * @return array<string, array<string, mixed>>
+     */
+    public function dataProviderConstruct(): array
     {
         return [
             'pattern001' => [
@@ -54,7 +57,7 @@ class SchemaTest extends TestCase
      * @param mixed $expected
      * @param mixed $input
      */
-    public function testConstruct($expected, $input)
+    public function testConstruct($expected, $input): void
     {
         [
             'type' => $type,
@@ -71,7 +74,10 @@ class SchemaTest extends TestCase
         $this->assertSame($expectedType, $instance->type);
     }
 
-    public function dataProviderConstructException()
+    /**
+     * @return array<string, array<string, mixed>>
+     */
+    public function dataProviderConstructException(): array
     {
         return [
             'pattern001' => [
@@ -89,7 +95,7 @@ class SchemaTest extends TestCase
      * @param mixed $expected
      * @param mixed $input
      */
-    public function testConstructException($expected, $input)
+    public function testConstructException($expected, $input): void
     {
         [
             'type' => $type,

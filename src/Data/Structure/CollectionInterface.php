@@ -10,7 +10,21 @@ namespace Selen\Data\Structure;
 
 interface CollectionInterface extends ObjectsInterface
 {
-    public function add($object);
+    /**
+     * オブジェクトを追加します
+     *
+     * @param mixed $object 追加するオブジェクトを渡します
+     *
+     * @return bool 成功した場合はtrueを返します
+     */
+    public function add($object): bool;
 
-    public function remove($object);
+    /**
+     * オブジェクトを削除します
+     *
+     * @param mixed $object 削除するオブジェクトを渡します
+     *
+     * @return bool オブジェクトを削除できた場合はtrueを返します
+     */
+    public function remove($object): bool;
 }

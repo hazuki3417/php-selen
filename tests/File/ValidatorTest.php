@@ -22,7 +22,10 @@ use Selen\File\Validator;
  */
 class ValidatorTest extends TestCase
 {
-    public function dataProviderExecute()
+    /**
+     * @return array<string, array<string, mixed>>
+     */
+    public function dataProviderExecute(): array
     {
         return [
             'validPattern: 001' => [
@@ -67,7 +70,7 @@ class ValidatorTest extends TestCase
      * @param mixed $expected
      * @param mixed $input
      */
-    public function testExecute($expected, $input)
+    public function testExecute($expected, $input): void
     {
         [
             'construct' => $construct,

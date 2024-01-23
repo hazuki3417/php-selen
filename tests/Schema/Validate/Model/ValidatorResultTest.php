@@ -7,7 +7,7 @@ declare(strict_types=1);
  * @copyright 2021 hazuki3417 all rights reserved.
  */
 
-namespace Tests\Selen\Schema\Validate\Model\ValidatorResult;
+namespace Tests\Selen\Schema\Validate\Model;
 
 use PHPUnit\Framework\TestCase;
 use Selen\Schema\Validate\Model\ValidateResult;
@@ -22,14 +22,14 @@ use Selen\Schema\Validate\Model\ValidatorResult;
  */
 class ValidatorResultTest extends TestCase
 {
-    public function testConstruct1()
+    public function testConstruct1(): void
     {
         $validateResultStub = $this->createStub(ValidateResult::class);
         $instance           = new ValidatorResult($validateResultStub);
         $this->assertInstanceOf(ValidatorResult::class, $instance);
     }
 
-    public function testConstruct2()
+    public function testConstruct2(): void
     {
         $validateResultStub1 = $this->createStub(ValidateResult::class);
         $validateResultStub2 = $this->createStub(ValidateResult::class);
@@ -37,7 +37,10 @@ class ValidatorResultTest extends TestCase
         $this->assertInstanceOf(ValidatorResult::class, $instance);
     }
 
-    public function dataProviderSuccess()
+    /**
+     * @return array<string, array<string, mixed>>
+     */
+    public function dataProviderSuccess(): array
     {
         $successValidateResultStub = $this->createSuccessValidateResultStub();
         $failureValidateResultStub = $this->createFailureValidateResultStub();
@@ -87,16 +90,19 @@ class ValidatorResultTest extends TestCase
     /**
      * @dataProvider dataProviderSuccess
      *
-     * @param bool  $expected
-     * @param array $input
+     * @param mixed $expected
+     * @param mixed $input
      */
-    public function testSuccess($expected, $input)
+    public function testSuccess($expected, $input): void
     {
         $instance = new ValidatorResult(...$input);
         $this->assertSame($expected, $instance->success());
     }
 
-    public function dataProviderFailure()
+    /**
+     * @return array<string, array<string, mixed>>
+     */
+    public function dataProviderFailure(): array
     {
         $successValidateResultStub = $this->createSuccessValidateResultStub();
         $failureValidateResultStub = $this->createFailureValidateResultStub();
@@ -146,16 +152,16 @@ class ValidatorResultTest extends TestCase
     /**
      * @dataProvider dataProviderFailure
      *
-     * @param bool  $expected
-     * @param array $input
+     * @param mixed $expected
+     * @param mixed $input
      */
-    public function testFailure($expected, $input)
+    public function testFailure($expected, $input): void
     {
         $instance = new ValidatorResult(...$input);
         $this->assertSame($expected, $instance->failure());
     }
 
-    public function testGetValidateResults()
+    public function testGetValidateResults(): void
     {
         $validateResultStub1 = $this->createStub(ValidateResult::class);
         $validateResultStub2 = $this->createStub(ValidateResult::class);

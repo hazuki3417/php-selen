@@ -30,14 +30,17 @@ use Selen\MongoDB\Builder\UpdateSchema;
  */
 class UpdateSchemaTest extends TestCase
 {
-    public function testConstruct()
+    public function testConstruct(): void
     {
         $SchemaLoader = new SchemaLoader(new ReflectionClass(UpdateSchemaTestMockRootObject::class));
         $insertSchema = new UpdateSchema($SchemaLoader);
         $this->assertInstanceOf(UpdateSchema::class, $insertSchema);
     }
 
-    public function dataProviderCreateException()
+    /**
+     * @return array<string, array<string, mixed>>
+     */
+    public function dataProviderCreateException(): array
     {
         return [
             'invalidPattern:no input' => [
@@ -56,7 +59,7 @@ class UpdateSchemaTest extends TestCase
      * @param string $expected
      * @param array  $input
      */
-    public function testCreateException($expected, $input)
+    public function testCreateException($expected, $input): void
     {
         [
             'contractArgs' => $contractArgs,
@@ -71,7 +74,10 @@ class UpdateSchemaTest extends TestCase
         $updateSchema->create($createArgs);
     }
 
-    public function dataProviderCreate()
+    /**
+     * @return array<string, array<string, mixed>>
+     */
+    public function dataProviderCreate(): array
     {
         return [
             'validPattern:Override non-nested field values' => [
@@ -183,7 +189,7 @@ class UpdateSchemaTest extends TestCase
      * @param string $expected
      * @param array  $input
      */
-    public function testCreate($expected, $input)
+    public function testCreate($expected, $input): void
     {
         [
             'contractArgs' => $contractArgs,

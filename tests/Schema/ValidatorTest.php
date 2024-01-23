@@ -7,12 +7,13 @@ declare(strict_types=1);
  * @copyright 2021 hazuki3417 all rights reserved.
  */
 
-namespace Tests\Selen\Schema\Validator\Define;
+namespace Tests\Selen\Schema;
 
 use PHPUnit\Framework\TestCase;
 use Selen\Schema\Validate\ArrayDefine;
 use Selen\Schema\Validate\Define;
 use Selen\Schema\Validate\Model\ValidateResult;
+use Selen\Schema\Validate\Values\ArrayNotEmpty;
 use Selen\Schema\Validate\Values\Regex;
 use Selen\Schema\Validate\Values\Type;
 use Selen\Schema\Validator;
@@ -31,7 +32,10 @@ use Selen\Schema\Validator;
  */
 class ValidatorTest extends TestCase
 {
-    public function dataProviderValueAndExecute()
+    /**
+     * @return array<string, array<string, mixed>>
+     */
+    public function dataProviderValueAndExecute(): array
     {
         return [
             'validPattern: No validation definition' => [
@@ -131,7 +135,7 @@ class ValidatorTest extends TestCase
      * @param mixed $expected
      * @param mixed $input
      */
-    public function testValueAndExecute($expected, $input)
+    public function testValueAndExecute($expected, $input): void
     {
         [
             'result'          => $result,
@@ -148,7 +152,10 @@ class ValidatorTest extends TestCase
         $this->assertValidatorClass($result, $validateResults, $actualResult);
     }
 
-    public function dataProviderValueValidateForOneDimensionalArrayWithNoKey()
+    /**
+     * @return array<string, array<string, mixed>>
+     */
+    public function dataProviderValueValidateForOneDimensionalArrayWithNoKey(): array
     {
         $valStr    = new Type('string');
         $valStrNum = new Regex('^[0-9]+$');
@@ -524,7 +531,7 @@ class ValidatorTest extends TestCase
      * @param mixed $expected
      * @param mixed $input
      */
-    public function testValueValidateForOneDimensionalArrayWithNoKey($expected, $input)
+    public function testValueValidateForOneDimensionalArrayWithNoKey($expected, $input): void
     {
         [
             'result'          => $result,
@@ -541,27 +548,15 @@ class ValidatorTest extends TestCase
         $this->assertValidatorClass($result, $validateResults, $actualResult);
     }
 
-    public function dataProviderKeyValidateForOneDimensionalArrayWithKey()
+    /**
+     * @return array<string, array<string, mixed>>
+     */
+    public function dataProviderKeyValidateForOneDimensionalArrayWithKey(): array
     {
         return [
             /**
              * keyのバリデーションが1つのときのテスト
              */
-            'validPattern: no key validation (one key)' => [
-                'expected' => [
-                    'result'          => true,
-                    'validateResults' => [
-                    ],
-                ],
-                'input' => [
-                    'arrayDefine' => new ArrayDefine(
-                        Define::key('keyName', false),
-                    ),
-                    'execute' => [
-                        'key' => 'target-string',
-                    ],
-                ],
-            ],
             'validPattern: with key validation (one key)' => [
                 'expected' => [
                     'result'          => true,
@@ -577,11 +572,13 @@ class ValidatorTest extends TestCase
                     ],
                 ],
             ],
-            'invalidPattern: with key validation (one key)' => [
+            'invalidPattern: 定義に存在しないkey,valueを渡したとき' => [
                 'expected' => [
                     'result'          => false,
                     'validateResults' => [
-                        new ValidateResult(false, 'keyName', 'Key is required.'),
+                        new ValidateResult(false, 'inputOnlyKey', 'Undefined key.'),
+                        new ValidateResult(false, '1', 'Undefined key.'),
+                        new ValidateResult(false, '0', 'Undefined key.'),
                     ],
                 ],
                 'input' => [
@@ -589,30 +586,16 @@ class ValidatorTest extends TestCase
                         Define::key('keyName', true)
                     ),
                     'execute' => [
-                        'key' => 'target-string',
+                        'keyName'      => 'target-string',
+                        'inputOnlyKey' => 'value',
+                        '1'            => 'value',
+                        0              => 'value',
                     ],
                 ],
             ],
             /**
              * keyのバリデーションが複数のときのテスト
              */
-            'validPattern: do not verify multiple keys (multiple key)' => [
-                'expected' => [
-                    'result'          => true,
-                    'validateResults' => [
-                    ],
-                ],
-                'input' => [
-                    'arrayDefine' => new ArrayDefine(
-                        Define::key('keyName1', false),
-                        Define::key('keyName2', false),
-                    ),
-                    'execute' => [
-                        'key1' => 'target-string',
-                        'key2' => 'target-string',
-                    ],
-                ],
-            ],
             'validPattern: Validate multiple keys (multiple key)' => [
                 'expected' => [
                     'result'          => true,
@@ -634,8 +617,10 @@ class ValidatorTest extends TestCase
                 'expected' => [
                     'result'          => false,
                     'validateResults' => [
-                        new ValidateResult(false, 'keyName1', 'Key is required.'),
-                        new ValidateResult(false, 'keyName2', 'Key is required.'),
+                        new ValidateResult(false, 'key1', 'Undefined key.'),
+                        new ValidateResult(false, 'key2', 'Undefined key.'),
+                        new ValidateResult(false, 'keyName1', 'key is required.'),
+                        new ValidateResult(false, 'keyName2', 'key is required.'),
                     ],
                 ],
                 'input' => [
@@ -656,7 +641,9 @@ class ValidatorTest extends TestCase
                 'expected' => [
                     'result'          => false,
                     'validateResults' => [
-                        new ValidateResult(false, 'keyName2', 'Key is required.'),
+                        new ValidateResult(false, 'key1', 'Undefined key.'),
+                        new ValidateResult(false, 'key2', 'Undefined key.'),
+                        new ValidateResult(false, 'keyName2', 'key is required.'),
                     ],
                 ],
                 'input' => [
@@ -683,7 +670,7 @@ class ValidatorTest extends TestCase
      * @param mixed $expected
      * @param mixed $input
      */
-    public function testKeyValidateForOneDimensionalArrayWithKey($expected, $input)
+    public function testKeyValidateForOneDimensionalArrayWithKey($expected, $input): void
     {
         [
             'result'          => $result,
@@ -700,7 +687,10 @@ class ValidatorTest extends TestCase
         $this->assertValidatorClass($result, $validateResults, $actualResult);
     }
 
-    public function dataProviderKeyValueValidateForOneDimensionalArrayWithKey()
+    /**
+     * @return array<string, array<string, mixed>>
+     */
+    public function dataProviderKeyValueValidateForOneDimensionalArrayWithKey(): array
     {
         $valStr    = new Type('string');
         $valStrNum = new Regex('^[0-9]+$');
@@ -743,7 +733,8 @@ class ValidatorTest extends TestCase
                 'expected' => [
                     'result'          => false,
                     'validateResults' => [
-                        new ValidateResult(false, 'keyName', 'Key is required.'),
+                        new ValidateResult(false, 'key', 'Undefined key.'),
+                        new ValidateResult(false, 'keyName', 'key is required.'),
                     ],
                 ],
                 'input' => [
@@ -755,11 +746,11 @@ class ValidatorTest extends TestCase
                     ],
                 ],
             ],
-            // NOTE: keyがoptional指定で、入力側に存在しないときは値バリデーションが実施されないことを確認
-            'validPattern: value only validate (one key, input key does not match definition)' => [
+            'invalidPattern: value only validate (one key, input key does not match definition)' => [
                 'expected' => [
-                    'result'          => true,
+                    'result'          => false,
                     'validateResults' => [
+                        new ValidateResult(false, 'key', 'Undefined key.'),
                     ],
                 ],
                 'input' => [
@@ -809,7 +800,8 @@ class ValidatorTest extends TestCase
                 'expected' => [
                     'result'          => false,
                     'validateResults' => [
-                        new ValidateResult(false, 'keyName', 'Key is required.'),
+                        new ValidateResult(false, 'key', 'Undefined key.'),
+                        new ValidateResult(false, 'keyName', 'key is required.'),
                     ],
                 ],
                 'input' => [
@@ -926,7 +918,7 @@ class ValidatorTest extends TestCase
      * @param mixed $expected
      * @param mixed $input
      */
-    public function testKeyValueValidateForOneDimensionalArrayWithKey($expected, $input)
+    public function testKeyValueValidateForOneDimensionalArrayWithKey($expected, $input): void
     {
         [
             'result'          => $result,
@@ -943,11 +935,14 @@ class ValidatorTest extends TestCase
         $this->assertValidatorClass($result, $validateResults, $actualResult);
     }
 
-    public function dataProviderDefinesNestedArrays()
+    /**
+     * @return array<string, array<string, mixed>>
+     */
+    public function dataProviderDefinesNestedArrays(): array
     {
         return [
             /**
-             * 要素配列定義に->arrayDefine()を呼び出したときの動作を確認する
+             * 添字配列定義に->arrayDefine()を呼び出したときの動作を確認する
              */
             'validPattern: [noKey()->arrayDefine()] no data' => [
                 'expected' => [
@@ -1225,8 +1220,9 @@ class ValidatorTest extends TestCase
 
             'validPattern: [key()->arrayDefine()] key optional, no value matches key' => [
                 'expected' => [
-                    'result'          => true,
+                    'result'          => false,
                     'validateResults' => [
+                        new ValidateResult(false, '0', 'Undefined key.'),
                     ],
                 ],
                 'input' => [
@@ -1273,7 +1269,8 @@ class ValidatorTest extends TestCase
                 'expected' => [
                     'result'          => false,
                     'validateResults' => [
-                        new ValidateResult(false, 'keyName', 'Key is required.'),
+                        new ValidateResult(false, '0', 'Undefined key.'),
+                        new ValidateResult(false, 'keyName', 'key is required.'),
                     ],
                 ],
                 'input' => [
@@ -1331,10 +1328,11 @@ class ValidatorTest extends TestCase
                 ],
             ],
 
-            'validPattern: [key()->value()->arrayDefine()] key optional, no value matches key' => [
+            'invalidPattern: [key()->value()->arrayDefine()] key optional, no value matches key' => [
                 'expected' => [
-                    'result'          => true,
+                    'result'          => false,
                     'validateResults' => [
+                        new ValidateResult(false, '0', 'Undefined key.'),
                     ],
                 ],
                 'input' => [
@@ -1381,7 +1379,8 @@ class ValidatorTest extends TestCase
                 'expected' => [
                     'result'          => false,
                     'validateResults' => [
-                        new ValidateResult(false, 'keyName', 'Key is required.'),
+                        new ValidateResult(false, '0', 'Undefined key.'),
+                        new ValidateResult(false, 'keyName', 'key is required.'),
                     ],
                 ],
                 'input' => [
@@ -1436,7 +1435,7 @@ class ValidatorTest extends TestCase
      * @param mixed $expected
      * @param mixed $input
      */
-    public function testDefinesNestedArrays($expected, $input)
+    public function testDefinesNestedArrays($expected, $input): void
     {
         [
             'result'          => $result,
@@ -1453,10 +1452,13 @@ class ValidatorTest extends TestCase
         $this->assertValidatorClass($result, $validateResults, $actualResult);
     }
 
-    public function dataProviderCombinedOfIndexArrayAndIndexArray()
+    /**
+     * @return array<string, array<string, mixed>>
+     */
+    public function dataProviderCombinedOfIndexArrayAndIndexArray(): array
     {
         return [
-            'validPattern: ' => [
+            'validPattern: valueとarrayDefineのバリデーション定義が両立するか確認' => [
                 'expected' => [
                     'result'          => true,
                     'validateResults' => [
@@ -1464,8 +1466,54 @@ class ValidatorTest extends TestCase
                 ],
                 'input' => [
                     'arrayDefine' => new ArrayDefine(
+                        Define::key('contract', true)->value(new ArrayNotEmpty())->arrayDefine(
+                            Define::noKey()->value(new Type('string'))
+                        ),
+                        Define::key('key1', true)->value(new Type('string')),
+                        Define::key('key2', true)->value(new Type('string')),
+                        Define::key('key3', true)->value(new Type('string')),
+                        Define::key('key4', true)->value(new Type('string')),
                     ),
                     'execute' => [
+                        'contract' => [
+                            'abcde',
+                            'fghij',
+                            'klmno',
+                        ],
+                        'key1' => 'value1',
+                        'key2' => 'value2',
+                        'key3' => 'value3',
+                        'key4' => 'value4',
+                    ],
+                ],
+            ],
+            'invalidPattern: contractに指定したArrayNotEmptyが機能しているか確認' => [
+                'expected' => [
+                    'result'          => false,
+                    'validateResults' => [
+                        new ValidateResult(false, 'contract', 'Invalid value. Must have at least one element.'),
+                    ],
+                ],
+                'input' => [
+                    'arrayDefine' => new ArrayDefine(
+                        Define::key('contract', true)->value(new ArrayNotEmpty())->arrayDefine(
+                            Define::noKey()->value(new Type('string'))
+                        ),
+                        Define::key('key1', true)->value(new Type('string')),
+                        Define::key('key2', true)->value(new Type('string')),
+                        Define::key('key3', true)->value(new Type('string')),
+                        Define::key('key4', true)->value(new Type('string')),
+                    ),
+                    'execute' => [
+                        'contract' => [
+                            // 'abcde',
+                            // 'fghij',
+                            // 'klmno',
+                        ],
+                        'key1' => 'value1',
+                        'key2' => 'value2',
+                        'key3' => 'value3',
+                        'key4' => 'value4',
                     ],
                 ],
             ],
@@ -1474,14 +1522,14 @@ class ValidatorTest extends TestCase
 
     /**
      * テスト内容
-     * - 要素配列に要素配列をネストする定義パターンをテスト
+     * - 添字配列に添字配列をネストする定義パターンをテスト
      *
      * @dataProvider dataProviderCombinedOfIndexArrayAndIndexArray
      *
      * @param mixed $expected
      * @param mixed $input
      */
-    public function testCombinedOfIndexArrayAndIndexArray($expected, $input)
+    public function testCombinedOfIndexArrayAndIndexArray($expected, $input): void
     {
         [
             'result'          => $result,
@@ -1498,7 +1546,10 @@ class ValidatorTest extends TestCase
         $this->assertValidatorClass($result, $validateResults, $actualResult);
     }
 
-    public function dataProviderCombinedOfIndexArrayAndAssocArray()
+    /**
+     * @return array<string, array<string, mixed>>
+     */
+    public function dataProviderCombinedOfIndexArrayAndAssocArray(): array
     {
         return [
             'validPattern: ' => [
@@ -1514,19 +1565,40 @@ class ValidatorTest extends TestCase
                     ],
                 ],
             ],
+            'invalidPattern: ネストした連想配列に定義していないkeyがinputに存在するとき' => [
+                'expected' => [
+                    'result'          => false,
+                    'validateResults' => [
+                        new ValidateResult(false, '[0].inputOnlyKey', 'Undefined key.'),
+                    ],
+                ],
+                'input' => [
+                    'arrayDefine' => new ArrayDefine(
+                        Define::noKey()->arrayDefine(
+                            Define::key('key', true)
+                        )
+                    ),
+                    'execute' => [
+                        [
+                            'key'          => 'value',
+                            'inputOnlyKey' => 'value',
+                        ],
+                    ],
+                ],
+            ],
         ];
     }
 
     /**
      * テスト内容
-     * - 要素配列に連想配列をネストする定義パターンをテスト
+     * - 添字配列に連想配列をネストする定義パターンをテスト
      *
      * @dataProvider dataProviderCombinedOfIndexArrayAndAssocArray
      *
      * @param mixed $expected
      * @param mixed $input
      */
-    public function testCombinedOfIndexArrayAndAssocArray($expected, $input)
+    public function testCombinedOfIndexArrayAndAssocArray($expected, $input): void
     {
         [
             'result'          => $result,
@@ -1543,7 +1615,10 @@ class ValidatorTest extends TestCase
         $this->assertValidatorClass($result, $validateResults, $actualResult);
     }
 
-    public function dataProviderCombinedOfAssocArrayAndAssocArray()
+    /**
+     * @return array<string, array<string, mixed>>
+     */
+    public function dataProviderCombinedOfAssocArrayAndAssocArray(): array
     {
         return [
             'validPattern: ' => [
@@ -1556,6 +1631,27 @@ class ValidatorTest extends TestCase
                     'arrayDefine' => new ArrayDefine(
                     ),
                     'execute' => [
+                    ],
+                ],
+            ],
+            'invalidPattern: ネストした連想配列に定義していないkeyがinputに存在するとき' => [
+                'expected' => [
+                    'result'          => false,
+                    'validateResults' => [
+                        new ValidateResult(false, 'parent.inputOnlyKey', 'Undefined key.'),
+                    ],
+                ],
+                'input' => [
+                    'arrayDefine' => new ArrayDefine(
+                        Define::key('parent', true)->arrayDefine(
+                            Define::key('child', true)
+                        )
+                    ),
+                    'execute' => [
+                        'parent' => [
+                            'child'        => 'value',
+                            'inputOnlyKey' => 'value',
+                        ],
                     ],
                 ],
             ],
@@ -1571,7 +1667,7 @@ class ValidatorTest extends TestCase
      * @param mixed $expected
      * @param mixed $input
      */
-    public function testCombinedOfAssocArrayAndAssocArray($expected, $input)
+    public function testCombinedOfAssocArrayAndAssocArray($expected, $input): void
     {
         [
             'result'          => $result,
@@ -1588,7 +1684,10 @@ class ValidatorTest extends TestCase
         $this->assertValidatorClass($result, $validateResults, $actualResult);
     }
 
-    public function dataProviderCombinedOfAssocArrayAndIndexArray()
+    /**
+     * @return array<string, array<string, mixed>>
+     */
+    public function dataProviderCombinedOfAssocArrayAndIndexArray(): array
     {
         return [
             'validPattern: 1D empty array for items key is allowed' => [
@@ -1616,9 +1715,9 @@ class ValidatorTest extends TestCase
                 'expected' => [
                     'result'          => false,
                     'validateResults' => [
-                        new ValidateResult(false, 'items.[0].name', 'Key is required.'),
-                        new ValidateResult(false, 'items.[0].kana', 'Key is required.'),
-                        new ValidateResult(false, 'items.[0].age', 'Key is required.'),
+                        new ValidateResult(false, 'items.[0].name', 'key is required.'),
+                        new ValidateResult(false, 'items.[0].kana', 'key is required.'),
+                        new ValidateResult(false, 'items.[0].age', 'key is required.'),
                     ],
                 ],
                 'input' => [
@@ -1670,14 +1769,14 @@ class ValidatorTest extends TestCase
 
     /**
      * テスト内容
-     * - 連想配列に要素配列をネストする定義パターンをテスト
+     * - 連想配列に添字配列をネストする定義パターンをテスト
      *
      * @dataProvider dataProviderCombinedOfAssocArrayAndIndexArray
      *
      * @param mixed $expected
      * @param mixed $input
      */
-    public function testCombinedOfAssocArrayAndIndexArray($expected, $input)
+    public function testCombinedOfAssocArrayAndIndexArray($expected, $input): void
     {
         [
             'result'          => $result,
@@ -1701,7 +1800,7 @@ class ValidatorTest extends TestCase
      * @param \Selen\Schema\Validate\Model\ValidateResult[] $expectedValidateResults
      * @param \Selen\Schema\Validate\Model\ValidatorResult  $result
      */
-    private function assertValidatorClass($expectedSuccess, $expectedValidateResults, $result)
+    private function assertValidatorClass($expectedSuccess, $expectedValidateResults, $result): void
     {
         $this->assertSame($expectedSuccess, $result->success());
 

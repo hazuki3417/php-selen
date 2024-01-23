@@ -10,6 +10,12 @@ namespace Selen\Data;
 
 class Types
 {
+    /**
+     * 値の型を検証します
+     *
+     * @param mixed  $data      検証する値を指定します
+     * @param string $typeNames 型名を指定します
+     */
     public static function validate($data, string ...$typeNames): bool
     {
         $isDuplicateTypeName = count(\array_unique($typeNames)) < count($typeNames);

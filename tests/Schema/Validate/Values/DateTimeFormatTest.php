@@ -1,7 +1,6 @@
 <?php
 
 declare(strict_types=1);
-
 /**
  * @license MIT
  * @author hazuki3417<hazuki3417@gmail.com>
@@ -23,355 +22,386 @@ use Selen\Schema\Validate\Values\DateTimeFormat;
  */
 class DateTimeFormatTest extends TestCase
 {
-    public function testConstruct()
+    public function testConstruct(): void
     {
         $this->assertInstanceOf(DateTimeFormat::class, new DateTimeFormat('string'));
     }
 
-    public function dataProviderExecute()
+    /**
+     * @return array<string, array<string, mixed>>
+     */
+    public function dataProviderExecute(): array
     {
         return [
             'validDataType: value is not string type' => [
                 'expected' => new ValidateResult(true, '', 'Skip validation. Executed only when the value is of string type.'),
                 'input'    => [
-                    'format' => 'Y-m-d H:i',
-                    'value'  => 1,
+                    'args'  => ['Y-m-d H:i', false],
+                    'value' => 1,
                 ],
             ],
-            'validDataType: date format is Y-m-d' => [
+            'validDataType: date format Y-m-d 2019-01-01' => [
                 'expected' => new ValidateResult(true),
                 'input'    => [
-                    'format' => 'Y-m-d',
-                    'value'  => '2019-01-01',
+                    'args'  => ['Y-m-d', false],
+                    'value' => '2019-01-01',
                 ],
             ],
-            'validDataType: date format is Y-m-d' => [
+            'validDataType: date format Y-m-d 2019-12-31' => [
                 'expected' => new ValidateResult(true),
                 'input'    => [
-                    'format' => 'Y-m-d',
-                    'value'  => '2019-12-31',
+                    'args'  => ['Y-m-d', false],
+                    'value' => '2019-12-31',
                 ],
             ],
-            'validDataType: date format is Y/m/d' => [
+            'validDataType: date format Y/m/d 2019/01/01' => [
                 'expected' => new ValidateResult(true),
                 'input'    => [
-                    'format' => 'Y/m/d',
-                    'value'  => '2019/01/01',
+                    'args'  => ['Y/m/d', false],
+                    'value' => '2019/01/01',
                 ],
             ],
-            'validDataType: date format is Y/m/d' => [
+            'validDataType: date format Y/m/d 2019/12/31' => [
                 'expected' => new ValidateResult(true),
                 'input'    => [
-                    'format' => 'Y/m/d',
-                    'value'  => '2019/12/31',
+                    'args'  => ['Y/m/d', false],
+                    'value' => '2019/12/31',
                 ],
             ],
-            'validDataType: date format is Y m d' => [
+            'validDataType: date format Y m d 2019 01 01' => [
                 'expected' => new ValidateResult(true),
                 'input'    => [
-                    'format' => 'Y m d',
-                    'value'  => '2019 01 01',
+                    'args'  => ['Y m d', false],
+                    'value' => '2019 01 01',
                 ],
             ],
-            'validDataType: date format is Y m d' => [
+            'validDataType: date format Y m d 2019 12 31' => [
                 'expected' => new ValidateResult(true),
                 'input'    => [
-                    'format' => 'Y m d',
-                    'value'  => '2019 12 31',
+                    'args'  => ['Y m d', false],
+                    'value' => '2019 12 31',
                 ],
             ],
-            'validDataType: date format is Ymd' => [
+            'validDataType: date format Ymd 20190101' => [
                 'expected' => new ValidateResult(true),
                 'input'    => [
-                    'format' => 'Ymd',
-                    'value'  => '20190101',
+                    'args'  => ['Ymd', false],
+                    'value' => '20190101',
                 ],
             ],
-            'validDataType: date format is Ymd' => [
+            'validDataType: date format Ymd 20191231' => [
                 'expected' => new ValidateResult(true),
                 'input'    => [
-                    'format' => 'Ymd',
-                    'value'  => '20191231',
+                    'args'  => ['Ymd', false],
+                    'value' => '20191231',
                 ],
             ],
-            'validDataType: date format is YmdHis' => [
+            'validDataType: date format YmdHis 20190101000000' => [
                 'expected' => new ValidateResult(true),
                 'input'    => [
-                    'format' => 'YmdHis',
-                    'value'  => '20190101000000',
+                    'args'  => ['YmdHis', false],
+                    'value' => '20190101000000',
                 ],
             ],
-            'validDataType: date format is YmdHis' => [
+            'validDataType: date format YmdHis 20191231000000' => [
                 'expected' => new ValidateResult(true),
                 'input'    => [
-                    'format' => 'YmdHis',
-                    'value'  => '20191231000000',
+                    'args'  => ['YmdHis', false],
+                    'value' => '20191231000000',
                 ],
             ],
-            'validDataType: date format is H:i' => [
+            'validDataType: date format H:i 00:00' => [
                 'expected' => new ValidateResult(true),
                 'input'    => [
-                    'format' => 'H:i',
-                    'value'  => '00:00',
+                    'args'  => ['H:i', false],
+                    'value' => '00:00',
                 ],
             ],
-            'validDataType: date format is Hi' => [
+            'validDataType: date format Hi 0000' => [
                 'expected' => new ValidateResult(true),
                 'input'    => [
-                    'format' => 'Hi',
-                    'value'  => '0000',
+                    'args'  => ['Hi', false],
+                    'value' => '0000',
                 ],
             ],
-            'validDataType: date format is H:i:s' => [
+            'validDataType: date format H:i:s 00:00:00' => [
                 'expected' => new ValidateResult(true),
                 'input'    => [
-                    'format' => 'H:i:s',
-                    'value'  => '00:00:00',
+                    'args'  => ['H:i:s', false],
+                    'value' => '00:00:00',
                 ],
             ],
-            'validDataType: date format is His' => [
+            'validDataType: date format His 000000' => [
                 'expected' => new ValidateResult(true),
                 'input'    => [
-                    'format' => 'His',
-                    'value'  => '000000',
+                    'args'  => ['His', false],
+                    'value' => '000000',
                 ],
             ],
-            'validDataType: date format is Y-m-d H:i' => [
+            'validDataType: date format Y-m-d H:i 2019-01-01 00:00' => [
                 'expected' => new ValidateResult(true),
                 'input'    => [
-                    'format' => 'Y-m-d H:i',
-                    'value'  => '2019-01-01 00:00',
+                    'args'  => ['Y-m-d H:i', false],
+                    'value' => '2019-01-01 00:00',
                 ],
             ],
-            'validDataType: date format is Y-m-d H:i' => [
+            'validDataType: date format Y-m-d H:i 2019-12-31 00:00' => [
                 'expected' => new ValidateResult(true),
                 'input'    => [
-                    'format' => 'Y-m-d H:i',
-                    'value'  => '2019-12-31 00:00',
+                    'args'  => ['Y-m-d H:i', false],
+                    'value' => '2019-12-31 00:00',
                 ],
             ],
-            'validDataType: date format is Y/m/d H:i:s' => [
+            'validDataType: date format Y/m/d H:i:s 2019/01/01 00:00:00' => [
                 'expected' => new ValidateResult(true),
                 'input'    => [
-                    'format' => 'Y/m/d H:i:s',
-                    'value'  => '2019/01/01 00:00:00',
+                    'args'  => ['Y/m/d H:i:s', false],
+                    'value' => '2019/01/01 00:00:00',
                 ],
             ],
-            'validDataType: date format is Y/m/d H:i:s' => [
+            'validDataType: date format Y/m/d H:i:s 2019/12/31 00:00:00' => [
                 'expected' => new ValidateResult(true),
                 'input'    => [
-                    'format' => 'Y/m/d H:i:s',
-                    'value'  => '2019/12/31 00:00:00',
+                    'args'  => ['Y/m/d H:i:s', false],
+                    'value' => '2019/12/31 00:00:00',
                 ],
             ],
-            'validDataType: date format is Y m d H i' => [
+            'validDataType: date format Y m d H i 2019 01 01 00 00' => [
                 'expected' => new ValidateResult(true),
                 'input'    => [
-                    'format' => 'Y m d H i',
-                    'value'  => '2019 01 01 00 00',
+                    'args'  => ['Y m d H i', false],
+                    'value' => '2019 01 01 00 00',
                 ],
             ],
-            'validDataType: date format is Y m d H i' => [
+            'validDataType: date format Y m d H i 2019 12 31 00 00' => [
                 'expected' => new ValidateResult(true),
                 'input'    => [
-                    'format' => 'Y m d H i',
-                    'value'  => '2019 12 31 00 00',
-                ],
-            ],
-            'validDataType: date format is Ymd' => [
-                'expected' => new ValidateResult(true),
-                'input'    => [
-                    'format' => 'Ymd',
-                    'value'  => '20190101',
-                ],
-            ],
-            'validDataType: date format is Ymd' => [
-                'expected' => new ValidateResult(true),
-                'input'    => [
-                    'format' => 'Ymd',
-                    'value'  => '20191231',
-                ],
-            ],
-            'validDataType: date format is YmdHis' => [
-                'expected' => new ValidateResult(true),
-                'input'    => [
-                    'format' => 'YmdHis',
-                    'value'  => '20190101000000',
-                ],
-            ],
-            'validDataType: date format is YmdHis' => [
-                'expected' => new ValidateResult(true),
-                'input'    => [
-                    'format' => 'YmdHis',
-                    'value'  => '20191231000000',
+                    'args'  => ['Y m d H i', false],
+                    'value' => '2019 12 31 00 00',
                 ],
             ],
             // ゼロ埋めなし
-            'invalidDataType: date format Y-m-d' => [
-                'expected' => new ValidateResult(false, '', 'Invalid value. expected value format Y-m-d.'),
+            'invalidDataType: date format Y-m-d 2019-1-1' => [
+                'expected' => new ValidateResult(false, '', 'Invalid value. Expected value format Y-m-d.'),
                 'input'    => [
-                    'format' => 'Y-m-d',
-                    'value'  => '2019-1-1',
+                    'args'  => ['Y-m-d', false],
+                    'value' => '2019-1-1',
                 ],
             ],
             // フォーマット違い
-            'invalidDataType: date format Y-m-d' => [
-                'expected' => new ValidateResult(false, '', 'Invalid value. expected value format Y-m-d.'),
+            'invalidDataType: date format Y-m-d 20190101' => [
+                'expected' => new ValidateResult(false, '', 'Invalid value. Expected value format Y-m-d.'),
                 'input'    => [
-                    'format' => 'Y-m-d',
-                    'value'  => '20190101',
+                    'args'  => ['Y-m-d', false],
+                    'value' => '20190101',
                 ],
             ],
             // フォーマット違い
-            'invalidDataType: date format Y-m-d' => [
-                'expected' => new ValidateResult(false, '', 'Invalid value. expected value format Y-m-d.'),
+            'invalidDataType: date format Y-m-d 2019/01/01' => [
+                'expected' => new ValidateResult(false, '', 'Invalid value. Expected value format Y-m-d.'),
                 'input'    => [
-                    'format' => 'Y-m-d',
-                    'value'  => '2019/01/01',
+                    'args'  => ['Y-m-d', false],
+                    'value' => '2019/01/01',
                 ],
             ],
             // 日付に変換できない文字
-            'invalidDataType: date format Y-m-d' => [
-                'expected' => new ValidateResult(false, '', 'Invalid value. expected value format Y-m-d.'),
+            'invalidDataType: date format Y-m-d 1234-56-78' => [
+                'expected' => new ValidateResult(false, '', 'Invalid value. Expected value format Y-m-d.'),
                 'input'    => [
-                    'format' => 'Y-m-d',
-                    'value'  => '1234-56-78',
+                    'args'  => ['Y-m-d', false],
+                    'value' => '1234-56-78',
                 ],
             ],
             // 存在しない日付
-            'invalidDataType: date format Y-m-d' => [
-                'expected' => new ValidateResult(false, '', 'Invalid value. expected value format Y-m-d.'),
+            'invalidDataType: date format Y-m-d 2019-01-32' => [
+                'expected' => new ValidateResult(false, '', 'Invalid value. Expected value format Y-m-d.'),
                 'input'    => [
-                    'format' => 'Y-m-d',
-                    'value'  => '2019-01-32',
+                    'args'  => ['Y-m-d', false],
+                    'value' => '2019-01-32',
                 ],
             ],
             // うるう年じゃないのに29日
-            'invalidDataType: date format Y-m-d' => [
-                'expected' => new ValidateResult(false, '', 'Invalid value. expected value format Y-m-d.'),
+            'invalidDataType: date format Y-m-d 2017-02-29' => [
+                'expected' => new ValidateResult(false, '', 'Invalid value. Expected value format Y-m-d.'),
                 'input'    => [
-                    'format' => 'Y-m-d',
-                    'value'  => '2017-02-29',
+                    'args'  => ['Y-m-d', false],
+                    'value' => '2017-02-29',
                 ],
             ],
             // 存在しない時間
-            'invalidDataType: date format H:i' => [
-                'expected' => new ValidateResult(false, '', 'Invalid value. expected value format H:i.'),
+            'invalidDataType: date format H:i 24:00' => [
+                'expected' => new ValidateResult(false, '', 'Invalid value. Expected value format H:i.'),
                 'input'    => [
-                    'format' => 'H:i',
-                    'value'  => '24:00',
+                    'args'  => ['H:i', false],
+                    'value' => '24:00',
                 ],
             ],
             // 存在しない時間
-            'invalidDataType: date format Hi' => [
-                'expected' => new ValidateResult(false, '', 'Invalid value. expected value format Hi.'),
+            'invalidDataType: date format Hi 2400' => [
+                'expected' => new ValidateResult(false, '', 'Invalid value. Expected value format Hi.'),
                 'input'    => [
-                    'format' => 'Hi',
-                    'value'  => '2400',
+                    'args'  => ['Hi', false],
+                    'value' => '2400',
                 ],
             ],
             // 存在しない時間
-            'invalidDataType: date format H:i:s' => [
-                'expected' => new ValidateResult(false, '', 'Invalid value. expected value format H:i:s.'),
+            'invalidDataType: date format H:i:s 24:00:00' => [
+                'expected' => new ValidateResult(false, '', 'Invalid value. Expected value format H:i:s.'),
                 'input'    => [
-                    'format' => 'H:i:s',
-                    'value'  => '24:00:00',
+                    'args'  => ['H:i:s', false],
+                    'value' => '24:00:00',
                 ],
             ],
             // 存在しない時間
-            'invalidDataType: date format His' => [
-                'expected' => new ValidateResult(false, '', 'Invalid value. expected value format His.'),
+            'invalidDataType: date format His 240000' => [
+                'expected' => new ValidateResult(false, '', 'Invalid value. Expected value format His.'),
                 'input'    => [
-                    'format' => 'His',
-                    'value'  => '240000',
+                    'args'  => ['His', false],
+                    'value' => '240000',
                 ],
             ],
             // フォーマット違い
-            'invalidDataType: date format H:i' => [
-                'expected' => new ValidateResult(false, '', 'Invalid value. expected value format H:i.'),
+            'invalidDataType: date format H:i 0000' => [
+                'expected' => new ValidateResult(false, '', 'Invalid value. Expected value format H:i.'),
                 'input'    => [
-                    'format' => 'H:i',
-                    'value'  => '0000',
+                    'args'  => ['H:i', false],
+                    'value' => '0000',
                 ],
             ],
             // フォーマット違い
-            'invalidDataType: date format Hi' => [
-                'expected' => new ValidateResult(false, '', 'Invalid value. expected value format Hi.'),
+            'invalidDataType: date format Hi 00:00' => [
+                'expected' => new ValidateResult(false, '', 'Invalid value. Expected value format Hi.'),
                 'input'    => [
-                    'format' => 'Hi',
-                    'value'  => '00:00',
+                    'args'  => ['Hi', false],
+                    'value' => '00:00',
                 ],
             ],
             // フォーマット違い
-            'invalidDataType: date format H:i:s' => [
-                'expected' => new ValidateResult(false, '', 'Invalid value. expected value format H:i:s.'),
+            'invalidDataType: date format H:i:s 000000' => [
+                'expected' => new ValidateResult(false, '', 'Invalid value. Expected value format H:i:s.'),
                 'input'    => [
-                    'format' => 'H:i:s',
-                    'value'  => '000000',
-                ],
-            ],
-            // フォーマット違い
-            'invalidDataType: date format His' => [
-                'expected' => new ValidateResult(false, '', 'Invalid value. expected value format His.'),
-                'input'    => [
-                    'format' => 'His',
-                    'value'  => '240000',
+                    'args'  => ['H:i:s', false],
+                    'value' => '000000',
                 ],
             ],
             // ゼロ埋めなし
-            'invalidDataType: date format Y-m-d H:i' => [
-                'expected' => new ValidateResult(false, '', 'Invalid value. expected value format Y-m-d H:i.'),
+            'invalidDataType: date format Y-m-d H:i 2019-1-1 1:1' => [
+                'expected' => new ValidateResult(false, '', 'Invalid value. Expected value format Y-m-d H:i.'),
                 'input'    => [
-                    'format' => 'Y-m-d H:i',
-                    'value'  => '2019-1-1 1:1',
+                    'args'  => ['Y-m-d H:i', false],
+                    'value' => '2019-1-1 1:1',
                 ],
             ],
             // フォーマット違い
-            'invalidDataType: date format Y-m-d H:i' => [
-                'expected' => new ValidateResult(false, '', 'Invalid value. expected value format Y-m-d H:i.'),
+            'invalidDataType: date format Y-m-d H:i 201901010101' => [
+                'expected' => new ValidateResult(false, '', 'Invalid value. Expected value format Y-m-d H:i.'),
                 'input'    => [
-                    'format' => 'Y-m-d H:i',
-                    'value'  => '201901010101',
+                    'args'  => ['Y-m-d H:i', false],
+                    'value' => '201901010101',
                 ],
             ],
             // フォーマット違い
-            'invalidDataType: date format Y-m-d H:i' => [
-                'expected' => new ValidateResult(false, '', 'Invalid value. expected value format Y-m-d H:i.'),
+            'invalidDataType: date format Y-m-d H:i 2019/01/01 01:01' => [
+                'expected' => new ValidateResult(false, '', 'Invalid value. Expected value format Y-m-d H:i.'),
                 'input'    => [
-                    'format' => 'Y-m-d H:i',
-                    'value'  => '2019/01/01 01:01',
+                    'args'  => ['Y-m-d H:i', false],
+                    'value' => '2019/01/01 01:01',
                 ],
             ],
             // 日付に変換できない文字
-            'invalidDataType: date format Y-m-d H:i' => [
-                'expected' => new ValidateResult(false, '', 'Invalid value. expected value format Y-m-d H:i.'),
+            'invalidDataType: date format Y-m-d H:i 1234-56-78 00:00' => [
+                'expected' => new ValidateResult(false, '', 'Invalid value. Expected value format Y-m-d H:i.'),
                 'input'    => [
-                    'format' => 'Y-m-d H:i',
-                    'value'  => '1234-56-78 00:00',
+                    'args'  => ['Y-m-d H:i', false],
+                    'value' => '1234-56-78 00:00',
                 ],
             ],
             // 時刻に変換できない文字
-            'invalidDataType: date format Y-m-d H:i' => [
-                'expected' => new ValidateResult(false, '', 'Invalid value. expected value format Y-m-d H:i.'),
+            'invalidDataType: date format Y-m-d H:i 2019-12-31 99:99' => [
+                'expected' => new ValidateResult(false, '', 'Invalid value. Expected value format Y-m-d H:i.'),
                 'input'    => [
-                    'format' => 'Y-m-d H:i',
-                    'value'  => '2019-12-31 99:99',
+                    'args'  => ['Y-m-d H:i', false],
+                    'value' => '2019-12-31 99:99',
                 ],
             ],
             // 存在しない日付
-            'invalidDataType: date format Y-m-d H:i' => [
-                'expected' => new ValidateResult(false, '', 'Invalid value. expected value format Y-m-d H:i.'),
+            'invalidDataType: date format Y-m-d H:i 2019-01-32 00:00' => [
+                'expected' => new ValidateResult(false, '', 'Invalid value. Expected value format Y-m-d H:i.'),
                 'input'    => [
-                    'format' => 'Y-m-d H:i',
-                    'value'  => '2019-01-32 00:00',
+                    'args'  => ['Y-m-d H:i', false],
+                    'value' => '2019-01-32 00:00',
                 ],
             ],
             // うるう年じゃないのに29日
-            'invalidDataType: date format Y-m-d H:i' => [
-                'expected' => new ValidateResult(false, '', 'Invalid value. expected value format Y-m-d H:i.'),
+            'invalidDataType: date format Y-m-d H:i 2017-02-29 00:00' => [
+                'expected' => new ValidateResult(false, '', 'Invalid value. Expected value format Y-m-d H:i.'),
                 'input'    => [
-                    'format' => 'Y-m-d H:i',
-                    'value'  => '2017-02-29 00:00',
+                    'args'  => ['Y-m-d H:i', false],
+                    'value' => '2017-02-29 00:00',
+                ],
+            ],
+            //空許容パターン 異常(1) 空許容する & 文字以外の値を設定 -> Skip validationが動作すること
+            'validDataType: allow empty (value is not string type)' => [
+                'expected' => new ValidateResult(true, '', 'Skip validation. Executed only when the value is of string type.'),
+                'input'    => [
+                    'args'  => ['Y-m-d H:i', true],
+                    'value' => 1,
+                ],
+            ],
+            //空許容パターン 正常(1) 空許容する & Y-m-dフォーマット 値あり
+            'validDataType: allow empty( date format Y-m-d 2019-01-01)' => [
+                'expected' => new ValidateResult(true),
+                'input'    => [
+                    'args'  => ['Y-m-d', true],
+                    'value' => '2019-01-01',
+                ],
+            ],
+            //空許容パターン 正常(2) 空許容する & Y-m-d H:i:s 値あり
+            'validDataType: allow empty(date format Y-m-d H:i:s 2019-01-01 00:00:00)' => [
+                'expected' => new ValidateResult(true),
+                'input'    => [
+                    'args'  => ['Y-m-d H:i:s', true],
+                    'value' => '2019-01-01 00:00:00',
+                ],
+            ],
+            //空許容パターン 正常(3) 空許容する & Y-m-dフォーマット 値なし
+            'validDataType: allow empty(value empty date format Y-m-d)' => [
+                'expected' => new ValidateResult(true),
+                'input'    => [
+                    'args'  => ['Y-m-d', true],
+                    'value' => '',
+                ],
+            ],
+            //空許容パターン 正常(2) 空許容する & Y-m-d H:i:s 値なし
+            'validDataType: allow empty(value empty date format Y-m-d H:i:s)' => [
+                'expected' => new ValidateResult(true),
+                'input'    => [
+                    'args'  => ['Y-m-d H:i:s', true],
+                    'value' => '',
+                ],
+            ],
+            //空許容パターン 異常(2) 空許容しない & Y-m-dフォーマット 値なし
+            'validDataType: allow not empty(value empty)' => [
+                'expected' => new ValidateResult(false, '', 'Invalid value. Expected value format Y-m-d.'),
+                'input'    => [
+                    'args'  => ['Y-m-d', false],
+                    'value' => '',
+                ],
+            ],
+            //空許容パターン 異常(3) 空許容する & フォーマット違い
+            'invalidDataType: allow empty(date format Y-m-d 2019/01/01)' => [
+                'expected' => new ValidateResult(false, '', 'Invalid value. Expected value format Y-m-d.'),
+                'input'    => [
+                    'args'  => ['Y-m-d', true],
+                    'value' => '2019/01/01',
+                ],
+            ],
+            // 空許容パターン 異常(4) 日付に変換できない文字
+            'invalidDataType: allow empty(date format Y-m-d 1234-56-78)' => [
+                'expected' => new ValidateResult(false, '', 'Invalid value. Expected value format Y-m-d.'),
+                'input'    => [
+                    'args'  => ['Y-m-d', true],
+                    'value' => '1234-56-78',
                 ],
             ],
         ];
@@ -383,14 +413,14 @@ class DateTimeFormatTest extends TestCase
      * @param ValidateResult $expected
      * @param mixed          $input
      */
-    public function testExecute($expected, $input)
+    public function testExecute($expected, $input): void
     {
         [
-            'format' => $format,
-            'value'  => $value,
+            'args'  => $args,
+            'value' => $value,
         ] = $input;
 
-        $actual = (new DateTimeFormat($format))
+        $actual = (new DateTimeFormat(...$args))
             ->execute($value, new ValidateResult());
 
         $this->assertInstanceOf(ValidateResult::class, $actual);

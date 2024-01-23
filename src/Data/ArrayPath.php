@@ -10,17 +10,15 @@ namespace Selen\Data;
 
 class ArrayPath
 {
-    /** @var string */
-    private static $separator = '.';
+    private static string $separator = '.';
 
     /** @var string[] */
-    private $paths = [];
+    private array $paths = [];
 
-    /** @var int */
-    private $currentIndex = 0;
+    /** @var int 階層の深さ */
+    private int $currentIndex = 0;
 
-    /** @var int */
-    private $minCurrentIndex = 0;
+    private int $minCurrentIndex = 0;
 
     /**
      * 現在位置から1つ上の階層に移動します
@@ -72,7 +70,7 @@ class ArrayPath
     /**
      * 配列の階層情報を取得します。
      *
-     * @return array 配列の階層情報を返します
+     * @return string[] 配列の階層情報を返します
      */
     public function getPaths(): array
     {
@@ -92,7 +90,7 @@ class ArrayPath
     /**
      * 配列形式の階層表現を文字列形式に変換します
      *
-     * @param array $paths 配列形式の階層表現配列を渡します
+     * @param string[] $paths 配列形式の階層表現配列を渡します
      *
      * @return string 文字列形式の階層表現文字列を返します
      */
@@ -106,7 +104,7 @@ class ArrayPath
      *
      * @param string $path 文字列形式の階層表現文字列を渡します
      *
-     * @return array 配列形式の階層表現配列を返します
+     * @return string[] 配列形式の階層表現配列を返します
      */
     public static function toArray(string $path): array
     {

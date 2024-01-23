@@ -28,7 +28,7 @@ class PathGenerator implements Constants
         $this->maps = $maps;
     }
 
-    public function execute(string $namespace)
+    public function execute(string $namespace): Result
     {
         $conversionChar = $namespace;
 

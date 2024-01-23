@@ -7,13 +7,11 @@ declare(strict_types=1);
  * @copyright 2021 hazuki3417 all rights reserved.
  */
 
-namespace Tests\Selen\Schema\Exchange\Define;
+namespace Tests\Selen\Schema\Exchange;
 
-use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
 use Selen\Schema\Exchange\Define;
 use Selen\Schema\Exchange\ValueExchangeInterface;
-use ValueError;
 
 /**
  * @coversDefaultClass \Selen\Schema\Exchange\Define
@@ -24,136 +22,24 @@ use ValueError;
  */
 class DefineTest extends TestCase
 {
-    public function dataProviderKey()
+    public function testKey(): void
     {
-        return [
-            'pattern001' => [
-                'expected' => Define::class,
-                'input'    => [
-                    'name'    => 'keyName',
-                    'action'  => Define::KEY_ACTION_NONE,
-                    'execute' => null,
-                ],
-            ],
-            'pattern002' => [
-                'expected' => Define::class,
-                'input'    => [
-                    'name'    => 'keyName',
-                    'action'  => Define::KEY_ACTION_ADD,
-                    'execute' => null,
-                ],
-            ],
-            'pattern003' => [
-                'expected' => Define::class,
-                'input'    => [
-                    'name'    => 'keyName',
-                    'action'  => Define::KEY_ACTION_REMOVE,
-                    'execute' => null,
-                ],
-            ],
-            'pattern004' => [
-                'expected' => Define::class,
-                'input'    => [
-                    'name'    => 'keyName',
-                    'action'  => Define::KEY_ACTION_RENAME,
-                    'execute' => null,
-                ],
-            ],
-            'pattern005' => [
-                'expected' => Define::class,
-                'input'    => [
-                    'name'    => 'keyName',
-                    'action'  => Define::KEY_ACTION_NONE,
-                    'execute' => null,
-                ],
-            ],
-            'pattern006' => [
-                'expected' => Define::class,
-                'input'    => [
-                    'name'    => 'keyName',
-                    'action'  => Define::KEY_ACTION_NONE,
-                    'execute' => function ($key) {return $key; },
-                ],
-            ],
-        ];
+        $this->assertInstanceOf(Define::class, Define::key('keyName'));
+        $this->assertInstanceOf(Define::class, Define::key(0));
     }
 
-    /**
-     * @dataProvider dataProviderKey
-     *
-     * @param mixed $expected
-     * @param mixed $input
-     */
-    public function testKey($expected, $input)
-    {
-        [
-            'name'    => $name,
-            'action'  => $action,
-            'execute' => $execute,
-        ] = $input;
-
-        $this->assertInstanceOf($expected, Define::key($name, $action, $execute));
-    }
-    public function dataProviderKeyException()
-    {
-        return [
-            'pattern001' => [
-                'expected' => InvalidArgumentException::class,
-                'input'    => [
-                    'name'    => null,
-                    'action'  => Define::KEY_ACTION_NONE,
-                    'execute' => null,
-                ],
-            ],
-            'pattern002' => [
-                'expected' => ValueError::class,
-                'input'    => [
-                    'name'    => 'keyName',
-                    'action'  => 'action',
-                    'execute' => null,
-                ],
-            ],
-            'pattern003' => [
-                'expected' => InvalidArgumentException::class,
-                'input'    => [
-                    'name'    => 'keyName',
-                    'action'  => Define::KEY_ACTION_REMOVE,
-                    'execute' => [],
-                ],
-            ],
-        ];
-    }
-
-    /**
-     * @dataProvider dataProviderKeyException
-     *
-     * @param mixed $expected
-     * @param mixed $input
-     */
-    public function testKeyException($expected, $input)
-    {
-        [
-            'name'    => $name,
-            'action'  => $action,
-            'execute' => $execute,
-        ] = $input;
-
-        $this->expectException($expected);
-        Define::key($name, $action, $execute);
-    }
-
-    public function testNoKey()
+    public function testNoKey(): void
     {
         $this->assertInstanceOf(Define::class, Define::noKey());
     }
 
-    public function testValue1()
+    public function testValue1(): void
     {
         $key = Define::key('keyName');
         $this->assertInstanceOf(Define::class, $key->value());
     }
 
-    public function testValueException1()
+    public function testValueException1(): void
     {
         // NOTE: 配列形式の定義と変換の定義は同時に呼び出すことはできない
         $key = Define::key('keyName')->arrayDefine();
@@ -162,13 +48,13 @@ class DefineTest extends TestCase
         $key->value();
     }
 
-    public function testValue2()
+    public function testValue2(): void
     {
         $key = Define::noKey();
         $this->assertInstanceOf(Define::class, $key->value());
     }
 
-    public function testValueException2()
+    public function testValueException2(): void
     {
         // NOTE: 配列形式の定義と変換の定義は同時に呼び出すことはできない
         $key = Define::noKey()->arrayDefine();
@@ -177,26 +63,16 @@ class DefineTest extends TestCase
         $key->value();
     }
 
-    public function testValue3()
+    public function testValue3(): void
     {
         $key = Define::noKey();
         $this->assertInstanceOf(Define::class, $key->value(
-            function () {}
+            function () {
+            }
         ));
     }
 
-    public function testValueException3()
-    {
-        // NOTE: 配列形式の定義と変換の定義は同時に呼び出すことはできない
-        $key = Define::noKey()->arrayDefine();
-
-        $this->expectException(\LogicException::class);
-        $key->value(
-            true
-        );
-    }
-
-    public function testValue4()
+    public function testValue4(): void
     {
         $stub1 = $this->createStub(ValueExchangeInterface::class);
         $stub1->method('execute')->willReturn('replace string 2');
@@ -207,13 +83,13 @@ class DefineTest extends TestCase
         ));
     }
 
-    public function testArrayDefine1()
+    public function testArrayDefine1(): void
     {
         $key = Define::key('keyName');
         $this->assertInstanceOf(Define::class, $key->arrayDefine());
     }
 
-    public function testArrayDefineException1()
+    public function testArrayDefineException1(): void
     {
         // NOTE: 配列形式の定義と変換の定義は同時に呼び出すことはできない
         $key = Define::key('keyName')->value();
@@ -222,13 +98,13 @@ class DefineTest extends TestCase
         $key->arrayDefine();
     }
 
-    public function testArrayDefine2()
+    public function testArrayDefine2(): void
     {
         $key = Define::noKey();
         $this->assertInstanceOf(Define::class, $key->arrayDefine());
     }
 
-    public function testArrayDefineException2()
+    public function testArrayDefineException2(): void
     {
         // NOTE: 配列形式の定義と変換の定義は同時に呼び出すことはできない
         $key = Define::noKey()->value();
@@ -237,20 +113,16 @@ class DefineTest extends TestCase
         $key->arrayDefine();
     }
 
-    public function testArrayDefine3()
+    public function testArrayDefine3(): void
     {
         $key = Define::noKey();
         $this->assertInstanceOf(Define::class, $key->arrayDefine());
     }
 
-    public function testArrayDefineException3()
-    {
-        // NOTE: 変換処理の引数のcallableまたはValueExchangeInterface以外のものを指定
-        $this->expectException(InvalidArgumentException::class);
-        $key = Define::noKey()->value('string');
-    }
-
-    public function dataProviderIsIndexArrayDefine()
+    /**
+     * @return array<string, array<string, mixed>>
+     */
+    public function dataProviderIsIndexArrayDefine(): array
     {
         return [
             'pattern001' => ['expected' => false, 'input' => Define::key('str')],
@@ -266,13 +138,16 @@ class DefineTest extends TestCase
      * @param mixed $expected
      * @param mixed $input
      */
-    public function testIsIndexArrayDefine($expected, $input)
+    public function testIsIndexArrayDefine($expected, $input): void
     {
         // @var \Selen\Schema\Exchange\Define $input
         $this->assertSame($expected, $input->isIndexArrayDefine());
     }
 
-    public function dataProviderIsAssocArrayDefine()
+    /**
+     * @return array<string, array<string, mixed>>
+     */
+    public function dataProviderIsAssocArrayDefine(): array
     {
         return [
             'pattern001' => ['expected' => true,  'input' => Define::key('str')],
@@ -288,12 +163,15 @@ class DefineTest extends TestCase
      * @param mixed  $expected
      * @param Define $input
      */
-    public function testIsAssocArrayDefine($expected, $input)
+    public function testIsAssocArrayDefine($expected, $input): void
     {
         $this->assertSame($expected, $input->isAssocArrayDefine());
     }
 
-    public function dataProviderNestedTypeDefineExists()
+    /**
+     * @return array<string, array<string, mixed>>
+     */
+    public function dataProviderNestedTypeDefineExists(): array
     {
         return [
             'pattern001' => ['expected' => false, 'input' => Define::key('str')],
@@ -319,7 +197,7 @@ class DefineTest extends TestCase
      * @param mixed  $expected
      * @param Define $input
      */
-    public function testNestedTypeDefineExists($expected, $input)
+    public function testNestedTypeDefineExists($expected, $input): void
     {
         $this->assertSame($expected, $input->nestedTypeDefineExists());
     }

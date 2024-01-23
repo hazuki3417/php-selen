@@ -8,6 +8,9 @@
 
 namespace Selen\Bool;
 
+/**
+ * bool型のユーティリティクラスです
+ */
 class Util
 {
     /**
@@ -25,9 +28,9 @@ class Util
     /**
      * trueが1つだけ存在するか確認します
      *
-     * @return bool 1つだけ存在する場合はtrueを、それ以外の場合はfalseを返します
+     * @param bool $values 真偽値を渡します
      *
-     * @param bool[] $values
+     * @return bool 1つだけ存在する場合はtrueを、それ以外の場合はfalseを返します
      */
     public static function oneTrue(bool ...$values): bool
     {
@@ -44,9 +47,9 @@ class Util
     /**
      * falseが1つだけ存在するか確認します
      *
-     * @return bool 1つだけ存在する場合はtrueを、それ以外の場合はfalseを返します
+     * @param bool $values 真偽値を渡します
      *
-     * @param bool[] $values
+     * @return bool 1つだけ存在する場合はtrueを、それ以外の場合はfalseを返します
      */
     public static function oneFalse(bool ...$values): bool
     {
@@ -63,9 +66,9 @@ class Util
     /**
      * trueが存在するか確認します
      *
-     * @return bool 存在する場合はtrueを、それ以外の場合はfalseを返します
+     * @param bool $values 真偽値を渡します
      *
-     * @param bool[] $values
+     * @return bool 存在する場合はtrueを、それ以外の場合はfalseを返します
      */
     public static function anyTrue(bool ...$values): bool
     {
@@ -80,9 +83,9 @@ class Util
     /**
      * falseが存在するか確認します
      *
-     * @return bool 存在する場合はtrueを、それ以外の場合はfalseを返します
+     * @param bool $values 真偽値を渡します
      *
-     * @param bool[] $values
+     * @return bool 存在する場合はtrueを、それ以外の場合はfalseを返します
      */
     public static function anyFalse(bool ...$values): bool
     {
@@ -97,9 +100,9 @@ class Util
     /**
      * すべてtrueか確認します
      *
-     * @return bool すべてtrueの場合はtrueを、それ以外の場合はfalseを返します
+     * @param bool $values 真偽値を渡します
      *
-     * @param bool[] $values
+     * @return bool すべてtrueの場合はtrueを、それ以外の場合はfalseを返します
      */
     public static function allTrue(bool ...$values): bool
     {
@@ -116,9 +119,9 @@ class Util
     /**
      * すべてfalseか確認します
      *
-     * @return bool すべてfalseの場合はtrueを、それ以外の場合はfalseを返します
+     * @param bool $values 真偽値を渡します
      *
-     * @param bool[] $values
+     * @return bool すべてfalseの場合はtrueを、それ以外の場合はfalseを返します
      */
     public static function allFalse(bool ...$values): bool
     {

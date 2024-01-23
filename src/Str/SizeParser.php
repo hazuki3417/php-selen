@@ -42,15 +42,18 @@ class SizeParser
             return $value;
         }
 
-        $radix     = \strpos($unit, 'i') === false ? 1000 : 1024;
-        $scanChars = ['k', 'm', 'g', 't', 'p', 'e', 'z', 'y', 'r', 'q'];
+        $radix       = \strpos($unit, 'i') === false ? 1000 : 1024;
+        $scanChars   = ['k', 'm', 'g', 't', 'p', 'e', 'z', 'y', 'r', 'q'];
+        $selectIndex = 0;
 
         foreach ($scanChars as $index => $scanChar) {
             if (\strpos($unit, $scanChar) === false) {
                 continue;
             }
-            return $value * pow($radix, ($index + 1));
+            $selectIndex = $index + 1;
+            break;
         }
+        return $value * pow($radix, ($selectIndex));
     }
 
     /**
@@ -58,9 +61,11 @@ class SizeParser
      *
      * @param string $value 文字列を渡します
      *
-     * @return array 文字列表現されたデータ量を値と単位に分割した配列を返します
+     * @throws InvalidArgumentException パースに失敗したときの例外をスローします
+     *
+     * @return array<string,int|string> 文字列表現されたデータ量を値と単位に分割した配列を返します
      */
-    public static function parse(string $value): array
+    public static function parse(string $value)
     {
         $pattern = self::makeRegexPattern();
 
@@ -72,7 +77,7 @@ class SizeParser
                 'unit'  => $unit,
             ];
         }
-        self::throwParseException();
+        throw self::makeParseException();
     }
 
     /**
@@ -89,12 +94,14 @@ class SizeParser
 
     /**
      * string型で表現されたデータ量フォーマットのパースに失敗したときの例外をスローします
+     *
+     * @return InvalidArgumentException パースに失敗したときの例外をスローします
      */
-    public static function throwParseException()
+    public static function makeParseException()
     {
-        $format = 'Invalid data format. expected format %s .';
+        $format = 'Invalid data format. Expected format %s .';
         $mes    = \sprintf($format, self::makeRegexPattern());
-        throw new InvalidArgumentException($mes);
+        return new InvalidArgumentException($mes);
     }
 
     /**

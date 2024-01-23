@@ -26,7 +26,10 @@ use Selen\MongoDB\Attributes\SchemaField;
  */
 class SchemaFieldLoaderTest extends TestCase
 {
-    public function dataProviderConstruct()
+    /**
+     * @return array<string, array<string, mixed>>
+     */
+    public function dataProviderConstruct(): array
     {
         $reflectionClass = new ReflectionClass(SchemaFieldLoaderTestMockObject::class);
         return [
@@ -47,13 +50,16 @@ class SchemaFieldLoaderTest extends TestCase
      * @param mixed               $expected
      * @param \ReflectionProperty $input
      */
-    public function testConstruct($expected, $input)
+    public function testConstruct($expected, $input): void
     {
         $instance = new SchemaFieldLoader($input);
         $this->assertInstanceOf($expected, $instance);
     }
 
-    public function dataProviderConstructException()
+    /**
+     * @return array<string, array<string, mixed>>
+     */
+    public function dataProviderConstructException(): array
     {
         $reflectionClass = new ReflectionClass(SchemaFieldLoaderTestMockObject::class);
         return [
@@ -70,7 +76,7 @@ class SchemaFieldLoaderTest extends TestCase
      * @param mixed               $expected
      * @param \ReflectionProperty $input
      */
-    public function testConstructException($expected, $input)
+    public function testConstructException($expected, $input): void
     {
         $this->expectException($expected);
         new SchemaFieldLoader($input);
@@ -84,6 +90,7 @@ class SchemaFieldLoaderTestMockObject
     #[SchemaField]
     public $property2;
 
+    // @phpstan-ignore-next-line 例外テスト実施のためphpstanを無効化
     #[SchemaField, SchemaField]
     public $property3;
 }

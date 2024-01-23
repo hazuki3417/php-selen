@@ -22,6 +22,9 @@ use Selen\Str\SizeParser;
  */
 class SizeParserTest extends TestCase
 {
+    /**
+     * @return array<string, array<string, mixed>>
+     */
     public function dataProviderToByte(): array
     {
         return [
@@ -132,6 +135,9 @@ class SizeParserTest extends TestCase
         $this->assertSame($expected, SizeParser::toByte($input));
     }
 
+    /**
+     * @return array<string, array<string, mixed>>
+     */
     public function dataProviderParse(): array
     {
         return [
@@ -173,6 +179,9 @@ class SizeParserTest extends TestCase
         $this->assertSame($expected, SizeParser::parse($input));
     }
 
+    /**
+     * @return array<string, array<string, mixed>>
+     */
     public function dataProviderParseException(): array
     {
         return [
@@ -201,6 +210,9 @@ class SizeParserTest extends TestCase
         SizeParser::parse($input);
     }
 
+    /**
+     * @return array<string, array<string, mixed>>
+     */
     public function dataProviderValidParse(): array
     {
         return [
@@ -312,9 +324,8 @@ class SizeParserTest extends TestCase
         $this->assertSame($expected, SizeParser::validParse($input));
     }
 
-    public function testThrowParseException()
+    public function testMakeParseException(): void
     {
-        $this->expectException(InvalidArgumentException::class);
-        SizeParser::throwParseException();
+        $this->assertInstanceOf(InvalidArgumentException::class, SizeParser::makeParseException());
     }
 }

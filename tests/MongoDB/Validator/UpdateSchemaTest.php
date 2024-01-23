@@ -34,14 +34,17 @@ use Selen\MongoDB\Validator\UpdateSchema;
  */
 class UpdateSchemaTest extends TestCase
 {
-    public function testConstruct()
+    public function testConstruct(): void
     {
         $schemaLoader = new SchemaLoader(new ReflectionClass(UpdateSchemaTestMockRootObject::class));
         $updateSchema = new UpdateSchema($schemaLoader);
         $this->assertInstanceOf(UpdateSchema::class, $updateSchema);
     }
 
-    public function dataProviderExecute()
+    /**
+     * @return array<string, array<string, mixed>>
+     */
+    public function dataProviderExecute(): array
     {
         return [
             'validPattern:none validate all values strings' => [
@@ -122,8 +125,6 @@ class UpdateSchemaTest extends TestCase
                                 'nestObjItemField2' => new DateTime(),
                             ],
                         ],
-                        // 定義側に存在しないフィールドは無視される
-                        'rootObjField0' => 'string value1',
                     ],
                 ],
             ],
@@ -273,6 +274,76 @@ class UpdateSchemaTest extends TestCase
                         'rootObjField5' => [],
                         'rootObjField6' => null,
                         'rootObjField7' => null,
+                    ],
+                ],
+            ],
+            'invalidPattern: DB Schemaに定義していないフィールドがinputに存在するとき' => [
+                'expected' => [
+                    'success'         => false,
+                    'validateResults' => [
+                        new ValidateResult(false, 'inputOnlyKey', 'Undefined key.'),
+                    ],
+                ],
+                'input' => [
+                    'contractArgs' => InsertSchemaTestMockNoneValidateObject::class,
+                    'executeArgs'  => [
+                        'rootObjField1' => '',
+                        'rootObjField2' => '',
+                        'rootObjField3' => '',
+                        'rootObjField4' => '',
+                        'rootObjField5' => '',
+                        'inputOnlyKey'  => '', // 定義していないフィールドを渡す
+                    ],
+                ],
+            ],
+            'invalidPattern: DB Schemaに定義していないフィールドがinputに存在するとき（ネストされたスキーマ定義）' => [
+                'expected' => [
+                    'success'         => false,
+                    'validateResults' => [
+                        new ValidateResult(false, 'rootObjField4.inputOnlyKey', 'Undefined key.'),
+                        new ValidateResult(false, 'rootObjField7.[0].inputOnlyKey', 'Undefined key.'),
+                    ],
+                ],
+                'input' => [
+                    'contractArgs' => InsertSchemaTestMockRootObject::class,
+                    'executeArgs'  => [
+                        'rootObjField1' => 'string value1',
+                        'rootObjField2' => 10,
+                        'rootObjField3' => 'string value2',
+                        'rootObjField4' => [
+                            'nestObjField1' => 'string nest value1',
+                            'nestObjField2' => true,
+                            'nestObjField3' => [
+                                'string nest value2',
+                                'string nest value3',
+                                'string nest value4',
+                            ],
+                            'nestObjField4' => [1, 2, 3, 4],
+                            'inputOnlyKey'  => '',
+                        ],
+                        'rootObjField5' => [
+                            [
+                                'nestObjItemField1' => 'man',
+                                'nestObjItemField2' => new DateTime(),
+                            ],
+                            [
+                                'nestObjItemField1' => 'woman',
+                                'nestObjItemField2' => new DateTime(),
+                            ],
+                        ],
+                        'rootObjField6' => [
+                            'nestObjField1' => 'string nest value1',
+                            'nestObjField2' => true,
+                            'nestObjField3' => [],
+                            'nestObjField4' => [],
+                        ],
+                        'rootObjField7' => [
+                            [
+                                'nestObjItemField1' => 'man',
+                                'nestObjItemField2' => new DateTime(),
+                                'inputOnlyKey'      => '',
+                            ],
+                        ],
                     ],
                 ],
             ],
@@ -582,10 +653,10 @@ class UpdateSchemaTest extends TestCase
     /**
      * @dataProvider dataProviderExecute
      *
-     * @param string $expected
-     * @param array  $input
+     * @param array $expected
+     * @param mixed $input
      */
-    public function testExecute($expected, $input)
+    public function testExecute($expected, $input): void
     {
         [
             'contractArgs' => $contractArgs,
@@ -609,9 +680,9 @@ class UpdateSchemaTest extends TestCase
     /**
      * Validatorクラスの返り値を検証するメソッド
      *
-     * @param bool                                          $expectedSuccess
-     * @param \Selen\Schema\Validate\Model\ValidateResult[] $expectedValidateResults
-     * @param \Selen\Schema\Validate\Model\ValidatorResult  $result
+     * @param bool                                            $expectedSuccess
+     * @param \Selen\MongoDB\Validator\Model\ValidateResult[] $expectedValidateResults
+     * @param ValidatorResult                                 $result
      */
     private function assertValidatorClass($expectedSuccess, $expectedValidateResults, $result)
     {

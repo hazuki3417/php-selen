@@ -12,7 +12,8 @@ use LogicException;
 
 class Length
 {
-    private $str;
+    /** @var string 検証対象の文字列 */
+    private string $str;
 
     private function __construct(string $val)
     {
@@ -101,7 +102,7 @@ class Length
     /**
      * 文字数がしきい値と同じか判定します.
      *
-     * @param int $limen 検査する文字数のしきい値を指定します
+     * @param int $size 検査する文字数のしきい値を指定します
      *
      * @throws LogicException しきい値に負数を指定した場合に発生します
      *
@@ -159,7 +160,7 @@ class Length
      *
      * @throws LogicException 値が負数の場合に発生します
      */
-    private function verifySignedInteger(int $val)
+    private function verifySignedInteger(int $val): void
     {
         if ($val < 0) {
             throw new LogicException('Signed integers cannot be specified.');
@@ -174,7 +175,7 @@ class Length
      *
      * @throws LogicException 最大値より大きい値を最小値に指定している倍位に発生します
      */
-    private function verifyMinAndMaxLimen(int $min, int $max)
+    private function verifyMinAndMaxLimen(int $min, int $max): void
     {
         if ($min > $max) {
             throw new LogicException('A value greater than max cannot be specified for min.');

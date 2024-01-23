@@ -23,6 +23,11 @@ class InsertSchema implements SchemaBuilderInterface
         $this->schemaLoader = $schemaLoader;
     }
 
+    /**
+     * @param array<mixed,mixed> $input insertする値を渡します
+     *
+     * @return array<mixed,mixed> insertする値を返します
+     */
     public function create(array $input): array
     {
         $schema = [];

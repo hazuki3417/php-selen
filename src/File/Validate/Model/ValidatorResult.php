@@ -13,13 +13,13 @@ class ValidatorResult
     /** @var bool */
     private $result = true;
 
-    /** @var \Selen\File\Validate\Model\ValidateResult[] */
+    /** @var ValidateResult[] */
     private $validateResults;
 
     /**
      * インスタンスを生成します
      *
-     * @param ValidateResult[] $validateResults
+     * @param ValidateResult $validateResults バリデーション結果を渡します
      */
     public function __construct(ValidateResult ...$validateResults)
     {
@@ -56,7 +56,7 @@ class ValidatorResult
     /**
      * バリデーションの詳細情報を取得します
      *
-     * @return \Selen\File\Validate\Model\ValidateResult[]
+     * @return ValidateResult[]
      */
     public function getValidateResults()
     {

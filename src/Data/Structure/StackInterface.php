@@ -8,9 +8,22 @@
 
 namespace Selen\Data\Structure;
 
+/**
+ * @extends \Iterator<mixed>
+ */
 interface StackInterface extends ObjectsInterface, \Iterator
 {
-    public function push($object);
+    /**
+     * プッシュします
+     *
+     * @param mixed $object オブジェクトを渡します
+     */
+    public function push($object): void;
 
+    /**
+     * ポップします
+     *
+     * @return mixed オブジェクトを返します
+     */
     public function pop();
 }

@@ -26,7 +26,7 @@ use Selen\MongoDB\SchemaBuilder;
  */
 class SchemaBuilderTest extends TestCase
 {
-    public function testConstruct()
+    public function testConstruct(): void
     {
         $instance = new SchemaBuilder(SchemaBuilderTestMockRootObject::class);
         $this->assertInstanceOf(SchemaBuilder::class, $instance);

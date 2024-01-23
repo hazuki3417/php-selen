@@ -7,7 +7,7 @@ declare(strict_types=1);
  * @copyright 2023 hazuki3417 all rights reserved.
  */
 
-namespace Tests\Selen\Data\Structure;
+namespace Tests\Selen\Data;
 
 use DateTime;
 use PHPUnit\Framework\TestCase;
@@ -23,7 +23,10 @@ use TypeError;
  */
 class EnumTest extends TestCase
 {
-    public function dataProviderValidateException()
+    /**
+     * @return array<string, array<string, mixed>>
+     */
+    public function dataProviderValidateException(): array
     {
         return [
             'invalidPattern: 003' => [
@@ -46,13 +49,16 @@ class EnumTest extends TestCase
      *
      * @param mixed $input
      */
-    public function testValidateException($input)
+    public function testValidateException($input): void
     {
         $this->expectException(TypeError::class);
         Enum::validate($input['value'], $input['types']);
     }
 
-    public function dataProviderValidate()
+    /**
+     * @return array<string, array<string, mixed>>
+     */
+    public function dataProviderValidate(): array
     {
         return [
             'validPattern: 001' => [
@@ -180,7 +186,7 @@ class EnumTest extends TestCase
      * @param mixed $expected
      * @param mixed $input
      */
-    public function testValidate($expected, $input)
+    public function testValidate($expected, $input): void
     {
         $this->assertSame(
             $expected,

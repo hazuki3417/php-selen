@@ -26,7 +26,7 @@ class MinSize implements ValueValidateInterface
     /**
      * 新しいインスタンスを構築します
      *
-     * @param int $length 最小要素数を指定します
+     * @param int $size 最小要素数を指定します
      */
     public function __construct(int $size)
     {

@@ -44,7 +44,12 @@ class ValidateResult
         return $this;
     }
 
-    public function setArrayPath(string $value)
+    /**
+     * 配列の階層パスを設定します
+     *
+     * @param string $value 配列の階層パスを渡します
+     */
+    public function setArrayPath(string $value): ValidateResult
     {
         $this->arrayPath = $value;
         return $this;

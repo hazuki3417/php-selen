@@ -7,7 +7,7 @@ declare(strict_types=1);
  * @copyright 2021 hazuki3417 all rights reserved.
  */
 
-namespace Tests\Selen\Str;
+namespace Tests\Selen\Str\Exchanger;
 
 use PHPUnit\Framework\TestCase;
 use Selen\Str\Exchanger\CaseName;
@@ -21,7 +21,10 @@ use Selen\Str\Exchanger\CaseName;
  */
 class CaseNameTest extends TestCase
 {
-    public function dataProviderKebab()
+    /**
+     * @return array<string, array<string, mixed>>
+     */
+    public function dataProviderKebab(): array
     {
         return [
             'pattern001' => ['expected' => '',                     'input' => ''],
@@ -67,12 +70,15 @@ class CaseNameTest extends TestCase
      * @param mixed $expected
      * @param mixed $input
      */
-    public function testKebab($expected, $input)
+    public function testKebab($expected, $input): void
     {
         $this->assertSame($expected, CaseName::kebab($input));
     }
 
-    public function dataProviderSnake()
+    /**
+     * @return array<string, array<string, mixed>>
+     */
+    public function dataProviderSnake(): array
     {
         return [
             'pattern001' => ['expected' => '',                     'input' => ''],
@@ -118,12 +124,15 @@ class CaseNameTest extends TestCase
      * @param mixed $expected
      * @param mixed $input
      */
-    public function testSnake($expected, $input)
+    public function testSnake($expected, $input): void
     {
         $this->assertSame($expected, CaseName::snake($input));
     }
 
-    public function dataProviderPascal()
+    /**
+     * @return array<string, array<string, mixed>>
+     */
+    public function dataProviderPascal(): array
     {
         return [
             'pattern001' => ['expected' => '',                   'input' => ''],
@@ -169,12 +178,15 @@ class CaseNameTest extends TestCase
      * @param mixed $expected
      * @param mixed $input
      */
-    public function testPascal($expected, $input)
+    public function testPascal($expected, $input): void
     {
         $this->assertSame($expected, CaseName::pascal($input));
     }
 
-    public function dataProviderCamel()
+    /**
+     * @return array<string, array<string, mixed>>
+     */
+    public function dataProviderCamel(): array
     {
         return [
             'pattern001' => ['expected' => '',                   'input' => ''],
@@ -220,12 +232,15 @@ class CaseNameTest extends TestCase
      * @param mixed $expected
      * @param mixed $input
      */
-    public function testCamel($expected, $input)
+    public function testCamel($expected, $input): void
     {
         $this->assertSame($expected, CaseName::camel($input));
     }
 
-    public function dataProviderUpper()
+    /**
+     * @return array<string, array<string, mixed>>
+     */
+    public function dataProviderUpper(): array
     {
         return [
             'pattern001' => ['expected' => '',     'input' => ''],
@@ -240,12 +255,15 @@ class CaseNameTest extends TestCase
      * @param mixed $expected
      * @param mixed $input
      */
-    public function testUpper($expected, $input)
+    public function testUpper($expected, $input): void
     {
         $this->assertSame($expected, CaseName::upper($input));
     }
 
-    public function dataProviderLower()
+    /**
+     * @return array<string, array<string, mixed>>
+     */
+    public function dataProviderLower(): array
     {
         return [
             'pattern001' => ['expected' => '',     'input' => ''],
@@ -260,7 +278,7 @@ class CaseNameTest extends TestCase
      * @param mixed $expected
      * @param mixed $input
      */
-    public function testLower($expected, $input)
+    public function testLower($expected, $input): void
     {
         $this->assertSame($expected, CaseName::lower($input));
     }

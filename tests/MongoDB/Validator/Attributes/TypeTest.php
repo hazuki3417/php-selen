@@ -24,12 +24,15 @@ use Selen\MongoDB\Validator\Model\ValidateResult;
  */
 class TypeTest extends TestCase
 {
-    public function testConstruct()
+    public function testConstruct(): void
     {
         $this->assertInstanceOf(Type::class, new Type('string'));
     }
 
-    public function dataProviderExecute()
+    /**
+     * @return array<string, array<string, mixed>>
+     */
+    public function dataProviderExecute(): array
     {
         return [
             'pattern001' => [
@@ -56,6 +59,24 @@ class TypeTest extends TestCase
                     'type'  => ['int', 'string'],
                     'value' => true,
                 ], ],
+            'pattern005' => [
+                'expected' => new ValidateResult(true),
+                'input'    => [
+                    'type'  => ['string', 'array'],
+                    'value' => 'str',
+                ], ],
+            'pattern006' => [
+                'expected' => new ValidateResult(true),
+                'input'    => [
+                    'type'  => ['string', 'array'],
+                    'value' => [],
+                ], ],
+            'pattern007' => [
+                'expected' => new ValidateResult(true),
+                'input'    => [
+                    'type'  => ['string', 'array'],
+                    'value' => ['str1', 'str2'],
+                ], ],
         ];
     }
 
@@ -65,7 +86,7 @@ class TypeTest extends TestCase
      * @param ValidateResult $expected
      * @param mixed          $input
      */
-    public function testExecute($expected, $input)
+    public function testExecute($expected, $input): void
     {
         $actual = (new Type(...$input['type']))->execute($input['value'], new ValidateResult());
 

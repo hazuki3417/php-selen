@@ -38,42 +38,27 @@ class Define
     }
 
     /**
-     * @return Define
+     * 添字配列（index）の定義を生成します
      */
-    public static function noKey()
+    public static function noKey(): Define
     {
         return new self(new Key(null, false));
     }
 
     /**
-     * @param string|int $name
-     *
-     * @throws \InvalidArgumentException 引数の型が不正なときに発生します
-     *
-     * @return Define
+     * 連想配列（assoc）の定義を生成します
      */
-    public static function key($name, bool $require)
+    public static function key(string|int $name, bool $require): Define
     {
-        $format = 'Invalid %s %s. expected %s %s.';
-
-        if ($name === null) {
-            $allowType = ['integer', 'string'];
-            $mes       = \sprintf($format, '$name', 'type', 'type', \implode(', ', $allowType));
-            throw new \InvalidArgumentException($mes);
-        }
-
         return new self(new Key($name, $require));
     }
 
     /**
-     * @param \Selen\Schema\Validate\ValueValidateInterface|callable ...$executes
+     * @param ValueValidateInterface|callable $executes 検証値を渡します
      *
-     * @throws \LogicException           メソッドの呼び出し順が不正なときに発生します
-     * @throws \InvalidArgumentException 引数の型が不正なときに発生します
-     *
-     * @return Define
+     * @throws \LogicException メソッドの呼び出し順が不正なときに発生します
      */
-    public function value(...$executes)
+    public function value(ValueValidateInterface|callable ...$executes): Define
     {
         if ($this->haveCalledValue) {
             // value()->value()という呼び出し方をしたときに発生する
@@ -85,20 +70,6 @@ class Define
             throw new \LogicException('Invalid method call. cannot call value method after arrayDefine.');
         }
 
-        foreach ($executes as $execute) {
-            $allowTypeList = [
-                \is_callable($execute),
-                ($execute instanceof ValueValidateInterface),
-            ];
-
-            if (!\in_array(true, $allowTypeList, true)) {
-                $format    = 'Invalid %s %s. expected %s %s.';
-                $allowType = [null, 'callable', ValueValidateInterface::class];
-                $mes       = \sprintf($format, '$executes', 'type', 'type', \implode(', ', $allowType));
-                throw new \InvalidArgumentException($mes);
-            }
-        }
-
         $this->haveCalledValue       = true;
         $this->valueValidateExecutes = $executes;
         return $this;
@@ -107,11 +78,9 @@ class Define
     /**
      * @throws \LogicException メソッドの呼び出し順が不正なときに発生します
      *
-     * @return Define
-     *
-     * @param Define[] $define
+     * @param Define $define 定義を指定します
      */
-    public function arrayDefine(Define ...$define)
+    public function arrayDefine(Define ...$define): Define
     {
         if ($this->haveCalledArrayDefine) {
             // arrayDefine()->arrayDefine()という呼び出し方をしたときに発生する

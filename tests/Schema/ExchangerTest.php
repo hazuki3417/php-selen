@@ -7,10 +7,9 @@ declare(strict_types=1);
  * @copyright 2021 hazuki3417 all rights reserved.
  */
 
-namespace Tests\Selen\Schema\Exchanger\Define;
+namespace Tests\Selen\Schema;
 
 use DateTime;
-use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
 use Selen\Schema\Exchange\ArrayDefine;
 use Selen\Schema\Exchange\Define;
@@ -28,7 +27,10 @@ use Selen\Str\Exchanger\CaseName;
  */
 class ExchangerTest extends TestCase
 {
-    public function dataProviderExecute()
+    /**
+     * @return array<string, array<string, mixed>>
+     */
+    public function dataProviderExecute(): array
     {
         $valueExchangeStub1 = function ($value) {
             return 'replace string 1';
@@ -648,7 +650,7 @@ class ExchangerTest extends TestCase
      * @param mixed $expected
      * @param mixed $input
      */
-    public function testExecute($expected, $input)
+    public function testExecute($expected, $input): void
     {
         /** @var array $value */
         $value = $input['value'];
@@ -667,19 +669,5 @@ class ExchangerTest extends TestCase
                 ->arrayDefine($define)
                 ->execute($value)
         );
-    }
-
-    public function testKeyException()
-    {
-        $exchanger = Exchanger::new();
-        $this->expectException(InvalidArgumentException::class);
-        $exchanger->key([]);
-    }
-
-    public function testValueException()
-    {
-        $exchanger = Exchanger::new();
-        $this->expectException(InvalidArgumentException::class);
-        $exchanger->value([]);
     }
 }

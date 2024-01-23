@@ -10,8 +10,10 @@ namespace Selen\Data\Structure;
 
 abstract class AbstractStack extends AbstractObjects implements StackInterface
 {
+    /** @var mixed 要素の値 */
     private $workValue;
 
+    /** @var int|string 要素のkey */
     private $workKey;
 
     #[\ReturnTypeWillChange]

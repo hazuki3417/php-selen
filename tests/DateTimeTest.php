@@ -15,14 +15,17 @@ use Selen\DateTime\Record;
 
 /**
  * @coversDefaultClass \Selen\DateTime
- * * *
+ *
  * @see DateTime
  *
  * @internal
  */
 class DateTimeTest extends TestCase
 {
-    public function dataProviderConstruct()
+    /**
+     * @return array<string, array<string, mixed>>
+     */
+    public function dataProviderConstruct(): array
     {
         return [
             'validPattern: 001' => [
@@ -38,12 +41,15 @@ class DateTimeTest extends TestCase
      * @param mixed $expected
      * @param mixed $input
      */
-    public function testConstruct($expected, $input)
+    public function testConstruct($expected, $input): void
     {
         $this->assertInstanceOf($expected, new DateTime($input));
     }
 
-    public function dataProviderParseStr()
+    /**
+     * @return array<string, array<string, mixed>>
+     */
+    public function dataProviderParseStr(): array
     {
         return [
             'validPattern: 001' => [
@@ -62,12 +68,15 @@ class DateTimeTest extends TestCase
      * @param mixed $expected
      * @param mixed $input
      */
-    public function testParseStr($expected, $input)
+    public function testParseStr($expected, $input): void
     {
         $this->assertInstanceOf($expected, DateTime::parseStr(...$input));
     }
 
-    public function dataProviderParseInt()
+    /**
+     * @return array<string, array<string, mixed>>
+     */
+    public function dataProviderParseInt(): array
     {
         return [
             'validPattern: 001' => [
@@ -83,7 +92,7 @@ class DateTimeTest extends TestCase
      * @param mixed $expected
      * @param mixed $input
      */
-    public function testParseInt($expected, $input)
+    public function testParseInt($expected, $input): void
     {
         $this->assertInstanceOf($expected, DateTime::parseInt($input));
     }

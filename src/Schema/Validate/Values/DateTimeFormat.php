@@ -17,9 +17,18 @@ class DateTimeFormat implements ValueValidateInterface
     /** @var string */
     private $format;
 
-    public function __construct(string $format)
+    /** @var bool 空文字の許容ステータスを保持します（true: 許容する, false: 許容しない） */
+    private bool $allowEmpty;
+
+    /**
+     * @param string $format     日付フォーマットを指定します
+     * @param bool   $allowEmpty 空文字を許容するか指定します。（true: 許容する, false: 許容しない）
+     */
+    public function __construct(string $format, bool $allowEmpty = false)
     {
         $this->format = $format;
+
+        $this->allowEmpty = $allowEmpty;
     }
 
     public function execute($value, ValidateResult $result): ValidateResult
@@ -29,10 +38,14 @@ class DateTimeFormat implements ValueValidateInterface
             return $result->setResult(true)->setMessage($mes);
         }
 
+        if ($this->allowEmpty && $value === '') {
+            return $result->setResult(true);
+        }
+
         $dateTime = DateTime::createFromFormat($this->format, $value);
 
         if ($dateTime === false || $dateTime->format($this->format) !== $value) {
-            $mes = \sprintf('Invalid value. expected value format %s.', $this->format);
+            $mes = \sprintf('Invalid value. Expected value format %s.', $this->format);
             return $result->setResult(false)->setMessage($mes);
         }
 

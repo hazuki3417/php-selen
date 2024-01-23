@@ -30,7 +30,7 @@ class Alphabet
     /**
      * 26進数指定でアルファベット（小文字）を取得するメソッド（a-z:0-p）.
      */
-    public static function getLowerCase26Ary(string $val)
+    public static function getLowerCase26Ary(string $val): string
     {
         if (!Radix::verify($val, self::NUMBER)) {
             throw new \InvalidArgumentException(
@@ -40,12 +40,13 @@ class Alphabet
 
         $asciiCodeDiff = base_convert($val, self::NUMBER, 10);
 
-        if (!self::isValidDiffAsciiCode($asciiCodeDiff)) {
+        if (!self::isValidDiffAsciiCode((int) $asciiCodeDiff)) {
             throw new \RuntimeException(
                 'Specify the value within the range of 1 digit of the 26-ary number.'
             );
         }
 
+        /** @phpstan-ignore-next-line */
         $asciiCode = self::LOWER_CASE_ASCII_CODE + $asciiCodeDiff;
 
         return chr($asciiCode);
@@ -54,7 +55,7 @@ class Alphabet
     /**
      * 26進数指定でアルファベット（大文字）を取得するメソッド（a-z:0-p）.
      */
-    public static function getUpperCase26Ary(string $val)
+    public static function getUpperCase26Ary(string $val): string
     {
         if (!Radix::verify($val, self::NUMBER)) {
             throw new \InvalidArgumentException(
@@ -64,18 +65,19 @@ class Alphabet
 
         $asciiCodeDiff = base_convert($val, self::NUMBER, 10);
 
-        if (!self::isValidDiffAsciiCode($asciiCodeDiff)) {
+        if (!self::isValidDiffAsciiCode((int) $asciiCodeDiff)) {
             throw new \RuntimeException(
                 'Specify the value within the range of 1 digit of the 26-ary number.'
             );
         }
 
+        /** @phpstan-ignore-next-line */
         $asciiCode = self::UPPER_CASE_ASCII_CODE + $asciiCodeDiff;
 
         return chr($asciiCode);
     }
 
-    private static function isValidDiffAsciiCode(int $val)
+    private static function isValidDiffAsciiCode(int $val): bool
     {
         $alphaNumRangeMin = 0;
         $alphaNumRangeMax = self::NUMBER;

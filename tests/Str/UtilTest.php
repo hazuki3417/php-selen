@@ -22,20 +22,23 @@ use ValueError;
  */
 class UtilTest extends TestCase
 {
-    public function dataProviderToBoolException()
+    /**
+     * @return array<string, array<string, mixed>>
+     */
+    public function dataProviderToBoolException(): array
     {
         return [
             'invalidPattern: 001' => [
                 'expected' => [
                     'errorClass'   => ValueError::class,
-                    'errorMessage' => "Invalid value. expected value 'true' or 'false'",
+                    'errorMessage' => "Invalid value. Expected value 'true' or 'false'",
                 ],
                 'input' => '',
             ],
             'invalidPattern: 002' => [
                 'expected' => [
                     'errorClass'   => ValueError::class,
-                    'errorMessage' => "Invalid value. expected value 'true' or 'false'",
+                    'errorMessage' => "Invalid value. Expected value 'true' or 'false'",
                 ],
                 'input' => 'test',
             ],
@@ -48,7 +51,7 @@ class UtilTest extends TestCase
      * @param mixed $expected
      * @param mixed $input
      */
-    public function testToBoolException($expected, $input)
+    public function testToBoolException($expected, $input): void
     {
         [
             'errorClass'   => $errorClass,
@@ -61,7 +64,10 @@ class UtilTest extends TestCase
         Util::toBool($input);
     }
 
-    public function dataProviderToBool()
+    /**
+     * @return array<string, array<string, mixed>>
+     */
+    public function dataProviderToBool(): array
     {
         return [
             'validPattern: 001' => [
@@ -81,7 +87,7 @@ class UtilTest extends TestCase
      * @param mixed $expected
      * @param mixed $input
      */
-    public function testToBool($expected, $input)
+    public function testToBool($expected, $input): void
     {
         $this->assertSame($expected, Util::toBool($input));
     }

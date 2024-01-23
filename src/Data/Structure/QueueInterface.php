@@ -8,9 +8,22 @@
 
 namespace Selen\Data\Structure;
 
+/**
+ * @extends \Iterator<mixed>
+ */
 interface QueueInterface extends ObjectsInterface, \Iterator
 {
-    public function enqueue($object);
+    /**
+     * エンキューします
+     *
+     * @param mixed $object オブジェクトを渡します
+     */
+    public function enqueue($object): void;
 
+    /**
+     * デキューします
+     *
+     * @return mixed オブジェクトを返します
+     */
     public function dequeue();
 }

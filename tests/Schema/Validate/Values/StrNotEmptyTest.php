@@ -1,7 +1,6 @@
 <?php
 
 declare(strict_types=1);
-
 /**
  * @license MIT
  * @author hazuki3417<hazuki3417@gmail.com>
@@ -23,12 +22,15 @@ use Selen\Schema\Validate\Values\StrNotEmpty;
  */
 class StrNotEmptyTest extends TestCase
 {
-    public function testConstruct()
+    public function testConstruct(): void
     {
         $this->assertInstanceOf(StrNotEmpty::class, new StrNotEmpty());
     }
 
-    public function dataProviderExecute()
+    /**
+     * @return array<string, array<string, mixed>>
+     */
+    public function dataProviderExecute(): array
     {
         return [
             'validDataType: value is string' => [
@@ -58,7 +60,7 @@ class StrNotEmptyTest extends TestCase
      * @param ValidateResult $expected
      * @param mixed          $input
      */
-    public function testExecute($expected, $input)
+    public function testExecute($expected, $input): void
     {
         [
             'value' => $value,

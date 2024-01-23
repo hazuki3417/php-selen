@@ -13,7 +13,8 @@ use Selen\Str\Verify\Width\Half;
 
 class Width
 {
-    private $str;
+    /** @var string 検証対象の文字列 */
+    private string $str;
 
     private function __construct(string $val)
     {
@@ -25,12 +26,12 @@ class Width
         return new self($val);
     }
 
-    public function full()
+    public function full(): Full
     {
         return Full::set($this->str);
     }
 
-    public function half()
+    public function half(): Half
     {
         return Half::set($this->str);
     }

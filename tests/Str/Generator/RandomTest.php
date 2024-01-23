@@ -7,7 +7,7 @@ declare(strict_types=1);
  * @copyright 2021 hazuki3417 all rights reserved.
  */
 
-namespace Tests\Selen\Str;
+namespace Tests\Selen\Str\Generator;
 
 use PHPUnit\Framework\TestCase;
 use Selen\Str\Generator\Random;
@@ -21,7 +21,7 @@ use Selen\Str\Generator\Random;
  */
 class RandomTest extends TestCase
 {
-    public function testChar()
+    public function testChar(): void
     {
         $pool      = 'abcde';
         $poolChars = \str_split($pool);
@@ -29,7 +29,7 @@ class RandomTest extends TestCase
         $this->assertTrue(\in_array(Random::char($pool), $poolChars, true));
     }
 
-    public function testStr()
+    public function testStr(): void
     {
         $pool      = 'abcde';
         $poolChars = \str_split($pool);
@@ -42,7 +42,7 @@ class RandomTest extends TestCase
         }
     }
 
-    public function testAlpha()
+    public function testAlpha(): void
     {
         $pool      = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
         $poolChars = \str_split($pool);
@@ -55,7 +55,7 @@ class RandomTest extends TestCase
         }
     }
 
-    public function testNum()
+    public function testNum(): void
     {
         $pool      = '0123456789';
         $poolChars = \str_split($pool);
@@ -68,7 +68,7 @@ class RandomTest extends TestCase
         }
     }
 
-    public function testAlphaNum()
+    public function testAlphaNum(): void
     {
         $pool      = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
         $poolChars = \str_split($pool);

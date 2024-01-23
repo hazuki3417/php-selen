@@ -9,7 +9,6 @@ declare(strict_types=1);
 
 namespace Tests\Selen\Schema\Validate\Values;
 
-use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
 use Selen\Schema\Validate\Model\ValidateResult;
 use Selen\Schema\Validate\Values\Max;
@@ -23,80 +22,43 @@ use Selen\Schema\Validate\Values\Max;
  */
 class MaxTest extends TestCase
 {
-    public function testConstruct()
+    public function testConstruct(): void
     {
         $this->assertInstanceOf(Max::class, new Max(10));
     }
 
-    public function dataProviderExecuteException()
-    {
-        return [
-            'invalidDataType: argument value is not int or float' => [
-                'expected' => [
-                    'expectException'        => InvalidArgumentException::class,
-                    'expectExceptionMessage' => 'Invalid value. Please specify int or float type.',
-                ],
-                'input' => [
-                    'threshold' => '5',
-                    'value'     => 4,
-                ],
-            ],
-        ];
-    }
-
     /**
-     * @dataProvider dataProviderExecuteException
-     *
-     * @param mixed $expected
-     * @param mixed $input
+     * @return array<string, array<string, mixed>>
      */
-    public function testExecuteException($expected, $input)
-    {
-        [
-            'threshold' => $threshold,
-            'value'     => $value,
-        ] = $input;
-
-        [
-            'expectException'        => $expectException,
-            'expectExceptionMessage' => $expectExceptionMessage,
-        ] = $expected;
-
-        $this->expectException($expectException);
-        $this->expectExceptionMessage($expectExceptionMessage);
-
-        (new Max($threshold))->execute($value, new ValidateResult());
-    }
-
-    public function dataProviderExecute()
+    public function dataProviderExecute(): array
     {
         return [
             'validDataType: value not subject to validation' => [
                 'expected' => new ValidateResult(true, '', 'Skip validation. Executed only when the value is of type int or float'),
                 'input'    => [
-                    'threshold' => 5,
-                    'value'     => null,
+                    'args'  => 5,
+                    'value' => null,
                 ],
             ],
-            'validDataType: less than threshold' => [
+            'validDataType: less than args' => [
                 'expected' => new ValidateResult(true),
                 'input'    => [
-                    'threshold' => 5,
-                    'value'     => 4,
+                    'args'  => 5,
+                    'value' => 4,
                 ],
             ],
-            'validDataType: equivalent to threshold' => [
+            'validDataType: equivalent to args' => [
                 'expected' => new ValidateResult(true),
                 'input'    => [
-                    'threshold' => 5,
-                    'value'     => 5,
+                    'args'  => 5,
+                    'value' => 5,
                 ],
             ],
-            'invalidDataType: greater than threshold' => [
+            'invalidDataType: greater than args' => [
                 'expected' => new ValidateResult(false, '', 'Invalid value. Specify a value of 5 or less.'),
                 'input'    => [
-                    'threshold' => 5,
-                    'value'     => 6,
+                    'args'  => 5,
+                    'value' => 6,
                 ],
             ],
         ];
@@ -108,14 +70,15 @@ class MaxTest extends TestCase
      * @param ValidateResult $expected
      * @param mixed          $input
      */
-    public function testExecute($expected, $input)
+    public function testExecute($expected, $input): void
     {
         [
-            'threshold' => $threshold,
-            'value'     => $value,
+            'args'  => $args,
+            'value' => $value,
         ] = $input;
 
-        $actual = (new Max($threshold))->execute($value, new ValidateResult());
+        $actual = (new Max($args))
+            ->execute($value, new ValidateResult());
 
         $this->assertInstanceOf(ValidateResult::class, $actual);
         $this->assertSame($expected->getResult(), $actual->getResult());

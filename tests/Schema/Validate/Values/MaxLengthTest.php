@@ -4,7 +4,7 @@ declare(strict_types=1);
 /**
  * @license MIT
  * @author hazuki3417<hazuki3417@gmail.com>
- * @copyright 2022 hazuki3417 all rights reserved.
+ * @copyright 2023 hazuki3417 all rights reserved.
  */
 
 namespace Tests\Selen\Schema\Validate\Values;
@@ -23,12 +23,15 @@ use Selen\Schema\Validate\Values\MaxLength;
  */
 class MaxLengthTest extends TestCase
 {
-    public function testConstruct()
+    public function testConstruct(): void
     {
         $this->assertInstanceOf(MaxLength::class, new MaxLength(10));
     }
 
-    public function dataProviderExecuteException()
+    /**
+     * @return array<string, array<string, mixed>>
+     */
+    public function dataProviderExecuteException(): array
     {
         return [
             'invalidDataType: argument value is not int or float' => [
@@ -37,8 +40,8 @@ class MaxLengthTest extends TestCase
                     'expectExceptionMessage' => 'Invalid value. Values less than 0 cannot be specified.',
                 ],
                 'input' => [
-                    'length' => -1,
-                    'value'  => '12345',
+                    'args'  => -1,
+                    'value' => '12345',
                 ],
             ],
         ];
@@ -50,11 +53,11 @@ class MaxLengthTest extends TestCase
      * @param mixed $expected
      * @param mixed $input
      */
-    public function testExecuteException($expected, $input)
+    public function testExecuteException($expected, $input): void
     {
         [
-            'length' => $length,
-            'value'  => $value,
+            'args'  => $length,
+            'value' => $value,
         ] = $input;
 
         [
@@ -68,56 +71,59 @@ class MaxLengthTest extends TestCase
         (new MaxLength($length))->execute($value, new ValidateResult());
     }
 
-    public function dataProviderExecute()
+    /**
+     * @return array<string, array<string, mixed>>
+     */
+    public function dataProviderExecute(): array
     {
         return [
             'validDataType: value not subject to validation' => [
                 'expected' => new ValidateResult(true, '', 'Skip validation. Executed only when the value is of string type'),
                 'input'    => [
-                    'length' => 5,
-                    'value'  => null,
+                    'args'  => 5,
+                    'value' => null,
                 ],
             ],
             'validDataType: less than specified length (half-width)' => [
                 'expected' => new ValidateResult(true),
                 'input'    => [
-                    'length' => 5,
-                    'value'  => '1234',
+                    'args'  => 5,
+                    'value' => '1234',
                 ],
             ],
             'validDataType: same as specified length (half-width)' => [
                 'expected' => new ValidateResult(true),
                 'input'    => [
-                    'length' => 5,
-                    'value'  => '12345',
+                    'args'  => 5,
+                    'value' => '12345',
                 ],
             ],
             'invalidDataType: greater than specified length (half-width)' => [
                 'expected' => new ValidateResult(false, '', 'Invalid value. Please specify with a character string of 5 characters or less.'),
                 'input'    => [
-                    'length' => 5,
-                    'value'  => '123456',
+                    'args'  => 5,
+                    'value' => '123456',
                 ],
             ],
             'validDataType: less than specified length (full-width)' => [
                 'expected' => new ValidateResult(true),
                 'input'    => [
-                    'length' => 5,
-                    'value'  => '１２３４',
+                    'args'  => 5,
+                    'value' => '１２３４',
                 ],
             ],
             'validDataType: same as specified length (full-width)' => [
                 'expected' => new ValidateResult(true),
                 'input'    => [
-                    'length' => 5,
-                    'value'  => '１２３４５',
+                    'args'  => 5,
+                    'value' => '１２３４５',
                 ],
             ],
             'invalidDataType: greater than specified length (full-width)' => [
                 'expected' => new ValidateResult(false, '', 'Invalid value. Please specify with a character string of 5 characters or less.'),
                 'input'    => [
-                    'length' => 5,
-                    'value'  => '１２３４５６',
+                    'args'  => 5,
+                    'value' => '１２３４５６',
                 ],
             ],
         ];
@@ -129,14 +135,15 @@ class MaxLengthTest extends TestCase
      * @param ValidateResult $expected
      * @param mixed          $input
      */
-    public function testExecute($expected, $input)
+    public function testExecute($expected, $input): void
     {
         [
-            'length' => $length,
-            'value'  => $value,
+            'args'  => $args,
+            'value' => $value,
         ] = $input;
 
-        $actual = (new MaxLength($length))->execute($value, new ValidateResult());
+        $actual = (new MaxLength($args)
+            )->execute($value, new ValidateResult());
 
         $this->assertInstanceOf(ValidateResult::class, $actual);
         $this->assertSame($expected->getResult(), $actual->getResult());

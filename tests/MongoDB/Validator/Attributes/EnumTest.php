@@ -24,12 +24,15 @@ use Selen\MongoDB\Validator\Model\ValidateResult;
  */
 class EnumTest extends TestCase
 {
-    public function testConstruct()
+    public function testConstruct(): void
     {
         $this->assertInstanceOf(Enum::class, new Enum('string'));
     }
 
-    public function dataProviderExecute()
+    /**
+     * @return array<string, array<string, mixed>>
+     */
+    public function dataProviderExecute(): array
     {
         return [
             'pattern001' => [
@@ -83,7 +86,7 @@ class EnumTest extends TestCase
      * @param \Selen\Schema\Validate\Model\ValidateResult $expected
      * @param mixed                                       $input
      */
-    public function testExecute($expected, $input)
+    public function testExecute($expected, $input): void
     {
         $actual = (new Enum(...$input['type']))->execute($input['value'], new ValidateResult());
 

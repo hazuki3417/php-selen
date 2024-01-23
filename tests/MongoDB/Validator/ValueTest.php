@@ -30,7 +30,7 @@ use Selen\MongoDB\Validator\ValueValidateInterface;
  */
 class ValueTest extends TestCase
 {
-    public function testConstruct()
+    public function testConstruct(): void
     {
         $arrayPath          = new ArrayPath();
         $reflectionClass    = new \ReflectionClass(ValueTestMockNoneValidateObject::class);
@@ -47,7 +47,7 @@ class ValueTest extends TestCase
  * プロパティに設定された属性を元にバリデーションを提供する。
  * そのためプロパティに設定されている値に意味はありません。
  */
-#[Schema('root')]
+#[Schema(Schema::TYPE_ROOT)]
 class ValueTestMockNoneValidateObject
 {
     #[SchemaField]
@@ -67,17 +67,42 @@ class ValueTestMockNoneValidateObject
 
     // NOTE: fieldとして扱わないプロパティ
     public $rootObjField6;
+
+    /**
+     * NOTE: string | array[string] という型定義はできない（型定義の属性クラスを複数指定した場合、指定した型定義同士はandで判定するため）
+     *       - value type: string           > ng
+     *       - value type: array empty      > ok
+     *       - value type: array string     > ok
+     *       - value type: array not string > ng
+     *       複数の型定義属性をorで判定した場合、型定義の実装によっては型がゆるくなるためやらない
+     *       （ライブラリ側の設計方針は変えないので、DB設計を見直しての方針）
+     */
+    // #[SchemaField, ArrayType('string'), Type('string', 'array')]
+    // public $rootObjField7;
 }
 
-#[Schema('root')]
-class ValueTestMockRootObject
+#[Schema(Schema::TYPE_INNER)]
+class ValueTestMockInnerObject
 {
     #[SchemaField, Type('string', 'null')]
-    public $rootObjField1;
+    public $innerObjField1;
 
     #[SchemaField, Type('int')]
-    public $rootObjField2 = 0;
+    public $innerObjField2 = 0;
 
     #[SchemaField, Type('string')]
-    public $rootObjField3 = 'val';
+    public $innerObjField3 = 'val';
+}
+
+#[Schema(Schema::TYPE_INNER)]
+class ValueTestMockInnerObjectItem
+{
+    #[SchemaField, Type('string', 'null')]
+    public $innerObjField1;
+
+    #[SchemaField, Type('int')]
+    public $innerObjField2 = 0;
+
+    #[SchemaField, Type('string')]
+    public $innerObjField3 = 'val';
 }

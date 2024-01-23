@@ -22,6 +22,12 @@ class Key
         $this->arrayPath = $arrayPath;
     }
 
+    /**
+     * 値の検証を実行します
+     *
+     * @param string             $key   検証する値を保持しているキー名を渡します
+     * @param array<mixed,mixed> $input 検証する値を渡します
+     */
     public function execute(string $key, array $input): ValidatorResult
     {
         $this->arrayPath->setCurrentPath($key);

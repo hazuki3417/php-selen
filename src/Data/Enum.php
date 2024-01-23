@@ -10,6 +10,12 @@ namespace Selen\Data;
 
 class Enum
 {
+    /**
+     * 値が指定された型かどうかを検証します
+     *
+     * @param mixed                      $value 検証する値を指定します
+     * @param string|int|float|bool|null $types Enumで管理する値を定義します
+     */
     public static function validate($value, string|int|float|bool|null ...$types): bool
     {
         if (\is_array($value)) {

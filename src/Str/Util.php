@@ -26,7 +26,7 @@ class Util
         $allowType = ['true', 'false'];
 
         if (!\in_array($value, $allowType, true)) {
-            throw new ValueError("Invalid value. expected value 'true' or 'false'");
+            throw new ValueError("Invalid value. Expected value 'true' or 'false'");
         }
         return $value === 'true';
     }

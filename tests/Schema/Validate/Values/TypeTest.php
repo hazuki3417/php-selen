@@ -22,25 +22,28 @@ use Selen\Schema\Validate\Values\Type;
  */
 class TypeTest extends TestCase
 {
-    public function testConstruct()
+    public function testConstruct(): void
     {
         $this->assertInstanceOf(Type::class, new Type('string'));
     }
 
-    public function dataProviderExecute()
+    /**
+     * @return array<string, array<string, mixed>>
+     */
+    public function dataProviderExecute(): array
     {
         return [
             'pattern001' => [
                 'expected' => new ValidateResult(true),
                 'input'    => [
-                    'type'  => ['string'],
+                    'args'  => ['string'],
                     'value' => 'true',
                 ],
             ],
             'pattern002' => [
                 'expected' => new ValidateResult(false, '', 'Invalid type. expected type string.'),
                 'input'    => [
-                    'type'  => ['string'],
+                    'args'  => ['string'],
                     'value' => true,
                 ],
             ],
@@ -53,9 +56,15 @@ class TypeTest extends TestCase
      * @param ValidateResult $expected
      * @param mixed          $input
      */
-    public function testExecute($expected, $input)
+    public function testExecute($expected, $input): void
     {
-        $actual = (new Type(...$input['type']))->execute($input['value'], new ValidateResult());
+        [
+            'args'  => $args,
+            'value' => $value,
+        ] = $input;
+
+        $actual = (new Type(...$args))
+            ->execute($value, new ValidateResult());
 
         $this->assertInstanceOf(ValidateResult::class, $actual);
         $this->assertSame($expected->getResult(), $actual->getResult());

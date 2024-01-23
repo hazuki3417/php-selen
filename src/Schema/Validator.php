@@ -20,7 +20,7 @@ class Validator
     /** @var ArrayDefine */
     private $arrayDefine;
 
-    /** @var \Selen\Schema\Validate\Model\ValidateResult[] */
+    /** @var Validate\Model\ValidateResult[] */
     private $validateResults = [];
 
     /** @var ArrayPath */
@@ -56,7 +56,7 @@ class Validator
     /**
      * 検証処理を実行します
      *
-     * @param array $input 変換する配列を渡します
+     * @param array<mixed,mixed> $input 変換する配列を渡します
      */
     public function execute(array $input): ValidatorResult
     {
@@ -67,16 +67,29 @@ class Validator
     /**
      * 定義した配列形式に変換します（個別設定）
      *
-     * @param array       $input       変換する配列を渡します
-     * @param ArrayDefine $arrayDefine 変換の定義を渡します
-     *
-     * @return array 変換した配列を返します
+     * @param array<mixed,mixed> $input       変換する配列を渡します
+     * @param ArrayDefine        $arrayDefine 変換の定義を渡します
      */
     private function defineRoutine(
         array $input,
         ArrayDefine $arrayDefine
-    ) {
+    ): void {
         $this->arrayPath->down();
+
+        /** 検証対象の配列にのみ存在するフィールドを検出する処理 */
+        if ($arrayDefine->assocArrayDefineExists) {
+            $inputKeys     = array_keys($input);
+            $undefinedKeys = array_diff($inputKeys, $arrayDefine->keys);
+
+            foreach ($undefinedKeys as $undefinedKey) {
+                $this->arrayPath->setCurrentPath($undefinedKey);
+                $this->validateResults[] = new ValidateResult(
+                    false,
+                    $this->getArrayPathStr(),
+                    'Undefined key.'
+                );
+            }
+        }
 
         /** @var Define $define */
         foreach ($arrayDefine->defines as $define) {
@@ -108,14 +121,13 @@ class Validator
                 // valueの検証処理
 
                 /**
-                 * TODO: 先にisAssocArrayDefine(),isIndexArrayDefine()を判定し、その後にループしたら判定する数が減りそう
                  * TODO: バリデーションの処理順を統一する。x軸を型定義、y軸を配列の要素名として説明（2次元配列をイメージ）
                  *       isAssocArrayDefine(): x軸を先に処理してから、y軸を処理する
                  *       isIndexArrayDefine(): y軸を処理してから、x軸を処理する
                  */
                 // 値バリデーションのループ（値のバリデーションは複数指定可能）
-                foreach ($define->valueValidateExecutes as $execute) {
-                    if ($define->isAssocArrayDefine()) {
+                if ($define->isAssocArrayDefine()) {
+                    foreach ($define->valueValidateExecutes as $execute) {
                         // 連想配列のときの値バリデーション処理
                         $validateResult = $this->valueValidate($execute, $input[$define->key->getName()]);
 
@@ -128,8 +140,10 @@ class Validator
                         // 検証結果が合格の場合は控えている検証処理を実行する。
                         continue;
                     }
+                }
 
-                    if ($define->isIndexArrayDefine()) {
+                if ($define->isIndexArrayDefine()) {
+                    foreach ($define->valueValidateExecutes as $execute) {
                         // 要素配列のときの値バリデーション処理
                         $keyValues = $input;
                         /** @var bool 配列要素すべてのバリデーションが合格ならtrue、それ以外ならfalse */
@@ -155,10 +169,6 @@ class Validator
                 }
             }
 
-            /**
-             * TODO: Define::key()で配列要素名を指定するときに数値または数字のkey名を指定できるか確認
-             *       指定できる場合は、指定できないようにしたほうがよいかを含めて検討する（それ次第で下記の実装が変わる）
-             */
             if ($define->nestedTypeDefineExists()) {
                 // ネストされた定義なら再帰処理を行う
                 if ($define->isAssocArrayDefine()) {
@@ -226,7 +236,8 @@ class Validator
     /**
      * 定義されたkeyが入力側に存在しないかどうか確認します
      *
-     * @param Validator\Define $define
+     * @param Define             $define 定義を指定します
+     * @param array<mixed,mixed> $input  入力側の配列を指定します
      *
      * @return bool 存在しない場合はtrueを、それ以外の場合はfalseを返します
      */
@@ -263,14 +274,14 @@ class Validator
             $validateResult :
             $validateResult
                 ->setResult(false)
-                ->setMessage('Key is required.');
+                ->setMessage('key is required.');
     }
 
     /**
      * 値の検証処理を行います
      *
-     * @param \Selen\Schema\Validate\ValueValidateInterface|callable $execute
-     * @param mixed                                                  $value
+     * @param Validate\ValueValidateInterface|callable $execute
+     * @param mixed                                    $value
      */
     private function valueValidate($execute, $value): ValidateResult
     {

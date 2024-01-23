@@ -12,13 +12,13 @@ use LogicException;
 
 class ArrayDefine
 {
-    /** @var \Selen\Schema\Exchange\Define[] key定義 */
+    /** @var Define[] key定義 */
     public $defines;
 
     /**
      * ArrayDefineインスタンスを生成します
      *
-     * @param Define ...$defines 定義を渡します
+     * @param Define $defines 定義を渡します
      *
      * @return ArrayDefine
      *

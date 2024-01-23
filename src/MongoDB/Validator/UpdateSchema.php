@@ -20,7 +20,7 @@ class UpdateSchema implements SchemaValidatorInterface
     /** @var ArrayPath */
     public $arrayPath;
 
-    /** @var \Selen\MongoDB\Validator\Model\ValidateResult[] */
+    /** @var Model\ValidateResult[] */
     private $validateResults = [];
 
     /** @var SchemaLoader */
@@ -32,20 +32,44 @@ class UpdateSchema implements SchemaValidatorInterface
         $this->schemaLoader = $schemaLoader;
     }
 
+    /**
+     * 値の検証を実行します
+     *
+     * @param array<mixed,mixed> $input 検証する値を渡します
+     */
     public function execute(array $input): ValidatorResult
     {
         $this->main($input);
         return new ValidatorResult(...$this->validateResults);
     }
 
-    private function addValidateResults(ValidateResult ...$validateResults)
+    private function addValidateResults(ValidateResult ...$validateResults): void
     {
         $this->validateResults = \array_merge($this->validateResults, $validateResults);
     }
 
-    private function main(array $input)
+    /**
+     * 値の検証を実行します
+     *
+     * @param array<mixed,mixed> $input 検証する値を渡します
+     */
+    private function main(array $input): void
     {
         $this->arrayPath->down();
+
+        /** 検証対象の配列にのみ存在するフィールドを検出する処理 */
+        $inputKeys     = array_keys($input);
+        $definedKeys   = array_keys($this->schemaLoader->fieldLoaders);
+        $undefinedKeys = array_diff($inputKeys, $definedKeys);
+
+        foreach ($undefinedKeys as $undefinedKey) {
+            $this->arrayPath->setCurrentPath($undefinedKey);
+            $this->validateResults[] = new ValidateResult(
+                false,
+                ArrayPath::toString($this->arrayPath->getPaths()),
+                'Undefined key.'
+            );
+        }
 
         foreach ($input as $key => $value) {
             $keyValue = [$key => $value];

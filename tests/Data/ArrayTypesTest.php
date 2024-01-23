@@ -7,7 +7,7 @@ declare(strict_types=1);
  * @copyright 2021 hazuki3417 all rights reserved.
  */
 
-namespace Tests\Selen\Data\Structure;
+namespace Tests\Selen\Data;
 
 use PHPUnit\Framework\TestCase;
 use Selen\Data\ArrayTypes;
@@ -21,7 +21,10 @@ use Selen\Data\ArrayTypes;
  */
 class ArrayTypesTest extends TestCase
 {
-    public function dataProviderValidate()
+    /**
+     * @return array<string, array<string, mixed>>
+     */
+    public function dataProviderValidate(): array
     {
         return [
             'pattern001' => ['expected' => true,  'input' => ['typeName1' => 'int', 'typeName2' => 'string', 'data' => [0]]],
@@ -36,7 +39,7 @@ class ArrayTypesTest extends TestCase
      * @param mixed $expected
      * @param mixed $input
      */
-    public function testValidate($expected, $input)
+    public function testValidate($expected, $input): void
     {
         $this->assertSame(
             $expected,

@@ -7,7 +7,7 @@ declare(strict_types=1);
  * @copyright 2023 hazuki3417 all rights reserved.
  */
 
-namespace Tests\Selen;
+namespace Tests\Selen\DateTime;
 
 use DateTime;
 use PHPUnit\Framework\TestCase;
@@ -15,14 +15,17 @@ use Selen\DateTime\Util;
 
 /**
  * @coversDefaultClass \mixed\Util
- * * *
+ *
  * @see mixed\Util
  *
  * @internal
  */
 class UtilTest extends TestCase
 {
-    public function dataProviderIsFeature()
+    /**
+     * @return array<string, array<string, mixed>>
+     */
+    public function dataProviderIsFeature(): array
     {
         return [
             'validPattern: 未来の日付' => [
@@ -42,12 +45,15 @@ class UtilTest extends TestCase
      * @param mixed $expected
      * @param mixed $input
      */
-    public function testIsFeature($expected, $input)
+    public function testIsFeature($expected, $input): void
     {
         $this->assertSame($expected, (new Util($input))->isFeature());
     }
 
-    public function dataProviderIsPast()
+    /**
+     * @return array<string, array<string, mixed>>
+     */
+    public function dataProviderIsPast(): array
     {
         return [
             'validPattern: 未来の日付' => [
@@ -67,12 +73,15 @@ class UtilTest extends TestCase
      * @param mixed $expected
      * @param mixed $input
      */
-    public function testIsPast($expected, $input)
+    public function testIsPast($expected, $input): void
     {
         $this->assertSame($expected, (new Util($input))->isPast());
     }
 
-    public function dataProviderEq()
+    /**
+     * @return array<string, array<string, mixed>>
+     */
+    public function dataProviderEq(): array
     {
         return [
             'validPattern: 同じ日付' => [
@@ -98,7 +107,7 @@ class UtilTest extends TestCase
      * @param mixed $expected
      * @param mixed $input
      */
-    public function testEq($expected, $input)
+    public function testEq($expected, $input): void
     {
         [
             'util'     => $util,
@@ -108,7 +117,10 @@ class UtilTest extends TestCase
         $this->assertSame($expected, (new Util($util))->eq($dateTime));
     }
 
-    public function dataProviderNe()
+    /**
+     * @return array<string, array<string, mixed>>
+     */
+    public function dataProviderNe(): array
     {
         return [
             'validPattern: 同じ日付' => [
@@ -134,7 +146,7 @@ class UtilTest extends TestCase
      * @param mixed $expected
      * @param mixed $input
      */
-    public function testNe($expected, $input)
+    public function testNe($expected, $input): void
     {
         [
             'util'     => $util,
@@ -144,7 +156,10 @@ class UtilTest extends TestCase
         $this->assertSame($expected, (new Util($util))->ne($dateTime));
     }
 
-    public function dataProviderGt()
+    /**
+     * @return array<string, array<string, mixed>>
+     */
+    public function dataProviderGt(): array
     {
         return [
             'validPattern: 境界値（record > dateTime）' => [
@@ -184,7 +199,7 @@ class UtilTest extends TestCase
      * @param mixed $expected
      * @param mixed $input
      */
-    public function testGt($expected, $input)
+    public function testGt($expected, $input): void
     {
         [
             'util'     => $util,
@@ -194,7 +209,10 @@ class UtilTest extends TestCase
         $this->assertSame($expected, (new Util($util))->gt($dateTime));
     }
 
-    public function dataProviderGe()
+    /**
+     * @return array<string, array<string, mixed>>
+     */
+    public function dataProviderGe(): array
     {
         return [
             'validPattern: 境界値（record > dateTime）' => [
@@ -234,7 +252,7 @@ class UtilTest extends TestCase
      * @param mixed $expected
      * @param mixed $input
      */
-    public function testGe($expected, $input)
+    public function testGe($expected, $input): void
     {
         [
             'util'     => $util,
@@ -244,7 +262,10 @@ class UtilTest extends TestCase
         $this->assertSame($expected, (new Util($util))->ge($dateTime));
     }
 
-    public function dataProviderLe()
+    /**
+     * @return array<string, array<string, mixed>>
+     */
+    public function dataProviderLe(): array
     {
         return [
             'validPattern: 境界値（record > dateTime）' => [
@@ -284,7 +305,7 @@ class UtilTest extends TestCase
      * @param mixed $expected
      * @param mixed $input
      */
-    public function testLe($expected, $input)
+    public function testLe($expected, $input): void
     {
         [
             'util'     => $util,
@@ -294,7 +315,10 @@ class UtilTest extends TestCase
         $this->assertSame($expected, (new Util($util))->le($dateTime));
     }
 
-    public function dataProviderLt()
+    /**
+     * @return array<string, array<string, mixed>>
+     */
+    public function dataProviderLt(): array
     {
         return [
             'validPattern: 境界値（record > dateTime）' => [
@@ -334,7 +358,7 @@ class UtilTest extends TestCase
      * @param mixed $expected
      * @param mixed $input
      */
-    public function testLt($expected, $input)
+    public function testLt($expected, $input): void
     {
         [
             'util'     => $util,

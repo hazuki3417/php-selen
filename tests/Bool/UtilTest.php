@@ -21,7 +21,10 @@ use Selen\Bool\Util;
  */
 class UtilTest extends TestCase
 {
-    public function dataProviderToString()
+    /**
+     * @return array<string, array<string, mixed>>
+     */
+    public function dataProviderToString(): array
     {
         return [
             'pattern001' => ['expected' => 'true',  'input' => true],
@@ -35,12 +38,15 @@ class UtilTest extends TestCase
      * @param mixed $expected
      * @param mixed $input
      */
-    public function testToString($expected, $input)
+    public function testToString($expected, $input): void
     {
         $this->assertSame($expected, Util::toString($input));
     }
 
-    public function dataProviderOneTrue()
+    /**
+     * @return array<string, array<string, mixed>>
+     */
+    public function dataProviderOneTrue(): array
     {
         return [
             'pattern001' => ['expected' => true,    'input' => [true]],
@@ -61,12 +67,15 @@ class UtilTest extends TestCase
      * @param mixed $expected
      * @param mixed $input
      */
-    public function testOneTrue($expected, $input)
+    public function testOneTrue($expected, $input): void
     {
         $this->assertSame($expected, Util::oneTrue(...$input));
     }
 
-    public function dataProviderOneFalse()
+    /**
+     * @return array<string, array<string, mixed>>
+     */
+    public function dataProviderOneFalse(): array
     {
         return [
             'pattern001' => ['expected' => false,   'input' => [true]],
@@ -87,12 +96,15 @@ class UtilTest extends TestCase
      * @param mixed $expected
      * @param mixed $input
      */
-    public function testOneFalse($expected, $input)
+    public function testOneFalse($expected, $input): void
     {
         $this->assertSame($expected, Util::oneFalse(...$input));
     }
 
-    public function dataProviderAnyTrue()
+    /**
+     * @return array<string, array<string, mixed>>
+     */
+    public function dataProviderAnyTrue(): array
     {
         return [
             'pattern001' => ['expected' => true,    'input' => [true]],
@@ -113,12 +125,15 @@ class UtilTest extends TestCase
      * @param mixed $expected
      * @param mixed $input
      */
-    public function testAnyTrue($expected, $input)
+    public function testAnyTrue($expected, $input): void
     {
         $this->assertSame($expected, Util::anyTrue(...$input));
     }
 
-    public function dataProviderAnyFalse()
+    /**
+     * @return array<string, array<string, mixed>>
+     */
+    public function dataProviderAnyFalse(): array
     {
         return [
             'pattern001' => ['expected' => false,   'input' => [true]],
@@ -139,12 +154,15 @@ class UtilTest extends TestCase
      * @param mixed $expected
      * @param mixed $input
      */
-    public function testAnyFalse($expected, $input)
+    public function testAnyFalse($expected, $input): void
     {
         $this->assertSame($expected, Util::anyFalse(...$input));
     }
 
-    public function dataProviderAllTrue()
+    /**
+     * @return array<string, array<string, mixed>>
+     */
+    public function dataProviderAllTrue(): array
     {
         return [
             'pattern001' => ['expected' => true,    'input' => [true]],
@@ -165,12 +183,15 @@ class UtilTest extends TestCase
      * @param mixed $expected
      * @param mixed $input
      */
-    public function testAllTrue($expected, $input)
+    public function testAllTrue($expected, $input): void
     {
         $this->assertSame($expected, Util::allTrue(...$input));
     }
 
-    public function dataProviderAllFalse()
+    /**
+     * @return array<string, array<string, mixed>>
+     */
+    public function dataProviderAllFalse(): array
     {
         return [
             'pattern001' => ['expected' => false,   'input' => [true]],
@@ -191,7 +212,7 @@ class UtilTest extends TestCase
      * @param mixed $expected
      * @param mixed $input
      */
-    public function testAllFalse($expected, $input)
+    public function testAllFalse($expected, $input): void
     {
         $this->assertSame($expected, Util::allFalse(...$input));
     }

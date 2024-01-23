@@ -18,16 +18,18 @@ use Selen\MongoDB\Attributes\Schema;
  */
 class SchemaLoader
 {
-    /** @var ReflectionClass */
+    /** @var ReflectionClass<object> */
     public $reflectionClass;
 
-    /** @var \ReflectionAttribute|null */
+    /** @var \ReflectionAttribute<SchemaMarkerInterface>|null */
     public $attributeSchema;
 
-    /** @var \Selen\MongoDB\Attribute\SchemaFieldLoader[] */
+    /** @var array<string,SchemaFieldLoader> key: fieldName, value: instance */
     public $fieldLoaders;
 
     /**
+     * @param ReflectionClass<object> $reflectionClass MongoDB Schemaのクラス名を渡します
+     *
      * @throws LogicException 属性の指定が不正なときに発生します
      */
     public function __construct(ReflectionClass $reflectionClass)

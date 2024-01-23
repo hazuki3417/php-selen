@@ -7,7 +7,7 @@ declare(strict_types=1);
  * @copyright 2021 hazuki3417 all rights reserved.
  */
 
-namespace Tests\Selen\Schema\Exchange\ArrayDefine;
+namespace Tests\Selen\Schema\Exchange;
 
 use PHPUnit\Framework\TestCase;
 use Selen\Schema\Exchange\ArrayDefine;
@@ -22,7 +22,7 @@ use Selen\Schema\Exchange\Define;
  */
 class ArrayDefineTest extends TestCase
 {
-    public function testConstruct()
+    public function testConstruct(): void
     {
         $this->assertInstanceOf(ArrayDefine::class, new ArrayDefine(
             Define::key('keyName1'),
@@ -39,7 +39,7 @@ class ArrayDefineTest extends TestCase
         ));
     }
 
-    public function testConstructException1()
+    public function testConstructException1(): void
     {
         // keyなしの定義が複数存在するケース（想定していない定義）
         $this->expectException(\LogicException::class);
@@ -49,7 +49,7 @@ class ArrayDefineTest extends TestCase
         );
     }
 
-    public function testConstructException2()
+    public function testConstructException2(): void
     {
         // keyあり・なしの定義が混在するケース（想定していない定義）
         $this->expectException(\LogicException::class);

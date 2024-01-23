@@ -7,7 +7,7 @@ declare(strict_types=1);
  * @copyright 2023 hazuki3417 all rights reserved.
  */
 
-namespace Tests\Selen;
+namespace Tests\Selen\DateTime;
 
 use DateTime;
 use PHPUnit\Framework\TestCase;
@@ -16,14 +16,17 @@ use ValueError;
 
 /**
  * @coversDefaultClass \Selen\DateTime\Record
- * * *
+ *
  * @see Record
  *
  * @internal
  */
 class RecordTest extends TestCase
 {
-    public function dataProviderConstructException()
+    /**
+     * @return array<string, array<string, mixed>>
+     */
+    public function dataProviderConstructException(): array
     {
         return [
             'invalidPattern: year === 0' => [
@@ -133,7 +136,7 @@ class RecordTest extends TestCase
      * @param mixed $expected
      * @param mixed $input
      */
-    public function testConstructException($expected, $input)
+    public function testConstructException($expected, $input): void
     {
         [
             'exceptionClass'   => $exceptionClass,
@@ -145,7 +148,10 @@ class RecordTest extends TestCase
         new Record(...$input);
     }
 
-    public function dataProviderConstruct()
+    /**
+     * @return array<string, array<string, mixed>>
+     */
+    public function dataProviderConstruct(): array
     {
         return [
             'validPattern: 引数なし' => [
@@ -238,12 +244,15 @@ class RecordTest extends TestCase
      * @param mixed $expected
      * @param mixed $input
      */
-    public function testConstruct($expected, $input)
+    public function testConstruct($expected, $input): void
     {
         $this->assertInstanceOf($expected, new Record(...$input));
     }
 
-    public function dataProviderClassProperty()
+    /**
+     * @return array<string, array<string, mixed>>
+     */
+    public function dataProviderClassProperty(): array
     {
         $nowDateTimeInstance = new DateTime();
         $nowParseFormat      = 'Y-m-d H:i:s';
@@ -289,7 +298,7 @@ class RecordTest extends TestCase
      * @param mixed $expected
      * @param mixed $input
      */
-    public function testClassProperty($expected, $input)
+    public function testClassProperty($expected, $input): void
     {
         [
             'year'   => $year,
@@ -310,7 +319,10 @@ class RecordTest extends TestCase
         $this->assertSame($second, $record->second);
     }
 
-    public function dataProviderParseStrException()
+    /**
+     * @return array<string, array<string, mixed>>
+     */
+    public function dataProviderParseStrException(): array
     {
         return [
             'invalidPattern: フォーマット文字列が空' => [
@@ -352,7 +364,7 @@ class RecordTest extends TestCase
      * @param mixed $expected
      * @param mixed $input
      */
-    public function testParseStrException($expected, $input)
+    public function testParseStrException($expected, $input): void
     {
         [
             'exceptionClass'   => $exceptionClass,
@@ -364,7 +376,10 @@ class RecordTest extends TestCase
         Record::parseStr(...$input);
     }
 
-    public function dataProviderParseStr()
+    /**
+     * @return array<string, array<string, mixed>>
+     */
+    public function dataProviderParseStr(): array
     {
         return [
             'invalidPattern: 有効な日時' => [
@@ -390,12 +405,15 @@ class RecordTest extends TestCase
      * @param mixed $expected
      * @param mixed $input
      */
-    public function testParseStr($expected, $input)
+    public function testParseStr($expected, $input): void
     {
         $this->assertInstanceOf($expected, Record::parseStr(...$input));
     }
 
-    public function dataProviderToDateTime()
+    /**
+     * @return array<string, array<string, mixed>>
+     */
+    public function dataProviderToDateTime(): array
     {
         return [
             'validPattern: 001' => [
@@ -418,7 +436,7 @@ class RecordTest extends TestCase
      * @param mixed $expected
      * @param mixed $input
      */
-    public function testToDateTime($expected, $input)
+    public function testToDateTime($expected, $input): void
     {
         $format = 'Y-m-d H:i:s';
         $actual = (new Record(...$input))->toDateTime();

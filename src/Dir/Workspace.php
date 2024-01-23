@@ -45,7 +45,7 @@ class Workspace
      *
      * @param int $permissions 権限を指定します
      */
-    public function create(int $permissions = 0777)
+    public function create(int $permissions = 0777): void
     {
         if (\file_exists($this->path)) {
             $mes = \sprintf(
@@ -61,7 +61,7 @@ class Workspace
     /**
      * 作業ディレクトリを削除します
      */
-    public function remove()
+    public function remove(): void
     {
         if (!\is_dir($this->path)) {
             return;

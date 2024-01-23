@@ -10,6 +10,7 @@ namespace Selen\Str\Verify;
 
 class Space
 {
+    /** @var string 検証対象の文字列 */
     private $str;
 
     private function __construct(string $val)

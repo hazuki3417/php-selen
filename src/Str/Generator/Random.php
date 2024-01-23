@@ -9,16 +9,16 @@
 namespace Selen\Str\Generator;
 
 /**
- * ランダムな文字列を返すクラス
+ * ランダムな文字列の生成を提供するクラスです
  */
 class Random
 {
     /**
-     * プールからランダムな1文字を返します
+     * プールからランダムな1文字を生成します
      *
      * @param string $pool プールする文字列を指定します
      *
-     * @return string ランダムな文字を返します
+     * @return string 生成した文字列を返します
      */
     public static function char(string $pool): string
     {
@@ -27,12 +27,12 @@ class Random
     }
 
     /**
-     * プールからランダムな文字列を返します
+     * プールからランダムな文字列を生成します
      *
      * @param string $pool   プールする文字列を指定します
      * @param int    $length 文字列長を指定します
      *
-     * @return string ランダムな文字列を返します
+     * @return string 生成した文字列を返します
      */
     public static function str(string $pool, int $length): string
     {
@@ -45,11 +45,11 @@ class Random
     }
 
     /**
-     * ランダムなアルファベット文字列を返します
+     * ランダムなアルファベット文字列を生成します
      *
      * @param int $length 文字列長を指定します
      *
-     * @return string ランダムな文字列を返します
+     * @return string 生成した文字列を返します
      */
     public static function alpha(int $length): string
     {
@@ -58,11 +58,11 @@ class Random
     }
 
     /**
-     * ランダムな数字文字列を返します
+     * ランダムな数字文字列を生成します
      *
      * @param int $length 文字列長を指定します
      *
-     * @return string ランダムな文字列を返します
+     * @return string 生成した文字列を返します
      */
     public static function num(int $length): string
     {
@@ -71,11 +71,11 @@ class Random
     }
 
     /**
-     * ランダムなアルファベット・数字文字列を返します
+     * ランダムなアルファベット・数字文字列を生成します
      *
      * @param int $length 文字列長を指定します
      *
-     * @return string ランダムな文字列を返します
+     * @return string 生成した文字列を返します
      */
     public static function alphaNum(int $length): string
     {

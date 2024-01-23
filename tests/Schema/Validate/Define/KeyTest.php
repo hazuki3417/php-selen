@@ -7,7 +7,7 @@ declare(strict_types=1);
  * @copyright 2021 hazuki3417 all rights reserved.
  */
 
-namespace Tests\Selen\Schema\Validate\Define\Key;
+namespace Tests\Selen\Schema\Validate\Define;
 
 use PHPUnit\Framework\TestCase;
 use Selen\Schema\Validate\Define\Key;
@@ -21,7 +21,10 @@ use Selen\Schema\Validate\Define\Key;
  */
 class KeyTest extends TestCase
 {
-    public function dataProviderConstruct()
+    /**
+     * @return array<string, array<string, mixed>>
+     */
+    public function dataProviderConstruct(): array
     {
         return [
             'pattern001' => [
@@ -41,18 +44,15 @@ class KeyTest extends TestCase
      * @param mixed $expected
      * @param mixed $input
      */
-    public function testConstruct($expected, $input)
+    public function testConstruct($expected, $input): void
     {
         $this->assertInstanceOf($expected, new Key($input['name'], $input['require']));
     }
 
-    public function testConstructException()
-    {
-        $this->expectException(\InvalidArgumentException::class);
-        new Key(false, true);
-    }
-
-    public function dataProviderGetName()
+    /**
+     * @return array<string, array<string, mixed>>
+     */
+    public function dataProviderGetName(): array
     {
         return [
             'pattern001' => ['expected' => 'keyName', 'input' => 'keyName'],
@@ -68,12 +68,15 @@ class KeyTest extends TestCase
      * @param mixed $expected
      * @param mixed $input
      */
-    public function testGetName($expected, $input)
+    public function testGetName($expected, $input): void
     {
         $this->assertSame($expected, (new Key($input, true))->getName());
     }
 
-    public function dataProviderGetRequire()
+    /**
+     * @return array<string, array<string, mixed>>
+     */
+    public function dataProviderGetRequire(): array
     {
         return [
             'pattern001' => ['expected' => true,  'input' => true],
@@ -87,7 +90,7 @@ class KeyTest extends TestCase
      * @param mixed $expected
      * @param mixed $input
      */
-    public function testGetRequire($expected, $input)
+    public function testGetRequire($expected, $input): void
     {
         $this->assertSame($expected, (new Key('keyName', $input))->getRequire());
     }

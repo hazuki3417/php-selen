@@ -10,7 +10,8 @@ namespace Selen\Data;
 
 class ArrayDepth
 {
-    private $currentIndex = 0;
+    /** @var int 階層の深さ */
+    private int $currentIndex = 0;
 
     public function up(): bool
     {

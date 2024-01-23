@@ -10,5 +10,10 @@ namespace Selen\MongoDB\Builder;
 
 interface SchemaBuilderInterface
 {
+    /**
+     * @param array<mixed,mixed> $input 入力値を渡します
+     *
+     * @return array<mixed,mixed> コレクション投入する値を返します
+     */
     public function create(array $input): array;
 }

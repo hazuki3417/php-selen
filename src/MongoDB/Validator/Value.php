@@ -17,15 +17,26 @@ class Value
     /** @var ArrayPath */
     private $arrayPath;
 
-    /** @var \ReflectionAttribute[] */
+    /** @var \ReflectionAttribute<object>[] */
     private $attributeValueValidates = [];
 
+    /**
+     * インスタンスを生成します
+     *
+     * @param \ReflectionAttribute<object>[] $attributeValueValidates
+     */
     public function __construct(ArrayPath $arrayPath, array $attributeValueValidates)
     {
         $this->arrayPath               = $arrayPath;
         $this->attributeValueValidates = $attributeValueValidates;
     }
 
+    /**
+     * 値の検証を実行します
+     *
+     * @param string             $key   検証する値を保持しているキー名を渡します
+     * @param array<mixed,mixed> $input 検証する値を渡します
+     */
     public function execute(string $key, array $input): ValidatorResult
     {
         $this->arrayPath->setCurrentPath($key);
@@ -33,9 +44,7 @@ class Value
         $validateResult = new ValidateResult();
         $validateResult->setArrayPath($arrayPathStr);
 
-        /** @var ValidateResult */
         foreach ($this->attributeValueValidates as $attributeValueValidate) {
-            /** @var ValueValidateInterface */
             $valueValidateInstance = $attributeValueValidate->newInstance();
             $validateResult        = $valueValidateInstance->execute($input[$key], $validateResult);
 

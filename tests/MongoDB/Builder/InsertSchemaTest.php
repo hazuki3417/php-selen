@@ -29,14 +29,17 @@ use Selen\MongoDB\Builder\InsertSchema;
  */
 class InsertSchemaTest extends TestCase
 {
-    public function testConstruct()
+    public function testConstruct(): void
     {
         $schemaLoader = new SchemaLoader(new ReflectionClass(InsertSchemaTestMockRootObject::class));
         $insertSchema = new InsertSchema($schemaLoader);
         $this->assertInstanceOf(InsertSchema::class, $insertSchema);
     }
 
-    public function dataProviderCreate()
+    /**
+     * @return array<string, array<string, mixed>>
+     */
+    public function dataProviderCreate(): array
     {
         return [
             'validPattern:no input' => [
@@ -214,7 +217,7 @@ class InsertSchemaTest extends TestCase
      * @param string $expected
      * @param array  $input
      */
-    public function testCreate($expected, $input)
+    public function testCreate($expected, $input): void
     {
         [
             'contractArgs' => $contractArgs,

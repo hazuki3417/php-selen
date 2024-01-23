@@ -8,7 +8,6 @@
 
 namespace Selen\Schema\Validate\Values;
 
-use InvalidArgumentException;
 use Selen\Schema\Validate\Model\ValidateResult;
 use Selen\Schema\Validate\ValueValidateInterface;
 
@@ -28,14 +27,8 @@ class Max implements ValueValidateInterface
      *
      * @param int|float $threshold 最大範囲値を指定します
      */
-    public function __construct($threshold)
+    public function __construct(int|float $threshold)
     {
-        $allowType = \is_int($threshold) || \is_float($threshold);
-
-        if (!$allowType) {
-            $mes = 'Invalid value. Please specify int or float type.';
-            throw new InvalidArgumentException($mes);
-        }
         $this->threshold = $threshold;
     }
 

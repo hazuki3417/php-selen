@@ -13,5 +13,8 @@ use Selen\MongoDB\Validator\Model\ValidateResult;
 
 interface ValueValidateInterface extends ValidateMarkerInterface
 {
-    public function execute($value, ValidateResult $result): ValidateResult;
+    /**
+     * @param array<mixed,mixed> $value
+     */
+    public function execute(array $value, ValidateResult $result): ValidateResult;
 }

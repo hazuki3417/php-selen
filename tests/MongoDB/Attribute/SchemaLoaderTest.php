@@ -26,7 +26,10 @@ use Selen\MongoDB\Attributes\Schema;
  */
 class SchemaLoaderTest extends TestCase
 {
-    public function dataProviderConstruct()
+    /**
+     * @return array<string, array<string, mixed>>
+     */
+    public function dataProviderConstruct(): array
     {
         return [
             'pattern001' => [
@@ -50,13 +53,16 @@ class SchemaLoaderTest extends TestCase
      * @param mixed           $expected
      * @param ReflectionClass $input
      */
-    public function testConstruct($expected, $input)
+    public function testConstruct($expected, $input): void
     {
         $instance = new SchemaLoader($input);
         $this->assertInstanceOf($expected, $instance);
     }
 
-    public function dataProviderConstructException()
+    /**
+     * @return array<string, array<string, mixed>>
+     */
+    public function dataProviderConstructException(): array
     {
         return [
             'pattern001' => [
@@ -80,7 +86,7 @@ class SchemaLoaderTest extends TestCase
      * @param mixed           $expected
      * @param ReflectionClass $input
      */
-    public function testConstructException($expected, $input)
+    public function testConstructException($expected, $input): void
     {
         $this->expectException($expected);
         new SchemaLoader($input);
@@ -101,16 +107,19 @@ class SchemaLoaderTestMockObject
 {
 }
 
+// @phpstan-ignore-next-line 例外テスト実施のためphpstanを無効化
 #[Schema(Schema::TYPE_ROOT), Schema(Schema::TYPE_INNER)]
 class SchemaLoaderTestMockException2
 {
 }
 
+// @phpstan-ignore-next-line 例外テスト実施のためphpstanを無効化
 #[Schema(Schema::TYPE_ROOT), Schema(Schema::TYPE_ROOT)]
 class SchemaLoaderTestMockException3
 {
 }
 
+// @phpstan-ignore-next-line 例外テスト実施のためphpstanを無効化
 #[Schema(Schema::TYPE_INNER), Schema(Schema::TYPE_INNER)]
 class SchemaLoaderTestMockException4
 {

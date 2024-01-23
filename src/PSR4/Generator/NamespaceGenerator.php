@@ -28,7 +28,12 @@ class NamespaceGenerator implements Constants
         $this->maps = $maps;
     }
 
-    public function execute(string $path)
+    /**
+     * パスから名前空間を生成します
+     *
+     * @param string $path パスを渡します
+     */
+    public function execute(string $path): Result
     {
         $conversionChar = $path;
 

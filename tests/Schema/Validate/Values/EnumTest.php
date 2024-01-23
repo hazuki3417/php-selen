@@ -22,53 +22,56 @@ use Selen\Schema\Validate\Values\Enum;
  */
 class EnumTest extends TestCase
 {
-    public function testConstruct()
+    public function testConstruct(): void
     {
         $this->assertInstanceOf(Enum::class, new Enum('string'));
     }
 
-    public function dataProviderExecute()
+    /**
+     * @return array<string, array<string, mixed>>
+     */
+    public function dataProviderExecute(): array
     {
         return [
             'pattern001' => [
                 'expected' => new ValidateResult(true),
                 'input'    => [
-                    'type'  => ['main', 'sub'],
+                    'args'  => ['main', 'sub'],
                     'value' => 'main',
                 ],
             ],
             'pattern002' => [
                 'expected' => new ValidateResult(false, '', "Invalid value. expected value 'main', 'sub'."),
                 'input'    => [
-                    'type'  => ['main', 'sub'],
+                    'args'  => ['main', 'sub'],
                     'value' => 'mai',
                 ],
             ],
             'pattern003' => [
                 'expected' => new ValidateResult(true),
                 'input'    => [
-                    'type'  => ['main', 'sub', true, 0],
+                    'args'  => ['main', 'sub', true, 0],
                     'value' => 'sub',
                 ],
             ],
             'pattern004' => [
                 'expected' => new ValidateResult(false, '', "Invalid value. expected value 'main', true, 0."),
                 'input'    => [
-                    'type'  => ['main', true, 0],
+                    'args'  => ['main', true, 0],
                     'value' => [],
                 ],
             ],
             'pattern005' => [
                 'expected' => new ValidateResult(false, '', "Invalid value. expected value 'main', true, null."),
                 'input'    => [
-                    'type'  => ['main', true, null],
+                    'args'  => ['main', true, null],
                     'value' => [],
                 ],
             ],
             'pattern006' => [
                 'expected' => new ValidateResult(false, '', "Invalid value. expected value 'main', false, 0.1."),
                 'input'    => [
-                    'type'  => ['main', false, 0.1],
+                    'args'  => ['main', false, 0.1],
                     'value' => [],
                 ],
             ],
@@ -81,9 +84,15 @@ class EnumTest extends TestCase
      * @param ValidateResult $expected
      * @param mixed          $input
      */
-    public function testExecute($expected, $input)
+    public function testExecute($expected, $input): void
     {
-        $actual = (new Enum(...$input['type']))->execute($input['value'], new ValidateResult());
+        [
+            'args'  => $args,
+            'value' => $value,
+        ] = $input;
+
+        $actual = (new Enum(...$args))
+            ->execute($value, new ValidateResult());
 
         $this->assertInstanceOf(ValidateResult::class, $actual);
         $this->assertSame($expected->getResult(), $actual->getResult());

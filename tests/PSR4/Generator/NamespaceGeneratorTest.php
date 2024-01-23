@@ -1,12 +1,11 @@
 <?php
 
+declare(strict_types=1);
 /**
  * @license MIT
  * @author hazuki3417<hazuki3417@gmail.com>
  * @copyright 2023 hazuki3417 all rights reserved.
  */
-
-declare(strict_types=1);
 
 namespace Tests\Selen\PSR4\Generator;
 
@@ -26,7 +25,10 @@ use Selen\PSR4\Map;
  */
 class NamespaceGeneratorTest extends TestCase
 {
-    public function dataProviderConstruct()
+    /**
+     * @return array<string, array<string, mixed>>
+     */
+    public function dataProviderConstruct(): array
     {
         return [
             'valid: create instance' => [
@@ -47,7 +49,7 @@ class NamespaceGeneratorTest extends TestCase
      * @param mixed $expected
      * @param mixed $input
      */
-    public function testConstruct($expected, $input)
+    public function testConstruct($expected, $input): void
     {
         [
             'exception' => $expectedException,
@@ -66,7 +68,10 @@ class NamespaceGeneratorTest extends TestCase
         $this->assertInstanceOf($exceptedInstance, $actual);
     }
 
-    public function dataProviderExecute()
+    /**
+     * @return array<string, array<string, mixed>>
+     */
+    public function dataProviderExecute(): array
     {
         return [
             'valid: create instance' => [
@@ -97,7 +102,7 @@ class NamespaceGeneratorTest extends TestCase
      * @param mixed $expected
      * @param mixed $input
      */
-    public function testExecute($expected, $input)
+    public function testExecute($expected, $input): void
     {
         [
             'properties' => $expectedProperties,

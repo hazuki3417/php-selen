@@ -10,5 +10,10 @@ namespace Selen\Schema\Exchange;
 
 interface ValueExchangeInterface
 {
+    /**
+     * @param array<mixed,mixed> $value
+     *
+     * @return array<mixed,mixed>
+     */
     public function execute($value);
 }

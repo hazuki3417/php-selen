@@ -44,7 +44,7 @@ class ValidateResult
         return $this;
     }
 
-    public function setArrayPath(string $value)
+    public function setArrayPath(string $value): ValidateResult
     {
         $this->arrayPath = $value;
         return $this;

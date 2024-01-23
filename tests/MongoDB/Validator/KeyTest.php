@@ -26,13 +26,16 @@ use Selen\MongoDB\Validator\Model\ValidatorResult;
  */
 class KeyTest extends TestCase
 {
-    public function testConstruct()
+    public function testConstruct(): void
     {
         $instance = new Key(new ArrayPath());
         $this->assertInstanceOf(Key::class, $instance);
     }
 
-    public function dataProviderExecute()
+    /**
+     * @return array<string, array<string, mixed>>
+     */
+    public function dataProviderExecute(): array
     {
         return [
             'pattern001' => [
@@ -67,7 +70,7 @@ class KeyTest extends TestCase
      * @param mixed $expected
      * @param mixed $input
      */
-    public function testExecute($expected, $input)
+    public function testExecute($expected, $input): void
     {
         [
             'key'   => $key,
