@@ -19,7 +19,7 @@ class Util
      *
      * @return bool 変換した値を返します
      *
-     * @throws \ValueError 真偽値文字列が不正なときに発生します
+     * @throws ValueError 真偽値文字列が不正なときに発生します
      */
     public static function toBool(string $value): bool
     {

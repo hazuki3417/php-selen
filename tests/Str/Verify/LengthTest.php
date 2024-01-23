@@ -16,7 +16,7 @@ use Selen\Str\Verify\Length;
 /**
  * @coversDefaultClass \Selen\Str\Verify\Length
  *
- * @see \Selen\Str\Verify\Length
+ * @see Length
  *
  * @internal
  */

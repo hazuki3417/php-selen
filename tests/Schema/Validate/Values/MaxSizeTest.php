@@ -17,7 +17,7 @@ use Selen\Schema\Validate\Values\MaxSize;
 /**
  * @coversDefaultClass \Selen\Schema\Validate\Values\MaxSize
  *
- * @see \Selen\Schema\Validate\Values\MaxSize
+ * @see MaxSize
  *
  * @internal
  */
@@ -105,8 +105,8 @@ class MaxSizeTest extends TestCase
     /**
      * @dataProvider dataProviderExecute
      *
-     * @param \Selen\Schema\Validate\Model\ValidateResult $expected
-     * @param mixed $input
+     * @param ValidateResult $expected
+     * @param mixed          $input
      */
     public function testExecute($expected, $input)
     {

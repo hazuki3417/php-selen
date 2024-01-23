@@ -20,7 +20,7 @@ use Selen\Schema\Validator;
 /**
  * @coversDefaultClass \Selen\Schema\Validator
  *
- * @see \Selen\Schema\Validator
+ * @see Validator
  *
  * @internal
  *
@@ -1697,9 +1697,9 @@ class ValidatorTest extends TestCase
     /**
      * Validatorクラスの返り値を検証するメソッド
      *
-     * @param bool $expectedSuccess
+     * @param bool                                          $expectedSuccess
      * @param \Selen\Schema\Validate\Model\ValidateResult[] $expectedValidateResults
-     * @param \Selen\Schema\Validate\Model\ValidatorResult $result
+     * @param \Selen\Schema\Validate\Model\ValidatorResult  $result
      */
     private function assertValidatorClass($expectedSuccess, $expectedValidateResults, $result)
     {

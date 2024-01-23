@@ -15,7 +15,7 @@ use Selen\Data\ArrayTypes;
 /**
  * @coversDefaultClass \Selen\Data\ArrayTypes
  *
- * @see \Selen\Data\ArrayTypes
+ * @see ArrayTypes
  *
  * @internal
  */

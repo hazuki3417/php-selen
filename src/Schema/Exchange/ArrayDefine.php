@@ -20,9 +20,9 @@ class ArrayDefine
      *
      * @param Define ...$defines 定義を渡します
      *
-     * @return \Selen\Schema\Exchange\ArrayDefine
+     * @return ArrayDefine
      *
-     * @throws \LogicException Defineクラスの定義が不正なときに発生します
+     * @throws LogicException Defineクラスの定義が不正なときに発生します
      */
     public function __construct(Define ...$defines)
     {

@@ -17,7 +17,7 @@ use Selen\Schema\Validate\Values\DateTimeFormat;
 /**
  * @coversDefaultClass \Selen\Schema\Validate\Values\DateTimeFormat
  *
- * @see \Selen\Schema\Validate\Values\DateTimeFormat
+ * @see DateTimeFormat
  *
  * @internal
  */
@@ -380,8 +380,8 @@ class DateTimeFormatTest extends TestCase
     /**
      * @dataProvider dataProviderExecute
      *
-     * @param \Selen\Schema\Validate\Model\ValidateResult $expected
-     * @param mixed $input
+     * @param ValidateResult $expected
+     * @param mixed          $input
      */
     public function testExecute($expected, $input)
     {

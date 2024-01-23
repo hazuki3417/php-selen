@@ -17,7 +17,7 @@ use Selen\Schema\Validate\Values\StrNotEmpty;
 /**
  * @coversDefaultClass \Selen\Schema\Validate\Values\StrNotEmpty
  *
- * @see \Selen\Schema\Validate\Values\StrNotEmpty
+ * @see StrNotEmpty
  *
  * @internal
  */
@@ -55,8 +55,8 @@ class StrNotEmptyTest extends TestCase
     /**
      * @dataProvider dataProviderExecute
      *
-     * @param \Selen\Schema\Validate\Model\ValidateResult $expected
-     * @param mixed $input
+     * @param ValidateResult $expected
+     * @param mixed          $input
      */
     public function testExecute($expected, $input)
     {

@@ -16,7 +16,7 @@ use Selen\MongoDB\Builder\Attributes\Build;
 
 class UpdateSchema implements SchemaBuilderInterface
 {
-    /** @var \Selen\MongoDB\Attribute\SchemaLoader */
+    /** @var SchemaLoader */
     private $schemaLoader;
 
     public function __construct(SchemaLoader $schemaLoader)
@@ -57,7 +57,7 @@ class UpdateSchema implements SchemaBuilderInterface
 
             // ネストされた定義のときの処理
 
-            /** @var \Selen\MongoDB\Attributes\Nest */
+            /** @var Nest */
             $nestInstance = $attributeNest->newInstance();
             $updateSchema = new self(new SchemaLoader(new ReflectionClass($nestInstance->schemaClassName)));
 
@@ -86,6 +86,7 @@ class UpdateSchema implements SchemaBuilderInterface
              * （1次はObjectを持つ要素, 2次はObjectのフィールドを持つ要素）
              */
             $inputObjectItems = $inputValue;
+
             // ObjectItemsを想定した値かどうか確認
             if (!\is_array($inputObjectItems)) {
                 // ObjectItemsを想定した値がリテラル値のときは処理しない

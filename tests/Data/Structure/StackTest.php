@@ -15,7 +15,7 @@ use Selen\Data\Structure\Stack;
 /**
  * @coversDefaultClass \Selen\Data\Structure\Stack
  *
- * @see \Selen\Data\Structure\Stack
+ * @see Stack
  *
  * @internal
  */

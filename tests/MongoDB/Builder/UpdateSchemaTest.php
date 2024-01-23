@@ -24,7 +24,7 @@ use Selen\MongoDB\Builder\UpdateSchema;
  *
  * @coversDefaultClass \Selen\MongoDB\Builder\UpdateSchema
  *
- * @see \Selen\MongoDB\Builder\UpdateSchema
+ * @see UpdateSchema
  *
  * @internal
  */
@@ -54,7 +54,7 @@ class UpdateSchemaTest extends TestCase
      * @dataProvider dataProviderCreateException
      *
      * @param string $expected
-     * @param array $input
+     * @param array  $input
      */
     public function testCreateException($expected, $input)
     {
@@ -181,7 +181,7 @@ class UpdateSchemaTest extends TestCase
      * @dataProvider dataProviderCreate
      *
      * @param string $expected
-     * @param array $input
+     * @param array  $input
      */
     public function testCreate($expected, $input)
     {

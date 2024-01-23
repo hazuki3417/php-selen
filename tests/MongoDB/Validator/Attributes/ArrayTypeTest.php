@@ -18,7 +18,7 @@ use Selen\MongoDB\Validator\Model\ValidateResult;
  *
  * @coversDefaultClass \Selen\MongoDB\Validator\Attributes\ArrayType
  *
- * @see \Selen\MongoDB\Validator\Attributes\ArrayType
+ * @see ArrayType
  *
  * @internal
  */
@@ -70,8 +70,8 @@ class ArrayTypeTest extends TestCase
     /**
      * @dataProvider dataProviderExecute
      *
-     * @param \Selen\MongoDB\Validator\Model\ValidateResult $expected
-     * @param mixed $input
+     * @param ValidateResult $expected
+     * @param mixed          $input
      */
     public function testExecute($expected, $input)
     {

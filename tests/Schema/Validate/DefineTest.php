@@ -17,7 +17,7 @@ use Selen\Schema\Validate\ValueValidateInterface;
 /**
  * @coversDefaultClass \Selen\Schema\Validate\Define
  *
- * @see \Selen\Schema\Validate\Define
+ * @see Define
  *
  * @internal
  */
@@ -274,8 +274,8 @@ class DefineTest extends TestCase
     /**
      * @dataProvider dataProviderIsAssocArrayDefine
      *
-     * @param mixed $expected
-     * @param \Selen\Schema\Validate\Define $input
+     * @param mixed  $expected
+     * @param Define $input
      */
     public function testIsAssocArrayDefine($expected, $input)
     {
@@ -294,8 +294,8 @@ class DefineTest extends TestCase
     /**
      * @dataProvider dataProviderIsKeyValidate
      *
-     * @param mixed $expected
-     * @param \Selen\Schema\Validate\Define $input
+     * @param mixed  $expected
+     * @param Define $input
      */
     public function testIsKeyValidate($expected, $input)
     {
@@ -322,8 +322,8 @@ class DefineTest extends TestCase
     /**
      * @dataProvider dataProviderIsValueValidate
      *
-     * @param mixed $expected
-     * @param \Selen\Schema\Validate\Define $input
+     * @param mixed  $expected
+     * @param Define $input
      */
     public function testIsValueValidate($expected, $input)
     {
@@ -353,8 +353,8 @@ class DefineTest extends TestCase
     /**
      * @dataProvider dataProviderNestedTypeDefineExists
      *
-     * @param mixed $expected
-     * @param \Selen\Schema\Validate\Define $input
+     * @param mixed  $expected
+     * @param Define $input
      */
     public function testNestedTypeDefineExists($expected, $input)
     {

@@ -25,9 +25,9 @@ class DateTime
      * 日付文字列からインスタンスを生成します
      *
      * @param string $parseFormat パース文字列
-     * @param string $dateTime 日付文字列
+     * @param string $dateTime    日付文字列
      *
-     * @return \Selen\DateTime 成功した場合はインスタンスを返します
+     * @return DateTime 成功した場合はインスタンスを返します
      */
     public static function parseStr(string $parseFormat, string $dateTime): DateTime
     {
@@ -39,7 +39,7 @@ class DateTime
      *
      * @param int $timestamp タイムスタンプ
      *
-     * @return \Selen\DateTime 成功した場合はインスタンスを返します
+     * @return DateTime 成功した場合はインスタンスを返します
      */
     public static function parseInt(int $timestamp): DateTime
     {

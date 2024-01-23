@@ -15,7 +15,7 @@ use Selen\Schema\Validate\Define\Key;
 /**
  * @coversDefaultClass \Selen\Schema\Validate\Define\Key
  *
- * @see \Selen\Schema\Validate\Define\Key
+ * @see Key
  *
  * @internal
  */

@@ -23,7 +23,7 @@ class Define
         self::KEY_ACTION_RENAME,
     ];
 
-    /** @var \Selen\Schema\Exchange\Define\Key */
+    /** @var Key */
     public $key;
 
     /** @var \Selen\Schema\Exchange\KeyExchangeInterface|callable|null */
@@ -32,7 +32,7 @@ class Define
     /** @var \Selen\Schema\Exchange\ValueExchangeInterface|callable|null */
     public $valueExchangeExecute;
 
-    /** @var \Selen\Schema\Exchange\ArrayDefine|null */
+    /** @var ArrayDefine|null */
     public $arrayDefine;
 
     /** @var bool */
@@ -44,7 +44,7 @@ class Define
     /**
      * インスタンスを生成します
      *
-     * @return \Selen\Schema\Exchange\Define
+     * @return Define
      */
     private function __construct(Key $key)
     {
@@ -52,7 +52,7 @@ class Define
     }
 
     /**
-     * @return \Selen\Schema\Exchange\Define
+     * @return Define
      */
     public static function noKey()
     {
@@ -61,13 +61,13 @@ class Define
     }
 
     /**
-     * @param string|int $name
+     * @param string|int                                                $name
      * @param \Selen\Schema\Exchange\KeyExchangeInterface|callable|null $execute
      *
      * @throws \InvalidArgumentException 引数の型が不正なときに発生します
-     * @throws \ValueError 引数の値が不正なときに発生します
+     * @throws \ValueError               引数の値が不正なときに発生します
      *
-     * @return \Selen\Schema\Exchange\Define
+     * @return Define
      */
     public static function key($name, string $action = self::KEY_ACTION_NONE, $execute = null)
     {
@@ -121,10 +121,10 @@ class Define
     /**
      * @param \Selen\Schema\Exchange\ValueExchangeInterface|callable|null $execute
      *
-     * @throws \LogicException メソッドの呼び出し順が不正なときに発生します
+     * @throws \LogicException           メソッドの呼び出し順が不正なときに発生します
      * @throws \InvalidArgumentException 引数の型が不正なときに発生します
      *
-     * @return \Selen\Schema\Exchange\Define
+     * @return Define
      */
     public function value($execute = null)
     {
@@ -151,11 +151,11 @@ class Define
     }
 
     /**
-     * @param \Selen\Schema\Exchange\Define ...$define
-     *
      * @throws \LogicException メソッドの呼び出し順が不正なときに発生します
      *
-     * @return \Selen\Schema\Exchange\Define
+     * @return Define
+     *
+     * @param Define[] $define
      */
     public function arrayDefine(Define ...$define)
     {

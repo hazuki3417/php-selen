@@ -22,7 +22,7 @@ class ValidateResult
     /**
      * インスタンスを生成します
      *
-     * @param bool $result 検証結果を渡します。成功の場合はtrueを、失敗の場合はfalseを設定します
+     * @param bool   $result  検証結果を渡します。成功の場合はtrueを、失敗の場合はfalseを設定します
      * @param string $message 配列の階層パスを渡します
      * @param string $message メッセージを渡します
      */

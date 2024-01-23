@@ -15,8 +15,8 @@ class Radix
     /**
      * 基数かどうか判定します.
      *
-     * @param string $num チェックする値
-     * @param int $base チェックする基数
+     * @param string $num  チェックする値
+     * @param int    $base チェックする基数
      *
      * @throws LogicException サポートしていない基数を指定したときに発生します
      *

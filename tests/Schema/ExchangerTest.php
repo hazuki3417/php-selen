@@ -22,7 +22,7 @@ use Selen\Str\Exchanger\CaseName;
 /**
  * @coversDefaultClass \Selen\Schema\Exchanger
  *
- * @see \Selen\Schema\Exchanger
+ * @see Exchanger
  *
  * @internal
  */
@@ -652,7 +652,7 @@ class ExchangerTest extends TestCase
     {
         /** @var array $value */
         $value = $input['value'];
-        /** @var \Selen\Schema\Exchange\ArrayDefine $define */
+        /** @var ArrayDefine $define */
         $define               = $input['define'];
         $keyExchangeExecute   = $input['keyExchangeExecute'];
         $valueExchangeExecute = $input['valueExchangeExecute'];

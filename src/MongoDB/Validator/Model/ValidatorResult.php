@@ -19,7 +19,7 @@ class ValidatorResult
     /**
      * インスタンスを生成します
      *
-     * @param \Selen\MongoDB\Validator\Model\ValidateResult ...$validateResults
+     * @param ValidateResult[] $validateResults
      */
     public function __construct(ValidateResult ...$validateResults)
     {

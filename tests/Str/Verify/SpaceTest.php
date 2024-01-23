@@ -15,7 +15,7 @@ use Selen\Str\Verify\Space;
 /**
  * @coversDefaultClass \Selen\Str\Verify\Space
  *
- * @see \Selen\Str\Verify\Space
+ * @see Space
  *
  * @internal
  */

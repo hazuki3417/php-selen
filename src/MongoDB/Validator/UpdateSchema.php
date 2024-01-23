@@ -17,13 +17,13 @@ use Selen\MongoDB\Validator\Model\ValidatorResult;
 
 class UpdateSchema implements SchemaValidatorInterface
 {
-    /** @var \Selen\Data\ArrayPath */
+    /** @var ArrayPath */
     public $arrayPath;
 
     /** @var \Selen\MongoDB\Validator\Model\ValidateResult[] */
     private $validateResults = [];
 
-    /** @var \Selen\MongoDB\Attribute\SchemaLoader */
+    /** @var SchemaLoader */
     private $schemaLoader;
 
     public function __construct(SchemaLoader $schemaLoader)
@@ -82,6 +82,7 @@ class UpdateSchema implements SchemaValidatorInterface
                     // 値チェックが成功 + ネストした値のバリデーションをしない
                     continue;
                 }
+
                 // 値チェックが成功 + ネストした値のバリデーションをする
                 if (!\is_array($value)) {
                     /**
@@ -95,7 +96,7 @@ class UpdateSchema implements SchemaValidatorInterface
 
             if ($isNestValidExecute) {
                 // ネストした値のバリデーション処理
-                /** @var \Selen\MongoDB\Attributes\Nest */
+                /** @var Nest */
                 $nestInstance             = $attributeNest->newInstance();
                 $schemaLoader             = new SchemaLoader(new ReflectionClass($nestInstance->schemaClassName));
                 $nestValidator            = new self($schemaLoader);

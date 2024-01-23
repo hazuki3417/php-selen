@@ -17,7 +17,7 @@ use Selen\Schema\Validate\Values\ArrayNotEmpty;
 /**
  * @coversDefaultClass \Selen\Schema\Validate\Values\ArrayNotEmpty
  *
- * @see \Selen\Schema\Validate\Values\ArrayNotEmpty
+ * @see ArrayNotEmpty
  *
  * @internal
  */
@@ -55,8 +55,8 @@ class ArrayNotEmptyTest extends TestCase
     /**
      * @dataProvider dataProviderExecute
      *
-     * @param \Selen\Schema\Validate\Model\ValidateResult $expected
-     * @param mixed $input
+     * @param ValidateResult $expected
+     * @param mixed          $input
      */
     public function testExecute($expected, $input)
     {

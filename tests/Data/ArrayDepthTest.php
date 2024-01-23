@@ -15,7 +15,7 @@ use Selen\Data\ArrayDepth;
 /**
  * @coversDefaultClass \Selen\Data\ArrayDepth
  *
- * @see \Selen\Data\ArrayDepth
+ * @see ArrayDepth
  *
  * @internal
  */

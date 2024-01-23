@@ -17,7 +17,7 @@ use TypeError;
 /**
  * @coversDefaultClass \Selen\Data\Enum
  *
- * @see \Selen\Data\Enum
+ * @see Enum
  *
  * @internal
  */

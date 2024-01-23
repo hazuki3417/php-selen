@@ -17,9 +17,9 @@ class SchemaValidator
 {
     /** @var string */
     public $schemaClassName;
-    /** @var \Selen\MongoDB\Validator\InsertSchema */
+    /** @var InsertSchema */
     public $insert;
-    /** @var \Selen\MongoDB\Validator\UpdateSchema */
+    /** @var UpdateSchema */
     public $update;
 
     public function __construct(string $schemaClassName)

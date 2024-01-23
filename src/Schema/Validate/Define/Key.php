@@ -27,9 +27,9 @@ class Key
      *
      * @param string|int|null $name key名を指定します。index arrayの場合はnullを渡します。
      *
-     * @return \Selen\Schema\Validate\Define\Key
+     * @return Key
      *
-     * @throws \InvalidArgumentException 引数の型が不正なときに発生します
+     * @throws InvalidArgumentException 引数の型が不正なときに発生します
      */
     public function __construct($name, bool $require)
     {

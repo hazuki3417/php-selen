@@ -18,7 +18,7 @@ use Selen\MongoDB\Attributes\Schema;
  */
 class SchemaLoader
 {
-    /** @var \ReflectionClass */
+    /** @var ReflectionClass */
     public $reflectionClass;
 
     /** @var \ReflectionAttribute|null */
@@ -28,7 +28,7 @@ class SchemaLoader
     public $fieldLoaders;
 
     /**
-     * @throws \LogicException 属性の指定が不正なときに発生します
+     * @throws LogicException 属性の指定が不正なときに発生します
      */
     public function __construct(ReflectionClass $reflectionClass)
     {

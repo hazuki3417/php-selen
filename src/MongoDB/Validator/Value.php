@@ -14,7 +14,7 @@ use Selen\MongoDB\Validator\Model\ValidatorResult;
 
 class Value
 {
-    /** @var \Selen\Data\ArrayPath */
+    /** @var ArrayPath */
     private $arrayPath;
 
     /** @var \ReflectionAttribute[] */
@@ -33,9 +33,9 @@ class Value
         $validateResult = new ValidateResult();
         $validateResult->setArrayPath($arrayPathStr);
 
-        /** @var \Selen\MongoDB\Validator\Model\ValidateResult */
+        /** @var ValidateResult */
         foreach ($this->attributeValueValidates as $attributeValueValidate) {
-            /** @var \Selen\MongoDB\Validator\ValueValidateInterface */
+            /** @var ValueValidateInterface */
             $valueValidateInstance = $attributeValueValidate->newInstance();
             $validateResult        = $valueValidateInstance->execute($input[$key], $validateResult);
 

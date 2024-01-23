@@ -20,7 +20,7 @@ use Selen\MongoDB\Attributes\SchemaField;
  *
  * @coversDefaultClass \Selen\MongoDB\Attribute\SchemaFieldLoader
  *
- * @see \Selen\MongoDB\Attribute\SchemaFieldLoader
+ * @see SchemaFieldLoader
  *
  * @internal
  */
@@ -44,7 +44,7 @@ class SchemaFieldLoaderTest extends TestCase
     /**
      * @dataProvider dataProviderConstruct
      *
-     * @param mixed $expected
+     * @param mixed               $expected
      * @param \ReflectionProperty $input
      */
     public function testConstruct($expected, $input)
@@ -67,7 +67,7 @@ class SchemaFieldLoaderTest extends TestCase
     /**
      * @dataProvider dataProviderConstructException
      *
-     * @param mixed $expected
+     * @param mixed               $expected
      * @param \ReflectionProperty $input
      */
     public function testConstructException($expected, $input)

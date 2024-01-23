@@ -15,7 +15,7 @@ use Selen\Str\Verify\Jp;
 /**
  * @coversDefaultClass \Selen\Str\Verify\Jp
  *
- * @see \Selen\Str\Verify\Jp
+ * @see Jp
  *
  * @internal
  */

@@ -15,7 +15,7 @@ use Selen\Str\Alphabet;
 /**
  * @coversDefaultClass \Selen\Str\Alphabet
  *
- * @see \Selen\Str\Alphabet
+ * @see Alphabet
  *
  * @internal
  */

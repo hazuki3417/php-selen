@@ -15,7 +15,7 @@ use Selen\Str\Verify\Width\Half;
 /**
  * @coversDefaultClass \Selen\Str\Verify\Width\Half
  *
- * @see \Selen\Str\Verify\Width\Half
+ * @see Half
  *
  * @internal
  */

@@ -15,7 +15,7 @@ use Selen\MongoDB\Builder\Attributes\Build;
 
 class InsertSchema implements SchemaBuilderInterface
 {
-    /** @var \Selen\MongoDB\Attribute\SchemaLoader */
+    /** @var SchemaLoader */
     private $schemaLoader;
 
     public function __construct(SchemaLoader $schemaLoader)
@@ -51,7 +51,7 @@ class InsertSchema implements SchemaBuilderInterface
 
             // ネストされた定義のときの処理
 
-            /** @var \Selen\MongoDB\Attributes\Nest */
+            /** @var Nest */
             $nestInstance = $attributeNest->newInstance();
             $insertSchema = new self(new SchemaLoader(new ReflectionClass($nestInstance->schemaClassName)));
 
@@ -95,6 +95,7 @@ class InsertSchema implements SchemaBuilderInterface
             // input側に上書きする値があるときの処理
 
             $inputObjectItems = $input[$key];
+
             // ObjectItemsを想定した値かどうか確認
             if (!\is_array($inputObjectItems)) {
                 // ObjectItemsを想定した値がリテラル値のときは処理しない

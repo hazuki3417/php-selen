@@ -18,7 +18,7 @@ use ValueError;
 /**
  * @coversDefaultClass \Selen\Schema\Exchange\Define
  *
- * @see \Selen\Schema\Exchange\Define
+ * @see Define
  *
  * @internal
  */
@@ -246,7 +246,7 @@ class DefineTest extends TestCase
     public function testArrayDefineException3()
     {
         // NOTE: 変換処理の引数のcallableまたはValueExchangeInterface以外のものを指定
-        $this->expectException(\InvalidArgumentException::class);
+        $this->expectException(InvalidArgumentException::class);
         $key = Define::noKey()->value('string');
     }
 
@@ -285,8 +285,8 @@ class DefineTest extends TestCase
     /**
      * @dataProvider dataProviderIsAssocArrayDefine
      *
-     * @param mixed $expected
-     * @param \Selen\Schema\Exchange\Define $input
+     * @param mixed  $expected
+     * @param Define $input
      */
     public function testIsAssocArrayDefine($expected, $input)
     {
@@ -316,8 +316,8 @@ class DefineTest extends TestCase
     /**
      * @dataProvider dataProviderNestedTypeDefineExists
      *
-     * @param mixed $expected
-     * @param \Selen\Schema\Exchange\Define $input
+     * @param mixed  $expected
+     * @param Define $input
      */
     public function testNestedTypeDefineExists($expected, $input)
     {

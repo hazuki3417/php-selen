@@ -16,7 +16,7 @@ use Selen\Schema\Exchange\Define;
 /**
  * @coversDefaultClass \Selen\Schema\Exchange\ArrayDefine
  *
- * @see \Selen\Schema\Exchange\ArrayDefine
+ * @see ArrayDefine
  *
  * @internal
  */

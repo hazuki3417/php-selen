@@ -20,7 +20,7 @@ use Selen\MongoDB\Validator\Model\ValidatorResult;
  *
  * @coversDefaultClass \Selen\MongoDB\Validator\Key
  *
- * @see \Selen\MongoDB\Validator\Key
+ * @see Key
  *
  * @internal
  */
@@ -94,7 +94,7 @@ class KeyTest extends TestCase
     /**
      * ValidatorResultクラスの返り値を検証するメソッド
      *
-     * @param bool $expectedSuccess
+     * @param bool  $expectedSuccess
      * @param array $expectedValidateResults
      * @param mixed $actual
      */

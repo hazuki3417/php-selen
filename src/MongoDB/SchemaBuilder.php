@@ -17,9 +17,9 @@ class SchemaBuilder
 {
     /** @var string */
     public $schemaClassName;
-    /** @var \Selen\MongoDB\Builder\InsertSchema */
+    /** @var InsertSchema */
     public $insert;
-    /** @var \Selen\MongoDB\Builder\UpdateSchema */
+    /** @var UpdateSchema */
     public $update;
 
     public function __construct(string $schemaClassName)

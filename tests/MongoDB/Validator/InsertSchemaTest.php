@@ -28,7 +28,7 @@ use Selen\MongoDB\Validator\Model\ValidatorResult;
  *
  * @coversDefaultClass \Selen\MongoDB\Validator\InsertSchema
  *
- * @see \Selen\MongoDB\Validator\InsertSchema
+ * @see InsertSchema
  *
  * @internal
  */
@@ -585,7 +585,7 @@ class InsertSchemaTest extends TestCase
      * @dataProvider dataProviderExecute
      *
      * @param string $expected
-     * @param array $input
+     * @param array  $input
      */
     public function testExecute($expected, $input)
     {
@@ -611,9 +611,9 @@ class InsertSchemaTest extends TestCase
     /**
      * Validatorクラスの返り値を検証するメソッド
      *
-     * @param bool $expectedSuccess
+     * @param bool                                          $expectedSuccess
      * @param \Selen\Schema\Validate\Model\ValidateResult[] $expectedValidateResults
-     * @param \Selen\Schema\Validate\Model\ValidatorResult $result
+     * @param \Selen\Schema\Validate\Model\ValidatorResult  $result
      */
     private function assertValidatorClass($expectedSuccess, $expectedValidateResults, $result)
     {

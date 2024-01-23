@@ -16,7 +16,7 @@ use ValueError;
 /**
  * @coversDefaultClass \Selen\Str\Util
  *
- * @see \Selen\Str\Util
+ * @see Util
  *
  * @internal
  */

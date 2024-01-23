@@ -15,7 +15,7 @@ use Selen\Data\ArrayPath;
 /**
  * @coversDefaultClass \Selen\Data\ArrayPath
  *
- * @see \Selen\Data\ArrayPath
+ * @see ArrayPath
  *
  * @internal
  */

@@ -25,7 +25,7 @@ class Workspace
      *
      * @param string $path 作業ディレクトリパスを指定します
      *
-     * @return \Selen\Dir\Workspace 新しいオブジェクトを返します
+     * @return Workspace 新しいオブジェクトを返します
      */
     public function __construct(string $path)
     {

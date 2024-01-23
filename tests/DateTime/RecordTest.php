@@ -17,7 +17,7 @@ use ValueError;
 /**
  * @coversDefaultClass \Selen\DateTime\Record
  * * *
- * @see \Selen\DateTime\Record
+ * @see Record
  *
  * @internal
  */

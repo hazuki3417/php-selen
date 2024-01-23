@@ -111,7 +111,7 @@ class CaseName
      * 文字列内にある特定の文字（' ', '_', '-'）を置換します
      *
      * @param string $delimiter デリミタ文字を指定します
-     * @param string $value 置換対象の文字列を渡します
+     * @param string $value     置換対象の文字列を渡します
      *
      * @return string 置換後の文字列を返します
      */

@@ -14,7 +14,7 @@ use Selen\MongoDB\Validator\Model\ValidatorResult;
 
 class Key
 {
-    /** @var \Selen\Data\ArrayPath */
+    /** @var ArrayPath */
     private $arrayPath;
 
     public function __construct(ArrayPath $arrayPath)

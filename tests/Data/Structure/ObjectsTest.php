@@ -15,7 +15,7 @@ use Selen\Data\Structure\Objects;
 /**
  * @coversDefaultClass \Selen\Data\Structure\Objects
  *
- * @see \Selen\Data\Structure\Objects
+ * @see Objects
  *
  * @internal
  */

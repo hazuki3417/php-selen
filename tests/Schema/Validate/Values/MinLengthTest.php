@@ -17,7 +17,7 @@ use Selen\Schema\Validate\Values\MinLength;
 /**
  * @coversDefaultClass \Selen\Schema\Validate\Values\MinLength
  *
- * @see \Selen\Schema\Validate\Values\MinLength
+ * @see MinLength
  *
  * @internal
  */
@@ -127,8 +127,8 @@ class MinLengthTest extends TestCase
     /**
      * @dataProvider dataProviderExecute
      *
-     * @param \Selen\Schema\Validate\Model\ValidateResult $expected
-     * @param mixed $input
+     * @param ValidateResult $expected
+     * @param mixed          $input
      */
     public function testExecute($expected, $input)
     {

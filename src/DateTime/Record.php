@@ -30,10 +30,10 @@ class Record
     public int $second;
 
     /**
-     * @param int $year 年
-     * @param int $month 月
-     * @param int $day 日
-     * @param int $hour 時
+     * @param int $year   年
+     * @param int $month  月
+     * @param int $day    日
+     * @param int $hour   時
      * @param int $minute 分
      * @param int $second 秒
      */
@@ -73,9 +73,9 @@ class Record
      * 日付文字列からインスタンスを生成します
      *
      * @param string $parseFormat パース文字列
-     * @param string $dateTime 日付文字列
+     * @param string $dateTime    日付文字列
      *
-     * @return \Selen\DateTime\Record 成功した場合はインスタンスを返します
+     * @return Record 成功した場合はインスタンスを返します
      */
     public static function parseStr(string $parseFormat, string $dateTime): Record
     {
@@ -117,7 +117,7 @@ class Record
     /**
      * DateTimeインスタンスを取得します
      *
-     * @return \DateTime インスタンスを返します
+     * @return DateTime インスタンスを返します
      */
     public function toDateTime(): DateTime
     {

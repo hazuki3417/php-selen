@@ -16,7 +16,7 @@ use Selen\Schema\Validate\Define;
 /**
  * @coversDefaultClass \Selen\Schema\Validate\ArrayDefine
  *
- * @see \Selen\Schema\Validate\ArrayDefine
+ * @see ArrayDefine
  *
  * @internal
  */

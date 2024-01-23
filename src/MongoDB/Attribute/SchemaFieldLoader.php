@@ -19,7 +19,7 @@ use Selen\MongoDB\Attributes\SchemaField;
  */
 class SchemaFieldLoader
 {
-    /** @var \ReflectionProperty */
+    /** @var ReflectionProperty */
     public $reflectionProperty;
 
     /** @var \ReflectionAttribute|null */

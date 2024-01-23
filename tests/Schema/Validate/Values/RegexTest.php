@@ -16,7 +16,7 @@ use Selen\Schema\Validate\Values\Regex;
 /**
  * @coversDefaultClass \Selen\Schema\Validate\Values\Regex
  *
- * @see \Selen\Schema\Validate\Values\Regex
+ * @see Regex
  *
  * @internal
  */
@@ -57,8 +57,8 @@ class RegexTest extends TestCase
     /**
      * @dataProvider dataProviderExecute
      *
-     * @param \Selen\Schema\Validate\Model\ValidateResult $expected
-     * @param mixed $input
+     * @param ValidateResult $expected
+     * @param mixed          $input
      */
     public function testExecute($expected, $input)
     {

@@ -17,7 +17,7 @@ use Selen\Schema\Validate\Values\MinSize;
 /**
  * @coversDefaultClass \Selen\Schema\Validate\Values\MinSize
  *
- * @see \Selen\Schema\Validate\Values\MinSize
+ * @see MinSize
  *
  * @internal
  */
@@ -105,8 +105,8 @@ class MinSizeTest extends TestCase
     /**
      * @dataProvider dataProviderExecute
      *
-     * @param \Selen\Schema\Validate\Model\ValidateResult $expected
-     * @param mixed $input
+     * @param ValidateResult $expected
+     * @param mixed          $input
      */
     public function testExecute($expected, $input)
     {

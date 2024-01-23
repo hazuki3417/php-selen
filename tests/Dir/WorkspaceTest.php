@@ -16,7 +16,7 @@ use Selen\Dir\Workspace;
 /**
  * @coversDefaultClass \Selen\Dir\Workspace
  * * *
- * @see \Selen\Dir\Workspace
+ * @see Workspace
  *
  * @internal
  */
@@ -156,7 +156,7 @@ class WorkspaceTest extends TestCase
      * @dataProvider dataProviderRemove
      *
      * @param callable $callback
-     * @param mixed $input
+     * @param mixed    $input
      */
     public function testRemove($callback, $input)
     {

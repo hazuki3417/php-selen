@@ -17,7 +17,7 @@ use Selen\MongoDB\Validator\Model\ValidateResult;
  *
  * @coversDefaultClass \Selen\MongoDB\Validator\Model\ValidateResult
  *
- * @see \Selen\MongoDB\Validator\Model\ValidateResult
+ * @see ValidateResult
  *
  * @internal
  */

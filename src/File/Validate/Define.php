@@ -23,8 +23,8 @@ class Define
     /**
      * バリデーション定義を作成します。
      *
-     * @param string|null $limitSize ファイルサイズの上限を指定します
-     * @param string ...$allowExtensions 許容する拡張子を指定します。
+     * @param string|null $limitSize          ファイルサイズの上限を指定します
+     * @param string      ...$allowExtensions 許容する拡張子を指定します。
      */
     private function __construct(string $limitSize = null, string ...$allowExtensions)
     {
@@ -61,8 +61,8 @@ class Define
     /**
      * バリデーション定義を作成します。
      *
-     * @param string|null $limitSize ファイルサイズの上限を指定します。指定しない場合はnullを指定します。
-     * @param string ...$allowExtensions 許容する拡張子を指定します。
+     * @param string|null $limitSize          ファイルサイズの上限を指定します。指定しない場合はnullを指定します。
+     * @param string      ...$allowExtensions 許容する拡張子を指定します。
      */
     public static function make(string $limitSize = null, string ...$allowExtensions)
     {

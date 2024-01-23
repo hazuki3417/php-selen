@@ -15,7 +15,7 @@ use Selen\Schema\Validate\Model\ValidateResult;
 /**
  * @coversDefaultClass \Selen\Validate\Model\ValidateResult
  *
- * @see \Selen\Schema\Validate\Model\ValidateResult
+ * @see ValidateResult
  *
  * @internal
  */

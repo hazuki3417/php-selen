@@ -18,7 +18,7 @@ use Selen\MongoDB\Validator\Model\ValidateResult;
  *
  * @coversDefaultClass \Selen\MongoDB\Validator\Attributes\Regex
  *
- * @see \Selen\MongoDB\Validator\Attributes\Regex
+ * @see Regex
  *
  * @internal
  */
@@ -60,7 +60,7 @@ class RegexTest extends TestCase
      * @dataProvider dataProviderExecute
      *
      * @param \Selen\Schema\Validate\Model\ValidateResult $expected
-     * @param mixed $input
+     * @param mixed                                       $input
      */
     public function testExecute($expected, $input)
     {

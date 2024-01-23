@@ -18,7 +18,7 @@ use Selen\MongoDB\Attributes\Schema;
  *
  * @coversDefaultClass \Selen\MongoDB\Attributes\Schema
  *
- * @see \Selen\MongoDB\Attributes\Schema
+ * @see Schema
  *
  * @internal
  */

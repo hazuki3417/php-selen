@@ -23,8 +23,8 @@ class NamespaceResult
     /**
      * 新しいオブジェクトを作成します
      *
-     * @param string $full 名前空間のフルパスを指定します
-     * @param string $base 名前空間のベースパスを指定します
+     * @param string $full  名前空間のフルパスを指定します
+     * @param string $base  名前空間のベースパスを指定します
      * @param string $class クラス名を指定します
      */
     public function __construct(string $full, string $base, string $class)

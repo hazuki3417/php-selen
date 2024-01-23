@@ -24,7 +24,7 @@ class PathResult
      * 新しいオブジェクトを作成します
      *
      * @param string $full ファイルのフルパスを指定します
-     * @param string $dir ファイルのベースディレクトリを指定します
+     * @param string $dir  ファイルのベースディレクトリを指定します
      * @param string $file ファイル名を指定します
      */
     public function __construct(string $full, string $dir, string $file)

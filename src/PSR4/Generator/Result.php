@@ -25,7 +25,7 @@ class Result
      * 新しいオブジェクトを作成します
      *
      * @param NamespaceResult $namespace インスタンスを指定します
-     * @param PathResult $path インスタンスを指定します
+     * @param PathResult      $path      インスタンスを指定します
      */
     public function __construct(NamespaceResult $namespace, PathResult $path)
     {

@@ -23,7 +23,7 @@ use Selen\MongoDB\Builder\InsertSchema;
  *
  * @coversDefaultClass \Selen\MongoDB\Builder\InsertSchema
  *
- * @see \Selen\MongoDB\Builder\InsertSchema
+ * @see InsertSchema
  *
  * @internal
  */
@@ -212,7 +212,7 @@ class InsertSchemaTest extends TestCase
      * @dataProvider dataProviderCreate
      *
      * @param string $expected
-     * @param array $input
+     * @param array  $input
      */
     public function testCreate($expected, $input)
     {

@@ -16,7 +16,7 @@ use Selen\File\Validator;
 /**
  * @coversDefaultClass \Selen\File\Validator
  * * *
- * @see \Selen\File\Validator
+ * @see Validator
  *
  * @internal
  */

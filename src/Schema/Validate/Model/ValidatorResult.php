@@ -19,7 +19,7 @@ class ValidatorResult
     /**
      * インスタンスを生成します
      *
-     * @param \Selen\Schema\Validate\Model\ValidateResult ...$validateResults
+     * @param ValidateResult[] $validateResults
      */
     public function __construct(ValidateResult ...$validateResults)
     {

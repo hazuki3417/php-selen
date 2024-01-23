@@ -34,9 +34,9 @@ class Key
      *
      * @param string|int|null $name key名を指定します。index arrayの場合はnullを渡します。
      *
-     * @return \Selen\Schema\Exchange\Define\Key
+     * @return Key
      *
-     * @throws \InvalidArgumentException 引数の型が不正なときに発生します
+     * @throws InvalidArgumentException 引数の型が不正なときに発生します
      */
     public function __construct($name)
     {
@@ -51,9 +51,9 @@ class Key
     /**
      * keyの追加処理を有効にします
      *
-     * @return \Selen\Schema\Exchange\Define\Key
+     * @return Key
      *
-     * @throws \LogicException メソッドの呼び出し順が不正なときに発生します
+     * @throws LogicException メソッドの呼び出し順が不正なときに発生します
      */
     public function enableAdd()
     {
@@ -69,9 +69,9 @@ class Key
     /**
      * keyの削除処理を有効にします
      *
-     * @return \Selen\Schema\Exchange\Define\Key
+     * @return Key
      *
-     * @throws \LogicException メソッドの呼び出し順が不正なときに発生します
+     * @throws LogicException メソッドの呼び出し順が不正なときに発生します
      */
     public function enableRemove()
     {
@@ -87,9 +87,9 @@ class Key
     /**
      * keyのリネーム処理を有効にします
      *
-     * @return \Selen\Schema\Exchange\Define\Key
+     * @return Key
      *
-     * @throws \LogicException メソッドの呼び出し順が不正なときに発生します
+     * @throws LogicException メソッドの呼び出し順が不正なときに発生します
      */
     public function enableRename()
     {

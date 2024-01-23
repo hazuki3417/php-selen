@@ -15,7 +15,7 @@ use Selen\Str\Exchanger\CaseName;
 /**
  * @coversDefaultClass \Selen\Str\Exchanger\CaseName
  *
- * @see \Selen\Str\Exchanger\CaseName
+ * @see CaseName
  *
  * @internal
  */

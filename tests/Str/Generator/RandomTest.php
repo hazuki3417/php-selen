@@ -15,7 +15,7 @@ use Selen\Str\Generator\Random;
 /**
  * @coversDefaultClass \Selen\Str\Generator\Random
  *
- * @see \Selen\Str\Generator\Random
+ * @see Random
  *
  * @internal
  */

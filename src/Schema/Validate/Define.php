@@ -12,10 +12,10 @@ use Selen\Schema\Validate\Define\Key;
 
 class Define
 {
-    /** @var \Selen\Schema\Validate\Define\Key */
+    /** @var Key */
     public $key;
 
-    /** @var \Selen\Schema\Validate\ArrayDefine|null */
+    /** @var ArrayDefine|null */
     public $arrayDefine;
 
     /** @var (\Selen\Schema\Validate\ValueValidateInterface|callable)[] */
@@ -30,7 +30,7 @@ class Define
     /**
      * インスタンスを生成します
      *
-     * @return \Selen\Schema\Validate\Define
+     * @return Define
      */
     private function __construct(Key $key)
     {
@@ -38,7 +38,7 @@ class Define
     }
 
     /**
-     * @return \Selen\Schema\Validate\Define
+     * @return Define
      */
     public static function noKey()
     {
@@ -50,7 +50,7 @@ class Define
      *
      * @throws \InvalidArgumentException 引数の型が不正なときに発生します
      *
-     * @return \Selen\Schema\Validate\Define
+     * @return Define
      */
     public static function key($name, bool $require)
     {
@@ -68,10 +68,10 @@ class Define
     /**
      * @param \Selen\Schema\Validate\ValueValidateInterface|callable ...$executes
      *
-     * @throws \LogicException メソッドの呼び出し順が不正なときに発生します
+     * @throws \LogicException           メソッドの呼び出し順が不正なときに発生します
      * @throws \InvalidArgumentException 引数の型が不正なときに発生します
      *
-     * @return \Selen\Schema\Validate\Define
+     * @return Define
      */
     public function value(...$executes)
     {
@@ -105,11 +105,11 @@ class Define
     }
 
     /**
-     * @param \Selen\Schema\Validate\Define ...$define
-     *
      * @throws \LogicException メソッドの呼び出し順が不正なときに発生します
      *
-     * @return \Selen\Schema\Validate\Define
+     * @return Define
+     *
+     * @param Define[] $define
      */
     public function arrayDefine(Define ...$define)
     {

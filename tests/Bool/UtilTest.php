@@ -15,7 +15,7 @@ use Selen\Bool\Util;
 /**
  * @coversDefaultClass \Selen\Bool\Util
  *
- * @see \Selen\Bool\Util
+ * @see Util
  *
  * @internal
  */

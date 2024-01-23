@@ -15,7 +15,7 @@ use Selen\Data\AbstractMemo;
 /**
  * @coversDefaultClass \Selen\Data\AbstractMemo
  *
- * @see \Selen\Data\AbstractMemo
+ * @see AbstractMemo
  *
  * @internal
  */

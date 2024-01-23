@@ -29,8 +29,8 @@ class Random
     /**
      * プールからランダムな文字列を返します
      *
-     * @param string $pool プールする文字列を指定します
-     * @param int $length 文字列長を指定します
+     * @param string $pool   プールする文字列を指定します
+     * @param int    $length 文字列長を指定します
      *
      * @return string ランダムな文字列を返します
      */

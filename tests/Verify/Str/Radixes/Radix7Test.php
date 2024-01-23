@@ -15,7 +15,7 @@ use Selen\Verify\Str\Radixes\Radix7;
 /**
  * @coversDefaultClass \Selen\Verify\Str\Radixes\Radix7
  *
- * @see \Selen\Verify\Str\Radixes\Radix7
+ * @see Radix7
  *
  * @internal
  */

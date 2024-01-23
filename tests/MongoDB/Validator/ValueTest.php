@@ -24,7 +24,7 @@ use Selen\MongoDB\Validator\ValueValidateInterface;
  *
  * @coversDefaultClass \Selen\MongoDB\Validator\Value
  *
- * @see \Selen\MongoDB\Validator\Value
+ * @see Value
  *
  * @internal
  */

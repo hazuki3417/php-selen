@@ -15,7 +15,7 @@ use Selen\Schema\Exchange\Define\Key;
 /**
  * @coversDefaultClass \Selen\Schema\Exchange\Define\Key
  *
- * @see \Selen\Schema\Exchange\Define\Key
+ * @see Key
  *
  * @internal
  */

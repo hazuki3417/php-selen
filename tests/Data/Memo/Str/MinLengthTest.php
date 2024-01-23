@@ -15,7 +15,7 @@ use Selen\Data\Memo\Str\MinLength;
 /**
  * @coversDefaultClass \Selen\Data\Memo\Str\MinLength
  *
- * @see \Selen\Data\Memo\Str\MinLength
+ * @see MinLength
  *
  * @internal
  */

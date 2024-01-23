@@ -16,7 +16,7 @@ use Selen\Schema\Validate\Values\Type;
 /**
  * @coversDefaultClass \Selen\Schema\Validate\Values\Type
  *
- * @see \Selen\Schema\Validate\Values\Type
+ * @see Type
  *
  * @internal
  */
@@ -50,8 +50,8 @@ class TypeTest extends TestCase
     /**
      * @dataProvider dataProviderExecute
      *
-     * @param \Selen\Schema\Validate\Model\ValidateResult $expected
-     * @param mixed $input
+     * @param ValidateResult $expected
+     * @param mixed          $input
      */
     public function testExecute($expected, $input)
     {

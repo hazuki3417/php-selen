@@ -16,7 +16,7 @@ use Selen\DateTime\Record;
 /**
  * @coversDefaultClass \Selen\DateTime
  * * *
- * @see \Selen\DateTime
+ * @see DateTime
  *
  * @internal
  */

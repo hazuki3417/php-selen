@@ -15,7 +15,7 @@ use Selen\Data\Memo\Str\MaxLength;
 /**
  * @coversDefaultClass \Selen\Data\Memo\Str\MaxLength
  *
- * @see \Selen\Data\Memo\Str\MaxLength
+ * @see MaxLength
  *
  * @internal
  */

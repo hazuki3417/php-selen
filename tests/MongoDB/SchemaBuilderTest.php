@@ -20,7 +20,7 @@ use Selen\MongoDB\SchemaBuilder;
  *
  * @coversDefaultClass \Selen\MongoDB\SchemaBuilder
  *
- * @see \Selen\MongoDB\SchemaBuilder
+ * @see SchemaBuilder
  *
  * @internal
  */

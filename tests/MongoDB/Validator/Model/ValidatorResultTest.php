@@ -18,7 +18,7 @@ use Selen\MongoDB\Validator\Model\ValidatorResult;
  *
  * @coversDefaultClass \Selen\MongoDB\Validator\Model\ValidatorResult
  *
- * @see \Selen\MongoDB\Validator\Model\ValidatorResult
+ * @see ValidatorResult
  *
  * @internal
  */
@@ -95,7 +95,7 @@ class ValidatorResultTest extends TestCase
     /**
      * @dataProvider dataProviderSuccess
      *
-     * @param bool $expected
+     * @param bool  $expected
      * @param array $input
      */
     public function testSuccess($expected, $input)
@@ -154,7 +154,7 @@ class ValidatorResultTest extends TestCase
     /**
      * @dataProvider dataProviderFailure
      *
-     * @param bool $expected
+     * @param bool  $expected
      * @param array $input
      */
     public function testFailure($expected, $input)

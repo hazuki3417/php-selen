@@ -17,7 +17,7 @@ use Selen\MongoDB\Attributes\SchemaField;
  *
  * @coversDefaultClass \Selen\MongoDB\Attributes\SchemaField
  *
- * @see \Selen\MongoDB\Attributes\SchemaField
+ * @see SchemaField
  *
  * @internal
  */

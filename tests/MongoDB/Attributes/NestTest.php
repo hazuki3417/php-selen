@@ -18,7 +18,7 @@ use Selen\MongoDB\Attributes\Nest;
  *
  * @coversDefaultClass \Selen\MongoDB\Attributes\Nest
  *
- * @see \Selen\MongoDB\Attributes\Nest
+ * @see Nest
  *
  * @internal
  */

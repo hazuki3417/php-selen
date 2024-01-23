@@ -16,7 +16,7 @@ use Selen\Schema\Validate\Values\Enum;
 /**
  * @coversDefaultClass \Selen\Schema\Validate\Values\Enum
  *
- * @see \Selen\Schema\Validate\Values\Enum
+ * @see Enum
  *
  * @internal
  */
@@ -78,8 +78,8 @@ class EnumTest extends TestCase
     /**
      * @dataProvider dataProviderExecute
      *
-     * @param \Selen\Schema\Validate\Model\ValidateResult $expected
-     * @param mixed $input
+     * @param ValidateResult $expected
+     * @param mixed          $input
      */
     public function testExecute($expected, $input)
     {

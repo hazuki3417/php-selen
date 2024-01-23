@@ -15,7 +15,7 @@ use Selen\Data\Structure\Queue;
 /**
  * @coversDefaultClass \Selen\Data\Structure\Queue
  *
- * @see \Selen\Data\Structure\Queue
+ * @see Queue
  *
  * @internal
  */

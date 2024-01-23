@@ -20,13 +20,13 @@ class Exchanger
     /** @var \Selen\Schema\Exchange\ValueExchangeInterface|callable|null */
     private $valueExchangesExecute;
 
-    /** @var \Selen\Schema\Exchange\ArrayDefine|null */
+    /** @var Exchange\ArrayDefine|null */
     private $arrayDefine;
 
     /**
      * インスタンスを生成します
      *
-     * @return \Selen\Schema\Exchanger
+     * @return Exchanger
      */
     private function __construct()
     {
@@ -34,8 +34,6 @@ class Exchanger
 
     /**
      * インスタンスを生成します
-     *
-     * @return \Selen\Schema\Exchanger
      */
     public static function new(): Exchanger
     {
@@ -46,8 +44,6 @@ class Exchanger
      * keyの変換処理を設定します（全体設定）
      *
      * @param \Selen\Schema\Exchange\KeyExchangeInterface|callable|null $execute
-     *
-     * @return \Selen\Schema\Exchanger
      */
     public function key($execute): Exchanger
     {
@@ -73,8 +69,6 @@ class Exchanger
      * valueの変換処理を設定します（全体設定）
      *
      * @param \Selen\Schema\Exchange\ValueExchangeInterface|callable|null $execute
-     *
-     * @return \Selen\Schema\Exchanger
      */
     public function value($execute): Exchanger
     {
@@ -100,8 +94,6 @@ class Exchanger
      * key・valueの変換処理を設定します（個別設定）
      *
      * @param ?\Selen\Schema\Exchange\ArrayDefine $arrayDefine
-     *
-     * @return \Selen\Schema\Exchanger
      */
     public function arrayDefine(?ArrayDefine $arrayDefine): Exchanger
     {
@@ -125,8 +117,8 @@ class Exchanger
     /**
      * 定義した配列形式に変換します（個別設定）
      *
-     * @param array $input 変換する配列を渡します
-     * @param \Selen\Schema\Exchange\ArrayDefine $arrayDefine 変換の定義を渡します
+     * @param array       $input       変換する配列を渡します
+     * @param ArrayDefine $arrayDefine 変換の定義を渡します
      *
      * @return array 変換した配列を返します
      */
@@ -141,7 +133,7 @@ class Exchanger
 
         // 変換の定義があるときの処理
 
-        /** @var \Selen\Schema\Exchange\Define $define */
+        /** @var Exchange\Define $define */
         foreach ($arrayDefine->defines as $define) {
             if ($define->nestedTypeDefineExists()) {
                 // ネストされた定義なら再帰処理を行う
@@ -323,7 +315,7 @@ class Exchanger
      * keyの変換処理を行います
      *
      * @param \Selen\Schema\Exchange\KeyExchangeInterface|callable|null $execute
-     * @param string $key
+     * @param string                                                    $key
      *
      * @return string
      */
@@ -344,7 +336,7 @@ class Exchanger
      * 値の変換処理を行います
      *
      * @param \Selen\Schema\Exchange\ValueExchangeInterface|callable|null $execute
-     * @param mixed $value
+     * @param mixed                                                       $value
      *
      * @return mixed
      */

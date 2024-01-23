@@ -18,7 +18,7 @@ use Selen\MongoDB\Validator\Model\ValidateResult;
  *
  * @coversDefaultClass \Selen\MongoDB\Validator\Attributes\Enum
  *
- * @see \Selen\MongoDB\Validator\Attributes\Enum
+ * @see Enum
  *
  * @internal
  */
@@ -81,7 +81,7 @@ class EnumTest extends TestCase
      * @dataProvider dataProviderExecute
      *
      * @param \Selen\Schema\Validate\Model\ValidateResult $expected
-     * @param mixed $input
+     * @param mixed                                       $input
      */
     public function testExecute($expected, $input)
     {

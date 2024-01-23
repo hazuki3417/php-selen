@@ -16,7 +16,7 @@ use Selen\Str\SizeParser;
 /**
  * @coversDefaultClass \Selen\Str\SizeParser
  *
- * @see \Selen\Str\SizeParser
+ * @see SizeParser
  *
  * @internal
  */

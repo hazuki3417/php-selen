@@ -15,7 +15,7 @@ use Selen\Data\Types;
 /**
  * @coversDefaultClass \Selen\Data\Types
  *
- * @see \Selen\Data\Types
+ * @see Types
  *
  * @internal
  */

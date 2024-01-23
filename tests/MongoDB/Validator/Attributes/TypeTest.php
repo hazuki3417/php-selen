@@ -18,7 +18,7 @@ use Selen\MongoDB\Validator\Model\ValidateResult;
  *
  * @coversDefaultClass \Selen\MongoDB\Validator\Attributes\Type
  *
- * @see \Selen\MongoDB\Validator\Attributes\Type
+ * @see Type
  *
  * @internal
  */
@@ -62,8 +62,8 @@ class TypeTest extends TestCase
     /**
      * @dataProvider dataProviderExecute
      *
-     * @param \Selen\MongoDB\Validator\Model\ValidateResult $expected
-     * @param mixed $input
+     * @param ValidateResult $expected
+     * @param mixed          $input
      */
     public function testExecute($expected, $input)
     {

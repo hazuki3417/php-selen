@@ -17,19 +17,19 @@ use Selen\Schema\Validate\ValueValidateInterface;
 
 class Validator
 {
-    /** @var \Selen\Schema\Validate\ArrayDefine */
+    /** @var ArrayDefine */
     private $arrayDefine;
 
     /** @var \Selen\Schema\Validate\Model\ValidateResult[] */
     private $validateResults = [];
 
-    /** @var \Selen\Data\ArrayPath */
+    /** @var ArrayPath */
     private $arrayPath;
 
     /**
      * インスタンスを生成します
      *
-     * @return \Selen\Schema\Validator
+     * @return Validator
      */
     private function __construct()
     {
@@ -38,8 +38,6 @@ class Validator
 
     /**
      * インスタンスを生成します
-     *
-     * @return \Selen\Schema\Validator
      */
     public static function new(): Validator
     {
@@ -48,8 +46,6 @@ class Validator
 
     /**
      * key・valueの検証処理を設定します（個別設定）
-     *
-     * @return \Selen\Schema\Validator
      */
     public function arrayDefine(ArrayDefine $arrayDefine): Validator
     {
@@ -71,8 +67,8 @@ class Validator
     /**
      * 定義した配列形式に変換します（個別設定）
      *
-     * @param array $input 変換する配列を渡します
-     * @param \Selen\Schema\Validate\ArrayDefine $arrayDefine 変換の定義を渡します
+     * @param array       $input       変換する配列を渡します
+     * @param ArrayDefine $arrayDefine 変換の定義を渡します
      *
      * @return array 変換した配列を返します
      */
@@ -81,7 +77,8 @@ class Validator
         ArrayDefine $arrayDefine
     ) {
         $this->arrayPath->down();
-        /** @var \Selen\Schema\Validate\Define $define */
+
+        /** @var Define $define */
         foreach ($arrayDefine->defines as $define) {
             if ($define->isAssocArrayDefine()) {
                 $this->arrayPath->setCurrentPath($define->key->getName());
@@ -166,6 +163,7 @@ class Validator
                 // ネストされた定義なら再帰処理を行う
                 if ($define->isAssocArrayDefine()) {
                     $passRecursionInput = $input[$define->key->getName()];
+
                     // 値が配列以外の場合は値のバリデーションエラーとする。（ネストされた定義 = 配列形式のため）
                     if (!\is_array($passRecursionInput)) {
                         // keyは存在するが、値が配列型以外の場合はエラーとする
@@ -228,7 +226,7 @@ class Validator
     /**
      * 定義されたkeyが入力側に存在しないかどうか確認します
      *
-     * @param \Selen\Schema\Validator\Define $define
+     * @param Validator\Define $define
      *
      * @return bool 存在しない場合はtrueを、それ以外の場合はfalseを返します
      */
@@ -255,8 +253,8 @@ class Validator
     /**
      * keyの検証処理を行います
      *
-     * @param \Selen\Schema\Validate\Define $define
-     * @param mixed $value
+     * @param Define $define
+     * @param mixed  $value
      */
     private function keyValidate($define, $value): ValidateResult
     {
@@ -272,7 +270,7 @@ class Validator
      * 値の検証処理を行います
      *
      * @param \Selen\Schema\Validate\ValueValidateInterface|callable $execute
-     * @param mixed $value
+     * @param mixed                                                  $value
      */
     private function valueValidate($execute, $value): ValidateResult
     {

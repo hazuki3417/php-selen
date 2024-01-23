@@ -17,7 +17,7 @@ use Selen\Schema\Validate\Values\MaxLength;
 /**
  * @coversDefaultClass \Selen\Schema\Validate\Values\MaxLength
  *
- * @see \Selen\Schema\Validate\Values\MaxLength
+ * @see MaxLength
  *
  * @internal
  */
@@ -126,8 +126,8 @@ class MaxLengthTest extends TestCase
     /**
      * @dataProvider dataProviderExecute
      *
-     * @param \Selen\Schema\Validate\Model\ValidateResult $expected
-     * @param mixed $input
+     * @param ValidateResult $expected
+     * @param mixed          $input
      */
     public function testExecute($expected, $input)
     {

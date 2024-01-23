@@ -20,7 +20,7 @@ use Selen\MongoDB\Validator\UpdateSchema;
  *
  * @coversDefaultClass \Selen\MongoDB\SchemaValidator
  *
- * @see \Selen\MongoDB\SchemaValidator
+ * @see SchemaValidator
  *
  * @internal
  */

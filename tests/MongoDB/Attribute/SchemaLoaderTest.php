@@ -20,7 +20,7 @@ use Selen\MongoDB\Attributes\Schema;
  *
  * @coversDefaultClass \Selen\MongoDB\Attribute\SchemaLoader
  *
- * @see \Selen\MongoDB\Attribute\SchemaLoader
+ * @see SchemaLoader
  *
  * @internal
  */
@@ -47,8 +47,8 @@ class SchemaLoaderTest extends TestCase
     /**
      * @dataProvider dataProviderConstruct
      *
-     * @param mixed $expected
-     * @param \ReflectionClass $input
+     * @param mixed           $expected
+     * @param ReflectionClass $input
      */
     public function testConstruct($expected, $input)
     {
@@ -77,8 +77,8 @@ class SchemaLoaderTest extends TestCase
     /**
      * @dataProvider dataProviderConstructException
      *
-     * @param mixed $expected
-     * @param \ReflectionClass $input
+     * @param mixed           $expected
+     * @param ReflectionClass $input
      */
     public function testConstructException($expected, $input)
     {

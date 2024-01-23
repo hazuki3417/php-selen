@@ -17,7 +17,7 @@ use Selen\Schema\Validate\Values\Max;
 /**
  * @coversDefaultClass \Selen\Schema\Validate\Values\Max
  *
- * @see \Selen\Schema\Validate\Values\Max
+ * @see Max
  *
  * @internal
  */
@@ -105,8 +105,8 @@ class MaxTest extends TestCase
     /**
      * @dataProvider dataProviderExecute
      *
-     * @param \Selen\Schema\Validate\Model\ValidateResult $expected
-     * @param mixed $input
+     * @param ValidateResult $expected
+     * @param mixed          $input
      */
     public function testExecute($expected, $input)
     {
