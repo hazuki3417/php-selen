@@ -1,32 +1,73 @@
 version: "3.0"
 
 services:
-  php-xdebug:
-    image: webdevops/php-dev:8.1
-    stdin_open: true
-    tty: true
+
+  # NOTE: パッケージ化しているため依存関係はできるだけ少なくしたい。そのためphp.iniの設定は初期値のままで開発を行う。
+  #       特定の設定が必要な場合は、パッケージを利用する側で設定すること。（例: タイムゾーンなど）
+
+  # 開発用コンテナ
+  php-selen:
+    build:
+      context: ./
+      dockerfile: docker/develop/php-selen/Dockerfile
+    image: php-selen:latest-develop
     volumes:
       - ./:/var/www/html
-    working_dir: /var/www/html
     environment:
       - XDEBUG_MODE=debug
-      - XDEBUG_START_WITH_REQUEST=yes
-      - XDEBUG_CLIENT_HOST=host.docker.internal
-      - XDEBUG_CLIENT_PORT=9003
-      - XDEBUG_IDE_KEY=VSCODE
 
-  composer:
-    image: composer:latest
+  # コマンド実行用コンテナ
+  test:
+    image: php-selen:latest-develop
     volumes:
-      - ./:/app
-    tty: true
+      - ./:/var/www/html
+    command: vendor/bin/phpunit
     profiles:
       - task
 
-  php-documentor:
+  code-format:
+    image: php-selen:latest-develop
+    volumes:
+      - ./:/var/www/html
+    command: vendor/bin/php-cs-fixer fix
+    profiles:
+      - task
+
+  gen-code-document:
     image: phpdoc/phpdoc:latest
     volumes:
       - ./:/data
-    tty: true
+    profiles:
+      - task
+
+  gen-code-coverage:
+    image: php-selen:latest-develop
+    volumes:
+      - ./:/var/www/html
+    command: phpdbg -qrr vendor/bin/phpunit -c phpunit.coverage.xml
+    profiles:
+      - task
+
+  inspect-code:
+    image: php-selen:latest-develop
+    volumes:
+      - ./:/var/www/html
+    command: vendor/bin/phpstan analyse --memory-limit=-1
+    profiles:
+      - task
+
+  inspect-code-style:
+    image: php-selen:latest-develop
+    volumes:
+      - ./:/var/www/html
+    command: vendor/bin/php-cs-fixer fix --dry-run --diff
+    profiles:
+      - task
+
+  inspect-namespace:
+    image: php-selen:latest-develop
+    volumes:
+      - ./:/var/www/html
+    command: composer dump-autoload --optimize --strict-psr
     profiles:
       - task

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 $config = new PhpCsFixer\Config();
 return $config
+    ->setUsingCache(false)
     ->setRules([
         'align_multiline_comment'                       => true,
         'array_indentation'                             => true,
@@ -81,7 +82,8 @@ return $config
         'no_spaces_inside_parenthesis'                  => true,
         'no_superfluous_elseif'                         => true,
         'no_superfluous_phpdoc_tags'                    => ['allow_mixed' => true, 'allow_unused_params' => true],
-        'no_trailing_comma_in_singleline'               => true,
+        'no_trailing_comma_in_list_call'                => true,
+        'no_trailing_comma_in_singleline_array'         => true,
         'no_trailing_whitespace'                        => true,
         'no_trailing_whitespace_in_comment'             => true,
         'no_unneeded_control_parentheses'               => true,
@@ -100,9 +102,9 @@ return $config
         'php_unit_fqcn_annotation'                      => true,
         'php_unit_internal_class'                       => true,
         'php_unit_method_casing'                        => true,
-        'php_unit_test_class_requires_covers'           => true,
+        'php_unit_test_class_requires_covers'           => false,
         'phpdoc_add_missing_param_annotation'           => ['only_untyped' => false],
-        'phpdoc_align'                                  => ['align' => 'left'],
+        'phpdoc_align'                                  => ['align' => 'vertical'],
         'phpdoc_annotation_without_dot'                 => true,
         'phpdoc_indent'                                 => true,
         'phpdoc_inline_tag_normalizer'                  => true,

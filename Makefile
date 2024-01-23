@@ -1,50 +1,22 @@
-
+# 概要: docker imageのビルド・デプロイを行うタスクランナー
+include ${abspath makefiles/variables.mk}
 
 # NOTE: 誤操作防止のためtarget指定なしの場合はエラー扱いにする
 all:
-	@echo Please specify the target
+	@echo Please specify the target. >&2
 	@exit 1
 
-composer:
-	docker-compose run --rm composer ${COMMAND}
+# usage:
+#	make build-image \
+#		DOCKER_IMAGE_NAME={}
+build-image:
+	make build -C ${DOCKAE_IMAGE_BUILD_MAKE_PATH}
 
-package-install:COMMAND +=install --no-suggest
-package-install: composer;
 
-package-dumpautoload:COMMAND +=dumpautoload
-package-dumpautoload: composer;
-
-runner:
-	docker run -t --rm -v ${PWD}:/var/www/html -w /var/www/html php:${IMAGE_TAG} ${COMMAND}
-
-php-cs-fixer: IMAGE_TAG +=8.0-alpine
-php-cs-fixer: COMMAND +=php vendor/bin/php-cs-fixer fix -vvv --diff
-php-cs-fixer: runner;
-
-generate-api-coverage: IMAGE_TAG +=8.0-alpine
-generate-api-coverage: COMMAND +=phpdbg -qrr vendor/bin/phpunit -c phpunit.coverage.xml
-generate-api-coverage: runner;
-
-generate-api-document:
-	docker-compose run --rm php-documentor
-
-test-verify: IMAGE_TAG +=alpine
-test-verify: COMMAND +=php vendor/bin/phpunit --group=verify
-test-verify: runner;
-
-test-all:
-	make test-php-latest && \
-	make test-php-8.1 && \
-	make test-php-8.0
-
-test-php-latest: IMAGE_TAG +=alpine
-test-php-latest: COMMAND +=php vendor/bin/phpunit
-test-php-latest: runner;
-
-test-php-8.1: IMAGE_TAG +=8.1-alpine
-test-php-8.1: COMMAND +=php vendor/bin/phpunit
-test-php-8.1: runner;
-
-test-php-8.0: IMAGE_TAG +=8.0-alpine
-test-php-8.0: COMMAND +=php vendor/bin/phpunit
-test-php-8.0: runner;
+# usage:
+# 	make deploy-image-ghcr \
+#		DOCKER_IMAGE_NAME={} \
+#		GHCR_OWNER={} \
+#		GHCR_AUTH_TOKEN={}
+deploy-image-ghcr:
+	make deploy-image -C ${TASK_FILE_PATH} -f deploy-ghcr.mk

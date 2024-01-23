@@ -23,7 +23,7 @@
     verbose="false">
   <coverage/>
   <testsuites>
-    <testsuite name="default">
+    <testsuite name="Default">
       <directory>tests</directory>
     </testsuite>
   </testsuites>

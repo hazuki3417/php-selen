@@ -11,22 +11,27 @@
             "role": "Developer"
         }
     ],
+    "config": {
+        "platform": {
+            "php": "8.1"
+        }
+    },
     "autoload": {
         "psr-4": {
             "Selen\\": "src"
         }
     },
-    "config": {
-        "platform": {
-            "php": "8.0"
+    "autoload-dev": {
+        "psr-4": {
+            "Tests\\Selen\\": "tests/",
+            "Rules\\Selen\\": "rules/"
         }
     },
-    "require": {
-        "php": ">=8.0"
-    },
     "require-dev": {
-        "php": ">=8.0",
-        "phpunit/phpunit": "^9.5",
-        "friendsofphp/php-cs-fixer": "^3.3"
+        "phpunit/phpunit": "^9.6",
+        "friendsofphp/php-cs-fixer": "^3.48",
+        "phpstan/phpstan": "^1.10",
+        "phpstan/phpstan-php-parser": "^1.1",
+        "phpstan/phpstan-strict-rules": "^1.5"
     }
 }

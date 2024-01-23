@@ -27,5 +27,6 @@
       </markers>
     </api>
   </version>
+  <setting name="template.color" value="indigo"/>
   <template name="default"/>
 </phpdocumentor>
