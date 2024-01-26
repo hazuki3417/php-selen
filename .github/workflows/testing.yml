@@ -105,8 +105,8 @@ jobs:
     - name: upload
       uses: actions/upload-artifact@v4
       with:
-        name: documents
-        path: docs
+        name: coverage
+        path: docs/coverage
 
   generate-api-document:
     runs-on: ubuntu-latest
@@ -131,8 +131,8 @@ jobs:
     - name: upload
       uses: actions/upload-artifact@v4
       with:
-        name: documents
-        path: docs
+        name: document
+        path: docs/phpdoc
 
   upload-api-coverage:
     runs-on: ubuntu-latest
@@ -145,8 +145,8 @@ jobs:
     - name: download artifact documents
       uses: actions/download-artifact@v4
       with:
-        name: documents
-        path: docs
+        name: coverage
+        path: docs/coverage
 
     # [Reference]
     # https://github.com/aws-actions/configure-aws-credentials
@@ -174,8 +174,8 @@ jobs:
     - name: download artifact documents
       uses: actions/download-artifact@v4
       with:
-        name: documents
-        path: docs
+        name: document
+        path: docs/phpdoc
 
     # [Reference]
     # https://github.com/aws-actions/configure-aws-credentials
