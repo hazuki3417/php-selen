@@ -2,34 +2,44 @@ version: "3.0"
 
 services:
 
-  # NOTE: パッケージ化しているため依存関係はできるだけ少なくしたい。そのためphp.iniの設定は初期値のままで開発を行う。
-  #       特定の設定が必要な場合は、パッケージを利用する側で設定すること。（例: タイムゾーンなど）
-
-  # 開発用コンテナ
-  php-selen:
-    build:
-      context: ./
-      dockerfile: docker/develop/php-selen/Dockerfile
-    image: php-selen:latest-develop
+  debug:
+    image: webdevops/php-dev:8.1
+    stdin_open: true
+    tty: true
+    working_dir: /var/www/html
     volumes:
       - ./:/var/www/html
     environment:
       - XDEBUG_MODE=debug
+      - XDEBUG_START_WITH_REQUEST=yes
+      - XDEBUG_CLIENT_HOST=host.docker.internal
+      - XDEBUG_CLIENT_PORT=9003
+      - XDEBUG_IDE_KEY=VSCODE
 
   # コマンド実行用コンテナ
+  composer:
+    image: composer:latest
+    volumes:
+      - ./:/app
+    command: composer install
+    profiles:
+      - task
+
   test:
-    image: php-selen:latest-develop
+    image: webdevops/php-dev:8.1
+    working_dir: /var/www/html
     volumes:
       - ./:/var/www/html
-    command: vendor/bin/phpunit
+    command: php -d memory_limit=-1 ./vendor/bin/phpunit
     profiles:
       - task
 
   code-format:
-    image: php-selen:latest-develop
+    image: webdevops/php-dev:8.1
+    working_dir: /var/www/html
     volumes:
       - ./:/var/www/html
-    command: vendor/bin/php-cs-fixer fix
+    command: php -d memory_limit=-1 ./vendor/bin/php-cs-fixer fix
     profiles:
       - task
 
@@ -41,31 +51,37 @@ services:
       - task
 
   gen-code-coverage:
-    image: php-selen:latest-develop
+    image: webdevops/php-dev:8.1
+    working_dir: /var/www/html
     volumes:
       - ./:/var/www/html
-    command: phpdbg -qrr vendor/bin/phpunit -c phpunit.coverage.xml
+    environment:
+      - XDEBUG_MODE=coverage
+    command: php -d memory_limit=-1 ./vendor/bin/phpunit -c phpunit.coverage.xml
     profiles:
       - task
 
   inspect-code:
-    image: php-selen:latest-develop
+    image: webdevops/php-dev:8.1
+    working_dir: /var/www/html
     volumes:
       - ./:/var/www/html
-    command: vendor/bin/phpstan analyse --memory-limit=-1
+    command: php -d memory_limit=-1 ./vendor/bin/phpstan analyse
     profiles:
       - task
 
   inspect-code-style:
-    image: php-selen:latest-develop
+    image: webdevops/php-dev:8.1
+    working_dir: /var/www/html
     volumes:
       - ./:/var/www/html
-    command: vendor/bin/php-cs-fixer fix --dry-run --diff
+    command: php -d memory_limit=-1 ./vendor/bin/php-cs-fixer fix --dry-run --diff
     profiles:
       - task
 
   inspect-namespace:
-    image: php-selen:latest-develop
+    image: webdevops/php-dev:8.1
+    working_dir: /var/www/html
     volumes:
       - ./:/var/www/html
     command: composer dump-autoload --optimize --strict-psr
