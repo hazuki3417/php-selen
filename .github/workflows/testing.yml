@@ -5,12 +5,6 @@ on:
   # push:
   #   branches: [ main ]
 
-# TODO: キャッシュ・リストアキーを共通化する
-env:
-  # 動的に設定される環境変数
-  COMPOSER_CACHE_KEY:
-  COMPOSER_CACHE_RESTORE_KEY:
-
 jobs:
   provision:
     runs-on: ubuntu-latest
@@ -18,11 +12,6 @@ jobs:
     steps:
     - name: checkout
       uses: actions/checkout@v4
-
-    - name: set env
-      run: |
-        echo "COMPOSER_CACHE_KEY=${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}" >> $GITHUB_ENV
-        echo "COMPOSER_CACHE_RESTORE_KEY=${{ runner.os }}-composer-" >> $GITHUB_ENV
 
     - name: verify composer.json
       run: docker compose run --rm composer validate
@@ -35,9 +24,9 @@ jobs:
       uses: actions/cache@v4
       with:
         path: vendor
-        key: ${{ env.COMPOSER_CACHE_KEY }}
+        key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
         restore-keys: |
-          ${{ env.COMPOSER_CACHE_RESTORE_KEY }}
+          ${{ runner.os }}-composer-
 
   inspect:
     runs-on: ubuntu-latest
@@ -60,9 +49,9 @@ jobs:
       uses: actions/cache@v4
       with:
         path: vendor
-        key: ${{ env.COMPOSER_CACHE_KEY }}
+        key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
         restore-keys: |
-          ${{ env.COMPOSER_CACHE_RESTORE_KEY }}
+          ${{ runner.os }}-composer-
 
     - name: inspect
       run: docker compose run --rm inspect-${{ matrix.task }}
@@ -82,9 +71,9 @@ jobs:
       uses: actions/cache@v4
       with:
         path: vendor
-        key: ${{ env.COMPOSER_CACHE_KEY }}
+        key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
         restore-keys: |
-          ${{ env.COMPOSER_CACHE_RESTORE_KEY }}
+          ${{ runner.os }}-composer-
           
     - name: test
       run: docker compose run --rm test
@@ -102,9 +91,9 @@ jobs:
       uses: actions/cache@v4
       with:
         path: vendor
-        key: ${{ env.COMPOSER_CACHE_KEY }}
+        key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
         restore-keys: |
-          ${{ env.COMPOSER_CACHE_RESTORE_KEY }}
+          ${{ runner.os }}-composer-
 
     - name: generate
       run: docker compose run --rm gen-code-coverage
@@ -128,9 +117,9 @@ jobs:
       uses: actions/cache@v4
       with:
         path: vendor
-        key: ${{ env.COMPOSER_CACHE_KEY }}
+        key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
         restore-keys: |
-          ${{ env.COMPOSER_CACHE_RESTORE_KEY }}
+          ${{ runner.os }}-composer-
 
     - name: generate
       run: docker compose run --rm gen-code-document
