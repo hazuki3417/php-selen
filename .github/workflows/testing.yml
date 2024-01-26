@@ -57,125 +57,77 @@ jobs:
 
 
 
-  # test-php-latest:
-  #   runs-on: ubuntu-latest
-  #   needs: provision
+  test:
+    runs-on: ubuntu-latest
+    needs: inspect
 
-  #   steps:
-  #   - name: checkout repository
-  #     uses: actions/checkout@v4
+    steps:
+    - name: checkout repository
+      uses: actions/checkout@v4
 
-  #   - name: Composer cache or restore
-  #     id: composer-cache
-  #     uses: actions/cache@v4
-  #     with:
-  #       path: vendor
-  #       key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
-  #       restore-keys: |
-  #         ${{ runner.os }}-composer-
+    - name: composer cache or restore
+      id: composer-cache
+      uses: actions/cache@v4
+      with:
+        path: vendor
+        key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
+        restore-keys: |
+          ${{ runner.os }}-composer-
           
-  #   - name: Test
-  #     run: make test-php-latest
+    - name: test
+      run: docker compose run --rm test
 
-  # test-php-8_1:
-  #   runs-on: ubuntu-latest
-  #   needs: provision
+  generate-api-coverage:
+    runs-on: ubuntu-latest
+    needs: test
 
-  #   steps:
-  #   - name: checkout repository
-  #     uses: actions/checkout@v4
+    steps:
+    - name: checkout repository
+      uses: actions/checkout@v4
 
-  #   - name: Composer cache or restore
-  #     id: composer-cache
-  #     uses: actions/cache@v4
-  #     with:
-  #       path: vendor
-  #       key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
-  #       restore-keys: |
-  #         ${{ runner.os }}-composer-
-          
-  #   - name: Test
-  #     run: make test-php-8.1
+    - name: composer cache or restore
+      id: composer-cache
+      uses: actions/cache@v4
+      with:
+        path: vendor
+        key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
+        restore-keys: |
+          ${{ runner.os }}-composer-
 
-  # test-php-8_0:
-  #   runs-on: ubuntu-latest
-  #   needs: provision
+    - name: generate
+      run: docker compose run --rm gen-code-coverage
 
-  #   steps:
-  #   - name: checkout repository
-  #     uses: actions/checkout@v4
+    - name: upload
+      uses: actions/upload-artifact@v2
+      with:
+        name: documents
+        path: docs
 
-  #   - name: Composer cache or restore
-  #     id: composer-cache
-  #     uses: actions/cache@v4
-  #     with:
-  #       path: vendor
-  #       key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
-  #       restore-keys: |
-  #         ${{ runner.os }}-composer-
-          
-  #   - name: Test
-  #     run: make test-php-8.0
+  generate-api-document:
+    runs-on: ubuntu-latest
+    needs: test
 
-  # generate-api-coverage:
-  #   runs-on: ubuntu-latest
-  #   needs: [
-  #       test-php-latest,
-  #       test-php-8_1,
-  #       test-php-8_0
-  #     ]
+    steps:
+    - name: checkout repository
+      uses: actions/checkout@v4
 
-  #   steps:
-  #   - name: checkout repository
-  #     uses: actions/checkout@v4
+    - name: composer cache or restore
+      id: composer-cache
+      uses: actions/cache@v4
+      with:
+        path: vendor
+        key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
+        restore-keys: |
+          ${{ runner.os }}-composer-
 
-  #   - name: Composer cache or restore
-  #     id: composer-cache
-  #     uses: actions/cache@v4
-  #     with:
-  #       path: vendor
-  #       key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
-  #       restore-keys: |
-  #         ${{ runner.os }}-composer-
+    - name: generate
+      run: docker compose run --rm gen-code-document
 
-  #   - name: Generate api coverage
-  #     run: make generate-api-coverage
-
-  #   - name: upload artifact documents
-  #     uses: actions/upload-artifact@v2
-  #     with:
-  #       name: documents
-  #       path: docs
-
-  # generate-api-document:
-  #   runs-on: ubuntu-latest
-  #   needs: [
-  #       test-php-latest,
-  #       test-php-8_1,
-  #       test-php-8_0
-  #     ]
-
-  #   steps:
-  #   - name: checkout repository
-  #     uses: actions/checkout@v4
-
-  #   - name: Composer cache or restore
-  #     id: composer-cache
-  #     uses: actions/cache@v4
-  #     with:
-  #       path: vendor
-  #       key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
-  #       restore-keys: |
-  #         ${{ runner.os }}-composer-
-
-  #   - name: Generate api document
-  #     run: make generate-api-document
-
-  #   - name: upload artifact documents
-  #     uses: actions/upload-artifact@v2
-  #     with:
-  #       name: documents
-  #       path: docs
+    - name: upload
+      uses: actions/upload-artifact@v2
+      with:
+        name: documents
+        path: docs
 
   # upload-api-coverage:
   #   runs-on: ubuntu-latest
