@@ -6,6 +6,8 @@ on:
   #   branches: [ main ]
 
 # TODO: キャッシュ・リストアキーを共通化する
+env:
+  COMPOSER_CACHE_RESTORE_KEY: ${{ runner.os }}-composer-
 
 jobs:
   provision:
@@ -28,7 +30,7 @@ jobs:
         path: vendor
         key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
         restore-keys: |
-          ${{ runner.os }}-composer-
+          ${{ env.COMPOSER_CACHE_RESTORE_KEY }}
 
   inspect:
     runs-on: ubuntu-latest
@@ -53,7 +55,8 @@ jobs:
         path: vendor
         key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
         restore-keys: |
-          ${{ runner.os }}-composer-
+          ${{ env.COMPOSER_CACHE_RESTORE_KEY }}
+
     - name: inspect
       run: docker compose run --rm inspect-${{ matrix.task }}
 
@@ -74,7 +77,7 @@ jobs:
         path: vendor
         key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
         restore-keys: |
-          ${{ runner.os }}-composer-
+          ${{ env.COMPOSER_CACHE_RESTORE_KEY }}
           
     - name: test
       run: docker compose run --rm test
@@ -94,7 +97,7 @@ jobs:
         path: vendor
         key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
         restore-keys: |
-          ${{ runner.os }}-composer-
+          ${{ env.COMPOSER_CACHE_RESTORE_KEY }}
 
     - name: generate
       run: docker compose run --rm gen-code-coverage
@@ -120,7 +123,7 @@ jobs:
         path: vendor
         key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
         restore-keys: |
-          ${{ runner.os }}-composer-
+          ${{ env.COMPOSER_CACHE_RESTORE_KEY }}
 
     - name: generate
       run: docker compose run --rm gen-code-document
@@ -147,14 +150,14 @@ jobs:
 
     # [Reference]
     # https://github.com/aws-actions/configure-aws-credentials
-    - name: Configure aws credentials
+    - name: configure aws credentials
       uses: aws-actions/configure-aws-credentials@v4
       with:
         aws-access-key-id: ${{secrets.AWS_CLI_ACCESS_KEY}}
         aws-secret-access-key: ${{secrets.AWS_CLI_SECRET_ACCESS_KEY}}
         aws-region: ap-northeast-1
 
-    - name: Upload coverage files
+    - name: upload
       env:
         S3_BUCKET_NAME: ${{secrets.AWS_S3_BUCKET_NAME}}
       run: |
@@ -176,14 +179,14 @@ jobs:
 
     # [Reference]
     # https://github.com/aws-actions/configure-aws-credentials
-    - name: Configure aws credentials
+    - name: configure aws credentials
       uses: aws-actions/configure-aws-credentials@v4
       with:
         aws-access-key-id: ${{secrets.AWS_CLI_ACCESS_KEY}}
         aws-secret-access-key: ${{secrets.AWS_CLI_SECRET_ACCESS_KEY}}
         aws-region: ap-northeast-1
 
-    - name: Upload api document
+    - name: upload
       env:
         S3_BUCKET_NAME: ${{secrets.AWS_S3_BUCKET_NAME}}
       run: |
