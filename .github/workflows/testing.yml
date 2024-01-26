@@ -35,9 +35,9 @@ jobs:
     strategy:
       matrix:
         task: [
-          'inspect-code',
-          'inspect-code-style',
-          'inspect-namespace',
+          'code',
+          'code-style',
+          'namespace',
         ]
 
     steps:
@@ -53,7 +53,7 @@ jobs:
         restore-keys: |
           ${{ runner.os }}-composer-
     - name: inspect
-      run: docker compose run --rm ${{ matrix.task }}
+      run: docker compose run --rm inspect-${{ matrix.task }}
 
 
 
