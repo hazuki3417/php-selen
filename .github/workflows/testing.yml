@@ -7,7 +7,9 @@ on:
 
 # TODO: キャッシュ・リストアキーを共通化する
 env:
-  COMPOSER_CACHE_RESTORE_KEY: ${{ runner.os }}-composer-
+  # 動的に設定される環境変数
+  COMPOSER_CACHE_KEY:
+  COMPOSER_CACHE_RESTORE_KEY:
 
 jobs:
   provision:
@@ -16,6 +18,11 @@ jobs:
     steps:
     - name: checkout
       uses: actions/checkout@v4
+
+    - name: set env
+      run: |
+        echo "COMPOSER_CACHE_KEY=${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}" >> $GITHUB_ENV
+        echo "COMPOSER_CACHE_RESTORE_KEY=${{ runner.os }}-composer-" >> $GITHUB_ENV
 
     - name: verify composer.json
       run: docker compose run --rm composer validate
@@ -28,7 +35,7 @@ jobs:
       uses: actions/cache@v4
       with:
         path: vendor
-        key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
+        key: ${{ env.COMPOSER_CACHE_KEY }}
         restore-keys: |
           ${{ env.COMPOSER_CACHE_RESTORE_KEY }}
 
@@ -53,7 +60,7 @@ jobs:
       uses: actions/cache@v4
       with:
         path: vendor
-        key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
+        key: ${{ env.COMPOSER_CACHE_KEY }}
         restore-keys: |
           ${{ env.COMPOSER_CACHE_RESTORE_KEY }}
 
@@ -75,7 +82,7 @@ jobs:
       uses: actions/cache@v4
       with:
         path: vendor
-        key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
+        key: ${{ env.COMPOSER_CACHE_KEY }}
         restore-keys: |
           ${{ env.COMPOSER_CACHE_RESTORE_KEY }}
           
@@ -95,7 +102,7 @@ jobs:
       uses: actions/cache@v4
       with:
         path: vendor
-        key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
+        key: ${{ env.COMPOSER_CACHE_KEY }}
         restore-keys: |
           ${{ env.COMPOSER_CACHE_RESTORE_KEY }}
 
@@ -121,7 +128,7 @@ jobs:
       uses: actions/cache@v4
       with:
         path: vendor
-        key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
+        key: ${{ env.COMPOSER_CACHE_KEY }}
         restore-keys: |
           ${{ env.COMPOSER_CACHE_RESTORE_KEY }}
 
