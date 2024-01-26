@@ -6,7 +6,7 @@
  * @copyright 2024 hazuki3417 all rights reserved.
  */
 
- namespace Selen\Array;
+namespace Selen\Array;
 
 use ArrayIterator;
 
@@ -22,7 +22,7 @@ class ArrayOperation
     public const RETURN_CONDITION_VALUE   = 'value';
     public const RETURN_CONDITION_ELEMENT = 'element';
 
-    /** @var ArrayIterator<int|string,mixed> イテレータクラスのインスタンス  */
+    /** @var ArrayIterator<int|string,mixed> イテレータクラスのインスタンス */
     private ArrayIterator $arrayIterator;
 
     /**
