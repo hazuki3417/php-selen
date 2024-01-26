@@ -7,7 +7,7 @@ declare(strict_types=1);
  * @copyright 2021 hazuki3417 all rights reserved.
  */
 
-namespace Tests\Selen\Data;
+namespace Tests\Selen\Data\Memo\Str;
 
 use PHPUnit\Framework\TestCase;
 use Selen\Data\Memo\Str\MaxLength;

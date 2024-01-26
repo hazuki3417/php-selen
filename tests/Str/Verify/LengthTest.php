@@ -7,7 +7,7 @@ declare(strict_types=1);
  * @copyright 2021 hazuki3417 all rights reserved.
  */
 
-namespace Tests\Selen\Verify\Str;
+namespace Tests\Selen\Str\Verify;
 
 use LogicException;
 use PHPUnit\Framework\TestCase;
