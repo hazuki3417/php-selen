@@ -1,5 +1,4 @@
 <?php
-
 /**
  * @license MIT
  * @author hazuki3417<hazuki3417@gmail.com>
@@ -7,6 +6,8 @@
  */
 
 namespace Selen\Str\Date;
+
+use InvalidArgumentException;
 
 /**
  * 日本語・英語の曜日を相互変換するクラス.
@@ -129,14 +130,14 @@ class Week
         $allowArgWeekType = $isInteger || $isString;
 
         if (!$allowArgWeekType) {
-            throw new \InvalidArgumentException('型が不正');
+            throw new InvalidArgumentException('型が不正');
         }
 
         $weekId = 0;
 
         if ($isInteger) {
             if (!self::checkWeekId($week)) {
-                throw new \InvalidArgumentException('値が不正');
+                throw new InvalidArgumentException('値が不正');
             }
             $weekId = $week;
         }
@@ -145,7 +146,7 @@ class Week
             $weekId = self::enWeekStrToWeekId($week);
 
             if ($weekId < 0) {
-                throw new \InvalidArgumentException('値が不正');
+                throw new InvalidArgumentException('値が不正');
             }
         }
 
@@ -158,7 +159,7 @@ class Week
                 break;
         }
 
-        throw new \InvalidArgumentException('値が不正');
+        throw new InvalidArgumentException('値が不正');
     }
 
     /**
@@ -175,14 +176,14 @@ class Week
         $allowArgWeekType = $isInteger || $isString;
 
         if (!$allowArgWeekType) {
-            throw new \InvalidArgumentException('型が不正');
+            throw new InvalidArgumentException('型が不正');
         }
 
         $weekId = 0;
 
         if ($isInteger) {
             if (!self::checkWeekId($week)) {
-                throw new \InvalidArgumentException('値が不正');
+                throw new InvalidArgumentException('値が不正');
             }
             $weekId = $week;
         }
@@ -191,7 +192,7 @@ class Week
             $weekId = self::jpWeekStrToWeekId($week);
 
             if ($weekId < 0) {
-                throw new \InvalidArgumentException('値が不正');
+                throw new InvalidArgumentException('値が不正');
             }
         }
 
@@ -204,6 +205,6 @@ class Week
                 break;
         }
 
-        throw new \InvalidArgumentException('値が不正');
+        throw new InvalidArgumentException('値が不正');
     }
 }

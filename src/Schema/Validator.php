@@ -280,8 +280,8 @@ class Validator
     /**
      * 値の検証処理を行います
      *
-     * @param Validate\ValueValidateInterface|callable $execute
-     * @param mixed                                    $value
+     * @param ValueValidateInterface|callable $execute
+     * @param mixed                           $value
      */
     private function valueValidate($execute, $value): ValidateResult
     {

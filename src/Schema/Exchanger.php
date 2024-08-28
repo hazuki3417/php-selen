@@ -280,8 +280,8 @@ class Exchanger
     /**
      * keyの変換処理を行います
      *
-     * @param Exchange\KeyExchangeInterface|callable|null $execute
-     * @param string                                      $key
+     * @param KeyExchangeInterface|callable|null $execute
+     * @param string                             $key
      *
      * @return string
      */
@@ -301,8 +301,8 @@ class Exchanger
     /**
      * 値の変換処理を行います
      *
-     * @param Exchange\ValueExchangeInterface|callable|null $execute
-     * @param mixed                                         $value
+     * @param ValueExchangeInterface|callable|null $execute
+     * @param mixed                                $value
      *
      * @return mixed
      */

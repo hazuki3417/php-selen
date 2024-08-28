@@ -156,6 +156,8 @@ return $config
         'whitespace_after_comma_in_array'               => true,
         'yoda_style'                                    => ['equal' => false, 'identical' => false],
     ])
+    // NOTE: 並列実行を有効にする
+    ->setParallelConfig(PhpCsFixer\Runner\Parallel\ParallelConfigFactory::detect())
     ->setFinder(
         PhpCsFixer\Finder::create()
             ->exclude('vendor')
