@@ -1,7 +1,6 @@
 version: "3.0"
 
 services:
-
   debug:
     image: webdevops/php-dev:8.1
     stdin_open: true
@@ -26,7 +25,7 @@ services:
       - task
 
   test:
-    image: webdevops/php-dev:8.1
+    image: php:8.1-cli-alpine
     working_dir: /var/www/html
     volumes:
       - ./:/var/www/html
@@ -35,7 +34,7 @@ services:
       - task
 
   code-format:
-    image: webdevops/php-dev:8.1
+    image: php:8.1-cli-alpine
     working_dir: /var/www/html
     volumes:
       - ./:/var/www/html
@@ -51,7 +50,7 @@ services:
       - task
 
   gen-code-coverage:
-    image: webdevops/php-dev:8.1
+    image: php:8.1-cli-alpine
     working_dir: /var/www/html
     volumes:
       - ./:/var/www/html
@@ -62,7 +61,7 @@ services:
       - task
 
   inspect-code:
-    image: webdevops/php-dev:8.1
+    image: php:8.1-cli-alpine
     working_dir: /var/www/html
     volumes:
       - ./:/var/www/html
@@ -71,7 +70,7 @@ services:
       - task
 
   inspect-code-style:
-    image: webdevops/php-dev:8.1
+    image: php:8.1-cli-alpine
     working_dir: /var/www/html
     volumes:
       - ./:/var/www/html
@@ -80,7 +79,7 @@ services:
       - task
 
   inspect-namespace:
-    image: webdevops/php-dev:8.1
+    image: composer:latest
     working_dir: /var/www/html
     volumes:
       - ./:/var/www/html
